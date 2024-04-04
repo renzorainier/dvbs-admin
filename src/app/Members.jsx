@@ -28,7 +28,8 @@ function Members() {
       const timeField = currentWeekNumber + "t";
 
       await updateDoc(docRef, {
-        [currentWeekNumber]: !memberData.find((m) => m.id === memberId)[currentWeekNumber],
+        [currentWeekNumber]: 16,
+        // !memberData.find((m) => m.id === memberId)[currentWeekNumber]
         [timeField]: !memberData.find((m) => m.id === memberId)[currentWeekNumber] ? uploadTime : "",
       });
 
