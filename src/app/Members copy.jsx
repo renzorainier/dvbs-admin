@@ -137,3 +137,22 @@ export default Members;
 
 //
 
+{
+  /* <div className="flex flex-col gap-2 w-full">
+{sortedMemberNames.map((name, index) => (
+  <button
+    key={index}
+    className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl
+      ${selectedNames.includes(name) ? "bg-gray-500" : ""}
+      text-lg sm:text-xl md:text-2xl`} // Remove any margin classes
+    onClick={() => handleClick(name)}
+  >
+    {name}
+  </button>
+))}
+
+
+</div>
+</div>
+<p>Current Week Number: {currentWeekNumber}</p> */
+}
