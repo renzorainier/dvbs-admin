@@ -11,7 +11,7 @@ function Tab() {
 
   return (
     <div>
-      <div className="flex justify-center pt-5 items-center">
+      <div className="flex justify-center py-5 items-center">
         <div className="w-full rounded-lg mx-auto ">
           <Switch
             checked={state}
