@@ -53,10 +53,16 @@ const addVisitor = async () => {
   if (newVisitorName.trim() !== "") {
     try {
       // Add a new document with a randomly generated ID
-      const docRef = await addDoc(collection(db, "visitors"), {
-        visitorName: newVisitorName, // Store the name of the visitor in a separate field
+    const docRef = await setDoc(doc(db, "visitors", newVisitorName), {
+        name: newVisitorName,
         [currentWeekNumber]: true,
       });
+
+
+      // const docRef = await setDoc(doc(db, "visitors", newVisitorName), {
+      //   name: newVisitorName,
+      //   [currentWeekNumber]: true,
+      // });
 
       const newVisitor = { id: docRef.id, name: newVisitorName };
       setVisitors([...visitors, newVisitor]);
