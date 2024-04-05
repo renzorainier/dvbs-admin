@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { doc, updateDoc, getDocs, collection, setDoc, addDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, getDocs, collection, setDoc, addDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 
 function Visitors() {
@@ -47,39 +47,38 @@ function Visitors() {
     setNewVisitorName(event.target.value);
   };
 
-const addVisitor = async () => {
-  if (newVisitorName.trim() !== "") {
-    try {
-      // Set the document name to match the visitor's name
-      const docRef = doc(collection(db, "visitors"), newVisitorName.trim());
-      // Check if the document already exists
-      const docSnapshot = await getDoc(docRef);
-      if (docSnapshot.exists()) {
-        console.error("Visitor already exists!");
-        return;
+  // Add a New Visitor
+  const addVisitor = async () => {
+    if (newVisitorName.trim() !== "") {
+      try {
+        // Set the document name to match the visitor's name
+        const docRef = doc(collection(db, "visitors"), newVisitorName.trim());
+        // Check if the document already exists
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+          console.error("Visitor already exists!");
+          return;
+        }
+        // If the document doesn't exist, add it
+        await setDoc(docRef, {
+          visitorName: newVisitorName, // Store the name of the visitor in a separate field
+          [currentWeekNumber]: true,
+        });
+
+        const newVisitor = { id: docRef.id, name: newVisitorName };
+        setVisitors([...visitors, newVisitor]);
+        setNewVisitorName("");
+
+        // Update recent visitors by prepending the new visitor
+        setRecentVisitors((prevRecentVisitors) => [newVisitor, ...prevRecentVisitors]);
+
+        // Add console log to check if recent visitor is updated
+        console.log("Recent Visitors After Adding:", recentVisitors);
+      } catch (error) {
+        console.error("Error adding visitor: ", error);
       }
-      // If the document doesn't exist, add it
-      await setDoc(docRef, {
-        visitorName: newVisitorName, // Store the name of the visitor in a separate field
-        [currentWeekNumber]: true,
-      });
-
-      const newVisitor = { id: docRef.id, name: newVisitorName };
-      setVisitors([...visitors, newVisitor]);
-      setNewVisitorName("");
-
-      // Update recent visitors by prepending the new visitor
-      setRecentVisitors((prevRecentVisitors) => [newVisitor, ...prevRecentVisitors]);
-
-      // Add console log to check if recent visitor is updated
-      console.log("Recent Visitors After Adding:", recentVisitors);
-    } catch (error) {
-      console.error("Error adding visitor: ", error);
     }
-  }
-};
-
-
+  };
 
   // Handle click on a visitor name
   const handleVisitorClick = async (visitorId) => {
