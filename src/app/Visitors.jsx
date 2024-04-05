@@ -56,7 +56,9 @@ function Visitors() {
           [currentWeekNumber]: true,
         });
 
-        setVisitors([...visitors, { id: docRef.id, name: newVisitorName }]);
+        const newVisitor = { id: docRef.id, name: newVisitorName };
+        setVisitors([...visitors, newVisitor]);
+        setRecentVisitors([...recentVisitors, newVisitor]); // Add the new visitor to recent visitors
         setNewVisitorName("");
       } catch (error) {
         console.error("Error adding visitor: ", error);
@@ -90,27 +92,39 @@ function Visitors() {
             : visitor
         )
       );
+
+      // Update recent visitors if necessary
+      setRecentVisitors((prevRecentVisitors) =>
+        prevRecentVisitors.map((visitor) =>
+          visitor.id === visitorId
+            ? {
+                ...visitor,
+                [currentWeekNumber]: !isVisitorPresent,
+              }
+            : visitor
+        )
+      );
     } catch (error) {
       console.error("Error updating Firebase: ", error);
     }
   };
 
-  
-function getWeekNumber() {
-  const date = new Date();
-  date.setHours(0, 0, 0, 0);
-  date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
-  var week1 = new Date(date.getFullYear(), 0, 4);
-  return (
-    1 +
-    Math.round(
-      ((date.getTime() - week1.getTime()) / 86400000 -
-        3 +
-        ((week1.getDay() + 6) % 7)) /
-        7
-    )
-  );
-}
+
+  function getWeekNumber() {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
+    var week1 = new Date(date.getFullYear(), 0, 4);
+    return (
+      1 +
+      Math.round(
+        ((date.getTime() - week1.getTime()) / 86400000 -
+          3 +
+          ((week1.getDay() + 6) % 7)) /
+          7
+      )
+    );
+  }
 
 
   // Rendering Section
@@ -169,20 +183,3 @@ function getWeekNumber() {
 }
 
 export default Visitors;
-
-// function getWeekNumber() {
-//   const date = new Date();
-//   date.setHours(0, 0, 0, 0);
-//   date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
-//   var week1 = new Date(date.getFullYear(), 0, 4);
-//   return (
-//     1 +
-//     Math.round(
-//       ((date.getTime() - week1.getTime()) / 86400000 -
-//         3 +
-//         ((week1.getDay() + 6) % 7)) /
-//         7
-//     )
-//   );
-// }
-
