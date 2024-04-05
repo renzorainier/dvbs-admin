@@ -51,12 +51,12 @@ function Visitors() {
 const addVisitor = async () => {
   if (newVisitorName.trim() !== "") {
     try {
-      const docRef = await addDoc(collection(db, "visitors"), {
+      const docRef = await addDoc(collection(db, "visitors", newVisitorName), {
         name: newVisitorName,
         [currentWeekNumber]: true,
       });
 
-      const newVisitor = { id: newVisitorName, name: newVisitorName };
+      const newVisitor = { id: docRef.id, name: newVisitorName };
       setVisitors([...visitors, newVisitor]);
       setNewVisitorName("");
 
