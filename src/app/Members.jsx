@@ -79,7 +79,7 @@ function getWeekNumber() {
     <div className="flex flex-col items-center">
       <div
         className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto"
-        style={{ maxWidth: "90%" }}
+       
       >
         <div className="flex flex-col gap-2 w-full">
           {memberData.map((member, index) => (
