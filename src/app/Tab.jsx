@@ -8,18 +8,6 @@ import Members from "./Members";
 
 function Tab() {
   const [state, setState] = useState(false);
-  // const [memberNames, setMemberNames] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchMembers = async () => {
-  //     const membersSnapshot = await getDocs(collection(db, "memberRecords")); // Adjust collection name if needed
-  //     const names = membersSnapshot.docs.map((doc) => doc.id);
-  //     setMemberNames(names);
-  //   };
-
-  //   fetchMembers();
-  // }, []);
-
 
   return (
     <div>
