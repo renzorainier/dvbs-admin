@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { doc, updateDoc, getDocs, collection, setDoc } from "firebase/firestore";
+import { doc, updateDoc, getDocs, collection, setDoc, addDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 
 function Visitors() {
@@ -49,10 +49,11 @@ function Visitors() {
 
   // Add a New Visitor
 // Add a New Visitor
+// Add a New Visitor
 const addVisitor = async () => {
   if (newVisitorName.trim() !== "") {
     try {
-      const docRef = await setDoc(doc(db, "visitors", newVisitorName), {
+      const docRef = await addDoc(collection(db, "visitors"), {
         name: newVisitorName,
         [currentWeekNumber]: true,
       });
