@@ -167,20 +167,6 @@ function Visitors() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center mt-6">
-        <input
-          type="text"
-          value={newVisitorName}
-          onChange={handleInputChange}
-          placeholder="Enter visitor name"
-          className="border border-gray-400 rounded-lg p-3 w-80 focus:outline-none focus:border-green-500"
-        />
-        <button
-          className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg mt-4 transition duration-300 ease-in-out"
-          onClick={addVisitor}>
-          Add Visitor
-        </button>
-      </div>
     </div>
   );
 }
