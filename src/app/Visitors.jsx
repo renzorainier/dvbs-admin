@@ -61,7 +61,7 @@ function Visitors() {
         }
         // If the document doesn't exist, add it
         await setDoc(docRef, {
-          visitorName: newVisitorName, // Store the name of the visitor in a separate field
+          name: newVisitorName, // Store the name of the visitor in a separate field
           [currentWeekNumber]: true,
         });
 
@@ -153,7 +153,7 @@ function Visitors() {
               } text-white`}
               onClick={() => handleVisitorClick(visitor.id)}
             >
-              {visitor.visitorName}
+              {visitor.name}
             </button>
           ))}
         </div>
@@ -169,7 +169,7 @@ function Visitors() {
               } text-white`}
               onClick={() => handleVisitorClick(visitor.id)}
             >
-              {visitor.visitorName}
+              {visitor.name}
             </button>
           ))}
         </div>
