@@ -49,6 +49,7 @@ function Visitors() {
 
 
 
+// Add a New Visitor
 const addVisitor = async () => {
   if (newVisitorName.trim() !== "") {
     try {
@@ -59,8 +60,10 @@ const addVisitor = async () => {
 
       const newVisitor = { id: docRef.id, name: newVisitorName };
       setVisitors([...visitors, newVisitor]);
-      setRecentVisitors([...recentVisitors, newVisitor]); // Add the new visitor to recent visitors
       setNewVisitorName("");
+
+      // Update recent visitors by using a functional update
+      setRecentVisitors((prevRecentVisitors) => [...prevRecentVisitors, newVisitor]);
     } catch (error) {
       console.error("Error adding visitor: ", error);
     }
