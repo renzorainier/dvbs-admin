@@ -5,6 +5,7 @@ import { db } from "./firebase.js";
 function Visitors() {
   const [visitors, setVisitors] = useState([]);
   const [recentVisitors, setRecentVisitors] = useState([]);
+  const [olderVisitors, setOlderVisitors] = useState([]);
   const [newVisitorName, setNewVisitorName] = useState("");
   const [currentWeekNumber, setCurrentWeekNumber] = useState(getWeekNumber());
 
@@ -19,22 +20,29 @@ function Visitors() {
         id: doc.id,
         ...doc.data(),
       }));
+
       setVisitors(visitorList);
-      filterVisitors(visitorList);
+
+      const recentWeeksThreshold = currentWeekNumber - 4;
+      const recentVisitors = visitorList.filter((visitor) => {
+        const highestWeek = Math.max(
+          ...Object.keys(visitor).filter((key) => !isNaN(key))
+        );
+        return highestWeek >= recentWeeksThreshold;
+      });
+
+      const olderVisitors = visitorList.filter((visitor) => {
+        const highestWeek = Math.max(
+          ...Object.keys(visitor).filter((key) => !isNaN(key))
+        );
+        return highestWeek < recentWeeksThreshold;
+      });
+
+      setRecentVisitors(recentVisitors);
+      setOlderVisitors(olderVisitors);
     } catch (error) {
       console.error("Error fetching visitors: ", error);
     }
-  };
-
-  const filterVisitors = (visitorList) => {
-    const recentWeeksThreshold = currentWeekNumber - 4;
-    const recentVisitors = visitorList.filter((visitor) => {
-      const highestWeek = Math.max(
-        ...Object.keys(visitor).filter((key) => !isNaN(key))
-      );
-      return highestWeek >= recentWeeksThreshold;
-    });
-    setRecentVisitors(recentVisitors);
   };
 
   const handleInputChange = (event) => {
@@ -104,6 +112,23 @@ function Visitors() {
         <h3>Recent Visitors:</h3>
         <div className="flex flex-col gap-2">
           {recentVisitors.map((visitor) => (
+            <button
+              key={visitor.id}
+              className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
+                visitor[currentWeekNumber] ? "bg-green-500" : "bg-gray-500 hover:bg-blue-700"
+              } text-white`}
+              onClick={() => handleVisitorClick(visitor.id)}
+            >
+              {visitor.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2 w-full">
+        <h3>Older Visitors:</h3>
+        <div className="flex flex-col gap-2">
+          {olderVisitors.map((visitor) => (
             <button
               key={visitor.id}
               className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
