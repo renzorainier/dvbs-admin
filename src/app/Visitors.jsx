@@ -47,30 +47,26 @@ function Visitors() {
     setNewVisitorName(event.target.value);
   };
 
+  // Add a New Visitor
+  const addVisitor = async () => {
+    if (newVisitorName.trim() !== "") {
+      try {
+        const docRef = await setDoc(doc(db, "visitors", newVisitorName), {
+          name: newVisitorName,
+          [currentWeekNumber]: true,
+        });
 
+        const newVisitor = { id: docRef.id, name: newVisitorName };
+        setVisitors([...visitors, newVisitor]);
+        setNewVisitorName("");
 
-// Add a New Visitor
-const addVisitor = async () => {
-  if (newVisitorName.trim() !== "") {
-    try {
-      const docRef = await setDoc(doc(db, "visitors", newVisitorName), {
-        name: newVisitorName,
-        [currentWeekNumber]: true,
-      });
-
-      const newVisitor = { id: docRef.id, name: newVisitorName };
-      setVisitors([...visitors, newVisitor]);
-      setNewVisitorName("");
-
-      // Update recent visitors by using a functional update
-      setRecentVisitors((prevRecentVisitors) => [...prevRecentVisitors, newVisitor]);
-    } catch (error) {
-      console.error("Error adding visitor: ", error);
+        // Update recent visitors by using a functional update
+        setRecentVisitors((prevRecentVisitors) => [...prevRecentVisitors, newVisitor]);
+      } catch (error) {
+        console.error("Error adding visitor: ", error);
+      }
     }
-  }
-};
-
-
+  };
 
   // Handle click on a visitor name
   const handleVisitorClick = async (visitorId) => {
@@ -115,7 +111,6 @@ const addVisitor = async () => {
     }
   };
 
-
   function getWeekNumber() {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
@@ -127,11 +122,10 @@ const addVisitor = async () => {
         ((date.getTime() - week1.getTime()) / 86400000 -
           3 +
           ((week1.getDay() + 6) % 7)) /
-          7
+        7
       )
     );
   }
-
 
   // Rendering Section
   return (
