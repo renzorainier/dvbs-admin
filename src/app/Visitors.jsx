@@ -116,57 +116,60 @@ function Visitors() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col items-center mt-6">
-        <input
-          type="text"
-          value={newVisitorName}
-          onChange={handleInputChange}
-          placeholder="Enter visitor name"
-          className="border border-gray-400 rounded-lg p-3 w-80 focus:outline-none focus:border-green-500"
-        />
-        <button
-          className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg mt-4 transition duration-300 ease-in-out"
-          onClick={addVisitor}>
-          Add Visitor
-        </button>
-      </div>
-
-      <div className="flex flex-col gap-2 w-full">
-        <h3>Recent Visitors:</h3>
-        <div className="flex flex-col gap-2">
-          {recentVisitors.map((visitor) => (
-            <button
-              key={visitor.id}
-              className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
-                visitor[currentWeekNumber]
-                  ? "bg-green-500"
-                  : "bg-gray-500 hover:bg-blue-700"
-              } text-white`}
-              onClick={() => handleVisitorClick(visitor.id)}>
-              {visitor.name}
-            </button>
-          ))}
+      <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+        <div className="flex flex-col items-center ">
+          <input
+            type="text"
+            value={newVisitorName}
+            onChange={handleInputChange}
+            placeholder="Enter visitor name"
+            className="border border-gray-400 rounded-lg p-3 w-80 focus:outline-none focus:border-green-500"
+          />
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg mt-4 transition duration-300 ease-in-out"
+            onClick={addVisitor}>
+            Add Visitor
+          </button>
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 w-full">
-        <h3>Older Visitors:</h3>
-        <div className="flex flex-col gap-2">
-          {olderVisitors.map((visitor) => (
-            <button
-              key={visitor.id}
-              className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
-                visitor[currentWeekNumber]
-                  ? "bg-green-500"
-                  : "bg-gray-500 hover:bg-blue-700"
-              } text-white`}
-              onClick={() => handleVisitorClick(visitor.id)}>
-              {visitor.name}
-            </button>
-          ))}
+      <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto mt-5">
+        <div className="flex flex-col gap-2 w-full">
+          <h3>Recent Visitors:</h3>
+          <div className="flex flex-col gap-2">
+            {recentVisitors.map((visitor) => (
+              <button
+                key={visitor.id}
+                className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
+                  visitor[currentWeekNumber]
+                    ? "bg-green-500"
+                    : "bg-gray-500 hover:bg-blue-700"
+                } text-white`}
+                onClick={() => handleVisitorClick(visitor.id)}>
+                {visitor.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2 w-full">
+          <h3>Older Visitors:</h3>
+          <div className="flex flex-col gap-2">
+            {olderVisitors.map((visitor) => (
+              <button
+                key={visitor.id}
+                className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
+                  visitor[currentWeekNumber]
+                    ? "bg-green-500"
+                    : "bg-gray-500 hover:bg-blue-700"
+                } text-white`}
+                onClick={() => handleVisitorClick(visitor.id)}>
+                {visitor.name}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-
     </div>
   );
 }
