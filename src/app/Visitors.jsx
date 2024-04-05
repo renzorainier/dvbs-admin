@@ -46,10 +46,8 @@ function Visitors() {
   const handleInputChange = (event) => {
     setNewVisitorName(event.target.value);
   };
+// Add a New Visitor
 
-  // Add a New Visitor
-// Add a New Visitor
-// Add a New Visitor
 const addVisitor = async () => {
   if (newVisitorName.trim() !== "") {
     try {
@@ -58,12 +56,12 @@ const addVisitor = async () => {
         [currentWeekNumber]: true,
       });
 
-      const newVisitor = { id: docRef.id, name: newVisitorName };
+      const newVisitor = { id: newVisitorName, name: newVisitorName };
       setVisitors([...visitors, newVisitor]);
       setNewVisitorName("");
 
-      // Update recent visitors by using a functional update
-      setRecentVisitors((prevRecentVisitors) => [...prevRecentVisitors, newVisitor]);
+      // Update recent visitors by prepending the new visitor
+      setRecentVisitors((prevRecentVisitors) => [newVisitor, ...prevRecentVisitors]);
 
       // Add console log to check if recent visitor is updated
       console.log("Recent Visitors After Adding:", recentVisitors);
