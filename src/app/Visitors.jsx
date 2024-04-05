@@ -48,8 +48,7 @@ function Visitors() {
   };
 
 
-// Add a New Visitor
-// Add a New Visitor
+
 const addVisitor = async () => {
   if (newVisitorName.trim() !== "") {
     try {
@@ -67,6 +66,7 @@ const addVisitor = async () => {
     }
   }
 };
+
 
 
   // Handle click on a visitor name
