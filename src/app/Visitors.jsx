@@ -46,14 +46,20 @@ function Visitors() {
   const handleInputChange = (event) => {
     setNewVisitorName(event.target.value);
   };
-// Add a New Visitor
 
-// Add a New Visitor
 const addVisitor = async () => {
   if (newVisitorName.trim() !== "") {
     try {
-      // Add a new document with a randomly generated ID
-      const docRef = await addDoc(collection(db, "visitors"), {
+      // Set the document name to match the visitor's name
+      const docRef = doc(collection(db, "visitors"), newVisitorName.trim());
+      // Check if the document already exists
+      const docSnapshot = await getDoc(docRef);
+      if (docSnapshot.exists()) {
+        console.error("Visitor already exists!");
+        return;
+      }
+      // If the document doesn't exist, add it
+      await setDoc(docRef, {
         visitorName: newVisitorName, // Store the name of the visitor in a separate field
         [currentWeekNumber]: true,
       });
@@ -72,6 +78,7 @@ const addVisitor = async () => {
     }
   }
 };
+
 
 
   // Handle click on a visitor name
