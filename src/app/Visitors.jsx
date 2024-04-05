@@ -99,22 +99,6 @@ function Visitors() {
     );
   }
 
-  return (
-    <div className="flex flex-col items-center">
-      <div className="flex flex-col gap-2 w-full">
-        <h3>Recent Visitors:</h3>
-        <div className="flex flex-col gap-2">
-          {recentVisitors.map((visitor) => (
-            <VisitorButton key={visitor.id} visitor={visitor} onClick={handleVisitorClick} />
-          ))}
-        </div>
-      </div>
-
-      <VisitorInput newVisitorName={newVisitorName} onChange={handleInputChange} onClick={addVisitor} />
-
-    </div>
-  );
-}
 
 const VisitorButton = ({ visitor, onClick }) => {
   const currentWeekNumber = getWeekNumber();
@@ -149,5 +133,23 @@ const VisitorInput = ({ newVisitorName, onChange, onClick }) => {
     </div>
   );
 };
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="flex flex-col gap-2 w-full">
+        <h3>Recent Visitors:</h3>
+        <div className="flex flex-col gap-2">
+          {recentVisitors.map((visitor) => (
+            <VisitorButton key={visitor.id} visitor={visitor} onClick={handleVisitorClick} />
+          ))}
+        </div>
+      </div>
+
+      <VisitorInput newVisitorName={newVisitorName} onChange={handleInputChange} onClick={addVisitor} />
+
+    </div>
+  );
+}
+
 
 export default Visitors;
