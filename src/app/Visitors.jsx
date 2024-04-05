@@ -61,7 +61,7 @@ function Visitors() {
         }
         // If the document doesn't exist, add it
         await setDoc(docRef, {
-          name: newVisitorName, // Store the name of the visitor in a separate field
+        name: newVisitorName, // Store the name of the visitor in a separate field
           [currentWeekNumber]: true,
         });
 
