@@ -3,7 +3,6 @@ import { doc, getDoc, updateDoc, getDocs, collection, setDoc, addDoc } from "fir
 import { db } from "./firebase.js";
 
 function Visitors() {
-  // State Variables
   const [visitors, setVisitors] = useState([]);
   const [recentVisitors, setRecentVisitors] = useState([]);
   const [newVisitorName, setNewVisitorName] = useState("");
@@ -99,57 +98,42 @@ function Visitors() {
     );
   }
 
-
-const VisitorButton = ({ visitor, onClick }) => {
-  const currentWeekNumber = getWeekNumber();
-  return (
-    <button
-      className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
-        visitor[currentWeekNumber] ? "bg-green-500" : "bg-gray-500 hover:bg-blue-700"
-      } text-white`}
-      onClick={() => onClick(visitor.id)}
-    >
-      {visitor.name}
-    </button>
-  );
-};
-
-const VisitorInput = ({ newVisitorName, onChange, onClick }) => {
-  return (
-    <div className="flex flex-col items-center gap-2 justify-center mt-6 bg-gray-100 border border-gray-300 rounded-md p-4">
-      <input
-        type="text"
-        value={newVisitorName}
-        onChange={onChange}
-        placeholder="Enter visitor name"
-        className="border border-gray-400 rounded p-3 w-64"
-      />
-      <button
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded mx-2"
-        onClick={onClick}
-      >
-        Add Visitor
-      </button>
-    </div>
-  );
-};
-
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col gap-2 w-full">
         <h3>Recent Visitors:</h3>
         <div className="flex flex-col gap-2">
           {recentVisitors.map((visitor) => (
-            <VisitorButton key={visitor.id} visitor={visitor} onClick={handleVisitorClick} />
+            <button
+              key={visitor.id}
+              className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
+                visitor[currentWeekNumber] ? "bg-green-500" : "bg-gray-500 hover:bg-blue-700"
+              } text-white`}
+              onClick={() => handleVisitorClick(visitor.id)}
+            >
+              {visitor.name}
+            </button>
           ))}
         </div>
       </div>
 
-      <VisitorInput newVisitorName={newVisitorName} onChange={handleInputChange} onClick={addVisitor} />
-
+      <div className="flex flex-col items-center gap-2 justify-center mt-6 bg-gray-100 border border-gray-300 rounded-md p-4">
+        <input
+          type="text"
+          value={newVisitorName}
+          onChange={handleInputChange}
+          placeholder="Enter visitor name"
+          className="border border-gray-400 rounded p-3 w-64"
+        />
+        <button
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded mx-2"
+          onClick={addVisitor}
+        >
+          Add Visitor
+        </button>
+      </div>
     </div>
   );
 }
-
 
 export default Visitors;
