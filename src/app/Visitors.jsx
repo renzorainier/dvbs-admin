@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { doc, updateDoc, getDocs, collection } from "firebase/firestore";
 import { db } from "./firebase.js"; // Assuming you have your Firebase setup
@@ -29,9 +28,12 @@ function Visitors() {
       const timeField = currentWeekNumber + "t";
       const uploadTime = new Date().toLocaleString();
 
+      const visitor = visitors.find((v) => v.id === visitorId);
+      const isVisitorPresent = visitor && visitor[currentWeekNumber];
+
       await updateDoc(docRef, {
-        [currentWeekNumber]: !visitors.find((v) => v.id === visitorId)[currentWeekNumber],
-        [timeField]: !visitors.find((v) => v.id === visitorId)[currentWeekNumber] ? uploadTime : "",
+        [currentWeekNumber]: !isVisitorPresent,
+        [timeField]: !isVisitorPresent ? uploadTime : "",
       });
 
       // Update local visitors for immediate visual feedback
@@ -40,7 +42,7 @@ function Visitors() {
           visitor.id === visitorId
             ? {
                 ...visitor,
-                [currentWeekNumber]: !visitor[currentWeekNumber],
+                [currentWeekNumber]: !isVisitorPresent,
               }
             : visitor
         )
@@ -84,9 +86,9 @@ function Visitors() {
           {visitors.map((visitor) => (
             <button
               key={visitor.id}
-              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl
-                ${visitor[currentWeekNumber] ? "bg-gray-500" : ""}
-              `}
+              className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
+                visitor[currentWeekNumber] ? "bg-green-500" : "bg-gray-500 hover:bg-blue-700"
+              } text-white`}
               onClick={() => handleVisitorClick(visitor.id)}
             >
               {visitor.id}
@@ -99,5 +101,3 @@ function Visitors() {
 }
 
 export default Visitors;
-
-
