@@ -153,7 +153,7 @@ function Visitors() {
               } text-white`}
               onClick={() => handleVisitorClick(visitor.id)}
             >
-              {visitor.name}
+              {visitor.visitorName}
             </button>
           ))}
         </div>
@@ -169,7 +169,7 @@ function Visitors() {
               } text-white`}
               onClick={() => handleVisitorClick(visitor.id)}
             >
-              {visitor.name}
+              {visitor.visitorName}
             </button>
           ))}
         </div>
