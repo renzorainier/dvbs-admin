@@ -26,7 +26,7 @@ function Tab() {
               } pointer-events-none inline-block h-[47px] w-[50%] transform rounded-lg bg-gray-100 shadow-lg ring-0 transition duration-200 ease-in-out `}
             />
 
-            <div className="absolute top-1/2 left-[12%] transform -translate-y-1/2 font-bold text-lg">
+            <div className="absolute  top-1/2 left-[12%] transform -translate-y-1/2 font-bold text-lg">
               Members
             </div>
             <div className="absolute top-1/2 right-[18%] transform -translate-y-1/2 font-bold text-lg">
