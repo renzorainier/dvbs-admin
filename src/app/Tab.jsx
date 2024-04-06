@@ -25,7 +25,7 @@ function Tab() {
               borderBottomWidth: "1px", // equivalent to divide-y
               borderColor: "#E5E7EB", // equivalent to divide-gray-100
               borderRadius: "0.5rem", // equivalent to rounded-lg
-            
+
               boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -2px rgba(0,0,0,0.05)", // equivalent to shadow-xl
               ringWidth: "1px", // equivalent to ring-1
               ringColor: "rgba(0,0,0,0.2)", // equivalent to ring-black/5
@@ -39,7 +39,7 @@ function Tab() {
               } pointer-events-none inline-block h-[47px] w-[50%] transform rounded-lg bg-gray-100 shadow-lg ring-0 transition duration-200 ease-in-out `}
             />
 
-            <div className="absolute  top-1/2 left-[12%] transform -translate-y-1/2 font-bold text-lg">
+            <div className="absolute  top-1/2 left-[14%] transform -translate-y-1/2 font-bold text-lg">
               Members
             </div>
             <div className="absolute top-1/2 right-[18%] transform -translate-y-1/2 font-bold text-lg">
