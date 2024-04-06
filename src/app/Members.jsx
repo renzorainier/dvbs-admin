@@ -77,7 +77,7 @@ function getWeekNumber() {
 
 return (
   <div className="flex flex-col items-center">
-    <div className="w-ful l text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+   w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto
       <div className="flex flex-col gap-2 w-full">
         {memberData.map((member, index) => (
           <button
