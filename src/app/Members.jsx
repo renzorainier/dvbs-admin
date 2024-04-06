@@ -86,7 +86,7 @@ function getWeekNumber() {
             <button
               key={index}
               className={`bg-gray-200 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl
-                    ${member[currentWeekNumber] ? "bg-[#A2C579]" : ""}
+                    ${member[currentWeekNumber] ? "bg-[#A2C579]" : "bg-gray-200"}
                   `}
               onClick={() => handleClick(member.id)}
             >
