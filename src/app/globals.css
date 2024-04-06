@@ -17,11 +17,13 @@ body {
 
     /* 0a739a */
 
-
-
-    .column {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .container {
+        display: flex; /* Allow children to arrange in columns */
+        justify-content: center; /* Center the columns horizontally */
       }
+
+      .column {
+        width: 50%; /* Each column takes up half the available space */
+        text-align: center; /* Center the labels within each column */
+      }
+
