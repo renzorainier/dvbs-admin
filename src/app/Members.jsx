@@ -75,28 +75,26 @@ function getWeekNumber() {
 }
 
 
-  return (
-    <div className="flex flex-col items-center">
-      <div
-        className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto"
-
-      >
-        <div className="flex flex-col gap-2 w-full">
-          {memberData.map((member, index) => (
-            <button
-              key={index}
-              className={`bg-gray-200 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl
-                    ${member[currentWeekNumber] ? "bg-[#A2C579]" : "bg-gray-200"}
-                  `}
-              onClick={() => handleClick(member.id)}
-            >
-              {member.id}
-            </button>
-          ))}
-        </div>
+return (
+  <div className="flex flex-col items-center">
+    <div className="w-ful l text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+      <div className="flex flex-col gap-2 w-full">
+        {memberData.map((member, index) => (
+          <button
+            key={index}
+            className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl
+                  ${member[currentWeekNumber] ? "bg-[#A2C579]" : "bg-gray-200"}
+                `}
+            onClick={() => handleClick(member.id)}
+          >
+            {member.id}
+          </button>
+        ))}
       </div>
     </div>
-  );
+  </div>
+);
+
 }
 
 export default Members;
