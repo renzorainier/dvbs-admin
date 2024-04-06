@@ -193,7 +193,7 @@ function Visitors() {
                 className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
                   visitor[currentWeekNumber]
                     ? "bg-[#61A3BA]"
-                    : "bg-gray-200 hover:bg-blue-700"
+                    : "bg-gray-200 hover:bg-[#61A3BA]"
                 } text-white`}
                 onClick={() => handleVisitorClick(visitor.id)}>
                 {visitor.name}
@@ -211,7 +211,7 @@ function Visitors() {
                 className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
                   visitor[currentWeekNumber]
                     ? "bg-[#61A3BA]"
-                    : "bg-gray-200 hover:bg-blue-700"
+                    : "bg-gray-200 hover:bg-[#61A3BA]"
                 } text-white`}
                 onClick={() => handleVisitorClick(visitor.id)}>
                 {visitor.name}
@@ -236,7 +236,7 @@ export default Visitors;
 //         className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
 //           visitor[currentWeekNumber]
 //             ? "bg-[#61A3BA]"
-//             : "bg-gray-200 hover:bg-blue-700"
+//             : "bg-gray-200 hover:bg-[#61A3BA]"
 //         } text-white`}
 //         onClick={() => handleVisitorClick(visitor.id)}>
 //         {visitor.name}
@@ -254,7 +254,7 @@ export default Visitors;
 //         className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
 //           visitor[currentWeekNumber]
 //             ? "bg-[#61A3BA]"
-//             : "bg-gray-200 hover:bg-blue-700"
+//             : "bg-gray-200 hover:bg-[#61A3BA]"
 //         } text-white`}
 //         onClick={() => handleVisitorClick(visitor.id)}>
 //         {visitor.name}
