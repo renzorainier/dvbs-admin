@@ -12,7 +12,7 @@ function Tab() {
   return (
     <div style={{ height: '100vh' }}>
       <div className="flex justify-center pt-7 pb-4 items-center">
-        <div className="w-full rounded-lg mx-auto">
+        <div className="w-full rounded-lg mx-auto " >
           <Switch
             checked={state}
             onChange={setState}
@@ -39,10 +39,10 @@ function Tab() {
               } pointer-events-none inline-block h-[47px] w-[50%] transform rounded-lg bg-gray-100 shadow-lg ring-0 transition duration-200 ease-in-out `}
             />
 
-            <div className="absolute  top-1/2 left-[14%] transform -translate-y-1/2 font-bold text-lg">
+            <div id="title" className="absolute  top-1/2 left-[14%] transform -translate-y-1/2 font-bold text-2xl ">
               Members
             </div>
-            <div className="absolute top-1/2 right-[18%] transform -translate-y-1/2 font-bold text-lg">
+            <div className="absolute top-1/2 right-[18%] transform -translate-y-1/2 font-bold ">
               Visitors
             </div>
           </Switch>
