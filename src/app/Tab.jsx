@@ -10,7 +10,7 @@ function Tab() {
   const [state, setState] = useState(false);
 
   return (
-    <div>
+    <div style={{ height: '100vh' }}>
       <div className="flex justify-center pt-7 pb-4 items-center">
         <div className="w-full rounded-lg mx-auto">
           <Switch
