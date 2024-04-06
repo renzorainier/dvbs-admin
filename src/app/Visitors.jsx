@@ -151,31 +151,31 @@ function Visitors() {
               value={newVisitorName}
               onChange={(e) => handleInputChange(e, "name")}
               placeholder="Visitor Name"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-green-500"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <input
               type="text"
               value={newVisitorAddress}
               onChange={(e) => handleInputChange(e, "address")}
               placeholder="Visitor Address"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-green-500"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <input
               type="text"
               value={invitedBy}
               onChange={(e) => handleInputChange(e, "invitedBy")}
               placeholder="Invited By"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-green-500"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <input
               type="text"
               value={contactNumber}
               onChange={(e) => handleInputChange(e, "contactNumber")}
               placeholder="Contact Number"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-green-500"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <button
-              className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg mt-4 w-full transition duration-300 ease-in-out"
+              className="bg-[#61A3BA] hover:bg-[#61A3BA] text-white font-bold py-3 px-6 rounded-lg mt-4 w-full transition duration-300 ease-in-out"
               onClick={addVisitor}>
               Add Visitor
             </button>
@@ -192,7 +192,7 @@ function Visitors() {
                 key={visitor.id}
                 className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
                   visitor[currentWeekNumber]
-                    ? "bg-green-500"
+                    ? "bg-[#61A3BA]"
                     : "bg-gray-500 hover:bg-blue-700"
                 } text-white`}
                 onClick={() => handleVisitorClick(visitor.id)}>
@@ -210,7 +210,7 @@ function Visitors() {
                 key={visitor.id}
                 className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
                   visitor[currentWeekNumber]
-                    ? "bg-green-500"
+                    ? "bg-[#61A3BA]"
                     : "bg-gray-500 hover:bg-blue-700"
                 } text-white`}
                 onClick={() => handleVisitorClick(visitor.id)}>
@@ -235,7 +235,7 @@ export default Visitors;
 //         key={visitor.id}
 //         className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
 //           visitor[currentWeekNumber]
-//             ? "bg-green-500"
+//             ? "bg-[#61A3BA]"
 //             : "bg-gray-500 hover:bg-blue-700"
 //         } text-white`}
 //         onClick={() => handleVisitorClick(visitor.id)}>
@@ -253,7 +253,7 @@ export default Visitors;
 //         key={visitor.id}
 //         className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
 //           visitor[currentWeekNumber]
-//             ? "bg-green-500"
+//             ? "bg-[#61A3BA]"
 //             : "bg-gray-500 hover:bg-blue-700"
 //         } text-white`}
 //         onClick={() => handleVisitorClick(visitor.id)}>
