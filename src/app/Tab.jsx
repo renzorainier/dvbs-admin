@@ -26,7 +26,7 @@ function Tab() {
               borderBottomWidth: "1px", // equivalent to divide-y
               borderColor: "#E5E7EB", // equivalent to divide-gray-100
               borderRadius: "0.5rem", // equivalent to rounded-lg
-              backgroundImage: "linear-gradient(to bottom, #E5E7EB, #FFFFFF)", // equivalent to bg-gradient-to-b from-gray-100 to-white
+              background: "rgba(66, 74, 87, 0.2)", // semi-transparent with a dark shade
               boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -2px rgba(0,0,0,0.05)", // equivalent to shadow-xl
               ringWidth: "1px", // equivalent to ring-1
               ringColor: "rgba(0,0,0,0.2)", // equivalent to ring-black/5
@@ -62,6 +62,7 @@ function Tab() {
       </div>
     </div>
   );
+
 
 }
 
