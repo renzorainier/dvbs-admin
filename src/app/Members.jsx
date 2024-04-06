@@ -85,8 +85,8 @@ function getWeekNumber() {
           {memberData.map((member, index) => (
             <button
               key={index}
-              className={`bg-gray-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl
-                    ${member[currentWeekNumber] ? "bg-green-500" : ""}
+              className={`bg-gray-200 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl
+                    ${member[currentWeekNumber] ? "bg-[#A2C579]" : ""}
                   `}
               onClick={() => handleClick(member.id)}
             >
