@@ -38,15 +38,15 @@ function Tab() {
               } pointer-events-none inline-block h-[47px] w-[50%] transform rounded-lg bg-gray-100 shadow-lg ring-0 transition duration-200 ease-in-out`}
             />
 
-<div class="flex justify-center">
-  <div class="column">
+<div class="grid grid-cols-2 justify-center">
+  <div class="flex justify-center">
     <div class="absolute top-1/2 transform -translate-y-1/2 font-bold text-4xl">
       <div>
         Member
       </div>
     </div>
   </div>
-  <div class="column">
+  <div class="flex justify-center">
     <div class="absolute top-1/2 transform -translate-y-1/2 font-bold text-4xl">
       <div>
         Visitors
@@ -54,6 +54,7 @@ function Tab() {
     </div>
   </div>
 </div>
+
 
           </Switch>
         </div>
