@@ -15,6 +15,9 @@ function Visitors() {
   const [recentVisitors, setRecentVisitors] = useState([]);
   const [olderVisitors, setOlderVisitors] = useState([]);
   const [newVisitorName, setNewVisitorName] = useState("");
+  const [newVisitorAddress, setNewVisitorAddress] = useState("");
+  const [invitedBy, setInvitedBy] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
   const [currentWeekNumber, setCurrentWeekNumber] = useState(getWeekNumber());
 
   useEffect(() => {
@@ -53,8 +56,23 @@ function Visitors() {
     }
   };
 
-  const handleInputChange = (event) => {
-    setNewVisitorName(event.target.value);
+  const handleInputChange = (event, field) => {
+    switch (field) {
+      case "name":
+        setNewVisitorName(event.target.value);
+        break;
+      case "address":
+        setNewVisitorAddress(event.target.value);
+        break;
+      case "invitedBy":
+        setInvitedBy(event.target.value);
+        break;
+      case "contactNumber":
+        setContactNumber(event.target.value);
+        break;
+      default:
+        break;
+    }
   };
 
   const addVisitor = async () => {
@@ -68,9 +86,15 @@ function Visitors() {
         }
         await setDoc(docRef, {
           name: newVisitorName,
+          address: newVisitorAddress,
+          invitedBy: invitedBy,
+          contactNumber: contactNumber,
           [currentWeekNumber]: true,
         });
         setNewVisitorName("");
+        setNewVisitorAddress("");
+        setInvitedBy("");
+        setContactNumber("");
         fetchVisitors();
       } catch (error) {
         console.error("Error adding visitor: ", error);
@@ -116,20 +140,46 @@ function Visitors() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-        <div className="flex flex-col items-center ">
-          <input
-            type="text"
-            value={newVisitorName}
-            onChange={handleInputChange}
-            placeholder="Enter visitor name"
-            className="border border-gray-400 rounded-lg p-3 w-80 focus:outline-none focus:border-green-500"
-          />
-          <button
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg mt-4 transition duration-300 ease-in-out"
-            onClick={addVisitor}>
-            Add Visitor
-          </button>
+      <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
+        <div className="p-5">
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">
+            Add New Visitor
+          </h2>
+          <div className="space-y-4">
+            <input
+              type="text"
+              value={newVisitorName}
+              onChange={(e) => handleInputChange(e, "name")}
+              placeholder="Visitor Name"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-green-500"
+            />
+            <input
+              type="text"
+              value={newVisitorAddress}
+              onChange={(e) => handleInputChange(e, "address")}
+              placeholder="Visitor Address"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-green-500"
+            />
+            <input
+              type="text"
+              value={invitedBy}
+              onChange={(e) => handleInputChange(e, "invitedBy")}
+              placeholder="Invited By"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-green-500"
+            />
+            <input
+              type="text"
+              value={contactNumber}
+              onChange={(e) => handleInputChange(e, "contactNumber")}
+              placeholder="Contact Number"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-green-500"
+            />
+            <button
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg mt-4 w-full transition duration-300 ease-in-out"
+              onClick={addVisitor}>
+              Add Visitor
+            </button>
+          </div>
         </div>
       </div>
 
@@ -175,3 +225,41 @@ function Visitors() {
 }
 
 export default Visitors;
+
+// <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto mt-5">
+// <div className="flex flex-col gap-2 w-full">
+//   <h3>Recent Visitors:</h3>
+//   <div className="flex flex-col gap-2">
+//     {recentVisitors.map((visitor) => (
+//       <button
+//         key={visitor.id}
+//         className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
+//           visitor[currentWeekNumber]
+//             ? "bg-green-500"
+//             : "bg-gray-500 hover:bg-blue-700"
+//         } text-white`}
+//         onClick={() => handleVisitorClick(visitor.id)}>
+//         {visitor.name}
+//       </button>
+//     ))}
+//   </div>
+// </div>
+
+// <div className="flex flex-col gap-2 w-full">
+//   <h3>Older Visitors:</h3>
+//   <div className="flex flex-col gap-2">
+//     {olderVisitors.map((visitor) => (
+//       <button
+//         key={visitor.id}
+//         className={`font-bold py-3 px-4 rounded-xl text-lg sm:text-xl md:text-2xl ${
+//           visitor[currentWeekNumber]
+//             ? "bg-green-500"
+//             : "bg-gray-500 hover:bg-blue-700"
+//         } text-white`}
+//         onClick={() => handleVisitorClick(visitor.id)}>
+//         {visitor.name}
+//       </button>
+//     ))}
+//   </div>
+// </div>
+// </div>
