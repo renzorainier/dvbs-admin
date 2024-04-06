@@ -39,10 +39,10 @@ function Tab() {
               } pointer-events-none inline-block h-[47px] w-[50%] transform rounded-lg bg-gray-100 shadow-lg ring-0 transition duration-200 ease-in-out `}
             />
 
-            <div id="title" className="absolute  top-1/2 left-[14%] transform -translate-y-1/2 font-bold text-2xl ">
+            <div  className="absolute  top-1/2 left-[4%] transform -translate-y-1/2 font-bold text-4xl">
               Members
             </div>
-            <div className="absolute top-1/2 right-[18%] transform -translate-y-1/2 font-bold ">
+            <div className="absolute top-1/2 right-[9%] transform -translate-y-1/2 font-bold text-4xl">
               Visitors
             </div>
           </Switch>
