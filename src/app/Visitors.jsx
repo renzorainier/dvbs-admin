@@ -175,22 +175,24 @@ function Visitors() {
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
         <button
-  className="bg-[#61A3BA] hover:bg-[#61A3BA] text-white font-bold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out"
+  className="bg-[#61A3BA] hover:bg-[#61A3BA] text-white font-bold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out"
   onClick={addVisitor}
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5 text-white"
-    viewBox="0 0 20 20"
-    fill="currentColor"
+    className="h-6 w-6 mr-2"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
   >
     <path
-      fillRule="evenodd"
-      d="M13 11a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2H7a1 1 0 0 1 0-2h2V9a1 1 0 0 1 2 0v2h2zM10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 14a6 6 0 1 1 0-12 6 6 0 0 1 0 12z"
-      clipRule="evenodd"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
     />
   </svg>
-  <span>Add Visitor</span>
+  Add Visitor
 </button>
 
           </div>
