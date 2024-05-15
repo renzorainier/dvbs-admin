@@ -27,25 +27,31 @@ function Visitors() {
     }
   };
 
-  const addVisitor = async () => {
-    if (newVisitorName.trim() !== "") {
-      try {
-        await setDoc(doc(collection(db, "visitors"), newVisitorName.trim()), {
-          name: newVisitorName,
-          address: newVisitorAddress,
-          invitedBy: invitedBy,
-          contactNumber: contactNumber,
-        });
-        setNewVisitorName("");
-        setNewVisitorAddress("");
-        setInvitedBy("");
-        setContactNumber("");
-        console.log("Visitor added successfully!");
-      } catch (error) {
-        console.error("Error adding visitor: ", error);
-      }
-    }
-  };
+  function Primary() {
+    const uploadTime = new Date().toLocaleString();
+    const [primaryData, setPrimaryData] = useState({});
+    const [searchQuery, setSearchQuery] = useState("");
+
+    useEffect(() => {
+      const fetchPrimary = async () => {
+        const docRef = doc(db, "dvbs", "primary");
+        const primarySnapshot = await getDoc(docRef);
+        if (primarySnapshot.exists()) {
+          setPrimaryData(primarySnapshot.data());
+        } else {
+          console.error("No such document!");
+        }
+      };
+
+      fetchPrimary();
+    }, []);
+
+    const getCurrentDayLetter = () => {
+      const days = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+      const dayIndex = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+      return days[dayIndex === 0 ? 6 : dayIndex - 1]; // Adjust to make A = Monday
+    };
+
 
   return (
     <div className="flex flex-col items-center pb-5">
