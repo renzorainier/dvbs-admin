@@ -38,7 +38,7 @@ function Tab() {
 
             <div className="absolute top-1/2 transform -translate-y-1/2 font-bold text-4xl flex container">
               <div className="column">
-                <div>Attendance</div>
+                <div>List</div>
               </div>
               <div className="column">
                 <div>Add</div>
