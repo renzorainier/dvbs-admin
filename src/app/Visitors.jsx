@@ -50,6 +50,7 @@ function Visitors() {
     }
   };
 
+
   const addVisitor = async () => {
     if (newVisitorName.trim() !== "") {
       try {
@@ -67,12 +68,12 @@ function Visitors() {
           [`${newIndex}address`]: newVisitorAddress,
           [`${newIndex}invitedBy`]: invitedBy,
           [`${newIndex}contactNumber`]: contactNumber,
-          [`${newIndex}A`]: "",
-          [`${newIndex}B`]: "",
-          [`${newIndex}C`]: "",
-          [`${newIndex}D`]: "",
-          [`${newIndex}E`]: "",
         };
+
+        // Set the value for the field corresponding to the current day with the current time
+        const currentDayLetter = getCurrentDayLetter();
+        const currentTime = new Date().toLocaleString();
+        newFields[`${newIndex}${currentDayLetter}`] = currentTime;
 
         // Update the document with the new visitor data
         await updateDoc(docRef, newFields);
@@ -94,6 +95,8 @@ function Visitors() {
       }
     }
   };
+
+
   return (
     <div className="flex flex-col items-center pb-5">
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
