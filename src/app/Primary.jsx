@@ -5,6 +5,7 @@ import { db } from "./firebase.js"; // Import your Firebase config
 function Primary() {
   const uploadTime = new Date().toLocaleString();
   const [primaryData, setPrimaryData] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchPrimary = async () => {
@@ -55,17 +56,23 @@ function Primary() {
     return primaryData[fieldToCheck] ? "bg-[#A2C579]" : "bg-gray-200";
   };
 
-  // Extract and sort the "name" fields alphabetically
-  const sortedNames = Object.keys(primaryData)
-    .filter(fieldName => fieldName.endsWith("name"))
-    .map(fieldName => primaryData[fieldName])
-    .sort();
+  // Filter the sortedNames based on the search query
+  const filteredNames = sortedNames.filter(name =>
+    name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="flex flex-col items-center">
       <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+        <input
+          type="text"
+          placeholder="Search names..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+        />
         <div className="flex flex-col gap-2 w-full">
-          {sortedNames.map((name, index) => {
+          {filteredNames.map((name, index) => {
             const fieldName = Object.keys(primaryData).find(key => primaryData[key] === name);
             return (
               <button
