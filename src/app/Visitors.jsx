@@ -36,7 +36,7 @@ function Visitors() {
       case "name":
         setNewVisitorName(event.target.value);
         break;
-      case "address":
+      case "loc":
         setNewVisitorAddress(event.target.value);
         break;
       case "invitedBy":
@@ -49,7 +49,6 @@ function Visitors() {
         break;
     }
   };
-
 
   const addVisitor = async () => {
     if (newVisitorName.trim() !== "") {
@@ -65,15 +64,17 @@ function Visitors() {
         // Define the new field names
         const newFields = {
           [`${newIndex}name`]: newVisitorName,
-          [`${newIndex}address`]: newVisitorAddress,
+          [`${newIndex}loc`]: newVisitorAddress,
           [`${newIndex}invitedBy`]: invitedBy,
           [`${newIndex}contactNumber`]: contactNumber,
         };
 
-        // Set the value for the field corresponding to the current day with the current time
+        // Set the values for fields `${newIndex}A` to `${newIndex}E` with the current time for the current day
         const currentDayLetter = getCurrentDayLetter();
         const currentTime = new Date().toLocaleString();
-        newFields[`${newIndex}${currentDayLetter}`] = currentTime;
+        ['A', 'B', 'C', 'D', 'E'].forEach((letter) => {
+          newFields[`${newIndex}${letter}`] = letter === currentDayLetter ? currentTime : "";
+        });
 
         // Update the document with the new visitor data
         await updateDoc(docRef, newFields);
@@ -97,6 +98,7 @@ function Visitors() {
   };
 
 
+
   return (
     <div className="flex flex-col items-center pb-5">
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
@@ -115,7 +117,7 @@ function Visitors() {
             <input
               type="text"
               value={newVisitorAddress}
-              onChange={(e) => handleInputChange(e, "address")}
+              onChange={(e) => handleInputChange(e, "loc")}
               placeholder="Visitor Address"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
