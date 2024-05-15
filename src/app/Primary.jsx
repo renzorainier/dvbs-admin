@@ -65,15 +65,18 @@ function Primary() {
     <div className="flex flex-col items-center">
       <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <div className="flex flex-col gap-2 w-full">
-          {sortedNames.map((name, index) => (
-            <button
-              key={index}
-              className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl ${getButtonColor(fieldName)}`}
-              onClick={() => handleClick(fieldName)}
-            >
-              {name}
-            </button>
-          ))}
+          {sortedNames.map((name, index) => {
+            const fieldName = Object.keys(primaryData).find(key => primaryData[key] === name);
+            return (
+              <button
+                key={index}
+                className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl ${getButtonColor(fieldName)}`}
+                onClick={() => handleClick(fieldName)}
+              >
+                {name}
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
