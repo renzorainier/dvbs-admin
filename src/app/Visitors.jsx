@@ -106,7 +106,7 @@ function Visitors() {
     }
   };
 
-  const ageOptions = Array.from({ length: 50 }, (_, i) => i + 1);
+  const ageOptions = [1, 2, 3, 4, 5, 6]
 
   return (
     <div className="flex flex-col items-center pb-5">
