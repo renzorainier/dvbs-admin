@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { doc, updateDoc, getDocs, collection } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Switch } from "@headlessui/react";
-import Fetch from "./Fetch";
-import Visitors from "./Visitors";
-import Members from "./Members";
+import Fetch from "./Fetch.jsx";
+import Visitors from "./Visitors.jsx";
+import Members from "./Members.jsx";
 
 function Tab() {
   const [state, setState] = useState(false);
