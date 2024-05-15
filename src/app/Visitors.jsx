@@ -10,6 +10,7 @@ function Visitors() {
   const [contactNumber, setContactNumber] = useState("");
   const [age, setAge] = useState("");
   const [primaryData, setPrimaryData] = useState({});
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const fetchPrimary = async () => {
@@ -58,6 +59,7 @@ function Visitors() {
     // Check if required fields are filled
     if (newVisitorName.trim() === "" || newVisitorAddress.trim() === "" || invitedBy.trim() === "" || age === "") {
       console.error("Please fill in all required fields.");
+      setShowPopup(true);
       return; // Stop execution if any required field is empty
     }
 
