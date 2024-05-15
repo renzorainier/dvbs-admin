@@ -128,18 +128,20 @@ function Visitors() {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="fixed inset-0 bg-black opacity-50 " />{" "}
           {/* Background blur */}
-          <div className="bg-white rounded-lg p-5 shadow-md z-10">
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
             <p className="mb-2">
               Please fill in all required fields.
             </p>
             <button
-              className="bg-[#FFC100] hover:bg-[#FFC100] text-white font-bold py-2 px-4  rounded"
-              onClick={() => setShowPopup(false)}>
+              className="bg-[#FFC100] hover:bg-[#FFC100] text-white font-bold py-2 px-4 rounded"
+              onClick={() => setShowPopup(false)}
+            >
               OK
             </button>
           </div>
         </div>
       )}
+
 
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-5">
