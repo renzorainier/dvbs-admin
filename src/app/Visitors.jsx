@@ -7,6 +7,7 @@ function Visitors() {
   const [newVisitorAddress, setNewVisitorAddress] = useState("");
   const [invitedBy, setInvitedBy] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [age, setAge] = useState("");
   const [primaryData, setPrimaryData] = useState({});
 
   useEffect(() => {
@@ -22,8 +23,6 @@ function Visitors() {
 
     fetchPrimary();
   }, []);
-
-  const uploadTime = new Date().toLocaleString();
 
   const getCurrentDayLetter = () => {
     const days = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
@@ -45,10 +44,14 @@ function Visitors() {
       case "contactNumber":
         setContactNumber(event.target.value);
         break;
+      case "age":
+        setAge(event.target.value);
+        break;
       default:
         break;
     }
   };
+
   const addVisitor = async () => {
     if (newVisitorName.trim() !== "") {
       try {
@@ -69,6 +72,7 @@ function Visitors() {
           [`${paddedIndex}loc`]: newVisitorAddress,
           [`${paddedIndex}invitedBy`]: invitedBy,
           [`${paddedIndex}contactNumber`]: contactNumber,
+          [`${paddedIndex}age`]: age,
         };
 
         // Set the values for fields `${paddedIndex}A` to `${paddedIndex}E` with the current time for the current day
@@ -86,6 +90,7 @@ function Visitors() {
         setNewVisitorAddress("");
         setInvitedBy("");
         setContactNumber("");
+        setAge("");
         console.log("Visitor added successfully!");
 
         // Update local state with new visitor data
@@ -99,9 +104,6 @@ function Visitors() {
     }
   };
 
-
-
-
   return (
     <div className="flex flex-col items-center pb-5">
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
@@ -114,21 +116,21 @@ function Visitors() {
               type="text"
               value={newVisitorName}
               onChange={(e) => handleInputChange(e, "name")}
-              placeholder="Visitor Name"
+              placeholder="Name"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <input
               type="text"
               value={newVisitorAddress}
               onChange={(e) => handleInputChange(e, "loc")}
-              placeholder="Visitor Address"
+              placeholder="Address"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <input
               type="text"
               value={invitedBy}
               onChange={(e) => handleInputChange(e, "invitedBy")}
-              placeholder="Invited By"
+              placeholder="Invited by:"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <input
@@ -136,6 +138,13 @@ function Visitors() {
               value={contactNumber}
               onChange={(e) => handleInputChange(e, "contactNumber")}
               placeholder="Contact Number"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+            />
+            <input
+              type="text"
+              value={age}
+              onChange={(e) => handleInputChange(e, "age")}
+              placeholder="Age"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <button
