@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/solid';
+
 
 function Visitors() {
   const [newVisitorName, setNewVisitorName] = useState("");
@@ -147,7 +147,7 @@ function Visitors() {
               <div>
                 <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   {age ? `Age: ${age}` : "Select Age"}
-                  <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+                 
                 </Menu.Button>
               </div>
               <Transition
