@@ -1,43 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { doc, updateDoc, getDocs, collection } from "firebase/firestore";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 
 function Primary() {
   const uploadTime = new Date().toLocaleString();
-  const [primaryData, setPrimaryData] = useState([]);
+  const [primaryData, setPrimaryData] = useState({});
 
   useEffect(() => {
     const fetchPrimary = async () => {
-      const primarySnapshot = await getDocs(collection(db, "primary"));
-      const primaryData = primarySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setPrimaryData(primaryData);
+      const docRef = doc(db, "dvbs", "primary");
+      const primarySnapshot = await getDoc(docRef);
+      if (primarySnapshot.exists()) {
+        setPrimaryData(primarySnapshot.data());
+      } else {
+        console.error("No such document!");
+      }
     };
 
     fetchPrimary();
   }, []);
 
-  const handleClick = async (primaryId) => {
+  const handleClick = async (fieldName) => {
     try {
-      const docRef = doc(db, "primary", primaryId);
+      const docRef = doc(db, "dvbs", "primary");
+      const newValue = !primaryData[fieldName];
+      const timeField = fieldName + "Updated";
 
       await updateDoc(docRef, {
-        updatedAt: uploadTime,
-        active: !primaryData.find((p) => p.id === primaryId).active,
+        [fieldName]: newValue,
+        [timeField]: newValue ? uploadTime : "",
       });
 
-      setPrimaryData((prevData) =>
-        prevData.map((primary) =>
-          primary.id === primaryId
-            ? {
-                ...primary,
-                active: !primary.active,
-              }
-            : primary
-        )
-      );
+      setPrimaryData((prevData) => ({
+        ...prevData,
+        [fieldName]: newValue,
+      }));
     } catch (error) {
       console.error("Error updating Firebase: ", error);
     }
@@ -47,17 +44,19 @@ function Primary() {
     <div className="flex flex-col items-center">
       <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <div className="flex flex-col gap-2 w-full">
-          {primaryData.map((primary, index) => (
-            <button
-              key={index}
-              className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl
-                    ${primary.active ? "bg-[#A2C579]" : "bg-gray-200"}
-                  `}
-              onClick={() => handleClick(primary.id)}
-            >
-              {primary.id}
-            </button>
-          ))}
+          {Object.keys(primaryData).map((fieldName, index) =>
+            fieldName.endsWith("name") ? (
+              <button
+                key={index}
+                className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl
+                      ${primaryData[fieldName] ? "bg-[#A2C579]" : "bg-gray-200"}
+                    `}
+                onClick={() => handleClick(fieldName)}
+              >
+                {fieldName}
+              </button>
+            ) : null
+          )}
         </div>
       </div>
     </div>
