@@ -106,7 +106,7 @@ function Visitors() {
     }
   };
 
-  const ageOptions = [1, 2, 3, 4, 5, 6]
+  const ageOptions = [1, 2, 3, 4, 5]
 
   return (
     <div className="flex flex-col items-center pb-5">
@@ -115,7 +115,15 @@ function Visitors() {
           <h2 className="text-lg font-semibold text-gray-800 mb-2">
             Add New
           </h2>
-          <Menu as="div" className="relative inline-block text-left w-full">
+          <div className="space-y-4">
+            <input
+              type="text"
+              value={newVisitorName}
+              onChange={(e) => handleInputChange(e, "name")}
+              placeholder="Name"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+            />
+             <Menu as="div" className="relative inline-block text-left w-full">
               <div>
                 <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   {age ? `Age: ${age}` : "Age:"}
@@ -150,14 +158,6 @@ function Visitors() {
                 </Menu.Items>
               </Transition>
             </Menu>
-          <div className="space-y-4">
-            <input
-              type="text"
-              value={newVisitorName}
-              onChange={(e) => handleInputChange(e, "name")}
-              placeholder="Name"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
-            />
             <input
               type="text"
               value={newVisitorAddress}
