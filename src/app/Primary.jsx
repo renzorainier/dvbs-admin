@@ -56,6 +56,12 @@ function Primary() {
     return primaryData[fieldToCheck] ? "bg-[#A2C579]" : "bg-gray-200";
   };
 
+  // Extract and sort the "name" fields alphabetically
+  const sortedNames = Object.keys(primaryData)
+    .filter(fieldName => fieldName.endsWith("name"))
+    .map(fieldName => primaryData[fieldName])
+    .sort();
+
   // Filter the sortedNames based on the search query
   const filteredNames = sortedNames.filter(name =>
     name.toLowerCase().includes(searchQuery.toLowerCase())
