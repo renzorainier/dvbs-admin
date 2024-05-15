@@ -126,7 +126,7 @@ function Visitors() {
     <div className="flex flex-col items-center pb-5">
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black opacity-50 blur-sm" />{" "}
+          <div className="fixed inset-0 bg-black opacity-50 " />{" "}
           {/* Background blur */}
           <div className="bg-white rounded-lg p-5 shadow-md z-10">
             <p className="mb-2">
