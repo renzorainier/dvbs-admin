@@ -87,8 +87,6 @@ function Primary() {
 
   return (
     <div>
-
-
       <div className="flex flex-col items-center">
         <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
           <input
@@ -96,31 +94,47 @@ function Primary() {
             placeholder="Search names..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full p-2  border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
           />
           <div className="flex justify-between items-center mb-4"></div>
 
           <div className="flex flex-col gap-2 w-full">
-            {filteredNames.map((name, index) => {
-              const fieldName = Object.keys(primaryData).find(
-                (key) => primaryData[key] === name
-              );
-              return (
-                <button
-                  key={index}
-                  className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl ${getButtonColor(
-                    fieldName
-                  )}`}
-                  onClick={() => handleClick(fieldName)}>
-                  {name}
-                </button>
-              );
-            })}
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                    <th key={day}>{day}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredNames.map((name, index) => (
+                  <tr key={index}>
+                    <td>{name}</td>
+                    {['A', 'B', 'C', 'D', 'E', 'F', 'G'].map(dayLetter => {
+                      const fieldName = `${name.slice(0, 2)}${dayLetter}`;
+                      return (
+                        <td key={dayLetter}>
+                          <button
+                            className={`hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-xl ${getButtonColor(fieldName)}`}
+                            onClick={() => handleClick(fieldName)}
+                          >
+                            {primaryData[fieldName] ? "Present" : "Absent"}
+                          </button>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
   );
+
 }
 
 export default Primary;
