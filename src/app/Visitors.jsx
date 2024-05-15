@@ -49,7 +49,6 @@ function Visitors() {
         break;
     }
   };
-
   const addVisitor = async () => {
     if (newVisitorName.trim() !== "") {
       try {
@@ -61,19 +60,22 @@ function Visitors() {
           .map((key) => parseInt(key.match(/^\d+/)[0]));
         const newIndex = existingIndexes.length ? Math.max(...existingIndexes) + 1 : 1;
 
+        // Convert newIndex to a two-digit string
+        const paddedIndex = String(newIndex).padStart(2, '0');
+
         // Define the new field names
         const newFields = {
-          [`${newIndex}name`]: newVisitorName,
-          [`${newIndex}loc`]: newVisitorAddress,
-          [`${newIndex}invitedBy`]: invitedBy,
-          [`${newIndex}contactNumber`]: contactNumber,
+          [`${paddedIndex}name`]: newVisitorName,
+          [`${paddedIndex}loc`]: newVisitorAddress,
+          [`${paddedIndex}invitedBy`]: invitedBy,
+          [`${paddedIndex}contactNumber`]: contactNumber,
         };
 
-        // Set the values for fields `${newIndex}A` to `${newIndex}E` with the current time for the current day
+        // Set the values for fields `${paddedIndex}A` to `${paddedIndex}E` with the current time for the current day
         const currentDayLetter = getCurrentDayLetter();
         const currentTime = new Date().toLocaleString();
         ['A', 'B', 'C', 'D', 'E'].forEach((letter) => {
-          newFields[`${newIndex}${letter}`] = letter === currentDayLetter ? currentTime : "";
+          newFields[`${paddedIndex}${letter}`] = letter === currentDayLetter ? currentTime : "";
         });
 
         // Update the document with the new visitor data
@@ -99,12 +101,13 @@ function Visitors() {
 
 
 
+
   return (
     <div className="flex flex-col items-center pb-5">
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-5">
           <h2 className="text-lg font-semibold text-gray-800 mb-2">
-            Add New 
+            Add New
           </h2>
           <div className="space-y-4">
             <input
