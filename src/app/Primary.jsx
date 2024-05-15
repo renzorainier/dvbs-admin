@@ -46,6 +46,13 @@ function Primary() {
     }
   };
 
+  const getButtonColor = (fieldName) => {
+    const prefix = fieldName.slice(0, 2); // Get the two-digit prefix from the field name
+    const dayLetter = getCurrentDayLetter();
+    const fieldToCheck = `${prefix}${dayLetter}`;
+    return primaryData[fieldToCheck] ? "bg-[#A2C579]" : "bg-gray-200";
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
@@ -54,9 +61,7 @@ function Primary() {
             fieldName.endsWith("name") ? (
               <button
                 key={index}
-                className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl
-                      ${primaryData[fieldName] ? "bg-[#A2C579]" : "bg-gray-200"}
-                    `}
+                className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl ${getButtonColor(fieldName)}`}
                 onClick={() => handleClick(fieldName)}
               >
                 {primaryData[fieldName]}
