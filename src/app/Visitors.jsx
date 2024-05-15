@@ -55,56 +55,61 @@ function Visitors() {
   };
 
   const addVisitor = async () => {
-    if (newVisitorName.trim() !== "") {
-      try {
-        const docRef = doc(db, "dvbs", "primary");
+    // Check if required fields are filled
+    if (newVisitorName.trim() === "" || newVisitorAddress.trim() === "" || invitedBy.trim() === "" || age === "") {
+      console.error("Please fill in all required fields.");
+      return; // Stop execution if any required field is empty
+    }
 
-        // Find the highest index for existing visitors
-        const existingIndexes = Object.keys(primaryData)
-          .filter((key) => key.match(/^\d+/))
-          .map((key) => parseInt(key.match(/^\d+/)[0]));
-        const newIndex = existingIndexes.length ? Math.max(...existingIndexes) + 1 : 1;
+    try {
+      const docRef = doc(db, "dvbs", "primary");
 
-        // Convert newIndex to a two-digit string
-        const paddedIndex = String(newIndex).padStart(2, '0');
+      // Find the highest index for existing visitors
+      const existingIndexes = Object.keys(primaryData)
+        .filter((key) => key.match(/^\d+/))
+        .map((key) => parseInt(key.match(/^\d+/)[0]));
+      const newIndex = existingIndexes.length ? Math.max(...existingIndexes) + 1 : 1;
 
-        // Define the new field names
-        const newFields = {
-          [`${paddedIndex}name`]: newVisitorName,
-          [`${paddedIndex}loc`]: newVisitorAddress,
-          [`${paddedIndex}invitedBy`]: invitedBy,
-          [`${paddedIndex}contactNumber`]: contactNumber,
-          [`${paddedIndex}age`]: age,
-        };
+      // Convert newIndex to a two-digit string
+      const paddedIndex = String(newIndex).padStart(2, '0');
 
-        // Set the values for fields `${paddedIndex}A` to `${paddedIndex}E` with the current time for the current day
-        const currentDayLetter = getCurrentDayLetter();
-        const currentTime = new Date().toLocaleString();
-        ['A', 'B', 'C', 'D', 'E'].forEach((letter) => {
-          newFields[`${paddedIndex}${letter}`] = letter === currentDayLetter ? currentTime : "";
-        });
+      // Define the new field names
+      const newFields = {
+        [`${paddedIndex}name`]: newVisitorName,
+        [`${paddedIndex}loc`]: newVisitorAddress,
+        [`${paddedIndex}invitedBy`]: invitedBy,
+        [`${paddedIndex}contactNumber`]: contactNumber,
+        [`${paddedIndex}age`]: age,
+      };
 
-        // Update the document with the new visitor data
-        await updateDoc(docRef, newFields);
+      // Set the values for fields `${paddedIndex}A` to `${paddedIndex}E` with the current time for the current day
+      const currentDayLetter = getCurrentDayLetter();
+      const currentTime = new Date().toLocaleString();
+      ['A', 'B', 'C', 'D', 'E'].forEach((letter) => {
+        newFields[`${paddedIndex}${letter}`] = letter === currentDayLetter ? currentTime : "";
+      });
 
-        // Clear input fields
-        setNewVisitorName("");
-        setNewVisitorAddress("");
-        setInvitedBy("");
-        setContactNumber("");
-        setAge("");
-        console.log("Visitor added successfully!");
+      // Update the document with the new visitor data
+      await updateDoc(docRef, newFields);
 
-        // Update local state with new visitor data
-        setPrimaryData((prevData) => ({
-          ...prevData,
-          ...newFields,
-        }));
-      } catch (error) {
-        console.error("Error adding visitor: ", error);
-      }
+      // Clear input fields
+      setNewVisitorName("");
+      setNewVisitorAddress("");
+      setInvitedBy("");
+      setContactNumber("");
+      setAge("");
+      console.log("Visitor added successfully!");
+
+      // Update local state with new visitor data
+      setPrimaryData((prevData) => ({
+        ...prevData,
+        ...newFields,
+      }));
+    } catch (error) {
+      console.error("Error adding visitor: ", error);
     }
   };
+
 
   const ageOptions = [1, 2, 3, 4, 5]
 
