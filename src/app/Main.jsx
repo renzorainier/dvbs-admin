@@ -11,7 +11,7 @@ function Main() {
   return (
     <div>
       <Tab/>
-      <InitializeData/>
+      {/* <InitializeData/> */}
     </div>
   );
 }
