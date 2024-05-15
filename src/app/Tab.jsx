@@ -4,7 +4,8 @@ import { db } from "./firebase.js";
 import { Switch } from "@headlessui/react";
 import Fetch from "./Fetch.jsx";
 import Visitors from "./Visitors.jsx";
-import Members from "./Members.jsx";
+import <Primary></Primary> from "./<Primary></Primary>.jsx";
+
 
 function Tab() {
   const [state, setState] = useState(false);
@@ -59,7 +60,7 @@ function Tab() {
           </div>
         ) : (
           <div>
-            <Members />
+            <<Primary></Primary> />
           </div>
         )}
       </div>
