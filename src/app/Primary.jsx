@@ -55,21 +55,25 @@ function Primary() {
     return primaryData[fieldToCheck] ? "bg-[#A2C579]" : "bg-gray-200";
   };
 
+  // Extract and sort the "name" fields alphabetically
+  const sortedNames = Object.keys(primaryData)
+    .filter(fieldName => fieldName.endsWith("name"))
+    .map(fieldName => primaryData[fieldName])
+    .sort();
+
   return (
     <div className="flex flex-col items-center">
       <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <div className="flex flex-col gap-2 w-full">
-          {Object.keys(primaryData).map((fieldName, index) =>
-            fieldName.endsWith("name") ? (
-              <button
-                key={index}
-                className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl ${getButtonColor(fieldName)}`}
-                onClick={() => handleClick(fieldName)}
-              >
-                {primaryData[fieldName]}
-              </button>
-            ) : null
-          )}
+          {sortedNames.map((name, index) => (
+            <button
+              key={index}
+              className={`hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl ${getButtonColor(fieldName)}`}
+              onClick={() => handleClick(fieldName)}
+            >
+              {name}
+            </button>
+          ))}
         </div>
       </div>
     </div>
