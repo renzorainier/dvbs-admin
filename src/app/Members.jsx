@@ -7,10 +7,10 @@ function Members() {
   const [memberData, setMemberData] = useState([]);
   const [currentWeekNumber, setCurrentWeekNumber] = useState(getWeekNumber());
 
-  // Fetch member data on component mount
+
   useEffect(() => {
     const fetchMembers = async () => {
-      const membersSnapshot = await getDocs(collection(db, "memberRecords"));
+      const membersSnapshot = await getDocs(collection(db, "primary"));
       const memberData = membersSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -21,10 +21,9 @@ function Members() {
     fetchMembers();
   }, []);
 
-  // Handle click on a member button
   const handleClick = async (memberId) => {
     try {
-      const docRef = doc(db, "memberRecords", memberId);
+      const docRef = doc(db, "primary", memberId);
       const timeField = currentWeekNumber + "t";
 
       await updateDoc(docRef, {
@@ -32,7 +31,6 @@ function Members() {
         [timeField]: !memberData.find((m) => m.id === memberId)[currentWeekNumber] ? uploadTime : "",
       });
 
-      // Update local memberData for immediate visual feedback
       setMemberData((prevData) =>
         prevData.map((member) =>
           member.id === memberId
@@ -48,12 +46,12 @@ function Members() {
     }
   };
 
-  // Week Number Calculation
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentWeekNumber(getWeekNumber());
-    }, 60000); // Update every minute
-
+    }, 60000);
+    
     return () => clearInterval(intervalId);
   }, []);
 
