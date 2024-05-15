@@ -181,7 +181,7 @@ function Visitors() {
             />
 
             <button
-              className="bg-[#61A3BA] hover:bg-[#61A3BA] text-white font-bold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out"
+              className="bg-[#FFC100] hover:bg-[#FFC100] text-white font-bold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out"
               onClick={addVisitor}
             >
               <svg
@@ -198,7 +198,7 @@ function Visitors() {
                   d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                 />
               </svg>
-              Add 
+              Add
             </button>
           </div>
         </div>
