@@ -117,6 +117,14 @@ function Visitors() {
 
   return (
     <div className="flex flex-col items-center pb-5">
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-5 shadow-md">
+            <p>Please fill in all required fields.</p>
+            <button className="mt-4 bg-gray-200 text-gray-800 px-4 py-2 rounded-md" onClick={() => setShowPopup(false)}>OK</button>
+          </div>
+        </div>
+      )}
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-5">
           <h2 className="text-lg font-semibold text-gray-800 mb-2">
