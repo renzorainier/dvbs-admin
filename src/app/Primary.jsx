@@ -33,13 +33,15 @@ function Primary() {
       const dayLetter = getCurrentDayLetter();
       const fieldToUpdate = `${prefix}${dayLetter}`;
 
+      const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
+
       await updateDoc(docRef, {
-        [fieldToUpdate]: uploadTime,
+        [fieldToUpdate]: newValue,
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
-        [fieldToUpdate]: uploadTime,
+        [fieldToUpdate]: newValue,
       }));
     } catch (error) {
       console.error("Error updating Firebase: ", error);
