@@ -84,7 +84,6 @@ function Primary() {
   const filteredNames = sortedNames.filter((name) =>
     name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   return (
     <div>
       <div className="flex flex-col items-center">
@@ -111,17 +110,19 @@ function Primary() {
               <tbody>
                 {filteredNames.map((name, index) => (
                   <tr key={index}>
-                    <td>{name}</td>
+                    <td>
+                      <button
+                        className="hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-xl bg-transparent"
+                        onClick={() => setSearchQuery(name)}
+                      >
+                        {name}
+                      </button>
+                    </td>
                     {['A', 'B', 'C', 'D', 'E'].map(dayLetter => {
                       const fieldName = `${name.slice(0, 2)}${dayLetter}`;
                       return (
-                        <td key={dayLetter}>
-                          <button
-                            className={`hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-xl ${getButtonColor(fieldName)}`}
-                            onClick={() => handleClick(fieldName)}
-                          >
-                            {primaryData[fieldName] ? "Present" : "Absent"}
-                          </button>
+                        <td key={dayLetter} className={primaryData[fieldName] ? "bg-[#FFC100]" : "bg-gray-400"}>
+                          {primaryData[fieldName] ? "Present" : "Absent"}
                         </td>
                       );
                     })}
@@ -134,6 +135,7 @@ function Primary() {
       </div>
     </div>
   );
+
 
 }
 
