@@ -20,20 +20,26 @@ function Primary() {
     fetchPrimary();
   }, []);
 
+  const getCurrentDayLetter = () => {
+    const days = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    const dayIndex = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+    return days[dayIndex === 0 ? 6 : dayIndex - 1]; // Adjust to make A = Monday
+  };
+
   const handleClick = async (fieldName) => {
     try {
       const docRef = doc(db, "dvbs", "primary");
-      const newValue = !primaryData[fieldName];
-      const timeField = fieldName + "Updated";
+      const prefix = fieldName.slice(0, 2); // Get the two-digit prefix from the field name
+      const dayLetter = getCurrentDayLetter();
+      const fieldToUpdate = `${prefix}${dayLetter}`;
 
       await updateDoc(docRef, {
-        [fieldName]: newValue,
-        [timeField]: newValue ? uploadTime : "",
+        [fieldToUpdate]: uploadTime,
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
-        [fieldName]: newValue,
+        [fieldToUpdate]: uploadTime,
       }));
     } catch (error) {
       console.error("Error updating Firebase: ", error);
