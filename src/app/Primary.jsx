@@ -83,6 +83,27 @@ function Primary() {
 
   return (
     <div className="flex flex-col items-center">
+          <div>
+          <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-[#A2C579]"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632"
+                />
+              </svg>
+              <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
+              {countPresentForToday()}
+              </p>
+            </div>
+          </div>
       <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
@@ -92,9 +113,10 @@ function Primary() {
           className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
         />
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold">Total Present Today: {countPresentForToday()}</h2>
+         
           <h2 className="text-lg font-bold">Total Absent Today: {countAbsentForToday()}</h2>
         </div>
+
         <div className="flex flex-col gap-2 w-full">
           {filteredNames.map((name, index) => {
             const fieldName = Object.keys(primaryData).find(key => primaryData[key] === name);
