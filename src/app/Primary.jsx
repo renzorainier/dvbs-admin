@@ -143,7 +143,7 @@ function Primary() {
                 />
               </svg>
               <p className="text-gray-800 font-bold  ml-2 text-sm sm:text-base md:text-lg lg:text-xl">
-
+              {countPresentForToday() + countAbsentForToday()}
               </p>
             </div>
       </div>
