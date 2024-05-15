@@ -53,7 +53,7 @@ function Primary() {
     const prefix = fieldName.slice(0, 2); // Get the two-digit prefix from the field name
     const dayLetter = getCurrentDayLetter();
     const fieldToCheck = `${prefix}${dayLetter}`;
-    return primaryData[fieldToCheck] ? "bg-[#FFC100]" : "bg-gray-200";
+    return primaryData[fieldToCheck] ? "bg-[#FFC100]" : "bg-gray-400";
   };
 
   // Function to count the number of present students for the current day
