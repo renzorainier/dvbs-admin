@@ -47,6 +47,22 @@ function Visitors() {
     }
   };
 
+
+
+  useEffect(() => {
+    const fetchPrimary = async () => {
+      const docRef = doc(db, "dvbs", "primary");
+      const primarySnapshot = await getDoc(docRef);
+      if (primarySnapshot.exists()) {
+        setPrimaryData(primarySnapshot.data());
+      } else {
+        console.error("No such document!");
+      }
+    };
+
+    fetchPrimary();
+  }, []);
+  
   return (
     <div className="flex flex-col items-center pb-5">
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
