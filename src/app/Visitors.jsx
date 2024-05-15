@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
+
+const ages = Array.from({ length: 100 }, (_, i) => i + 1); // Array of ages from 1 to 100
 
 function Visitors() {
   const [newVisitorName, setNewVisitorName] = useState("");
   const [newVisitorAddress, setNewVisitorAddress] = useState("");
   const [invitedBy, setInvitedBy] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  const [age, setAge] = useState("");
+  const [age, setAge] = useState(ages[0]); // Default to first age
   const [primaryData, setPrimaryData] = useState({});
 
   useEffect(() => {
@@ -43,9 +47,6 @@ function Visitors() {
         break;
       case "contactNumber":
         setContactNumber(event.target.value);
-        break;
-      case "age":
-        setAge(event.target.value);
         break;
       default:
         break;
@@ -90,7 +91,7 @@ function Visitors() {
         setNewVisitorAddress("");
         setInvitedBy("");
         setContactNumber("");
-        setAge("");
+        setAge(ages[0]);
         console.log("Visitor added successfully!");
 
         // Update local state with new visitor data
@@ -109,28 +110,28 @@ function Visitors() {
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-5">
           <h2 className="text-lg font-semibold text-gray-800 mb-2">
-            Add New
+            Add New Visitor
           </h2>
           <div className="space-y-4">
             <input
               type="text"
               value={newVisitorName}
               onChange={(e) => handleInputChange(e, "name")}
-              placeholder="Name"
+              placeholder="Visitor Name"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <input
               type="text"
               value={newVisitorAddress}
               onChange={(e) => handleInputChange(e, "loc")}
-              placeholder="Address"
+              placeholder="Visitor Address"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <input
               type="text"
               value={invitedBy}
               onChange={(e) => handleInputChange(e, "invitedBy")}
-              placeholder="Invited by:"
+              placeholder="Invited By"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
             <input
@@ -140,13 +141,53 @@ function Visitors() {
               placeholder="Contact Number"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
-            <input
-              type="text"
-              value={age}
-              onChange={(e) => handleInputChange(e, "age")}
-              placeholder="Age"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
-            />
+            <Listbox value={age} onChange={setAge}>
+              <div className="relative">
+                <Listbox.Button className="relative w-full border border-gray-300 rounded-lg px-3 py-2 text-left focus:outline-none focus:border-[#61A3BA]">
+                  <span className="block truncate">{age}</span>
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                    <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
+                  </span>
+                </Listbox.Button>
+                <Transition
+                  as={Fragment}
+                  leave="transition ease-in duration-100"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <Listbox.Options className="absolute mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                    {ages.map((age, ageIdx) => (
+                      <Listbox.Option
+                        key={ageIdx}
+                        className={({ active }) =>
+                          `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
+                          cursor-default select-none relative py-2 pl-10 pr-4`
+                        }
+                        value={age}
+                      >
+                        {({ selected, active }) => (
+                          <>
+                            <span
+                              className={`${selected ? 'font-medium' : 'font-normal'} block truncate`}
+                            >
+                              {age}
+                            </span>
+                            {selected ? (
+                              <span
+                                className={`${active ? 'text-amber-600' : 'text-amber-600'}
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                              >
+                                <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                              </span>
+                            ) : null}
+                          </>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                  </Listbox.Options>
+                </Transition>
+              </div>
+            </Listbox>
             <button
               className="bg-[#61A3BA] hover:bg-[#61A3BA] text-white font-bold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out"
               onClick={addVisitor}
