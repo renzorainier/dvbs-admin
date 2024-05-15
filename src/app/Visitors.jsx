@@ -115,36 +115,7 @@ function Visitors() {
           <h2 className="text-lg font-semibold text-gray-800 mb-2">
             Add New Visitor
           </h2>
-          <div className="space-y-4">
-            <input
-              type="text"
-              value={newVisitorName}
-              onChange={(e) => handleInputChange(e, "name")}
-              placeholder="Name"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
-            />
-            <input
-              type="text"
-              value={newVisitorAddress}
-              onChange={(e) => handleInputChange(e, "loc")}
-              placeholder="Address"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
-            />
-            <input
-              type="text"
-              value={invitedBy}
-              onChange={(e) => handleInputChange(e, "invitedBy")}
-              placeholder="Invited by:"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
-            />
-            <input
-              type="text"
-              value={contactNumber}
-              onChange={(e) => handleInputChange(e, "contactNumber")}
-              placeholder="Contact Number"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
-            />
-            <Menu as="div" className="relative inline-block text-left w-full">
+          <Menu as="div" className="relative inline-block text-left w-full">
               <div>
                 <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   {age ? `Age: ${age}` : "Select Age"}
@@ -179,6 +150,36 @@ function Visitors() {
                 </Menu.Items>
               </Transition>
             </Menu>
+          <div className="space-y-4">
+            <input
+              type="text"
+              value={newVisitorName}
+              onChange={(e) => handleInputChange(e, "name")}
+              placeholder="Name"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+            />
+            <input
+              type="text"
+              value={newVisitorAddress}
+              onChange={(e) => handleInputChange(e, "loc")}
+              placeholder="Address"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+            />
+            <input
+              type="text"
+              value={invitedBy}
+              onChange={(e) => handleInputChange(e, "invitedBy")}
+              placeholder="Invited by:"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+            />
+            <input
+              type="text"
+              value={contactNumber}
+              onChange={(e) => handleInputChange(e, "contactNumber")}
+              placeholder="Contact Number"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+            />
+
             <button
               className="bg-[#61A3BA] hover:bg-[#61A3BA] text-white font-bold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out"
               onClick={addVisitor}
