@@ -6,6 +6,7 @@ import Upload from "./Upload";
 import Visitors from "./Visitors";
 import Tab from "./Tab";
 import Primary from "./Primary"
+import IniitializeData from "./InitializeData"
 
 
 function Main() {
@@ -15,6 +16,7 @@ function Main() {
       <Visitors/> */}
       {/* <Upload /> */}
       <Primary/>
+      <IniitializeData/>
 
     </div>
   );
