@@ -5,6 +5,7 @@ import Fetch from "./Fetch";
 import Upload from "./Upload";
 import Visitors from "./Visitors";
 import Tab from "./Tab";
+import Primary from "./Primary"
 
 
 function Main() {
@@ -13,7 +14,8 @@ function Main() {
       {/* <Fetch />
       <Visitors/> */}
       {/* <Upload /> */}
-      <Tab/>
+      <Primary/>
+
     </div>
   );
 }
