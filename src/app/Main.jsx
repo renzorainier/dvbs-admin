@@ -15,7 +15,7 @@ function Main() {
       {/* <Fetch />
       <Visitors/> */}
       {/* <Upload /> */}
-      <Primary/>
+      <Tab/>
       <IniitializeData/>
 
     </div>
