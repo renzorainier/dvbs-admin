@@ -53,7 +53,7 @@ function Primary() {
                     `}
                 onClick={() => handleClick(fieldName)}
               >
-                {fieldName}
+                {primaryData[fieldName]}
               </button>
             ) : null
           )}
