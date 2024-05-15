@@ -147,7 +147,7 @@ function Visitors() {
               <div>
                 <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   {age ? `Age: ${age}` : "Select Age"}
-                 
+
                 </Menu.Button>
               </div>
               <Transition
@@ -161,7 +161,7 @@ function Visitors() {
               >
                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
-                    {[...Array(100).keys()].map((age) => (
+                    {[...Array(50).keys()].map((age) => (
                       <Menu.Item key={age}>
                         {({ active }) => (
                           <button
