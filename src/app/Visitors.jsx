@@ -104,7 +104,7 @@ function Visitors() {
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-5">
           <h2 className="text-lg font-semibold text-gray-800 mb-2">
-            Add New Visitor
+            Add New 
           </h2>
           <div className="space-y-4">
             <input

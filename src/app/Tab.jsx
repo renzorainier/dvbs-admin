@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { doc, updateDoc, getDocs, collection } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Switch } from "@headlessui/react";
-import Fetch from "./Fetch.jsx";
 import Visitors from "./Visitors.jsx";
 import Primary from "./Primary.jsx";
 
