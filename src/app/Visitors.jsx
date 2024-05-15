@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { collection, doc, setDoc } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import { collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 
 function Visitors() {
@@ -7,6 +7,21 @@ function Visitors() {
   const [newVisitorAddress, setNewVisitorAddress] = useState("");
   const [invitedBy, setInvitedBy] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [primaryData, setPrimaryData] = useState({});
+
+  useEffect(() => {
+    const fetchPrimary = async () => {
+      const docRef = doc(db, "dvbs", "primary");
+      const primarySnapshot = await getDoc(docRef);
+      if (primarySnapshot.exists()) {
+        setPrimaryData(primarySnapshot.data());
+      } else {
+        console.error("No such document!");
+      }
+    };
+
+    fetchPrimary();
+  }, []);
 
   const handleInputChange = (event, field) => {
     switch (field) {
@@ -27,31 +42,45 @@ function Visitors() {
     }
   };
 
-  function Primary() {
-    const uploadTime = new Date().toLocaleString();
-    const [primaryData, setPrimaryData] = useState({});
-    const [searchQuery, setSearchQuery] = useState("");
-
-    useEffect(() => {
-      const fetchPrimary = async () => {
+  const addVisitor = async () => {
+    if (newVisitorName.trim() !== "") {
+      try {
         const docRef = doc(db, "dvbs", "primary");
-        const primarySnapshot = await getDoc(docRef);
-        if (primarySnapshot.exists()) {
-          setPrimaryData(primarySnapshot.data());
-        } else {
-          console.error("No such document!");
-        }
-      };
 
-      fetchPrimary();
-    }, []);
+        // Find the highest index for existing visitors
+        const existingIndexes = Object.keys(primaryData)
+          .filter((key) => key.match(/^\d+/))
+          .map((key) => parseInt(key.match(/^\d+/)[0]));
+        const newIndex = existingIndexes.length ? Math.max(...existingIndexes) + 1 : 1;
 
-    const getCurrentDayLetter = () => {
-      const days = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-      const dayIndex = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
-      return days[dayIndex === 0 ? 6 : dayIndex - 1]; // Adjust to make A = Monday
-    };
+        // Define the new field names
+        const newFields = {
+          [`${newIndex}name`]: newVisitorName,
+          [`${newIndex}address`]: newVisitorAddress,
+          [`${newIndex}invitedBy`]: invitedBy,
+          [`${newIndex}contactNumber`]: contactNumber,
+        };
 
+        // Update the document with the new visitor data
+        await updateDoc(docRef, newFields);
+
+        // Clear input fields
+        setNewVisitorName("");
+        setNewVisitorAddress("");
+        setInvitedBy("");
+        setContactNumber("");
+        console.log("Visitor added successfully!");
+
+        // Update local state with new visitor data
+        setPrimaryData((prevData) => ({
+          ...prevData,
+          ...newFields,
+        }));
+      } catch (error) {
+        console.error("Error adding visitor: ", error);
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col items-center pb-5">
