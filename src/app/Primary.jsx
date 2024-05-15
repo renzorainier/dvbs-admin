@@ -22,7 +22,7 @@ function Primary() {
   }, []);
 
   const getCurrentDayLetter = () => {
-    const days = ["A", "B", "C", "D", "E", "F", "G"];
+    const days = ["A", "B", "C", "D", "E"];
     const dayIndex = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
     return days[dayIndex === 0 ? 6 : dayIndex - 1]; // Adjust to make A = Monday
   };
@@ -103,7 +103,7 @@ function Primary() {
               <thead>
                 <tr>
                   <th>Name</th>
-                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map(day => (
                     <th key={day}>{day}</th>
                   ))}
                 </tr>
@@ -112,7 +112,7 @@ function Primary() {
                 {filteredNames.map((name, index) => (
                   <tr key={index}>
                     <td>{name}</td>
-                    {['A', 'B', 'C', 'D', 'E', 'F', 'G'].map(dayLetter => {
+                    {['A', 'B', 'C', 'D', 'E'].map(dayLetter => {
                       const fieldName = `${name.slice(0, 2)}${dayLetter}`;
                       return (
                         <td key={dayLetter}>
