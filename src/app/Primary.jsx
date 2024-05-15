@@ -62,6 +62,14 @@ function Primary() {
     return Object.keys(primaryData).filter(key => key.endsWith(dayLetter) && primaryData[key]).length;
   };
 
+  // Function to count the number of absent students for the current day
+  const countAbsentForToday = () => {
+    const dayLetter = getCurrentDayLetter();
+    const totalStudents = Object.keys(primaryData).filter(key => key.endsWith(dayLetter.slice(0, 2) + "name")).length;
+    const presentStudents = countPresentForToday();
+    return totalStudents - presentStudents;
+  };
+
   // Extract and sort the "name" fields alphabetically
   const sortedNames = Object.keys(primaryData)
     .filter(fieldName => fieldName.endsWith("name"))
@@ -85,6 +93,7 @@ function Primary() {
         />
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold">Total Present Today: {countPresentForToday()}</h2>
+          <h2 className="text-lg font-bold">Total Absent Today: {countAbsentForToday()}</h2>
         </div>
         <div className="flex flex-col gap-2 w-full">
           {filteredNames.map((name, index) => {
