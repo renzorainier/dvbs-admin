@@ -4,13 +4,13 @@ import { db } from "./firebase.js";
 import { Switch } from "@headlessui/react";
 import Fetch from "./Fetch.jsx";
 import Visitors from "./Visitors.jsx";
-import Members from "./Members.jsx";
+import Primary from "./Primary.jsx";
 
 function Tab() {
   const [state, setState] = useState(false);
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: "100vh" }}>
       <div className="flex justify-center pt-7 pb-4 items-center">
         <div className="w-full rounded-lg mx-auto">
           <Switch
@@ -28,9 +28,8 @@ function Tab() {
                 "0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -2px rgba(0,0,0,0.05)", // equivalent to shadow-xl
               ringWidth: "1px", // equivalent to ring-1
               ringColor: "rgba(0,0,0,0.2)", // equivalent to ring-black/5
-              outline: "none" // equivalent to focus:outline-none
-            }}
-          >
+              outline: "none", // equivalent to focus:outline-none
+            }}>
             <span
               aria-hidden="true"
               className={`${
@@ -38,17 +37,14 @@ function Tab() {
               } pointer-events-none inline-block h-[47px] w-[50%] transform rounded-lg bg-gray-100 shadow-lg ring-0 transition duration-200 ease-in-out`}
             />
 
-<div className="absolute top-1/2 transform -translate-y-1/2 font-bold text-4xl flex container">
-  <div className="column">
-    <div>Member</div>
-  </div>
-  <div className="column">
-    <div>Visitors</div>
-  </div>
-</div>
-
-
-
+            <div className="absolute top-1/2 transform -translate-y-1/2 font-bold text-4xl flex container">
+              <div className="column">
+                <div>Attendance</div>
+              </div>
+              <div className="column">
+                <div>Add</div>
+              </div>
+            </div>
           </Switch>
         </div>
       </div>
@@ -59,15 +55,12 @@ function Tab() {
           </div>
         ) : (
           <div>
-            <Members />
+            <Primary />
           </div>
         )}
       </div>
     </div>
   );
-
-
-
 }
 
 export default Tab;
