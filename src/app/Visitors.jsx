@@ -3,7 +3,6 @@ import { collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu, Transition } from '@headlessui/react';
 
-
 function Visitors() {
   const [newVisitorName, setNewVisitorName] = useState("");
   const [newVisitorAddress, setNewVisitorAddress] = useState("");
@@ -107,6 +106,8 @@ function Visitors() {
     }
   };
 
+  const ageOptions = Array.from({ length: 50 }, (_, i) => i + 1);
+
   return (
     <div className="flex flex-col items-center pb-5">
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
@@ -147,7 +148,6 @@ function Visitors() {
               <div>
                 <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   {age ? `Age: ${age}` : "Select Age"}
-
                 </Menu.Button>
               </div>
               <Transition
@@ -161,16 +161,16 @@ function Visitors() {
               >
                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
-                    {[...Array(50).keys()].map((age) => (
-                      <Menu.Item key={age}>
+                    {ageOptions.map((ageOption) => (
+                      <Menu.Item key={ageOption}>
                         {({ active }) => (
                           <button
-                            onClick={() => handleAgeSelect(age)}
+                            onClick={() => handleAgeSelect(ageOption)}
                             className={`${
                               active ? "bg-gray-100 text-gray-900" : "text-gray-700"
                             } block w-full text-left px-4 py-2 text-sm`}
                           >
-                            {age}
+                            {ageOption}
                           </button>
                         )}
                       </Menu.Item>
