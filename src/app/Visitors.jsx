@@ -23,6 +23,14 @@ function Visitors() {
     fetchPrimary();
   }, []);
 
+  const uploadTime = new Date().toLocaleString();
+
+  const getCurrentDayLetter = () => {
+    const days = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    const dayIndex = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+    return days[dayIndex === 0 ? 6 : dayIndex - 1]; // Adjust to make A = Monday
+  };
+
   const handleInputChange = (event, field) => {
     switch (field) {
       case "name":
@@ -59,6 +67,11 @@ function Visitors() {
           [`${newIndex}address`]: newVisitorAddress,
           [`${newIndex}invitedBy`]: invitedBy,
           [`${newIndex}contactNumber`]: contactNumber,
+          [`${newIndex}A`]: "",
+          [`${newIndex}B`]: "",
+          [`${newIndex}C`]: "",
+          [`${newIndex}D`]: "",
+          [`${newIndex}E`]: "",
         };
 
         // Update the document with the new visitor data
@@ -81,7 +94,6 @@ function Visitors() {
       }
     }
   };
-
   return (
     <div className="flex flex-col items-center pb-5">
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
