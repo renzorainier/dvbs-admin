@@ -53,7 +53,7 @@ function Primary() {
     const prefix = fieldName.slice(0, 2); // Get the two-digit prefix from the field name
     const dayLetter = getCurrentDayLetter();
     const fieldToCheck = `${prefix}${dayLetter}`;
-    return primaryData[fieldToCheck] ? "bg-[#A2C579]" : "bg-gray-200";
+    return primaryData[fieldToCheck] ? "bg-[#FFC100]" : "bg-gray-200";
   };
 
   // Extract and sort the "name" fields alphabetically
