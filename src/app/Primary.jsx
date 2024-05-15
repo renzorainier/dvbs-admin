@@ -86,8 +86,8 @@ function Primary() {
   );
 
   return (
-    <div className="flex flex-col items-center">
-      <div>
+    <div >
+      <div className= "flex flex-row items">
         <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -125,6 +125,8 @@ function Primary() {
           </p>
         </div>
       </div>
+      <div className = "flex flex-col items-center">
+
       <div className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
@@ -152,6 +154,7 @@ function Primary() {
             );
           })}
         </div>
+      </div>
       </div>
     </div>
   );
