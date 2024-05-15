@@ -133,7 +133,7 @@ function Visitors() {
               Please fill in all required fields.
             </p>
             <button
-              className="bg-[#61A3BA] hover:bg-[#4a8295] text-white font-bold py-2 px-4 rounded"
+              className="bg-[#FFC100] hover:bg-[#FFC100] text-white font-bold py-2 px-4  rounded"
               onClick={() => setShowPopup(false)}>
               OK
             </button>
