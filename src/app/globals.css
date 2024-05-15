@@ -2,28 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-    @apply  bg-gradient-to-br from-[#edb402] to-[#edb402];
-    font-family: 'Urbanist';
-    }
+  @apply bg-gradient-to-br from-[#edb402] to-[#edb402];
+  font-family: "Urbanist";
+}
 
+.w-70percent {
+  width: 70%;
+}
 
-    title {
-        font: x-large;
-      }
+title {
+  font: x-large;
+}
 
-    /* 67a852 */
+/* 67a852 */
 
-    /* 0a739a */
+/* 0a739a */
 
-    .container {
-        display: flex; /* Allow children to arrange in columns */
-        justify-content: center; /* Center the columns horizontally */
-      }
+.container {
+  display: flex; /* Allow children to arrange in columns */
+  justify-content: center; /* Center the columns horizontally */
+}
 
-      .column {
-        width: 50%; /* Each column takes up half the available space */
-        text-align: center; /* Center the labels within each column */
-      }
-
+.column {
+  width: 50%; /* Each column takes up half the available space */
+  text-align: center; /* Center the labels within each column */
+}

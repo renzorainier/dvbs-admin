@@ -152,7 +152,7 @@ function Visitors() {
               value={newVisitorName}
               onChange={(e) => handleInputChange(e, "name")}
               placeholder="Name"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#FFC100]"
             />
             <Menu as="div" className="relative inline-block text-left w-full">
               <div>
@@ -194,21 +194,21 @@ function Visitors() {
               value={newVisitorAddress}
               onChange={(e) => handleInputChange(e, "loc")}
               placeholder="Address"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#FFC100]"
             />
             <input
               type="text"
               value={invitedBy}
               onChange={(e) => handleInputChange(e, "invitedBy")}
               placeholder="Invited by:"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#FFC100]"
             />
             <input
               type="text"
               value={contactNumber}
               onChange={(e) => handleInputChange(e, "contactNumber")}
               placeholder="Contact Number"
-              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#FFC100]"
             />
 
             <button
