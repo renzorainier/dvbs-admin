@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
-import { Menu, Transition } from '@headlessui/react';
+import { Menu, Transition } from "@headlessui/react";
 
 function Visitors() {
   const [newVisitorName, setNewVisitorName] = useState("");
@@ -27,7 +27,7 @@ function Visitors() {
   }, []);
 
   const getCurrentDayLetter = () => {
-    const days = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    const days = ["A", "B", "C", "D", "E", "F", "G"];
     const dayIndex = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
     return days[dayIndex === 0 ? 6 : dayIndex - 1]; // Adjust to make A = Monday
   };
@@ -57,7 +57,12 @@ function Visitors() {
 
   const addVisitor = async () => {
     // Check if required fields are filled
-    if (newVisitorName.trim() === "" || newVisitorAddress.trim() === "" || invitedBy.trim() === "" || age === "") {
+    if (
+      newVisitorName.trim() === "" ||
+      newVisitorAddress.trim() === "" ||
+      invitedBy.trim() === "" ||
+      age === ""
+    ) {
       console.error("Please fill in all required fields.");
       setShowPopup(true);
       return; // Stop execution if any required field is empty
@@ -70,10 +75,12 @@ function Visitors() {
       const existingIndexes = Object.keys(primaryData)
         .filter((key) => key.match(/^\d+/))
         .map((key) => parseInt(key.match(/^\d+/)[0]));
-      const newIndex = existingIndexes.length ? Math.max(...existingIndexes) + 1 : 1;
+      const newIndex = existingIndexes.length
+        ? Math.max(...existingIndexes) + 1
+        : 1;
 
       // Convert newIndex to a two-digit string
-      const paddedIndex = String(newIndex).padStart(2, '0');
+      const paddedIndex = String(newIndex).padStart(2, "0");
 
       // Define the new field names
       const newFields = {
@@ -87,8 +94,9 @@ function Visitors() {
       // Set the values for fields `${paddedIndex}A` to `${paddedIndex}E` with the current time for the current day
       const currentDayLetter = getCurrentDayLetter();
       const currentTime = new Date().toLocaleString();
-      ['A', 'B', 'C', 'D', 'E'].forEach((letter) => {
-        newFields[`${paddedIndex}${letter}`] = letter === currentDayLetter ? currentTime : "";
+      ["A", "B", "C", "D", "E"].forEach((letter) => {
+        newFields[`${paddedIndex}${letter}`] =
+          letter === currentDayLetter ? currentTime : "";
       });
 
       // Update the document with the new visitor data
@@ -112,24 +120,30 @@ function Visitors() {
     }
   };
 
-
-  const ageOptions = [1, 2, 3, 4, 5]
+  const ageOptions = [1, 2, 3, 4, 5];
 
   return (
     <div className="flex flex-col items-center pb-5">
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-5 shadow-md">
-            <p>Please fill in all required fields.</p>
-            <button className="mt-4 bg-gray-200 text-gray-800 px-4 py-2 rounded-md" onClick={() => setShowPopup(false)}>OK</button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50 blur-sm" />{" "}
+          {/* Background blur */}
+          <div className="bg-white rounded-lg p-5 shadow-md z-10">
+            <p className="mb-2">
+              Please fill in all required fields.
+            </p>
+            <button
+              className="bg-[#61A3BA] hover:bg-[#4a8295] text-white font-bold py-2 px-4 rounded"
+              onClick={() => setShowPopup(false)}>
+              OK
+            </button>
           </div>
         </div>
       )}
+
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-5">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">
-            Add New
-          </h2>
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">Add New</h2>
           <div className="space-y-4">
             <input
               type="text"
@@ -138,7 +152,7 @@ function Visitors() {
               placeholder="Name"
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-[#61A3BA]"
             />
-             <Menu as="div" className="relative inline-block text-left w-full">
+            <Menu as="div" className="relative inline-block text-left w-full">
               <div>
                 <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   {age ? `Age: ${age}` : "Age:"}
@@ -151,8 +165,7 @@ function Visitors() {
                 enterTo="transform opacity-100 scale-100"
                 leave="transition ease-in duration-75"
                 leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
+                leaveTo="transform opacity-0 scale-95">
                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
                     {ageOptions.map((ageOption) => (
@@ -161,9 +174,10 @@ function Visitors() {
                           <button
                             onClick={() => handleAgeSelect(ageOption)}
                             className={`${
-                              active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                            } block w-full text-left px-4 py-2 text-sm`}
-                          >
+                              active
+                                ? "bg-gray-100 text-gray-900"
+                                : "text-gray-700"
+                            } block w-full text-left px-4 py-2 text-sm`}>
                             {ageOption}
                           </button>
                         )}
@@ -197,15 +211,13 @@ function Visitors() {
 
             <button
               className="bg-[#FFC100] hover:bg-[#FFC100] text-white font-bold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out"
-              onClick={addVisitor}
-            >
+              onClick={addVisitor}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 mr-2"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+                stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
