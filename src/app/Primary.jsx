@@ -9,12 +9,16 @@ function Primary() {
 
   useEffect(() => {
     const fetchPrimary = async () => {
-      const docRef = doc(db, "dvbs", "primary");
-      const primarySnapshot = await getDoc(docRef);
-      if (primarySnapshot.exists()) {
-        setPrimaryData(primarySnapshot.data());
-      } else {
-        console.error("No such document!");
+      try {
+        const docRef = doc(db, "dvbs", "primary");
+        const primarySnapshot = await getDoc(docRef);
+        if (primarySnapshot.exists()) {
+          setPrimaryData(primarySnapshot.data());
+        } else {
+          console.error("No such document!");
+        }
+      } catch (error) {
+        console.error("Error fetching Firebase data: ", error);
       }
     };
 
@@ -102,26 +106,33 @@ function Primary() {
               <thead>
                 <tr>
                   <th>Name</th>
-                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map(day => (
-                    <th key={day}>{day}</th>
-                  ))}
+                  {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map(
+                    (day) => (
+                      <th key={day}>{day}</th>
+                    )
+                  )}
                 </tr>
               </thead>
               <tbody>
-                {filteredNames.map((name, index) => (
+                {sortedNames.map((name, index) => (
                   <tr key={index}>
                     <td>
                       <button
                         className="hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-xl bg-transparent"
-                        onClick={() => setSearchQuery(name)}
-                      >
+                        onClick={() => setSearchQuery(name)}>
                         {name}
                       </button>
                     </td>
-                    {['A', 'B', 'C', 'D', 'E'].map(dayLetter => {
+                    {["A", "B", "C", "D", "E"].map((dayLetter) => {
                       const fieldName = `${name.slice(0, 2)}${dayLetter}`;
                       return (
-                        <td key={dayLetter} className={primaryData[fieldName] ? "bg-[#FFC100]" : "bg-gray-400"}>
+                        <td
+                          key={dayLetter}
+                          className={
+                            primaryData[fieldName]
+                              ? "bg-[#FFC100]"
+                              : "bg-gray-400"
+                          }>
                           {primaryData[fieldName] ? "Present" : "Absent"}
                         </td>
                       );
@@ -135,18 +146,9 @@ function Primary() {
       </div>
     </div>
   );
-
-
 }
 
 export default Primary;
-
-
-
-
-
-
-
 
 // <div className="flex justify-center mb-5">
 // <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
