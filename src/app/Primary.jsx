@@ -11,7 +11,7 @@ const configurations = [
   {
     name: "Config 2",
     colors: { present: "bg-[#34D399]", absent: "bg-gray-500" },
-    dbPath: "dvbs/secondary",
+    dbPath: "dvbs/middlers",
   },
 ];
 
