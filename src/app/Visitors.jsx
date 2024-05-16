@@ -14,7 +14,7 @@ function Visitors() {
 
   useEffect(() => {
     const fetchPrimary = async () => {
-      const docRef = doc(db, "dvbs", "middlers");
+      const docRef = doc(db, "dvbs", "youth");
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
         setPrimaryData(primarySnapshot.data());
@@ -69,7 +69,7 @@ function Visitors() {
     }
 
     try {
-      const docRef = doc(db, "dvbs", "primary");
+      const docRef = doc(db, "dvbs", "youth");
 
       // Find the highest index for existing visitors
       const existingIndexes = Object.keys(primaryData)
