@@ -13,6 +13,11 @@ const configurations = [
     colors: { present: "bg-[#34D399]", absent: "bg-gray-500" },
     dbPath: "dvbs/middlers",
   },
+  {
+    name: "Config 3",
+    colors: { present: "bg-[#34e399]", absent: "bg-gray-500" },
+    dbPath: "dvbs/juniors",
+  },
 ];
 
 function Primary() {
