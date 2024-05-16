@@ -15,8 +15,13 @@ const configurations = [
   },
   {
     name: "Config 3",
-    colors: { present: "bg-[#34e399]", absent: "bg-gray-500" },
+    colors: { present: "bg-[#14e339]", absent: "bg-gray-500" },
     dbPath: "dvbs/juniors",
+  },
+  {
+    name: "Config 4",
+    colors: { present: "bg-[#00e0d9]", absent: "bg-gray-500" },
+    dbPath: "dvbs/youth",
   },
 ];
 
