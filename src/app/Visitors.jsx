@@ -14,7 +14,7 @@ function Visitors() {
 
   useEffect(() => {
     const fetchPrimary = async () => {
-      const docRef = doc(db, "dvbs", "primary");
+      const docRef = doc(db, "dvbs", "middlers");
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
         setPrimaryData(primarySnapshot.data());
