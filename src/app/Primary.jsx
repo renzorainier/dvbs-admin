@@ -2,40 +2,15 @@ import React, { useState, useEffect } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 
-const configurations = [
-  {
-    name: "Config 1",
-    colors: { present: "bg-[#FFC100]", absent: "bg-gray-400" },
-    dbPath: "dvbs/primary",
-  },
-  {
-    name: "Config 2",
-    colors: { present: "bg-[#34D399]", absent: "bg-gray-500" },
-    dbPath: "dvbs/middlers",
-  },
-  {
-    name: "Config 3",
-    colors: { present: "bg-[#14e339]", absent: "bg-gray-500" },
-    dbPath: "dvbs/juniors",
-  },
-  {
-    name: "Config 4",
-    colors: { present: "bg-[#00e0d9]", absent: "bg-gray-500" },
-    dbPath: "dvbs/youth",
-  },
-];
-
-function Primary() {
+function Primary({ config }) {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
-  const currentConfig = configurations[currentConfigIndex];
 
   const uploadTime = new Date().toLocaleString();
 
   useEffect(() => {
     const fetchPrimary = async () => {
-      const docRef = doc(db, currentConfig.dbPath.split("/")[0], currentConfig.dbPath.split("/")[1]);
+      const docRef = doc(db, config.dbPath.split("/")[0], config.dbPath.split("/")[1]);
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
         setPrimaryData(primarySnapshot.data());
@@ -45,18 +20,18 @@ function Primary() {
     };
 
     fetchPrimary();
-  }, [currentConfig.dbPath]);
+  }, [config.dbPath]);
 
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E"];
-    const dayIndex = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
-    return days[dayIndex === 0 ? 6 : dayIndex - 1]; // Adjust to make A = Monday
+    const dayIndex = new Date().getDay();
+    return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
   const handleClick = async (fieldName) => {
     try {
-      const docRef = doc(db, currentConfig.dbPath.split("/")[0], currentConfig.dbPath.split("/")[1]);
-      const prefix = fieldName.slice(0, 2); // Get the two-digit prefix from the field name
+      const docRef = doc(db, config.dbPath.split("/")[0], config.dbPath.split("/")[1]);
+      const prefix = fieldName.slice(0, 2);
       const dayLetter = getCurrentDayLetter();
       const fieldToUpdate = `${prefix}${dayLetter}`;
 
@@ -76,10 +51,10 @@ function Primary() {
   };
 
   const getButtonColor = (fieldName) => {
-    const prefix = fieldName.slice(0, 2); // Get the two-digit prefix from the field name
+    const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
     const fieldToCheck = `${prefix}${dayLetter}`;
-    return primaryData[fieldToCheck] ? currentConfig.colors.present : currentConfig.colors.absent;
+    return primaryData[fieldToCheck] ? config.colors.present : config.colors.absent;
   };
 
   const countPresentForToday = () => {
@@ -107,18 +82,8 @@ function Primary() {
     name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const toggleConfig = () => {
-    setCurrentConfigIndex((prevIndex) => (prevIndex + 1) % configurations.length);
-  };
-
   return (
     <div className="flex flex-col items-center">
-      <button
-        onClick={toggleConfig}
-        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-      >
-        Toggle Configuration
-      </button>
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
@@ -151,8 +116,8 @@ function Primary() {
                         key={dayLetter}
                         className={`w-4 h-9 rounded-lg ${
                           primaryData[fieldName]
-                            ? currentConfig.colors.present
-                            : currentConfig.colors.absent
+                            ? config.colors.present
+                            : config.colors.absent
                         } mr-1`}
                       ></div>
                     );
@@ -168,6 +133,7 @@ function Primary() {
 }
 
 export default Primary;
+
 
 
 
