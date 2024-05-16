@@ -2,14 +2,30 @@ import React, { useState, useEffect } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 
+const configurations = [
+  {
+    name: "Config 1",
+    colors: { present: "bg-[#FFC100]", absent: "bg-gray-400" },
+    dbPath: "dvbs/primary",
+  },
+  {
+    name: "Config 2",
+    colors: { present: "bg-[#34D399]", absent: "bg-gray-500" },
+    dbPath: "dvbs/secondary",
+  },
+];
+
 function Primary() {
-  const uploadTime = new Date().toLocaleString();
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
+  const currentConfig = configurations[currentConfigIndex];
+
+  const uploadTime = new Date().toLocaleString();
 
   useEffect(() => {
     const fetchPrimary = async () => {
-      const docRef = doc(db, "dvbs", "primary");
+      const docRef = doc(db, currentConfig.dbPath.split("/")[0], currentConfig.dbPath.split("/")[1]);
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
         setPrimaryData(primarySnapshot.data());
@@ -19,7 +35,7 @@ function Primary() {
     };
 
     fetchPrimary();
-  }, []);
+  }, [currentConfig.dbPath]);
 
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E"];
@@ -29,7 +45,7 @@ function Primary() {
 
   const handleClick = async (fieldName) => {
     try {
-      const docRef = doc(db, "dvbs", "primary");
+      const docRef = doc(db, currentConfig.dbPath.split("/")[0], currentConfig.dbPath.split("/")[1]);
       const prefix = fieldName.slice(0, 2); // Get the two-digit prefix from the field name
       const dayLetter = getCurrentDayLetter();
       const fieldToUpdate = `${prefix}${dayLetter}`;
@@ -53,10 +69,9 @@ function Primary() {
     const prefix = fieldName.slice(0, 2); // Get the two-digit prefix from the field name
     const dayLetter = getCurrentDayLetter();
     const fieldToCheck = `${prefix}${dayLetter}`;
-    return primaryData[fieldToCheck] ? "bg-[#FFC100]" : "bg-gray-400";
+    return primaryData[fieldToCheck] ? currentConfig.colors.present : currentConfig.colors.absent;
   };
 
-  // Function to count the number of present students for the current day
   const countPresentForToday = () => {
     const dayLetter = getCurrentDayLetter();
     return Object.keys(primaryData).filter(
@@ -64,7 +79,6 @@ function Primary() {
     ).length;
   };
 
-  // Function to count the number of absent students for the current day
   const countAbsentForToday = () => {
     const dayLetter = getCurrentDayLetter();
     const totalStudents = Object.keys(primaryData).filter((key) =>
@@ -74,21 +88,27 @@ function Primary() {
     return totalStudents - presentCount;
   };
 
-  // Extract and sort the "name" fields alphabetically
   const sortedNames = Object.keys(primaryData)
     .filter((fieldName) => fieldName.endsWith("name"))
     .map((fieldName) => primaryData[fieldName])
     .sort();
 
-  // Filter the sortedNames based on the search query
   const filteredNames = sortedNames.filter((name) =>
     name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const toggleConfig = () => {
+    setCurrentConfigIndex((prevIndex) => (prevIndex + 1) % configurations.length);
+  };
+
   return (
     <div className="flex flex-col items-center">
-
-
+      <button
+        onClick={toggleConfig}
+        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+      >
+        Toggle Configuration
+      </button>
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
@@ -97,7 +117,6 @@ function Primary() {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
         />
-
         <div className="flex flex-col gap-4">
           {filteredNames.map((name, index) => {
             const studentIndex = Object.keys(primaryData).find(
@@ -105,12 +124,13 @@ function Primary() {
             );
 
             return (
-              <div key={index} className="flex items-center ">
+              <div key={index} className="flex items-center">
                 <button
                   className={`w-70percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
                     studentIndex
                   )}`}
-                  onClick={() => handleClick(studentIndex)}>
+                  onClick={() => handleClick(studentIndex)}
+                >
                   {name}
                 </button>
                 <div className="flex flex-row ml-1">
@@ -121,9 +141,10 @@ function Primary() {
                         key={dayLetter}
                         className={`w-4 h-9 rounded-lg ${
                           primaryData[fieldName]
-                            ? "bg-[#FFC100]"
-                            : "bg-gray-400"
-                        } mr-1`}></div>
+                            ? currentConfig.colors.present
+                            : currentConfig.colors.absent
+                        } mr-1`}
+                      ></div>
                     );
                   })}
                 </div>
@@ -137,7 +158,6 @@ function Primary() {
 }
 
 export default Primary;
-
 
 
 
