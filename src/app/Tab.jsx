@@ -1,42 +1,57 @@
-import React, { useState } from "react";
-import { Switch } from "@headlessui/react";
+import React, { useState, Fragment } from "react";
+import { Menu, Transition, Switch } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Visitors from "./Visitors.jsx";
 import Primary from "./Primary.jsx";
 
-const configurations = [
-  {
-    name: "Config 1",
-    colors: { present: "bg-[#FFC100]", absent: "bg-gray-400" },
-    dbPath: "dvbs/primary",
-  },
-  {
-    name: "Config 2",
-    colors: { present: "bg-[#34D399]", absent: "bg-gray-500" },
-    dbPath: "dvbs/middlers",
-  },
-  {
-    name: "Config 3",
-    colors: { present: "bg-[#14e339]", absent: "bg-gray-500" },
-    dbPath: "dvbs/juniors",
-  },
-  {
-    name: "Config 4",
-    colors: { present: "bg-[#00e0d9]", absent: "bg-gray-500" },
-    dbPath: "dvbs/youth",
-  },
-];
-
-function Tab() {
+function Tab({ configurations, currentConfigIndex, setCurrentConfigIndex }) {
   const [state, setState] = useState(false);
-  const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
+  // const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
   const currentConfig = configurations[currentConfigIndex];
-
-  const toggleConfig = () => {
-    setCurrentConfigIndex((prevIndex) => (prevIndex + 1) % configurations.length);
-  };
 
   return (
     <div style={{ height: "100vh" }}>
+      <Menu
+        as="div"
+        className="relative inline-block justify-center text-center mt-4">
+        <div>
+          <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+            <h2 className="text-4xl font-bold">
+              {configurations[currentConfigIndex].name}
+            </h2>
+            <ChevronDownIcon
+              className="ml-2 -mr-1 h-10 w-10"
+              aria-hidden="true"
+            />
+          </Menu.Button>
+        </div>
+
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-200"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95">
+          <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
+            {configurations.map((config, index) => (
+              <Menu.Item key={index}>
+                {({ active }) => (
+                  <button
+                    onClick={() => setCurrentConfigIndex(index)}
+                    className={`${
+                      active ? "bg-blue-500 text-white" : "text-gray-900"
+                    } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
+                    {config.name}
+                  </button>
+                )}
+              </Menu.Item>
+            ))}
+          </Menu.Items>
+        </Transition>
+      </Menu>
+
       <div className="flex justify-center pt-7 pb-4 items-center">
         <div className="w-full rounded-lg mx-auto">
           <Switch
@@ -49,7 +64,8 @@ function Tab() {
               borderBottomWidth: "1px",
               borderColor: "#E5E7EB",
               borderRadius: "0.5rem",
-              boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -2px rgba(0,0,0,0.05)",
+              boxShadow:
+                "0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -2px rgba(0,0,0,0.05)",
               ringWidth: "1px",
               ringColor: "rgba(0,0,0,0.2)",
               outline: "none",
@@ -71,17 +87,20 @@ function Tab() {
           </Switch>
         </div>
       </div>
-      <button
-        onClick={toggleConfig}
-        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-      >
-        Toggle Configuration
-      </button>
+
+      <div className="flex justify-center"></div>
+
       <div>
         {state ? (
-          <Visitors />
+          <Visitors config={currentConfig}
+          currentConfigIndex={currentConfigIndex}
+          setCurrentConfigIndex={setCurrentConfigIndex}/>
         ) : (
-          <Primary config={currentConfig} />
+          <Primary
+            config={currentConfig}
+            currentConfigIndex={currentConfigIndex}
+            setCurrentConfigIndex={setCurrentConfigIndex}
+          />
         )}
       </div>
     </div>
@@ -89,7 +108,6 @@ function Tab() {
 }
 
 export default Tab;
-
 
 // import React, { useState, useEffect } from "react";
 // import { doc, updateDoc, getDocs, collection } from "firebase/firestore";

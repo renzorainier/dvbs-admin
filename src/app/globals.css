@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --present-color: #FFC100; /* Default value */
+}
+
+
 body {
-  @apply bg-gradient-to-br from-[#edb402] to-[#edb402];
   font-family: "Urbanist";
 }
 
@@ -27,4 +31,14 @@ title {
 .column {
   width: 50%; /* Each column takes up half the available space */
   text-align: center; /* Center the labels within each column */
+}
+
+
+
+.attendance-chart-container {
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
