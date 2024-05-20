@@ -20,9 +20,22 @@ function StudentOutTime() {
         console.log("Fetched Student Data:", studentData); // Log the fetched data
 
         const currentDayLetter = getCurrentDayLetter();
-        const presentStudents = studentData.filter((student) =>
-          Object.keys(student).some((key) => key.endsWith(currentDayLetter) && student[key])
-        );
+        const presentStudents = studentData.map((group) => {
+          const groupStudents = [];
+          for (let i = 1; i <= 2; i++) { // Assuming you have up to "02" prefix
+            const prefix = `0${i}`;
+            const inTimeField = `${prefix}${currentDayLetter}`;
+            if (group[inTimeField]) {
+              groupStudents.push({
+                id: group.id,
+                prefix,
+                inTimeField,
+                name: group[`${prefix}name`],
+              });
+            }
+          }
+          return groupStudents;
+        }).flat();
         setStudents(presentStudents);
         setLoading(false);
       } catch (error) {
@@ -40,11 +53,11 @@ function StudentOutTime() {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const handleClick = async (studentId, inTimeFieldName) => {
+  const handleClick = async (groupId, prefix, inTimeField) => {
     const currentDayLetter = getCurrentDayLetter();
-    const outTimeFieldName = inTimeFieldName.replace(currentDayLetter, currentDayLetter + "out");
+    const outTimeFieldName = inTimeField.replace(currentDayLetter, currentDayLetter + "out");
 
-    const docRef = doc(db, "dvbs", studentId);
+    const docRef = doc(db, "dvbs", groupId);
     const newValue = uploadTime;
 
     try {
@@ -54,7 +67,7 @@ function StudentOutTime() {
 
       setStudents((prevStudents) =>
         prevStudents.map((student) =>
-          student.id === studentId
+          student.id === groupId && student.prefix === prefix
             ? { ...student, [outTimeFieldName]: newValue }
             : student
         )
@@ -68,22 +81,16 @@ function StudentOutTime() {
     <div className="flex flex-col items-center">
       <h1 className="text-xl font-bold mb-4">Present Students</h1>
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-        {students.map((student) => {
-          const currentDayLetter = getCurrentDayLetter();
-          const studentField = Object.keys(student).find((key) => key.endsWith(currentDayLetter));
-          const studentName = student[`${studentField.slice(0, 2)}name`]; // Get the student's name
-
-          return (
-            <div key={student.id} className="flex items-center mb-4">
-              <button
-                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
-                onClick={() => handleClick(student.id, studentField)}
-              >
-                {studentName} {/* Display the student's name */}
-              </button>
-            </div>
-          );
-        })}
+        {students.map((student) => (
+          <div key={`${student.id}-${student.prefix}`} className="flex items-center mb-4">
+            <button
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+              onClick={() => handleClick(student.id, student.prefix, student.inTimeField)}
+            >
+              {student.name} {/* Display the student's name */}
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
