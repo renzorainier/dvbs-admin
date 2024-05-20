@@ -197,7 +197,7 @@ function StudentOutTime() {
                     <button
                       className={`${
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                      } block px-4 py-2 text -2xl font-semibold text-left`}
+                      } block px-4 py-2 text-2xl font-semibold text-left`}
                       onClick={() => handleLocationChange(location)}>
                       {location}
                     </button>
@@ -209,6 +209,14 @@ function StudentOutTime() {
         </Transition>
       </Menu>
 
+      <div className="flex items-center justify-between mb-4">
+          <div>
+            <span className="font-bold">Marked:</span> {markedCount}
+          </div>
+          <div>
+            <span className="font-bold">Not Marked:</span> {notMarkedCount}
+          </div>
+        </div>
       <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
@@ -217,14 +225,7 @@ function StudentOutTime() {
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <span className="font-bold">Marked:</span> {markedCount}
-          </div>
-          <div>
-            <span className="font-bold">Not Marked:</span> {notMarkedCount}
-          </div>
-        </div>
+
         {filteredStudents.map((student) => (
           <div
             key={`${student.id}-${student.prefix}`}
