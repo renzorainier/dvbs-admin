@@ -144,11 +144,6 @@ function StudentOutTime() {
     }
   };
 
-  const markedCount = filteredStudents.filter(
-    (student) => student.outTime
-  ).length;
-  const unmarkedCount = filteredStudents.length - markedCount;
-
   const filteredStudents = students
     .filter((student) =>
       student.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -209,6 +204,7 @@ function StudentOutTime() {
           </Menu.Items>
         </Transition>
       </Menu>
+
       <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
@@ -217,14 +213,6 @@ function StudentOutTime() {
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <div className="flex justify-between mb-4">
-          <div>
-            <span className="font-bold">{markedCount}</span> marked
-          </div>
-          <div>
-            <span className="font-bold">{unmarkedCount}</span> unmarked
-          </div>
-        </div>
         {filteredStudents.map((student) => (
           <div
             key={`${student.id}-${student.prefix}`}
@@ -248,9 +236,8 @@ function StudentOutTime() {
             </button>
             <div
               className="ml-4 h-10 p-2 rounded-lg"
-              style={{
-                backgroundColor: getBackgroundColor(student.prefix),
-              }}></div>
+              style={{ backgroundColor: getBackgroundColor(student.id) }}>
+            </div>
           </div>
         ))}
       </div>
@@ -273,7 +260,7 @@ function StudentOutTime() {
                   )
                 }>
                 Yes
-              </button>
+                </button>
               <button
                 className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
                 onClick={() => setShowConfirmation(false)}>
