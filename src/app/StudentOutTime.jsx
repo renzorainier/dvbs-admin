@@ -37,19 +37,22 @@ function StudentOutTime() {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const handleClick = async (studentId, fieldName) => {
+  const handleClick = async (studentId, inTimeFieldName) => {
+    const currentDayLetter = getCurrentDayLetter();
+    const outTimeFieldName = inTimeFieldName.replace(currentDayLetter, currentDayLetter + "out");
+
     const docRef = doc(db, "dvbs", studentId);
     const newValue = uploadTime;
 
     try {
       await updateDoc(docRef, {
-        [fieldName]: newValue,
+        [outTimeFieldName]: newValue,
       });
 
       setStudents((prevStudents) =>
         prevStudents.map((student) =>
           student.id === studentId
-            ? { ...student, [fieldName]: newValue }
+            ? { ...student, [outTimeFieldName]: newValue }
             : student
         )
       );
@@ -58,9 +61,6 @@ function StudentOutTime() {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="flex flex-col items-center">
