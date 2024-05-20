@@ -8,6 +8,7 @@ function StudentOutTime() {
   const [students, setStudents] = useState([]);
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [studentToMarkOut, setStudentToMarkOut] = useState(null);
@@ -50,6 +51,9 @@ function StudentOutTime() {
             return groupStudents;
           })
           .flat();
+
+        // Sort students alphabetically by name
+        presentStudents.sort((a, b) => a.name.localeCompare(b.name));
 
         const uniqueLocations = [
           ...new Set(presentStudents.map((student) => student.location)),
@@ -121,17 +125,23 @@ function StudentOutTime() {
     setSelectedLocation(location);
   };
 
-  const filteredStudents = selectedLocation
-    ? students.filter((student) => student.location === selectedLocation)
-    : students;
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredStudents = students
+    .filter((student) =>
+      student.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .filter((student) =>
+      selectedLocation ? student.location === selectedLocation : true
+    );
 
   return (
-    <div >
-         <Menu
-        as="div"
-        className="relative inline-block  mt-4">
+    <div>
+      <Menu as="div" className="relative inline-block mt-4">
         <div>
-          <Menu.Button className="inline-flex  rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+          <Menu.Button className="inline-flex rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
             <h2 className="text-4xl font-bold">
               {selectedLocation || "All Locations"}
             </h2>
@@ -156,7 +166,7 @@ function StudentOutTime() {
                   <button
                     className={`${
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                    } block px-4 py-2 text-2xl font-semibold  text-left`}
+                    } block px-4 py-2 text-2xl font-semibold text-left`}
                     onClick={() => handleLocationChange("")}>
                     All Locations
                   </button>
@@ -168,7 +178,7 @@ function StudentOutTime() {
                     <button
                       className={`${
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                      } block px-4 py-2 text-2xl font-semibold  text-left`}
+                      } block px-4 py-2 text-2xl font-semibold text-left`}
                       onClick={() => handleLocationChange(location)}>
                       {location}
                     </button>
@@ -180,13 +190,20 @@ function StudentOutTime() {
         </Transition>
       </Menu>
 
-      <div className="w-full max-w-md text-gray-700 bg-white mt-4 p-5 border rounded-lg shadow-lg mx-auto">
+      <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
+        <input
+          type="text"
+          className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+          placeholder="Search by name"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
         {filteredStudents.map((student) => (
           <div
             key={`${student.id}-${student.prefix}`}
             className="flex items-center mb-4">
             <button
-              className={`w-full text-white font-bold py-2 px-4 rounded-lg ${
+              className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
                 student.outTime
                   ? "bg-green-500 hover:bg-green-700"
                   : "bg-gray-500 hover:bg-gray-700"
@@ -202,6 +219,9 @@ function StudentOutTime() {
               }>
               {student.name}
             </button>
+            <div className="ml-4 p-2 bg-gray-200 rounded-lg">
+              {student.prefix}
+            </div>
           </div>
         ))}
       </div>
