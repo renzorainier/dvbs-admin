@@ -130,14 +130,14 @@ function StudentOutTime() {
     leaveFrom="transform opacity-100 scale-100"
     leaveTo="transform opacity-0 scale-95"
   >
-    <Menu.Items className="absolute z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+    <Menu.Items className="absolute z-10 mt-2 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
       <div className="py-1">
         <Menu.Item>
           {({ active }) => (
             <button
               className={`${
                 active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-              } block px-4 py-2 text-2xl font-semibold w-full text-left`}
+              } block px-4 py-2 text-2xl font-semibold  text-left`}
               onClick={() => handleLocationChange("")}
             >
               All Locations
@@ -150,7 +150,7 @@ function StudentOutTime() {
               <button
                 className={`${
                   active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                } block px-4 py-2 text-2xl font-semibold w-full text-left`}
+                } block px-4 py-2 text-2xl font-semibold  text-left`}
                 onClick={() => handleLocationChange(location)}
               >
                 {location}
