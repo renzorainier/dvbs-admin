@@ -7,6 +7,8 @@ function StudentOutTime() {
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [studentToMarkOut, setStudentToMarkOut] = useState(null);
 
   const uploadTime = new Date().toLocaleString();
 
@@ -63,7 +65,13 @@ function StudentOutTime() {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const handleClick = async (groupId, prefix, inTimeField, outTimeField) => {
+  const handleClick = (groupId, prefix, inTimeField, outTimeField) => {
+    setStudentToMarkOut({ groupId, prefix, inTimeField, outTimeField });
+    setShowConfirmation(true);
+  };
+
+  const updateStudentOutTime = async () => {
+    const { groupId, prefix, outTimeField } = studentToMarkOut;
     const docRef = doc(db, "dvbs", groupId);
     const newValue = uploadTime;
 
@@ -82,6 +90,9 @@ function StudentOutTime() {
     } catch (error) {
       console.error("Error updating Firebase: ", error);
     }
+
+    setShowConfirmation(false);
+    setStudentToMarkOut(null);
   };
 
   const handleLocationChange = (event) => {
@@ -119,6 +130,29 @@ function StudentOutTime() {
           </div>
         ))}
       </div>
+
+      {showConfirmation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50" />
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="mb-2">Mark student as out?</p>
+            <div className="flex space-x-4">
+              <button
+                className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                onClick={updateStudentOutTime}
+              >
+                Yes
+              </button>
+              <button
+                className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
+                onClick={() => setShowConfirmation(false)}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
