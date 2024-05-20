@@ -78,7 +78,7 @@ function StudentOutTime() {
                 className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
                 onClick={() => handleClick(student.id, studentField)}
               >
-                {student.name}
+                {student.name} {/* Make sure student.name exists */}
               </button>
             </div>
           );
@@ -86,6 +86,7 @@ function StudentOutTime() {
       </div>
     </div>
   );
+
 }
 
 export default StudentOutTime;
