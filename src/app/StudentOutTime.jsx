@@ -4,6 +4,8 @@ import { db } from "./firebase.js"; // Import your Firebase config
 
 function StudentOutTime() {
   const [students, setStudents] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
   const [loading, setLoading] = useState(true);
 
   const uploadTime = new Date().toLocaleString();
@@ -33,13 +35,18 @@ function StudentOutTime() {
                 inTimeField,
                 outTimeField,
                 name: group[`${prefix}name`],
+                location: group[`${prefix}loc`], // Include location in the student data
                 outTime: group[outTimeField], // Include outTime in the student data
               });
             }
           }
           return groupStudents;
         }).flat();
+
+        const uniqueLocations = [...new Set(presentStudents.map(student => student.location))];
+
         setStudents(presentStudents);
+        setLocations(uniqueLocations);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching students: ", error);
@@ -77,11 +84,29 @@ function StudentOutTime() {
     }
   };
 
+  const handleLocationChange = (event) => {
+    setSelectedLocation(event.target.value);
+  };
+
+  const filteredStudents = selectedLocation
+    ? students.filter(student => student.location === selectedLocation)
+    : students;
+
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-xl font-bold mb-4">Present Students</h1>
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-        {students.map((student) => (
+        <select
+          className="mb-4 p-2 border rounded-lg w-full"
+          value={selectedLocation}
+          onChange={handleLocationChange}
+        >
+          <option value="">All Locations</option>
+          {locations.map(location => (
+            <option key={location} value={location}>{location}</option>
+          ))}
+        </select>
+        {filteredStudents.map((student) => (
           <div key={`${student.id}-${student.prefix}`} className="flex items-center mb-4">
             <button
               className={`w-full text-white font-bold py-2 px-4 rounded-lg ${
