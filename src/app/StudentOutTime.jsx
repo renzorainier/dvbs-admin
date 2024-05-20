@@ -8,6 +8,7 @@ function StudentOutTime() {
   const [students, setStudents] = useState([]);
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [studentToMarkOut, setStudentToMarkOut] = useState(null);
@@ -124,9 +125,17 @@ function StudentOutTime() {
     setSelectedLocation(location);
   };
 
-  const filteredStudents = selectedLocation
-    ? students.filter((student) => student.location === selectedLocation)
-    : students;
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredStudents = students
+    .filter((student) =>
+      student.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .filter((student) =>
+      selectedLocation ? student.location === selectedLocation : true
+    );
 
   return (
     <div>
@@ -182,6 +191,13 @@ function StudentOutTime() {
       </Menu>
 
       <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
+        <input
+          type="text"
+          className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+          placeholder="Search by name"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
         {filteredStudents.map((student) => (
           <div
             key={`${student.id}-${student.prefix}`}
