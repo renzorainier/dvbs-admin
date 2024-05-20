@@ -114,7 +114,7 @@ function StudentOutTime() {
       <h1 className="text-xl font-bold mb-4">Present Students</h1>
       <Menu as="div" className="relative inline-block justify-center text-center mt-4">
   <div>
-    <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+    <Menu.Button className="inline-flex  rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
       <h2 className="text-4xl font-bold">
         {selectedLocation || "All Locations"}
       </h2>
