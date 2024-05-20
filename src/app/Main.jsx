@@ -6,6 +6,7 @@ import Tab from "./Tab";
 import Primary from "./Primary"
 import InitializeData from "./InitializeData"
 import AttendanceChart from "./AttendanceChart"
+import StudentOutTime from "./StudentOutTime"
 
 
 function Main({ configurations, currentConfigIndex, setCurrentConfigIndex  }) {
@@ -14,7 +15,8 @@ function Main({ configurations, currentConfigIndex, setCurrentConfigIndex  }) {
       {/* <AttendanceChart/> */}
       <Tab configurations={configurations} currentConfigIndex={currentConfigIndex}
         setCurrentConfigIndex={setCurrentConfigIndex}/>
-      {/* <InitializeData/> */}
+      <StudentOutTime/>
+
     </div>
   );
 }
