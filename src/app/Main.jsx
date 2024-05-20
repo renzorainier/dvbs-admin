@@ -14,7 +14,7 @@ function Main({ configurations, currentConfigIndex, setCurrentConfigIndex  }) {
       {/* <AttendanceChart/> */}
       <Tab configurations={configurations} currentConfigIndex={currentConfigIndex}
         setCurrentConfigIndex={setCurrentConfigIndex}/>
-      <InitializeData/>
+      {/* <InitializeData/> */}
     </div>
   );
 }
