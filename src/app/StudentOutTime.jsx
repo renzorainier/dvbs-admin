@@ -16,6 +16,9 @@ function StudentOutTime() {
           id: doc.id,
           ...doc.data(),
         }));
+
+        console.log("Fetched Student Data:", studentData); // Add this line
+        
         const currentDayLetter = getCurrentDayLetter();
         const presentStudents = studentData.filter((student) =>
           Object.keys(student).some((key) => key.endsWith(currentDayLetter) && student[key])
