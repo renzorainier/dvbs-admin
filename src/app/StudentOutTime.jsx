@@ -220,7 +220,7 @@ function StudentOutTime() {
               {student.name}
             </button>
             <div className="ml-4 p-2 bg-gray-200 rounded-lg">
-              {student.prefix}
+              {student.id}
             </div>
           </div>
         ))}
