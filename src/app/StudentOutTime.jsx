@@ -18,7 +18,7 @@ function StudentOutTime() {
         }));
 
         console.log("Fetched Student Data:", studentData); // Add this line
-        
+
         const currentDayLetter = getCurrentDayLetter();
         const presentStudents = studentData.filter((student) =>
           Object.keys(student).some((key) => key.endsWith(currentDayLetter) && student[key])
@@ -71,9 +71,10 @@ function StudentOutTime() {
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         {students.map((student) => {
           const currentDayLetter = getCurrentDayLetter();
-          const studentField = Object.keys(student).find(
-            (key) => key.endsWith(currentDayLetter) && student[key]
-          );
+       const studentField = Object.keys(student).find(
+  (key) => key.endsWith(currentDayLetter) && student[key]
+);
+
 
           return (
             <div key={student.id} className="flex items-center mb-4">
