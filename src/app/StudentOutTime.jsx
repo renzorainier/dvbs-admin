@@ -112,8 +112,7 @@ function StudentOutTime() {
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-xl font-bold mb-4">Present Students</h1>
-      <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-        <Menu as="div" className="relative inline-block text-left w-full mb-4">
+      <Menu as="div" className="relative inline-block text-left w-full mb-4">
           <div>
             <Menu.Button className="inline-flex w-full justify-between rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
               <span>{selectedLocation || "All Locations"}</span>
@@ -161,6 +160,8 @@ function StudentOutTime() {
             </Menu.Items>
           </Transition>
         </Menu>
+      <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+
         {filteredStudents.map((student) => (
           <div key={`${student.id}-${student.prefix}`} className="flex items-center mb-4">
             <button
