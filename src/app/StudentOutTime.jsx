@@ -21,7 +21,7 @@ function StudentOutTime() {
           ...doc.data(),
         }));
 
-        console.log("Fetched Student Data:", studentData); // Log the fetched data
+        console.log("Fetched Student Data:", studentData);
 
         const currentDayLetter = getCurrentDayLetter();
         const presentStudents = studentData.map((group) => {
@@ -38,8 +38,8 @@ function StudentOutTime() {
                   inTimeField,
                   outTimeField,
                   name: group[`${prefix}name`],
-                  location: group[`${prefix}loc`], // Include location in the student data
-                  outTime: group[outTimeField], // Include outTime in the student data
+                  location: group[`${prefix}loc`],
+                  outTime: group[outTimeField],
                 });
               }
             }
@@ -129,7 +129,7 @@ function StudentOutTime() {
               }`}
               onClick={() => handleClick(student.id, student.prefix, student.inTimeField, student.outTimeField, student.outTime)}
             >
-              {student.name} {/* Display the student's name */}
+              {student.name}
             </button>
           </div>
         ))}
