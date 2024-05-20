@@ -51,6 +51,9 @@ function StudentOutTime() {
           })
           .flat();
 
+        // Sort students alphabetically by name
+        presentStudents.sort((a, b) => a.name.localeCompare(b.name));
+
         const uniqueLocations = [
           ...new Set(presentStudents.map((student) => student.location)),
         ];
@@ -126,12 +129,10 @@ function StudentOutTime() {
     : students;
 
   return (
-    <div >
-         <Menu
-        as="div"
-        className="relative inline-block  mt-4">
+    <div>
+      <Menu as="div" className="relative inline-block mt-4">
         <div>
-          <Menu.Button className="inline-flex  rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+          <Menu.Button className="inline-flex rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
             <h2 className="text-4xl font-bold">
               {selectedLocation || "All Locations"}
             </h2>
@@ -156,7 +157,7 @@ function StudentOutTime() {
                   <button
                     className={`${
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                    } block px-4 py-2 text-2xl font-semibold  text-left`}
+                    } block px-4 py-2 text-2xl font-semibold text-left`}
                     onClick={() => handleLocationChange("")}>
                     All Locations
                   </button>
@@ -168,7 +169,7 @@ function StudentOutTime() {
                     <button
                       className={`${
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                      } block px-4 py-2 text-2xl font-semibold  text-left`}
+                      } block px-4 py-2 text-2xl font-semibold text-left`}
                       onClick={() => handleLocationChange(location)}>
                       {location}
                     </button>
