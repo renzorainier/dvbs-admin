@@ -158,7 +158,7 @@ function StudentOutTime() {
 
   return (
     <div>
-      <Menu as="div" className="relative inline-block mt-4">
+      <Menu as="div" className="relative inline-block mt-5 mb-5">
         <div>
           <Menu.Button className="inline-flex rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
             <h2 className="text-4xl font-bold">
