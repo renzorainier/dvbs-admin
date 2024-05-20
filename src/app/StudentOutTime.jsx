@@ -25,12 +25,15 @@ function StudentOutTime() {
           for (let i = 1; i <= 2; i++) { // Assuming you have up to "02" prefix
             const prefix = `0${i}`;
             const inTimeField = `${prefix}${currentDayLetter}`;
+            const outTimeField = `${prefix}${currentDayLetter}out`;
             if (group[inTimeField]) {
               groupStudents.push({
                 id: group.id,
                 prefix,
                 inTimeField,
+                outTimeField,
                 name: group[`${prefix}name`],
+                outTime: group[outTimeField], // Include outTime in the student data
               });
             }
           }
@@ -53,22 +56,19 @@ function StudentOutTime() {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const handleClick = async (groupId, prefix, inTimeField) => {
-    const currentDayLetter = getCurrentDayLetter();
-    const outTimeFieldName = inTimeField.replace(currentDayLetter, currentDayLetter + "out");
-
+  const handleClick = async (groupId, prefix, inTimeField, outTimeField) => {
     const docRef = doc(db, "dvbs", groupId);
     const newValue = uploadTime;
 
     try {
       await updateDoc(docRef, {
-        [outTimeFieldName]: newValue,
+        [outTimeField]: newValue,
       });
 
       setStudents((prevStudents) =>
         prevStudents.map((student) =>
           student.id === groupId && student.prefix === prefix
-            ? { ...student, [outTimeFieldName]: newValue }
+            ? { ...student, outTime: newValue }
             : student
         )
       );
@@ -84,8 +84,10 @@ function StudentOutTime() {
         {students.map((student) => (
           <div key={`${student.id}-${student.prefix}`} className="flex items-center mb-4">
             <button
-              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
-              onClick={() => handleClick(student.id, student.prefix, student.inTimeField)}
+              className={`w-full text-white font-bold py-2 px-4 rounded-lg ${
+                student.outTime ? 'bg-green-500 hover:bg-green-700' : 'bg-gray-500 hover:bg-gray-700'
+              }`}
+              onClick={() => handleClick(student.id, student.prefix, student.inTimeField, student.outTimeField)}
             >
               {student.name} {/* Display the student's name */}
             </button>
