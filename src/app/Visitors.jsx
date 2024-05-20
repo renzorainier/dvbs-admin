@@ -99,6 +99,11 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}invitedBy`]: invitedBy,
         [`${paddedIndex}contactNumber`]: contactNumber,
         [`${paddedIndex}age`]: age,
+        [`${paddedIndex}Aout`]: "",
+        [`${paddedIndex}Bout`]: "",
+        [`${paddedIndex}Cout`]: "",
+        [`${paddedIndex}Dout`]: "",
+        [`${paddedIndex}Eout`]: "",
       };
 
       const currentDayLetter = getCurrentDayLetter();
