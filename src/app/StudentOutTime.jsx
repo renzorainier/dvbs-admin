@@ -26,20 +26,22 @@ function StudentOutTime() {
         const currentDayLetter = getCurrentDayLetter();
         const presentStudents = studentData.map((group) => {
           const groupStudents = [];
-          for (let i = 1; i <= 2; i++) { // Assuming you have up to "02" prefix
-            const prefix = `0${i}`;
-            const inTimeField = `${prefix}${currentDayLetter}`;
-            const outTimeField = `${prefix}${currentDayLetter}out`;
-            if (group[inTimeField]) {
-              groupStudents.push({
-                id: group.id,
-                prefix,
-                inTimeField,
-                outTimeField,
-                name: group[`${prefix}name`],
-                location: group[`${prefix}loc`], // Include location in the student data
-                outTime: group[outTimeField], // Include outTime in the student data
-              });
+          for (const key in group) {
+            if (key.endsWith(currentDayLetter)) {
+              const prefix = key.slice(0, 2);
+              const inTimeField = `${prefix}${currentDayLetter}`;
+              const outTimeField = `${prefix}${currentDayLetter}out`;
+              if (group[inTimeField]) {
+                groupStudents.push({
+                  id: group.id,
+                  prefix,
+                  inTimeField,
+                  outTimeField,
+                  name: group[`${prefix}name`],
+                  location: group[`${prefix}loc`], // Include location in the student data
+                  outTime: group[outTimeField], // Include outTime in the student data
+                });
+              }
             }
           }
           return groupStudents;
