@@ -1,70 +1,261 @@
-"use client";
-import Image from "next/image.js";
-import Main from "./Main.jsx";
-import Head from "next/head.js";
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { db } from "./firebase.js"; // Import your Firebase config
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-export default function Home() {
-  const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
+function StudentOutTime() {
+  const [students, setStudents] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [studentToMarkOut, setStudentToMarkOut] = useState(null);
 
-  const configurations = [
-    {
-      name: "Primary",
-      colors: { present: "bg-[#FFC100]", absent: "bg-gray-400" },
-      dbPath: "dvbs/primary",
-      color: "#FFC100",
-      ageRange: [4, 5, 6],
-    },
-    {
-      name: "Middlers",
-      colors: { present: "bg-[#04d924]", absent: "bg-gray-500" },
-      dbPath: "dvbs/middlers",
-      color: "#04d924",
-      ageRange: [7, 8, 9],
-    },
-    {
-      name: "Juniors",
-      colors: { present: "bg-[#027df7]", absent: "bg-gray-500" },
-      dbPath: "dvbs/juniors",
-      color: "#027df7",
-      ageRange: [10, 11, 12],
-    },
-    {
-      name: "Youth",
-      colors: { present: "bg-[#f70233]", absent: "bg-gray-500" },
-      dbPath: "dvbs/youth",
-      color: "#f70233",
-      ageRange: [13, 14, 15],
-    },
-  ];
+  const uploadTime = new Date().toLocaleString();
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "dvbs"));
+        const studentData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        console.log("Fetched Student Data:", studentData);
+
+        const currentDayLetter = getCurrentDayLetter();
+        const presentStudents = studentData
+          .map((group) => {
+            const groupStudents = [];
+            for (const key in group) {
+              if (key.endsWith(currentDayLetter)) {
+                const prefix = key.slice(0, 2);
+                const inTimeField = `${prefix}${currentDayLetter}`;
+                const outTimeField = `${prefix}${currentDayLetter}out`;
+                if (group[inTimeField]) {
+                  groupStudents.push({
+                    id: group.id,
+                    prefix,
+                    inTimeField,
+                    outTimeField,
+                    name: group[`${prefix}name`],
+                    location: group[`${prefix}loc`],
+                    outTime: group[outTimeField],
+                  });
+                }
+              }
+            }
+            return groupStudents;
+          })
+          .flat();
+
+        // Sort students alphabetically by name
+        presentStudents.sort((a, b) => a.name.localeCompare(b.name));
+
+        const uniqueLocations = [
+          ...new Set(presentStudents.map((student) => student.location)),
+        ];
+
+        setStudents(presentStudents);
+        setLocations(uniqueLocations);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching students: ", error);
+        setLoading(false);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+  const getCurrentDayLetter = () => {
+    const days = ["A", "B", "C", "D", "E"];
+    const dayIndex = new Date().getDay();
+    return days[dayIndex === 0 ? 6 : dayIndex - 1];
+  };
+
+  const handleClick = (groupId, prefix, inTimeField, outTimeField, outTime) => {
+    if (outTime) {
+      setStudentToMarkOut({ groupId, prefix, inTimeField, outTimeField });
+      setShowConfirmation(true);
+    } else {
+      updateStudentOutTime(
+        groupId,
+        prefix,
+        inTimeField,
+        outTimeField,
+        uploadTime
+      );
+    }
+  };
+
+  const updateStudentOutTime = async (
+    groupId,
+    prefix,
+    inTimeField,
+    outTimeField,
+    newValue
+  ) => {
+    const docRef = doc(db, "dvbs", groupId);
+
+    try {
+      await updateDoc(docRef, {
+        [outTimeField]: newValue,
+      });
+
+      setStudents((prevStudents) =>
+        prevStudents.map((student) =>
+          student.id === groupId && student.prefix === prefix
+            ? { ...student, outTime: newValue }
+            : student
+        )
+      );
+    } catch (error) {
+      console.error("Error updating Firebase: ", error);
+    }
+
+    setShowConfirmation(false);
+    setStudentToMarkOut(null);
+  };
+
+  const handleLocationChange = (location) => {
+    setSelectedLocation(location);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredStudents = students
+    .filter((student) =>
+      student.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .filter((student) =>
+      selectedLocation ? student.location === selectedLocation : true
+    );
 
   return (
-    <>
-      <Head>
-        <title>Attendance</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400&amp;display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-
-      <div
-        style={{
-          backgroundColor: `${configurations[currentConfigIndex].color}`,
-        }}>
-        <div className="flex justify-center items-center">
-          <div
-            className="w-full rounded-lg mx-auto"
-            style={{ maxWidth: "90%" }}>
-            <Main
-              configurations={configurations}
-              currentConfigIndex={currentConfigIndex}
-              setCurrentConfigIndex={setCurrentConfigIndex}
+    <div>
+      <Menu as="div" className="relative inline-block mt-4">
+        <div>
+          <Menu.Button className="inline-flex rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+            <h2 className="text-4xl font-bold">
+              {selectedLocation || "All Locations"}
+            </h2>
+            <ChevronDownIcon
+              className="ml-2 -mr-1 h-10 w-10"
+              aria-hidden="true"
             />
+          </Menu.Button>
+        </div>
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95">
+          <Menu.Items className="absolute z-10 mt-2 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="py-1">
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={`${
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                    } block px-4 py-2 text-2xl font-semibold text-left`}
+                    onClick={() => handleLocationChange("")}>
+                    All Locations
+                  </button>
+                )}
+              </Menu.Item>
+              {locations.map((location) => (
+                <Menu.Item key={location}>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                      } block px-4 py-2 text-2xl font-semibold text-left`}
+                      onClick={() => handleLocationChange(location)}>
+                      {location}
+                    </button>
+                  )}
+                </Menu.Item>
+              ))}
+            </div>
+          </Menu.Items>
+        </Transition>
+      </Menu>
+
+      <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
+        <input
+          type="text"
+          className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+          placeholder="Search by name"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+        {filteredStudents.map((student) => (
+          <div
+            key={`${student.id}-${student.prefix}`}
+            className="flex items-center mb-4">
+            <button
+              className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
+                student.outTime
+                  ? "bg-green-500 hover:bg-green-700"
+                  : "bg-gray-500 hover:bg-gray-700"
+              }`}
+              onClick={() =>
+                handleClick(
+                  student.id,
+                  student.prefix,
+                  student.inTimeField,
+                  student.outTimeField,
+                  student.outTime
+                )
+              }>
+              {student.name}
+            </button>
+            <div className="ml-4 p-2 bg-gray-200 rounded-lg">
+              {student.prefix}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {showConfirmation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50" />
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="mb-2">Unmark student as out?</p>
+            <div className="flex space-x-4">
+              <button
+                className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                onClick={() =>
+                  updateStudentOutTime(
+                    studentToMarkOut.groupId,
+                    studentToMarkOut.prefix,
+                    studentToMarkOut.inTimeField,
+                    studentToMarkOut.outTimeField,
+                    ""
+                  )
+                }>
+                Yes
+              </button>
+              <button
+                className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
+                onClick={() => setShowConfirmation(false)}>
+                No
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
+
+export default StudentOutTime;
