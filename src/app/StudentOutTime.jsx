@@ -129,6 +129,21 @@ function StudentOutTime() {
     setSearchQuery(e.target.value);
   };
 
+  const getBackgroundColor = (prefix) => {
+    switch (prefix) {
+      case "primary": // Assuming 'pr' stands for primary
+        return "#FFC100";
+      case "middlers": // Assuming 'mi' stands for middlers
+        return "#04d924";
+      case "juniors": // Assuming 'ju' stands for juniors
+        return "#027df7";
+      case "youth": // Assuming 'yo' stands for youth
+        return "#f70233";
+      default:
+        return "#FFFFFF"; // Default color if no match
+    }
+  };
+
   const filteredStudents = students
     .filter((student) =>
       student.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -219,7 +234,9 @@ function StudentOutTime() {
               }>
               {student.name}
             </button>
-            <div className="ml-4 p-2 bg-gray-200 rounded-lg">
+            <div
+              className="ml-4 p-2 rounded-lg"
+              style={{ backgroundColor: getBackgroundColor(student.id) }}>
               {student.id}
             </div>
           </div>
@@ -244,7 +261,7 @@ function StudentOutTime() {
                   )
                 }>
                 Yes
-              </button>
+                </button>
               <button
                 className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
                 onClick={() => setShowConfirmation(false)}>
