@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 function StudentOutTime() {
   const [students, setStudents] = useState([]);
@@ -99,8 +101,8 @@ function StudentOutTime() {
     setStudentToMarkOut(null);
   };
 
-  const handleLocationChange = (event) => {
-    setSelectedLocation(event.target.value);
+  const handleLocationChange = (location) => {
+    setSelectedLocation(location);
   };
 
   const filteredStudents = selectedLocation
@@ -111,16 +113,54 @@ function StudentOutTime() {
     <div className="flex flex-col items-center">
       <h1 className="text-xl font-bold mb-4">Present Students</h1>
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-        <select
-          className="mb-4 p-2 border rounded-lg w-full"
-          value={selectedLocation}
-          onChange={handleLocationChange}
-        >
-          <option value="">All Locations</option>
-          {locations.map(location => (
-            <option key={location} value={location}>{location}</option>
-          ))}
-        </select>
+        <Menu as="div" className="relative inline-block text-left w-full mb-4">
+          <div>
+            <Menu.Button className="inline-flex w-full justify-between rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+              <span>{selectedLocation || "All Locations"}</span>
+              <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
+            </Menu.Button>
+          </div>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="absolute z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="py-1">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                      } block px-4 py-2 text-sm w-full text-left`}
+                      onClick={() => handleLocationChange("")}
+                    >
+                      All Locations
+                    </button>
+                  )}
+                </Menu.Item>
+                {locations.map((location) => (
+                  <Menu.Item key={location}>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                        } block px-4 py-2 text-sm w-full text-left`}
+                        onClick={() => handleLocationChange(location)}
+                      >
+                        {location}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ))}
+              </div>
+            </Menu.Items>
+          </Transition>
+        </Menu>
         {filteredStudents.map((student) => (
           <div key={`${student.id}-${student.prefix}`} className="flex items-center mb-4">
             <button
