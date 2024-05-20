@@ -65,15 +65,17 @@ function StudentOutTime() {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const handleClick = (groupId, prefix, inTimeField, outTimeField) => {
-    setStudentToMarkOut({ groupId, prefix, inTimeField, outTimeField });
-    setShowConfirmation(true);
+  const handleClick = (groupId, prefix, inTimeField, outTimeField, outTime) => {
+    if (outTime) {
+      setStudentToMarkOut({ groupId, prefix, inTimeField, outTimeField });
+      setShowConfirmation(true);
+    } else {
+      updateStudentOutTime(groupId, prefix, inTimeField, outTimeField, uploadTime);
+    }
   };
 
-  const updateStudentOutTime = async () => {
-    const { groupId, prefix, outTimeField } = studentToMarkOut;
+  const updateStudentOutTime = async (groupId, prefix, inTimeField, outTimeField, newValue) => {
     const docRef = doc(db, "dvbs", groupId);
-    const newValue = uploadTime;
 
     try {
       await updateDoc(docRef, {
@@ -123,7 +125,7 @@ function StudentOutTime() {
               className={`w-full text-white font-bold py-2 px-4 rounded-lg ${
                 student.outTime ? 'bg-green-500 hover:bg-green-700' : 'bg-gray-500 hover:bg-gray-700'
               }`}
-              onClick={() => handleClick(student.id, student.prefix, student.inTimeField, student.outTimeField)}
+              onClick={() => handleClick(student.id, student.prefix, student.inTimeField, student.outTimeField, student.outTime)}
             >
               {student.name} {/* Display the student's name */}
             </button>
@@ -135,11 +137,11 @@ function StudentOutTime() {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="fixed inset-0 bg-black opacity-50" />
           <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-            <p className="mb-2">Mark student as out?</p>
+            <p className="mb-2">Unmark student as out?</p>
             <div className="flex space-x-4">
               <button
                 className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={updateStudentOutTime}
+                onClick={() => updateStudentOutTime(studentToMarkOut.groupId, studentToMarkOut.prefix, studentToMarkOut.inTimeField, studentToMarkOut.outTimeField, '')}
               >
                 Yes
               </button>
