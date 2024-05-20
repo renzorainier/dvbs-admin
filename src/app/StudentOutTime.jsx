@@ -152,6 +152,10 @@ function StudentOutTime() {
       selectedLocation ? student.location === selectedLocation : true
     );
 
+  // Count the number of marked and not marked students
+  const markedCount = filteredStudents.filter((student) => student.outTime).length;
+  const notMarkedCount = filteredStudents.length - markedCount;
+
   return (
     <div>
       <Menu as="div" className="relative inline-block mt-4">
@@ -193,7 +197,7 @@ function StudentOutTime() {
                     <button
                       className={`${
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                      } block px-4 py-2 text-2xl font-semibold text-left`}
+                      } block px-4 py-2 text -2xl font-semibold text-left`}
                       onClick={() => handleLocationChange(location)}>
                       {location}
                     </button>
@@ -213,10 +217,19 @@ function StudentOutTime() {
           value={searchQuery}
           onChange={handleSearchChange}
         />
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <span className="font-bold">Marked:</span> {markedCount}
+          </div>
+          <div>
+            <span className="font-bold">Not Marked:</span> {notMarkedCount}
+          </div>
+        </div>
         {filteredStudents.map((student) => (
           <div
             key={`${student.id}-${student.prefix}`}
-            className="flex items-center mb-4">
+            className="flex items-center mb-4"
+          >
             <button
               className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
                 student.outTime
@@ -231,13 +244,14 @@ function StudentOutTime() {
                   student.outTimeField,
                   student.outTime
                 )
-              }>
+              }
+            >
               {student.name}
             </button>
             <div
               className="ml-4 h-10 p-2 rounded-lg"
-              style={{ backgroundColor: getBackgroundColor(student.id) }}>
-            </div>
+              style={{ backgroundColor: getBackgroundColor(student.id) }}
+            ></div>
           </div>
         ))}
       </div>
@@ -258,12 +272,14 @@ function StudentOutTime() {
                     studentToMarkOut.outTimeField,
                     ""
                   )
-                }>
+                }
+              >
                 Yes
-                </button>
+              </button>
               <button
                 className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setShowConfirmation(false)}>
+                onClick={() => setShowConfirmation(false)}
+              >
                 No
               </button>
             </div>
@@ -275,3 +291,4 @@ function StudentOutTime() {
 }
 
 export default StudentOutTime;
+
