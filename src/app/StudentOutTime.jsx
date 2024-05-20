@@ -10,26 +10,27 @@ function StudentOutTime() {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "dvbs"));
-        const studentData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        try {
+          const querySnapshot = await getDocs(collection(db, "dvbs"));
+          const studentData = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
 
-        console.log("Fetched Student Data:", studentData); // Add this line
+          console.log("Fetched Student Data:", studentData); // Add this line to check student data
 
-        const currentDayLetter = getCurrentDayLetter();
-        const presentStudents = studentData.filter((student) =>
-          Object.keys(student).some((key) => key.endsWith(currentDayLetter) && student[key])
-        );
-        setStudents(presentStudents);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching students: ", error);
-        setLoading(false);
-      }
-    };
+          const currentDayLetter = getCurrentDayLetter();
+          const presentStudents = studentData.filter((student) =>
+            Object.keys(student).some((key) => key.endsWith(currentDayLetter) && student[key])
+          );
+          setStudents(presentStudents);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching students: ", error);
+          setLoading(false);
+        }
+      };
+
 
     fetchStudents();
   }, []);
