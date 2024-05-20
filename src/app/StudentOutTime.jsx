@@ -126,10 +126,10 @@ function StudentOutTime() {
     : students;
 
   return (
-    <div className="flex flex-col items-center">
+    <div >
          <Menu
         as="div"
-        className="relative inline-block justify-center text-center mt-4">
+        className="relative inline-block  mt-4">
         <div>
           <Menu.Button className="inline-flex  rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
             <h2 className="text-4xl font-bold">
@@ -179,10 +179,8 @@ function StudentOutTime() {
           </Menu.Items>
         </Transition>
       </Menu>
-      <h1 className="text-xl font-bold mb-4">Present Students</h1>
 
-
-      <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+      <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
         {filteredStudents.map((student) => (
           <div
             key={`${student.id}-${student.prefix}`}
