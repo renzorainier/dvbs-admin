@@ -159,7 +159,7 @@ function StudentOutTime() {
   const notMarkedCount = filteredStudents.length - markedCount;
 
   return (
-    <div className="bg-[#F2EFE5] h-screen overflow-auto ">
+    <div className="bg-[#61677A] h-screen overflow-auto ">
 
     <div className="flex justify-center items-center overflow-auto">
       <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
