@@ -53,7 +53,7 @@ export default function Home() {
         style={{
           backgroundColor: `${configurations[currentConfigIndex].color}`,
         }}>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center overflow-auto">
           <div
             className="w-full rounded-lg mx-auto"
             style={{ maxWidth: "90%" }}>

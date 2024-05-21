@@ -10,7 +10,7 @@ function Tab({ configurations, currentConfigIndex, setCurrentConfigIndex }) {
   const currentConfig = configurations[currentConfigIndex];
 
   return (
-    <div className="h-screen overflow-auto">
+    <div className="h-screen ">
       <Menu
         as="div"
         className="relative inline-block justify-center text-center mt-4">
