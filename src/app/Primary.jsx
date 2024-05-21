@@ -58,16 +58,17 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         config.dbPath.split("/")[1]
       );
       const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
+      const bibleField = `${fieldToUpdate}bible`;
 
       await updateDoc(docRef, {
         [fieldToUpdate]: newValue,
-        [`${fieldToUpdate}bible`]: newValue ? "" : null // Reset Bible status
+        [bibleField]: newValue ? "" : null, // Reset Bible status
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [fieldToUpdate]: newValue,
-        [`${fieldToUpdate}bible`]: newValue ? "" : null // Reset Bible status
+        [bibleField]: newValue ? "" : null, // Reset Bible status
       }));
 
       // Show Bible confirmation popup if student is marked present
@@ -90,7 +91,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         config.dbPath.split("/")[0],
         config.dbPath.split("/")[1]
       );
-      const bibleField = `${fieldName}bible`;
+      const dayLetter = getCurrentDayLetter();
+      const bibleField = `${fieldName.slice(0, 2)}${dayLetter}bible`;
 
       await updateDoc(docRef, {
         [bibleField]: broughtBible ? true : false,
@@ -157,14 +159,12 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                     studentToMarkAbsent.fieldName,
                     studentToMarkAbsent.fieldToUpdate
                   )
-                }
-              >
+                }>
                 Yes
               </button>
               <button
                 className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setShowConfirmation(false)}
-              >
+                onClick={() => setShowConfirmation(false)}>
                 No
               </button>
             </div>
@@ -180,14 +180,12 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
             <div className="flex space-x-4">
               <button
                 className="bg-green-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => updateBibleStatus(studentToUpdateBible, true)}
-              >
+                onClick={() => updateBibleStatus(studentToUpdateBible, true)}>
                 Yes
               </button>
               <button
                 className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => updateBibleStatus(studentToUpdateBible, false)}
-              >
+                onClick={() => updateBibleStatus(studentToUpdateBible, false)}>
                 No
               </button>
             </div>
@@ -203,8 +201,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12"
-          >
+            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 sm:h-10 lg:w-12 lg:h-12">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -222,8 +219,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12"
-          >
+            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 sm:h-10 lg:w-12 lg:h-12">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -231,7 +227,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
             />
           </svg>
           <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
-          {countAbsentForToday()}
+            {countAbsentForToday()}
           </p>
         </div>
 
@@ -242,8 +238,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12"
-          >
+            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -275,8 +270,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   className={`w-70percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
                     studentIndex
                   )}`}
-                  onClick={() => handleClick(studentIndex)}
-                >
+                  onClick={() => handleClick(studentIndex)}>
                   {name}
                 </button>
                 <div className="flex flex-row ml-1">
@@ -289,8 +283,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                           primaryData[fieldName]
                             ? config.colors.present
                             : config.colors.absent
-                        } mr-1`}
-                      ></div>
+                        } mr-1`}></div>
                     );
                   })}
                 </div>
