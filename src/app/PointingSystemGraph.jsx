@@ -31,11 +31,6 @@ function PointingSystemGraph() {
   const [isAdding, setIsAdding] = useState(true);
   const [confettiActive, setConfettiActive] = useState(false);
   const audioRef = useRef(null);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true); // Set isMounted to true after the initial render
-  }, []);
 
   useEffect(() => {
     const fetchPointsData = async () => {
@@ -65,16 +60,10 @@ function PointingSystemGraph() {
   }, []);
 
   useEffect(() => {
-    if (isMounted && pointsData) { // Check if the component is mounted and pointsData is available
+    if (pointsData) {
       renderChart(); // Render the chart when pointsData changes
-      setConfettiActive(true); // Activate confetti
-      playEnterSound(); // Play sound
-      setTimeout(() => {
-        setConfettiActive(false); // Deactivate confetti after 5 seconds
-      }, 5000);
     }
-  }, [isMounted, pointsData, selectedDay]); // Run this effect when isMounted, pointsData, or selectedDay changes
-
+  }, [pointsData, selectedDay]);
 
   const renderChart = () => {
     const existingChart = Chart.getChart("pointsChart");
