@@ -27,10 +27,10 @@ function Main() {
 
   const renderCurrentComponent = () => {
     switch (currentComponent) {
-      case "today":
+      case "Tab":
         return <Tab  />;
-      case "about":
-        return <Tab onBackButtonClick={handleBackButtonClick} />;
+      case "Out":
+        return < StudentOutTime />;
       // render other components as needed
       default:
         return (
@@ -40,18 +40,18 @@ function Main() {
               <div className="ml-5 text-white mr-5 mt-3 grid grid-cols-2 gap-4">
                 <button
                   className="bg-blue-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 font-bold text-xl py-10 rounded-lg shadow-lg"
-                  onClick={() => handleButtonClick("today")}
+                  onClick={() => handleButtonClick("Tab")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}
                 >
-                  Attendance
+                  Tab
                 </button>
 
                 <button
                   className="bg-violet-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 font-bold text-xl py-10 rounded-lg shadow-lg"
-                  onClick={() => handleButtonClick("about")}
+                  onClick={() => handleButtonClick("Out")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}
                 >
-                  About
+                  Out
                 </button>
               </div>
 
