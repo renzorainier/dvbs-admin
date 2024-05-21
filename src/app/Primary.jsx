@@ -86,6 +86,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
     setShowConfirmation(false);
     setStudentToMarkAbsent(null);
+    playEnterSound(); // Play sound
+
   };
 
   const updateBibleStatus = async (fieldName, broughtBible) => {
