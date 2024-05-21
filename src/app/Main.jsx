@@ -63,7 +63,7 @@ function Main() {
 
   // Style the back button with modern UI
   const backButton = currentComponent ? (
-    <div className="fixed top-4 left-4 z-50">
+    <div className="fixed bottom-4 left-4 z-50">
       <button
         className="bg-gradient-to-r from-blue-400 to-violet-400 hover:from-blue-500 hover:to-violet-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500"
         onClick={handleBackButtonClick}
