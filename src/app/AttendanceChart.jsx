@@ -182,7 +182,7 @@ function AttendanceChart() {
             key={group}
             style={{ backgroundColor: ["#FFC100", "#04d924", "#027df7", "#f70233"][index] }}
             className="h-full md:h-full w-full flex flex-col items-center rounded-lg m-2 justify-center cursor-pointer">
-            <div className="text-5xl md:text-9xl text-white font-bold">
+            <div className="text-5xl md:text-8xl text-white font-bold">
               {countPresentForDay(attendanceData[group], selectedDay)}
             </div>
             <div className="md:text-4xl text-white font-bold">{group}</div>
