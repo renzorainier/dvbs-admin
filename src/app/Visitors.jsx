@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu, Transition } from "@headlessui/react";
@@ -141,6 +141,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     } catch (error) {
       console.error("Error adding visitor: ", error);
     }
+    playEnterSound(); // Play sound
+
   };
 
   const ageOptions = [
