@@ -13,7 +13,9 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [broughtBible, setBroughtBible] = useState(false); // New state for Bible toggle
   const [primaryData, setPrimaryData] = useState({});
   const [showPopup, setShowPopup] = useState(false);
-  
+  const audioRef = useRef(null);
+
+
   const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
 
   useEffect(() => {
@@ -146,6 +148,12 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     config.ageRange[1],
     config.ageRange[2],
   ];
+
+
+  const playEnterSound = () => {
+    const audio = new Audio("/point.wav");
+    audio.play();
+  };
 
   return (
     <div className="flex flex-col items-center pb-5">
@@ -310,6 +318,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
           </div>
         </div>
       </div>
+      <audio ref={audioRef} />
+
     </div>
   );
 }
