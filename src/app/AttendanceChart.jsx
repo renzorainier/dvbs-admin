@@ -112,6 +112,12 @@ function AttendanceChart() {
     ).length;
   };
 
+  const getTotalAttendanceForDay = (day) => {
+    return Object.keys(attendanceData).reduce((total, group) => {
+      return total + countPresentForDay(attendanceData[group], day);
+    }, 0);
+  };
+
   const handleDayChange = (day) => {
     setSelectedDay(day);
   };
@@ -136,7 +142,7 @@ function AttendanceChart() {
   return (
     <div className="attendance-chart-container flex flex-col md:flex-row h-screen w-screen bg-white">
       {/* Chart Section */}
-      <div className="h-full md:w-2/3 ">
+      <div className="h-full md:w-2/3">
         <div className="bg-white rounded-lg p-4 shadow-lg w-full h-full">
           <canvas id="attendanceChart" className="w-full h-full"></canvas>
         </div>
@@ -182,6 +188,13 @@ function AttendanceChart() {
             <div className="md:text-4xl text-white font-bold">{group}</div>
           </div>
         ))}
+
+        <div className="w-full flex flex-col items-center rounded-lg m-2 justify-center bg-gray-300 cursor-pointer">
+          <div className="text-5xl md:text-9xl text-black font-bold">
+            {getTotalAttendanceForDay(selectedDay)}
+          </div>
+          <div className="md:text-4xl text-black font-bold">Total</div>
+        </div>
       </div>
     </div>
   );
