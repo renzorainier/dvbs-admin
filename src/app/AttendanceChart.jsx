@@ -140,7 +140,7 @@ function AttendanceChart() {
   };
 
   return (
-    <div className="attendance-chart-container flex flex-col md:flex-row h-screen w-screen bg-white">
+    <div className="attendance-chart-container flex flex-col md:flex-row h-screen w-screen bg-black">
       {/* Chart Section */}
       <div className="h-full md:w-2/3">
         <div className="bg-white rounded-lg p-4 shadow-lg w-full h-full">
