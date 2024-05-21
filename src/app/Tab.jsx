@@ -47,9 +47,10 @@ function Tab() {
       style={{
         backgroundColor: `${configurations[currentConfigIndex].color}`,
       }}
-      className=" h-screen ">
+      className=" h-screen overflow-auto ">
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
+
           <Menu
             as="div"
             className="relative inline-block justify-center text-center mt-4">
