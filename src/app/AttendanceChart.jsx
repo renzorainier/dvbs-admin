@@ -193,7 +193,7 @@ function AttendanceChart() {
           <div className="text-5xl md:text-9xl text-black font-bold">
             {getTotalAttendanceForDay(selectedDay)}
           </div>
-          <div className="md:text-4xl mb-4 text-black font-bold">Total</div>
+          <div className="md:text-4xl md:mb-4 text-black font-bold">Total</div>
         </div>
       </div>
     </div>
