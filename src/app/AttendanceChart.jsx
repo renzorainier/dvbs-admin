@@ -46,6 +46,8 @@ function AttendanceChart() {
     };
 
     fetchAttendanceData();
+    playEnterSound();
+
   }, []);
 
   useEffect(() => {
