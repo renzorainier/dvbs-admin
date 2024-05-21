@@ -12,7 +12,7 @@ import StudentOutTime from "./StudentOutTime"
 function Main({ configurations, currentConfigIndex, setCurrentConfigIndex  }) {
   return (
     <div>
-      {/* <AttendanceChart/> */}
+      <AttendanceChart/>
       <Tab configurations={configurations} currentConfigIndex={currentConfigIndex}
         setCurrentConfigIndex={setCurrentConfigIndex}/>
       <StudentOutTime/>
