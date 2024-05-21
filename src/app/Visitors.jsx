@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu, Transition } from "@headlessui/react";
-import Confetti from "react-confetti";
 
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
@@ -14,8 +13,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [broughtBible, setBroughtBible] = useState(false); // New state for Bible toggle
   const [primaryData, setPrimaryData] = useState({});
   const [showPopup, setShowPopup] = useState(false);
-  const [confettiActive, setConfettiActive] = useState(false);
-
+  
   const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
 
   useEffect(() => {
@@ -141,7 +139,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     } catch (error) {
       console.error("Error adding visitor: ", error);
     }
-    setConfettiActive(true);
   };
 
   const ageOptions = [
@@ -167,7 +164,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       )}
 
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto ">
-        {confettiActive && <Confetti numberOfPieces={200} />}
 
         <div className="p-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
