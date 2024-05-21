@@ -92,8 +92,8 @@ function Main() {
         <div className="fade-in">
           <div>
             {backButton}
+            {/* <ScrollToTopButton /> */}
             {renderCurrentComponent()}
-            <ScrollToTopButton />
             {/* <Analytics />  */}
           </div>
         </div>
