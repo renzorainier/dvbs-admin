@@ -58,9 +58,9 @@ export default function Home() {
             className="w-full rounded-lg mx-auto"
             style={{ maxWidth: "90%" }}>
             <Main
-              configurations={configurations}
-              currentConfigIndex={currentConfigIndex}
-              setCurrentConfigIndex={setCurrentConfigIndex}
+              // configurations={configurations}
+              // currentConfigIndex={currentConfigIndex}
+              // setCurrentConfigIndex={setCurrentConfigIndex}
             />
           </div>
         </div>

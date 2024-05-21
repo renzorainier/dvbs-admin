@@ -13,7 +13,7 @@ import ScrollToTopButton from "./Scroll"
 
 
 
-function Main({ configurations, currentConfigIndex, setCurrentConfigIndex  }) {
+function Main() {
 
   const [currentComponent, setCurrentComponent] = useState(null);
 
@@ -28,8 +28,7 @@ function Main({ configurations, currentConfigIndex, setCurrentConfigIndex  }) {
   const renderCurrentComponent = () => {
     switch (currentComponent) {
       case "today":
-        return <Tab configurations={configurations} currentConfigIndex={currentConfigIndex}
-        setCurrentConfigIndex={setCurrentConfigIndex} onBackButtonClick={handleBackButtonClick} />;
+        return <Tab  />;
       case "about":
         return <Tab onBackButtonClick={handleBackButtonClick} />;
       // render other components as needed
