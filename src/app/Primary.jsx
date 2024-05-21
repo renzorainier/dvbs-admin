@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
@@ -11,6 +11,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [studentToMarkAbsent, setStudentToMarkAbsent] = useState(null);
   const [showBiblePopup, setShowBiblePopup] = useState(false);
   const [studentToUpdateBible, setStudentToUpdateBible] = useState(null);
+  const audioRef = useRef(null);
+
 
   const uploadTime = new Date().toLocaleString();
 
@@ -145,6 +147,11 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const filteredNames = sortedNames.filter((name) =>
     name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const playEnterSound = () => {
+    const audio = new Audio("/point.wav");
+    audio.play();
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -294,6 +301,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
           })}
         </div>
       </div>
+      <audio ref={audioRef} />
+
     </div>
   );
 }
