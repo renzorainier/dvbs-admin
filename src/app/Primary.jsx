@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
+import Confetti from "react-confetti";
+
 
 function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [primaryData, setPrimaryData] = useState({});
