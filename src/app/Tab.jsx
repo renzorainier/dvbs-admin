@@ -10,7 +10,7 @@ function Tab({ configurations, currentConfigIndex, setCurrentConfigIndex }) {
   const currentConfig = configurations[currentConfigIndex];
 
   return (
-    <div className="h-full">
+    <div className="h-screen overflow-auto">
       <Menu
         as="div"
         className="relative inline-block justify-center text-center mt-4">
@@ -92,9 +92,11 @@ function Tab({ configurations, currentConfigIndex, setCurrentConfigIndex }) {
 
       <div>
         {state ? (
-          <Visitors config={currentConfig}
-          currentConfigIndex={currentConfigIndex}
-          setCurrentConfigIndex={setCurrentConfigIndex}/>
+          <Visitors
+            config={currentConfig}
+            currentConfigIndex={currentConfigIndex}
+            setCurrentConfigIndex={setCurrentConfigIndex}
+          />
         ) : (
           <Primary
             config={currentConfig}
