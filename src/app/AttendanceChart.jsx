@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase.js";
@@ -18,6 +18,8 @@ function AttendanceChart() {
     youth: {},
   });
   const [selectedDay, setSelectedDay] = useState(getDefaultSelectedDay());
+  const audioRef = useRef(null);
+
 
   useEffect(() => {
     const fetchAttendanceData = async () => {
@@ -139,6 +141,11 @@ function AttendanceChart() {
     }
   };
 
+  const playEnterSound = () => {
+    const audio = new Audio("/point.wav");
+    audio.play();
+  };
+
   return (
     <div className="attendance-chart-container flex flex-col md:flex-row h-screen w-screen bg-black">
       {/* Chart Section */}
@@ -196,6 +203,7 @@ function AttendanceChart() {
           <div className="md:text-4xl md:mb-4 text-black font-bold">Total</div>
         </div>
       </div>
+      <audio ref={audioRef} />
     </div>
   );
 }
