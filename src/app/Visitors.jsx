@@ -36,6 +36,16 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     fetchPrimary();
   }, [config.dbPath]);
 
+  useEffect(() => {
+    let timer;
+    if (confettiActive) {
+      timer = setTimeout(() => {
+        setConfettiActive(false);
+      }, 5000); // 5 seconds
+    }
+    return () => clearTimeout(timer);
+  }, [confettiActive]);
+
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E", "F", "G"];
     const dayIndex = new Date().getDay();
@@ -141,7 +151,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     } catch (error) {
       console.error("Error adding visitor: ", error);
     }
-    setConfettiActive(true);
   };
 
   const ageOptions = [
