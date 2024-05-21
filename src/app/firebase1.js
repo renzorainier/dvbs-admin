@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+const firebaseConfig1 = {
     apiKey: "AIzaSyDrCeB6u0CC3d-NWLudPiPzARkVgot2HyY",
     authDomain: "points-20cf8.firebaseapp.com",
     projectId: "points-20cf8",
@@ -13,7 +13,7 @@ const firebaseConfig = {
     appId: "1:341348174938:web:e45f679f1dc18f25149c63"
     };
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig1);
 export const db = getFirestore(app);
 
 
