@@ -280,7 +280,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   className={`w-70percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
                     studentIndex
                   )}`}
-                  onClick={() => { handleClick(studentIndex); playEnterSound(); }}>
+                  onClick={() => { handleClick(studentIndex); }}>
                   {name}
                 </button>
                 <div className="flex flex-row ml-1">
