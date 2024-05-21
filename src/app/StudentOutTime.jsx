@@ -159,7 +159,7 @@ function StudentOutTime() {
   const notMarkedCount = filteredStudents.length - markedCount;
 
   return (
-    <div className="bg-[#524C42]">
+    <div className="bg-[#31363F] h-screen overflow-auto ">
 
     <div className="flex justify-center items-center overflow-auto">
       <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
@@ -272,7 +272,7 @@ function StudentOutTime() {
                 className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
                   student.outTime
                     ? "bg-green-500 hover:bg-green-700"
-                    : "bg-gray-500 hover:bg-gray-700"
+                    : "bg-gray-400 hover:bg-gray-700"
                 }`}
                 onClick={() =>
                   handleClick(
