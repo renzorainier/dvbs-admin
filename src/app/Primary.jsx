@@ -3,7 +3,6 @@ import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
 
-
 function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,7 +11,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [showBiblePopup, setShowBiblePopup] = useState(false);
   const [studentToUpdateBible, setStudentToUpdateBible] = useState(null);
   const audioRef = useRef(null);
-
 
   const uploadTime = new Date().toLocaleString();
 
@@ -75,8 +73,9 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
       }));
 
-      // Show Bible confirmation popup if student is marked present
+      // Play sound if student is marked present
       if (newValue) {
+        playEnterSound();
         setStudentToUpdateBible(fieldName);
         setShowBiblePopup(true);
       }
@@ -86,7 +85,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
     setShowConfirmation(false);
     setStudentToMarkAbsent(null);
-
   };
 
   const updateBibleStatus = async (fieldName, broughtBible) => {
@@ -280,7 +278,9 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   className={`w-70percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
                     studentIndex
                   )}`}
-                  onClick={() => { handleClick(studentIndex); }}>
+                  onClick={() => {
+                    handleClick(studentIndex);
+                  }}>
                   {name}
                 </button>
                 <div className="flex flex-row ml-1">
@@ -303,7 +303,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         </div>
       </div>
       <audio ref={audioRef} />
-
     </div>
   );
 }
