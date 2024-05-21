@@ -31,6 +31,7 @@ function PointingSystemGraph() {
   const [isAdding, setIsAdding] = useState(true);
   const [confettiActive, setConfettiActive] = useState(false);
   const audioRef = useRef(null);
+  const previousPointsData = useRef(pointsData);
 
   useEffect(() => {
     const fetchPointsData = async () => {
@@ -41,10 +42,24 @@ function PointingSystemGraph() {
         const docRef = doc(db2, "points", docName);
         listeners[docName] = onSnapshot(docRef, (doc) => {
           if (doc.exists()) {
-            setPointsData((prevData) => ({
-              ...prevData,
-              [docName]: doc.data(),
-            }));
+            const newPointsData = doc.data();
+            setPointsData((prevData) => {
+              const updatedData = {
+                ...prevData,
+                [docName]: newPointsData,
+              };
+
+              // Check if points increased
+              if (prevData[docName][`${selectedDay}points`] < newPointsData[`${selectedDay}points`]) {
+                setConfettiActive(true);
+                playEnterSound();
+                setTimeout(() => {
+                  setConfettiActive(false);
+                }, 5000);
+              }
+
+              return updatedData;
+            });
           } else {
             console.error(`Document ${docName} does not exist!`);
           }
@@ -57,12 +72,12 @@ function PointingSystemGraph() {
     };
 
     fetchPointsData();
-  }, []);
+  }, [selectedDay]);
 
   useEffect(() => {
-    if (pointsData) {
-      renderChart(); // Render the chart when pointsData changes
-    }
+    renderChart(); // Render the chart when pointsData changes
+    // Update previous points data ref
+    previousPointsData.current = pointsData;
   }, [pointsData, selectedDay]);
 
   const renderChart = () => {
@@ -241,7 +256,7 @@ function PointingSystemGraph() {
           <div
             key={group}
             style={{ backgroundColor: colors[index % colors.length] }}
-            className="h-full md:h-full w-full flex flex-col items-center rounded-lg m-2 justify-center cursor-pointer"
+            className="h-full md:h-full w-full flex flex-col items-center rounded-lg m            -2 justify-center cursor-pointer"
             onClick={() => handleGroupClick(group, true)}>
             <div className="text-5xl md:text-9xl text-white font-bold">
               {pointsData[group][`${selectedDay}points`]}
@@ -261,18 +276,14 @@ function PointingSystemGraph() {
               <button
                 onClick={() => setIsAdding(true)}
                 className={`px-4 py-2 rounded-md mr-2 ${
-                  isAdding
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-700"
+                  isAdding ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
                 }`}>
                 Add
               </button>
               <button
                 onClick={() => setIsAdding(false)}
                 className={`px-4 py-2 rounded-md ${
-                  !isAdding
-                    ? "bg-red-500 text-white"
-                    : "bg-gray-200 text-gray-700"
+                  !isAdding ? "bg-red-500 text-white" : "bg-gray-200 text-gray-700"
                 }`}>
                 Minus
               </button>
@@ -282,6 +293,7 @@ function PointingSystemGraph() {
               onChange={handleInputChange}
               className="border border-gray-300 rounded-md px-2 py-1 w-full no-spin"
               placeholder="Enter points"
+              type="number"
             />
             <div className="flex justify-center mt-4">
               <button
@@ -298,10 +310,11 @@ function PointingSystemGraph() {
           </div>
         </div>
       )}
-      {confettiActive && <Confetti numberOfPieces="200" />}
+      {confettiActive && <Confetti numberOfPieces={200} />}
       <audio ref={audioRef} />
     </div>
   );
 }
 
 export default PointingSystemGraph;
+
