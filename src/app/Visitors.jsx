@@ -9,6 +9,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [invitedBy, setInvitedBy] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [age, setAge] = useState("");
+  const [broughtBible, setBroughtBible] = useState(false); // New state for Bible toggle
   const [primaryData, setPrimaryData] = useState({});
   const [showPopup, setShowPopup] = useState(false);
 
@@ -104,6 +105,11 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}Cout`]: "",
         [`${paddedIndex}Dout`]: "",
         [`${paddedIndex}Eout`]: "",
+        [`${paddedIndex}Abible`]: false,
+        [`${paddedIndex}Bbible`]: false,
+        [`${paddedIndex}Cbible`]: false,
+        [`${paddedIndex}Dbible`]: false,
+        [`${paddedIndex}Ebible`]: false,
       };
 
       const currentDayLetter = getCurrentDayLetter();
@@ -111,6 +117,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       ["A", "B", "C", "D", "E"].forEach((letter) => {
         newFields[`${paddedIndex}${letter}`] =
           letter === currentDayLetter ? currentTime : "";
+        newFields[`${paddedIndex}${letter}bible`] =
+          letter === currentDayLetter ? broughtBible : false; // Update Bible field for current day
       });
 
       await updateDoc(docRef, newFields);
@@ -120,6 +128,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       setInvitedBy("");
       setContactNumber("");
       setAge("");
+      setBroughtBible(false); // Reset Bible toggle
       console.log("Visitor added successfully!");
 
       setPrimaryData((prevData) => ({
@@ -184,8 +193,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95">
-                  <Menu.Items
-                    className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {ageOptions.map((ageOption) => (
                         <Menu.Item key={ageOption}>
@@ -206,6 +214,19 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   </Menu.Items>
                 </Transition>
               </Menu>
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={broughtBible}
+                    onChange={() => setBroughtBible(!broughtBible)}
+                    className={`form-checkbox h-6 w-6 text-[${config.color}] rounded focus:ring-2 focus:ring-offset-2 focus:ring-${config.color} transition duration-200`}
+                  />
+                  <span className="text-gray-800 font-medium">
+                    Bible
+                  </span>
+                </label>
+              </div>
             </div>
 
             <div className="flex items-center space-x-4">
@@ -267,6 +288,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               placeholder="Contact Number (optional)"
               className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
             />
+
             <button
               className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
               onClick={addVisitor}>
