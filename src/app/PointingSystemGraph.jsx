@@ -210,7 +210,7 @@ function PointingSystemGraph() {
   const colors = ["#FFC100", "#04d924", "#027df7", "#f70233"];
 
   return (
-    <div className="points-system-container h-screen flex flex-col md:flex-row">
+    <div className="points-system-container h-screen bg-black flex flex-col md:flex-row">
       {/* Graph Section */}
       <div className="h-full md:w-2/3">
         <div className="bg-white rounded-lg shadow-lg p-4 w-full h-full">
