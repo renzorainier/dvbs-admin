@@ -9,6 +9,7 @@ import InitializeData from "./InitializeData"
 import AttendanceChart from "./AttendanceChart"
 import StudentOutTime from "./StudentOutTime"
 import PointingSystemGraph from "./PointingSystemGraph"
+import ScrollToTopButton from "./Scroll"
 
 
 
@@ -101,8 +102,8 @@ function Main({ configurations, currentConfigIndex, setCurrentConfigIndex  }) {
                 </p>
               </div>
             </footer>
-            {/* <ScrollToTopButton />
-            <Analytics /> */}
+            <ScrollToTopButton />
+            {/* <Analytics />  */}
           </div>
         </div>
     </div>
