@@ -62,13 +62,13 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
       await updateDoc(docRef, {
         [fieldToUpdate]: newValue,
-        [bibleField]: newValue ? "" : null, // Reset Bible status
+        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [fieldToUpdate]: newValue,
-        [bibleField]: newValue ? "" : null, // Reset Bible status
+        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
       }));
 
       // Show Bible confirmation popup if student is marked present
@@ -226,7 +226,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
-          <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
+          <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text           text-lg lg:text-xl">
             {countAbsentForToday()}
           </p>
         </div>
