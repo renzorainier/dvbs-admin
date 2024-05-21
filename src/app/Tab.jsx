@@ -10,7 +10,7 @@ function Tab({ configurations, currentConfigIndex, setCurrentConfigIndex }) {
   const currentConfig = configurations[currentConfigIndex];
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div className="h-full">
       <Menu
         as="div"
         className="relative inline-block justify-center text-center mt-4">
