@@ -7,7 +7,6 @@ import Primary from "./Primary"
 import InitializeData from "./InitializeData"
 import AttendanceChart from "./AttendanceChart"
 import StudentOutTime from "./StudentOutTime"
-import PointingSystemGraph from "./PointingSystemGraph"
 
 
 function Main({ configurations, currentConfigIndex, setCurrentConfigIndex  }) {
@@ -17,7 +16,6 @@ function Main({ configurations, currentConfigIndex, setCurrentConfigIndex  }) {
       <Tab configurations={configurations} currentConfigIndex={currentConfigIndex}
         setCurrentConfigIndex={setCurrentConfigIndex}/>
       <StudentOutTime/>
-      <PointingSystemGraph/>
 
     </div>
   );
