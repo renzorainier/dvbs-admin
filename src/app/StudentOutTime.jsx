@@ -153,180 +153,176 @@ function StudentOutTime() {
     );
 
   // Count the number of marked and not marked students
-  const markedCount = filteredStudents.filter((student) => student.outTime).length;
+  const markedCount = filteredStudents.filter(
+    (student) => student.outTime
+  ).length;
   const notMarkedCount = filteredStudents.length - markedCount;
 
   return (
-    <div>
-      <Menu as="div" className="relative inline-block mt-5 mb-5">
-        <div>
-          <Menu.Button className="inline-flex rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-            <h2 className="text-4xl font-bold">
-              {selectedLocation || "All Locations"}
-            </h2>
-            <ChevronDownIcon
-              className="ml-2 -mr-1 h-10 w-10"
-              aria-hidden="true"
-            />
-          </Menu.Button>
-        </div>
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95">
-          <Menu.Items className="absolute z-10 mt-2 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="py-1">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                    } block px-4 py-2 text-2xl font-semibold text-left`}
-                    onClick={() => handleLocationChange("")}>
-                    All Locations
-                  </button>
-                )}
-              </Menu.Item>
-              {locations.map((location) => (
-                <Menu.Item key={location}>
+    <div className="flex justify-center items-center overflow-auto">
+      <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
+        <Menu as="div" className="relative inline-block mt-5 mb-5">
+          <div>
+            <Menu.Button className="inline-flex rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+              <h2 className="text-4xl font-bold">
+                {selectedLocation || "All Locations"}
+              </h2>
+              <ChevronDownIcon
+                className="ml-2 -mr-1 h-10 w-10"
+                aria-hidden="true"
+              />
+            </Menu.Button>
+          </div>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95">
+            <Menu.Items className="absolute z-10 mt-2 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="py-1">
+                <Menu.Item>
                   {({ active }) => (
                     <button
                       className={`${
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700"
                       } block px-4 py-2 text-2xl font-semibold text-left`}
-                      onClick={() => handleLocationChange(location)}>
-                      {location}
+                      onClick={() => handleLocationChange("")}>
+                      All Locations
                     </button>
                   )}
                 </Menu.Item>
-              ))}
-            </div>
-          </Menu.Items>
-        </Transition>
-      </Menu>
+                {locations.map((location) => (
+                  <Menu.Item key={location}>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                        } block px-4 py-2 text-2xl font-semibold text-left`}
+                        onClick={() => handleLocationChange(location)}>
+                        {location}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ))}
+              </div>
+            </Menu.Items>
+          </Transition>
+        </Menu>
 
-      <div className="flex justify-center mb-5 font-bold">
-        <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632"
-            />
-          </svg>
+        <div className="flex justify-center mb-5 font-bold">
+          <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632"
+              />
+            </svg>
 
-          <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
-          {markedCount}
-          </p>
+            <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
+              {markedCount}
+            </p>
+          </div>
+          <div className="flex items-center bg-white border rounded-lg shadow-md p-4 ml-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+
+            <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
+              {notMarkedCount}
+            </p>
+          </div>
         </div>
-        <div className="flex items-center bg-white border rounded-lg shadow-md p-4 ml-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
 
-          <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
-          {notMarkedCount}
-          </p>
-        </div>
+        <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
+          <input
+            type="text"
+            className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+            placeholder="Search by name"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
 
-        </div>
-
-
-      <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
-        <input
-          type="text"
-          className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
-          placeholder="Search by name"
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-
-        {filteredStudents.map((student) => (
-          <div
-            key={`${student.id}-${student.prefix}`}
-            className="flex items-center mb-4"
-          >
-            <button
-              className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
-                student.outTime
-                  ? "bg-green-500 hover:bg-green-700"
-                  : "bg-gray-500 hover:bg-gray-700"
-              }`}
-              onClick={() =>
-                handleClick(
-                  student.id,
-                  student.prefix,
-                  student.inTimeField,
-                  student.outTimeField,
-                  student.outTime
-                )
-              }
-            >
-              {student.name}
-            </button>
+          {filteredStudents.map((student) => (
             <div
-              className="ml-4 h-10 p-2 rounded-lg"
-              style={{ backgroundColor: getBackgroundColor(student.id) }}
-            ></div>
-          </div>
-        ))}
-      </div>
-
-      {showConfirmation && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black opacity-50" />
-          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-            <p className="mb-2">Unmark student as out?</p>
-            <div className="flex space-x-4">
+              key={`${student.id}-${student.prefix}`}
+              className="flex items-center mb-4">
               <button
-                className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
+                  student.outTime
+                    ? "bg-green-500 hover:bg-green-700"
+                    : "bg-gray-500 hover:bg-gray-700"
+                }`}
                 onClick={() =>
-                  updateStudentOutTime(
-                    studentToMarkOut.groupId,
-                    studentToMarkOut.prefix,
-                    studentToMarkOut.inTimeField,
-                    studentToMarkOut.outTimeField,
-                    ""
+                  handleClick(
+                    student.id,
+                    student.prefix,
+                    student.inTimeField,
+                    student.outTimeField,
+                    student.outTime
                   )
-                }
-              >
-                Yes
+                }>
+                {student.name}
               </button>
-              <button
-                className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setShowConfirmation(false)}
-              >
-                No
-              </button>
+              <div
+                className="ml-4 h-10 p-2 rounded-lg"
+                style={{
+                  backgroundColor: getBackgroundColor(student.id),
+                }}></div>
+            </div>
+          ))}
+        </div>
+
+        {showConfirmation && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="fixed inset-0 bg-black opacity-50" />
+            <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+              <p className="mb-2">Unmark student as out?</p>
+              <div className="flex space-x-4">
+                <button
+                  className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                  onClick={() =>
+                    updateStudentOutTime(
+                      studentToMarkOut.groupId,
+                      studentToMarkOut.prefix,
+                      studentToMarkOut.inTimeField,
+                      studentToMarkOut.outTimeField,
+                      ""
+                    )
+                  }>
+                  Yes
+                </button>
+                <button
+                  className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => setShowConfirmation(false)}>
+                  No
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
 
 export default StudentOutTime;
-
