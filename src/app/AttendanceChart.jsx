@@ -18,8 +18,8 @@ function AttendanceChart() {
     youth: {},
   });
   const [selectedDay, setSelectedDay] = useState(getDefaultSelectedDay());
+  const [previousAttendanceData, setPreviousAttendanceData] = useState({});
   const audioRef = useRef(null);
-
 
   useEffect(() => {
     const fetchAttendanceData = async () => {
@@ -30,10 +30,16 @@ function AttendanceChart() {
         const docRef = doc(db, "dvbs", docName);
         listeners[docName] = onSnapshot(docRef, (doc) => {
           if (doc.exists()) {
-            setAttendanceData((prevData) => ({
-              ...prevData,
-              [docName]: doc.data(),
-            }));
+            const newData = doc.data();
+            setAttendanceData((prevData) => {
+              if (shouldPlaySound(prevData[docName], newData, selectedDay)) {
+                playEnterSound();
+              }
+              return {
+                ...prevData,
+                [docName]: newData,
+              };
+            });
           } else {
             console.error(`Document ${docName} does not exist!`);
           }
@@ -46,8 +52,7 @@ function AttendanceChart() {
     };
 
     fetchAttendanceData();
-
-  }, []);
+  }, [selectedDay]);
 
   useEffect(() => {
     if (attendanceData) {
@@ -145,6 +150,13 @@ function AttendanceChart() {
   const playEnterSound = () => {
     const audio = new Audio("/point.wav");
     audio.play();
+  };
+
+  const shouldPlaySound = (previousData, newData, day) => {
+    if (!previousData || !newData) return false;
+    const previousCount = countPresentForDay(previousData, day);
+    const newCount = countPresentForDay(newData, day);
+    return newCount > previousCount;
   };
 
   return (
