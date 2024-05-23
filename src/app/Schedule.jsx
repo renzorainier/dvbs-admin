@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db3 } from "./firebaseConfig3.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
@@ -8,6 +8,8 @@ function Schedule() {
   const [scheduleData, setScheduleData] = useState({});
   const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const audioRef = useRef(null);
+
 
   const configurations = [
     {
@@ -157,6 +159,11 @@ function Schedule() {
     });
   };
 
+  const playEnterSound = () => {
+    const audio = new Audio("/point.wav");
+    audio.play();
+  };
+
 
   return (
     <div
@@ -216,6 +223,8 @@ function Schedule() {
           </div>
         </div>
       </div>
+      <audio ref={audioRef} />
+
     </div>
   );
 }
