@@ -9,6 +9,7 @@ import AttendanceChart from "./AttendanceChart";
 import StudentOutTime from "./StudentOutTime";
 import PointingSystemGraph from "./PointingSystemGraph";
 import ScrollToTopButton from "./Scroll";
+import Schedule from "./Schedule";
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -31,8 +32,8 @@ function Main() {
         return <PointingSystemGraph />;
       case "Attendance":
         return <AttendanceChart />;
-        case "Schedule":
-          return <AttendanceChart />;
+      case "Schedule":
+        return <Schedule />;
       // render other components as needed
       default:
         return (
