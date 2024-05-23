@@ -62,7 +62,7 @@ function Schedule() {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.src = "/point.wav";
+      audioRef.current.src = "/ding.wav";
     }
   }, []);
 
