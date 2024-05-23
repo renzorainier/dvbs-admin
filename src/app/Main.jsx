@@ -10,6 +10,7 @@ import StudentOutTime from "./StudentOutTime";
 import PointingSystemGraph from "./PointingSystemGraph";
 import ScrollToTopButton from "./Scroll";
 import Schedule from "./Schedule";
+import CopyScheduleData from "./CopyScheduleData"
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -110,6 +111,7 @@ function Main() {
           {backButton}
           {/* <ScrollToTopButton /> */}
           {renderCurrentComponent()}
+          <CopyScheduleData/>
           {/* <Analytics />  */}
         </div>
       </div>

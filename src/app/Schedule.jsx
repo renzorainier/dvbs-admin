@@ -170,7 +170,7 @@ function Schedule() {
           )}
         </div>
       );
-    });
+    });CopyScheduleData 
   };
 
   return (
