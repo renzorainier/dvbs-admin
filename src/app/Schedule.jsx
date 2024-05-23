@@ -124,10 +124,13 @@ function Schedule() {
 
       return (
         <div
-          key={segment}
-          className={`mb-4 p-4 border rounded-lg shadow-sm ${
-            isCurrent ? `${configurations[currentConfigIndex].color}` : "bg-white"
-          }`}>
+        key={segment}
+        className="mb-4 p-4 border rounded-lg shadow-sm"
+        style={{
+          backgroundColor: isCurrent ? currentConfig.color : "white",
+          color: isCurrent ? "white" : "black"
+        }}
+      >
           <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
           <p>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
