@@ -38,39 +38,39 @@ function Main() {
       // render other components as needed
       default:
         return (
-          <div className="flex justify-center h-screen">
-            <div className="mt-4 ax-w-screen-lg mx-auto">
-              <div className="ml-5 text-white mr-5 mt-3 grid gap-4">
+          <div className="flex justify-center items-center h-screen bg-gradient-to-br from-blue-800 to-purple-800">
+            <div className="container mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <button
-                  className="bg-blue-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 font-bold text-xl py-10 rounded-lg shadow-lg"
+                  className="focus:outline-none bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Tab")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
                   Tab
                 </button>
 
                 <button
-                  className="bg-violet-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 font-bold text-xl py-10 rounded-lg shadow-lg"
+                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Out")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Out
                 </button>
 
                 <button
-                  className="bg-blue-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 font-bold text-xl py-10 rounded-lg shadow-lg"
+                  className="focus:outline-none bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Point")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
                   Point
                 </button>
 
                 <button
-                  className="bg-violet-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 font-bold text-xl py-10 rounded-lg shadow-lg"
+                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Attendance")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Attendance
                 </button>
 
                 <button
-                  className="bg-violet-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 font-bold text-xl py-10 rounded-lg shadow-lg"
+                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Schedule")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Schedule
