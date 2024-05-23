@@ -3,12 +3,12 @@ import { getFirestore } from 'firebase/firestore';
 
 // Firebase configuration for the second account
 const firebaseConfig3 = {
-  apiKey: "AIzaSyDrCeB6u0CC3d-NWLudPiPzARkVgot2HyY",
-  authDomain: "points-20cf8.firebaseapp.com",
-  projectId: "points-20cf8",
-  storageBucket: "points-20cf8.appspot.com",
-  messagingSenderId: "341348174938",
-  appId: "1:341348174938:web:e45f679f1dc18f25149c63",
+  apiKey: "AIzaSyCGcUZWDk5fQLy-ESsnSrfUsC1FfsSl5jY",
+  authDomain: "sched-35c30.firebaseapp.com",
+  projectId: "sched-35c30",
+  storageBucket: "sched-35c30.appspot.com",
+  messagingSenderId: "190264231373",
+  appId: "1:190264231373:web:eb2b5f1bd7a3df51e7f084"
 };
 
 // Initialize Firebase app for the second account with a different name
