@@ -126,7 +126,7 @@ function Schedule() {
         <div
           key={segment}
           className={`mb-4 p-4 border rounded-lg shadow-sm ${
-            isCurrent ? "bg-green-500 text-white" : "bg-white"
+            isCurrent ? "  {configurations[currentConfigIndex].color} text-white" : "bg-white"
           }`}>
           <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
           <p>
