@@ -125,7 +125,7 @@ function Schedule() {
         <div
           key={segment}
           className={`mb-4 p-4 border rounded-lg shadow-sm ${
-            isCurrent ? "text-xl font-bold" : "" // Add font size class here
+            isCurrent ? "text-2xl font-bold" : "" // Add font size class here
           }`}
           style={{
             backgroundColor: isCurrent ? currentConfig.color : "white",
