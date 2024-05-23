@@ -136,7 +136,7 @@ function Schedule() {
               <div className="w-full h-2 bg-white rounded-full mt-2">
                 <div
                   className="h-2 bg-red-500 rounded-full"
-                  style={{ width: `${progressWidth}%` }}
+                  style={{ width: `${progressWidth}%`, transition: 'width 1s linear' }}
                 ></div>
               </div>
             </>
