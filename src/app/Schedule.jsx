@@ -37,6 +37,7 @@ function Schedule() {
 
   useEffect(() => {
     const fetchSchedule = async () => {
+      console.log("Fetching schedule for config:", currentConfig.db3Path);
       const docRef = doc(
         db3,
         currentConfig.db3Path.split("/")[0],
@@ -45,7 +46,7 @@ function Schedule() {
       const scheduleSnapshot = await getDoc(docRef);
       if (scheduleSnapshot.exists()) {
         const data = scheduleSnapshot.data();
-        console.log(data);
+        console.log("Fetched data:", data);
         setScheduleData(data);
       } else {
         console.error("No such document!");
@@ -62,10 +63,12 @@ function Schedule() {
 
   useEffect(() => {
     const checkForEventEnd = () => {
+      console.log("Checking for event end...");
       const segments = Object.keys(scheduleData)
         .filter((key) => key.length === 1)
         .sort();
       const currentTimeStr = getCurrentTime();
+      console.log("Current time:", currentTimeStr);
       const currentTime = new Date();
 
       segments.forEach((segment) => {
@@ -74,9 +77,11 @@ function Schedule() {
         const [endHour, endMinute] = endTime.split(":").map(Number);
         endTimeDate.setHours(endHour, endMinute, 0, 0);
 
+        console.log(`Checking segment ${segment} with end time ${endTime}`);
+
         if (currentTimeStr === endTime) {
           playEnterSound();
-          console.log("ayan na");
+          console.log("Event ended, playing sound for segment:", segment);
         }
       });
     };
@@ -202,9 +207,20 @@ function Schedule() {
   };
 
   const playEnterSound = () => {
+    console.log("Attempting to play sound");
     if (audioRef.current) {
+      console.log("Audio element found:", audioRef.current);
       audioRef.current.src = "/point.wav";
-      audioRef.current.play();
+      audioRef.current
+        .play()
+        .then(() => {
+          console.log("Sound played successfully");
+        })
+        .catch((error) => {
+          console.error("Error playing sound:", error);
+        });
+    } else {
+      console.error("No audio element found");
     }
   };
 
@@ -220,7 +236,7 @@ function Schedule() {
             as="div"
             className="relative inline-block justify-center text-center mt-4">
             <div>
-              <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+              <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white             hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                 <h2 className="text-4xl font-bold">
                   {configurations[currentConfigIndex].name}
                 </h2>
