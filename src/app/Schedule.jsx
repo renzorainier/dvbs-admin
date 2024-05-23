@@ -66,15 +66,20 @@ function Schedule() {
 
     const getCurrentTime = () => {
       const now = new Date();
-      return `${now.getHours()}:${now.getMinutes()}`;
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      return `${hours}:${minutes}:${seconds}`;
     };
 
     const isCurrentEvent = (start, end) => {
       const [startHour, startMinute] = start.split(":").map(Number);
       const [endHour, endMinute] = end.split(":").map(Number);
-      const [currentHour, currentMinute] = getCurrentTime().split(":").map(Number);
+      const [currentHour, currentMinute, currentSecond] = getCurrentTime()
+        .split(":")
+        .map(Number);
 
-      const currentTime = new Date(0, 0, 0, currentHour, currentMinute);
+      const currentTime = new Date(0, 0, 0, currentHour, currentMinute, currentSecond);
       const startTime = new Date(0, 0, 0, startHour, startMinute);
       const endTime = new Date(0, 0, 0, endHour, endMinute);
 
@@ -96,9 +101,11 @@ function Schedule() {
     const calculateProgressWidth = (start, end) => {
       const [startHour, startMinute] = start.split(":").map(Number);
       const [endHour, endMinute] = end.split(":").map(Number);
-      const [currentHour, currentMinute] = getCurrentTime().split(":").map(Number);
+      const [currentHour, currentMinute, currentSecond] = getCurrentTime()
+        .split(":")
+        .map(Number);
 
-      const currentTime = new Date(0, 0, 0, currentHour, currentMinute).getTime();
+      const currentTime = new Date(0, 0, 0, currentHour, currentMinute, currentSecond).getTime();
       const startTime = new Date(0, 0, 0, startHour, startMinute).getTime();
       const endTime = new Date(0, 0, 0, endHour, endMinute).getTime();
 
