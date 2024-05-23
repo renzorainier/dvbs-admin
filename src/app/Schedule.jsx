@@ -76,6 +76,7 @@ function Schedule() {
 
         if (currentTimeStr === endTime) {
           playEnterSound();
+          console.log("ayan na");
         }
       });
     };
