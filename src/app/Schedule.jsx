@@ -58,20 +58,42 @@ function Schedule() {
       .filter((key) => key.length === 1)
       .sort(); // Sort the segments to ensure proper order
 
-    return segments.map((segment) => (
-      <div
-        key={segment}
-        className="mb-4 p-4 border rounded-lg shadow-sm bg-white">
-        <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
-        <p>
-          <strong>Location:</strong> {scheduleData[`${segment}loc`]}
-        </p>
-        <p>
-          <strong>Time:</strong> {scheduleData[`${segment}start`]} -{" "}
-          {scheduleData[`${segment}end`]}
-        </p>
-      </div>
-    ));
+    const getCurrentTime = () => {
+      const now = new Date();
+      return `${now.getHours()}:${now.getMinutes()}`;
+    };
+
+    const isCurrentEvent = (start, end) => {
+      const [startHour, startMinute] = start.split(":").map(Number);
+      const [endHour, endMinute] = end.split(":").map(Number);
+      const [currentHour, currentMinute] = getCurrentTime().split(":").map(Number);
+
+      const currentTime = new Date(0, 0, 0, currentHour, currentMinute);
+      const startTime = new Date(0, 0, 0, startHour, startMinute);
+      const endTime = new Date(0, 0, 0, endHour, endMinute);
+
+      return currentTime >= startTime && currentTime < endTime;
+    };
+
+    return segments.map((segment) => {
+      const startTime = scheduleData[`${segment}start`];
+      const endTime = scheduleData[`${segment}end`];
+      const isCurrent = isCurrentEvent(startTime, endTime);
+
+      return (
+        <div
+          key={segment}
+          className={`mb-4 p-4 border rounded-lg shadow-sm ${isCurrent ? "bg-green-200" : "bg-white"}`}>
+          <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
+          <p>
+            <strong>Location:</strong> {scheduleData[`${segment}loc`]}
+          </p>
+          <p>
+            <strong>Time:</strong> {startTime} - {endTime}
+          </p>
+        </div>
+      );
+    });
   };
 
   return (
@@ -79,12 +101,12 @@ function Schedule() {
       style={{
         backgroundColor: `${configurations[currentConfigIndex].color}`,
       }}
-      className=" h-screen overflow-auto ">
+      className="h-screen overflow-auto">
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
           <Menu
             as="div"
-            className="relative inline-block justify-center  text-center mt-4">
+            className="relative inline-block justify-center text-center mt-4">
             <div>
               <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                 <h2 className="text-4xl font-bold">
