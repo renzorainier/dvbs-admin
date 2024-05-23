@@ -111,7 +111,7 @@ function Main() {
           {backButton}
           {/* <ScrollToTopButton /> */}
           {renderCurrentComponent()}
-          <CopyScheduleData/>
+          {/* <CopyScheduleData/> */}
           {/* <Analytics />  */}
         </div>
       </div>
