@@ -10,7 +10,6 @@ function Schedule() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const audioRef = useRef(null);
 
-
   const configurations = [
     {
       name: "Primary",
@@ -60,6 +59,19 @@ function Schedule() {
 
     return () => clearInterval(intervalId);
   }, [currentConfig.db3Path]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.src = "/point.wav";
+    }
+  }, []);
+
+  const playEnterSound = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
+
   const renderSchedule = () => {
     const segments = Object.keys(scheduleData)
       .filter((key) => key.length === 1)
@@ -123,6 +135,10 @@ function Schedule() {
       const remainingTime = isCurrent ? calculateRemainingTime(endTime) : "";
       const progressWidth = isCurrent ? calculateProgressWidth(startTime, endTime) : 0;
 
+      if (isCurrent && remainingTime === "0m 0s") {
+        playEnterSound();
+      }
+
       return (
         <div
           key={segment}
@@ -132,7 +148,7 @@ function Schedule() {
             color: isCurrent ? "white" : "black"
           }}
         >
-          <h3 className={`${isCurrent ? "text-4xl" : "text-lg"} font-bold `}>{scheduleData[segment]}</h3>
+          <h3 className={`${isCurrent ? "text-4xl" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
           <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
           </p>
@@ -154,28 +170,22 @@ function Schedule() {
           )}
         </div>
       );
-
-
     });
   };
-
-  const playEnterSound = () => {
-    const audio = new Audio("/point.wav");
-    audio.play();
-  };
-
 
   return (
     <div
       style={{
         backgroundColor: `${configurations[currentConfigIndex].color}`,
       }}
-      className="h-screen overflow-auto">
+      className="h-screen overflow-auto"
+    >
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
           <Menu
             as="div"
-            className="relative inline-block justify-center text-center mt-4">
+            className="relative inline-block justify-center text-center mt-4"
+          >
             <div>
               <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                 <h2 className="text-4xl font-bold">
@@ -195,7 +205,8 @@ function Schedule() {
               enterTo="transform opacity-100 scale-100"
               leave="transition ease-in duration-75"
               leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95">
+              leaveTo="transform opacity-0 scale-95"
+            >
               <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
                 {configurations.map((config, index) => (
                   <Menu.Item key={index}>
@@ -204,7 +215,8 @@ function Schedule() {
                         onClick={() => setCurrentConfigIndex(index)}
                         className={`${
                           active ? "bg-blue-500 text-white" : "text-gray-900"
-                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
+                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
+                      >
                         {config.name}
                       </button>
                     )}
@@ -215,7 +227,7 @@ function Schedule() {
           </Menu>
 
           <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-            {Object.keys(scheduleData).length > 0 ? (
+          {Object.keys(scheduleData).length > 0 ? (
               renderSchedule()
             ) : (
               <p className="text-center font-bold text-xl">Loading...</p>
@@ -224,7 +236,6 @@ function Schedule() {
         </div>
       </div>
       <audio ref={audioRef} />
-
     </div>
   );
 }
