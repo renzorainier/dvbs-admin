@@ -124,24 +124,22 @@ function Schedule() {
       return (
         <div
           key={segment}
-          className={`mb-4 p-4 border rounded-lg shadow-sm ${
-            isCurrent ? "text-2xl font-bold" : "" // Add font size class here
-          }`}
+          className={`mb-4 p-4 border rounded-lg shadow-sm`}
           style={{
             backgroundColor: isCurrent ? currentConfig.color : "white",
             color: isCurrent ? "white" : "black"
           }}
         >
-          <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
-          <p>
+          <h3 className={`text-2xl font-bold mb-2`}>{scheduleData[segment]}</h3>
+          <p className="text-lg">
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
           </p>
-          <p>
+          <p className="text-lg">
             <strong>Time:</strong> {startTime} - {endTime}
           </p>
           {isCurrent && (
             <>
-              <p className="mt-2 text-lg font-bold">
+              <p className="mt-2 text-base font-bold">
                 Remaining Time: {remainingTime}
               </p>
               <div className="w-full h-2 bg-white rounded-full mt-2">
@@ -154,6 +152,7 @@ function Schedule() {
           )}
         </div>
       );
+
     });
   };
 
