@@ -10,6 +10,7 @@ function Schedule() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const audioRef = useRef(null);
 
+
   const configurations = [
     {
       name: "Primary",
@@ -37,7 +38,6 @@ function Schedule() {
 
   useEffect(() => {
     const fetchSchedule = async () => {
-      console.log("Fetching schedule for config:", currentConfig.db3Path);
       const docRef = doc(
         db3,
         currentConfig.db3Path.split("/")[0],
@@ -46,7 +46,7 @@ function Schedule() {
       const scheduleSnapshot = await getDoc(docRef);
       if (scheduleSnapshot.exists()) {
         const data = scheduleSnapshot.data();
-        console.log("Fetched data:", data);
+        console.log(data);
         setScheduleData(data);
       } else {
         console.error("No such document!");
@@ -60,114 +60,68 @@ function Schedule() {
 
     return () => clearInterval(intervalId);
   }, [currentConfig.db3Path]);
-
-  useEffect(() => {
-    const checkForEventEnd = () => {
-      console.log("Checking for event end...");
-      const segments = Object.keys(scheduleData)
-        .filter((key) => key.length === 1)
-        .sort();
-      const currentTimeStr = getCurrentTime();
-      console.log("Current time:", currentTimeStr);
-      const currentTime = new Date();
-
-      segments.forEach((segment) => {
-        const endTime = scheduleData[`${segment}end`];
-        const endTimeDate = new Date(currentTime);
-        const [endHour, endMinute] = endTime.split(":").map(Number);
-        endTimeDate.setHours(endHour, endMinute, 0, 0);
-
-        console.log(`Checking segment ${segment} with end time ${endTime}`);
-
-        if (currentTimeStr === endTime) {
-          playEnterSound();
-          console.log("Event ended, playing sound for segment:", segment);
-        }
-      });
-    };
-
-    const intervalId = setInterval(checkForEventEnd, 1000);
-    return () => clearInterval(intervalId);
-  }, [scheduleData, currentTime]);
-
-  const getCurrentTime = () => {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const seconds = String(now.getSeconds()).padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
-  };
-
-  const isCurrentEvent = (start, end) => {
-    const [startHour, startMinute] = start.split(":").map(Number);
-    const [endHour, endMinute] = end.split(":").map(Number);
-    const [currentHour, currentMinute, currentSecond] = getCurrentTime()
-      .split(":")
-      .map(Number);
-
-    const currentTime = new Date(
-      0,
-      0,
-      0,
-      currentHour,
-      currentMinute,
-      currentSecond
-    );
-    const startTime = new Date(0, 0, 0, startHour, startMinute);
-    const endTime = new Date(0, 0, 0, endHour, endMinute);
-
-    return currentTime >= startTime && currentTime < endTime;
-  };
-
-  const calculateRemainingTime = (end) => {
-    const [endHour, endMinute] = end.split(":").map(Number);
-    const endTime = new Date();
-    endTime.setHours(endHour, endMinute, 0, 0);
-
-    const diff = endTime - currentTime;
-    const minutes = Math.floor(diff / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-
-    return `${minutes}m ${seconds}s`;
-  };
-
-  const calculateProgressWidth = (start, end) => {
-    const [startHour, startMinute] = start.split(":").map(Number);
-    const [endHour, endMinute] = end.split(":").map(Number);
-    const [currentHour, currentMinute, currentSecond] = getCurrentTime()
-      .split(":")
-      .map(Number);
-
-    const currentTime = new Date(
-      0,
-      0,
-      0,
-      currentHour,
-      currentMinute,
-      currentSecond
-    ).getTime();
-    const startTime = new Date(0, 0, 0, startHour, startMinute).getTime();
-    const endTime = new Date(0, 0, 0, endHour, endMinute).getTime();
-
-    const totalDuration = endTime - startTime;
-    const elapsedTime = currentTime - startTime;
-
-    return (elapsedTime / totalDuration) * 100;
-  };
-
   const renderSchedule = () => {
     const segments = Object.keys(scheduleData)
       .filter((key) => key.length === 1)
       .sort(); // Sort the segments to ensure proper order
+
+    const getCurrentTime = () => {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      return `${hours}:${minutes}:${seconds}`;
+    };
+
+    const isCurrentEvent = (start, end) => {
+      const [startHour, startMinute] = start.split(":").map(Number);
+      const [endHour, endMinute] = end.split(":").map(Number);
+      const [currentHour, currentMinute, currentSecond] = getCurrentTime()
+        .split(":")
+        .map(Number);
+
+      const currentTime = new Date(0, 0, 0, currentHour, currentMinute, currentSecond);
+      const startTime = new Date(0, 0, 0, startHour, startMinute);
+      const endTime = new Date(0, 0, 0, endHour, endMinute);
+
+      return currentTime >= startTime && currentTime < endTime;
+    };
+
+    const calculateRemainingTime = (end) => {
+      const [endHour, endMinute] = end.split(":").map(Number);
+      const endTime = new Date();
+      endTime.setHours(endHour, endMinute, 0, 0);
+
+      const diff = endTime - currentTime;
+      const minutes = Math.floor(diff / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+
+      return `${minutes}m ${seconds}s`;
+    };
+
+    const calculateProgressWidth = (start, end) => {
+      const [startHour, startMinute] = start.split(":").map(Number);
+      const [endHour, endMinute] = end.split(":").map(Number);
+      const [currentHour, currentMinute, currentSecond] = getCurrentTime()
+        .split(":")
+        .map(Number);
+
+      const currentTime = new Date(0, 0, 0, currentHour, currentMinute, currentSecond).getTime();
+      const startTime = new Date(0, 0, 0, startHour, startMinute).getTime();
+      const endTime = new Date(0, 0, 0, endHour, endMinute).getTime();
+
+      const totalDuration = endTime - startTime;
+      const elapsedTime = currentTime - startTime;
+
+      return (elapsedTime / totalDuration) * 100;
+    };
 
     return segments.map((segment) => {
       const startTime = scheduleData[`${segment}start`];
       const endTime = scheduleData[`${segment}end`];
       const isCurrent = isCurrentEvent(startTime, endTime);
       const remainingTime = isCurrent ? calculateRemainingTime(endTime) : "";
-      const progressWidth = isCurrent
-        ? calculateProgressWidth(startTime, endTime)
-        : 0;
+      const progressWidth = isCurrent ? calculateProgressWidth(startTime, endTime) : 0;
 
       return (
         <div
@@ -175,11 +129,10 @@ function Schedule() {
           className={`mb-4 p-4 border rounded-lg shadow-sm`}
           style={{
             backgroundColor: isCurrent ? currentConfig.color : "white",
-            color: isCurrent ? "white" : "black",
-          }}>
-          <h3 className={`${isCurrent ? "text-4xl" : "text-lg"} font-bold `}>
-            {scheduleData[segment]}
-          </h3>
+            color: isCurrent ? "white" : "black"
+          }}
+        >
+          <h3 className={`${isCurrent ? "text-4xl" : "text-lg"} font-bold `}>{scheduleData[segment]}</h3>
           <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
           </p>
@@ -194,35 +147,23 @@ function Schedule() {
               <div className="w-full h-2 bg-white rounded-full mt-2">
                 <div
                   className="h-2 bg-gray-500 rounded-full"
-                  style={{
-                    width: `${progressWidth}%`,
-                    transition: "width 1s linear",
-                  }}></div>
+                  style={{ width: `${progressWidth}%`, transition: 'width 1s linear' }}
+                ></div>
               </div>
             </>
           )}
         </div>
       );
+
+
     });
   };
 
   const playEnterSound = () => {
-    console.log("Attempting to play sound");
-    if (audioRef.current) {
-      console.log("Audio element found:", audioRef.current);
-      audioRef.current.src = "/point.wav";
-      audioRef.current
-        .play()
-        .then(() => {
-          console.log("Sound played successfully");
-        })
-        .catch((error) => {
-          console.error("Error playing sound:", error);
-        });
-    } else {
-      console.error("No audio element found");
-    }
+    const audio = new Audio("/point.wav");
+    audio.play();
   };
+
 
   return (
     <div
@@ -236,7 +177,7 @@ function Schedule() {
             as="div"
             className="relative inline-block justify-center text-center mt-4">
             <div>
-              <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white             hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+              <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                 <h2 className="text-4xl font-bold">
                   {configurations[currentConfigIndex].name}
                 </h2>
@@ -283,6 +224,7 @@ function Schedule() {
         </div>
       </div>
       <audio ref={audioRef} />
+
     </div>
   );
 }
