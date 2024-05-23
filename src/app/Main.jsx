@@ -47,21 +47,6 @@ function Main() {
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
                   Attendance
                 </button>
-
-                <button
-                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Out")}
-                  style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  Out
-                </button>
-
-                <button
-                  className="focus:outline-none bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Point")}
-                  style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  Points
-                </button>
-
                 <button
                   className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Attendance")}
@@ -75,6 +60,25 @@ function Main() {
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Schedules
                 </button>
+
+
+                <button
+                  className="focus:outline-none bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Point")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  Points
+                </button>
+
+
+
+
+                <button
+                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Out")}
+                  style={{ animation: "slide-from-right 1s ease forwards" }}>
+                  Out
+                </button>
+
               </div>
             </div>
           </div>
