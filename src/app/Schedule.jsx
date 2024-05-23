@@ -93,11 +93,27 @@ function Schedule() {
       return `${minutes}m ${seconds}s`;
     };
 
+    const calculateProgressWidth = (start, end) => {
+      const [startHour, startMinute] = start.split(":").map(Number);
+      const [endHour, endMinute] = end.split(":").map(Number);
+      const [currentHour, currentMinute] = getCurrentTime().split(":").map(Number);
+
+      const currentTime = new Date(0, 0, 0, currentHour, currentMinute).getTime();
+      const startTime = new Date(0, 0, 0, startHour, startMinute).getTime();
+      const endTime = new Date(0, 0, 0, endHour, endMinute).getTime();
+
+      const totalDuration = endTime - startTime;
+      const elapsedTime = currentTime - startTime;
+
+      return (elapsedTime / totalDuration) * 100;
+    };
+
     return segments.map((segment) => {
       const startTime = scheduleData[`${segment}start`];
       const endTime = scheduleData[`${segment}end`];
       const isCurrent = isCurrentEvent(startTime, endTime);
       const remainingTime = isCurrent ? calculateRemainingTime(endTime) : "";
+      const progressWidth = isCurrent ? calculateProgressWidth(startTime, endTime) : 0;
 
       return (
         <div
@@ -113,9 +129,17 @@ function Schedule() {
             <strong>Time:</strong> {startTime} - {endTime}
           </p>
           {isCurrent && (
-            <p className="mt-2 text-lg font-bold">
-              Remaining Time: {remainingTime}
-            </p>
+            <>
+              <p className="mt-2 text-lg font-bold">
+                Remaining Time: {remainingTime}
+              </p>
+              <div className="w-full h-2 bg-white rounded-full mt-2">
+                <div
+                  className="h-2 bg-red-500 rounded-full"
+                  style={{ width: `${progressWidth}%` }}
+                ></div>
+              </div>
+            </>
           )}
         </div>
       );
