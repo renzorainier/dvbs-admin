@@ -12,5 +12,5 @@ const firebaseConfig3 = {
 };
 
 // Initialize Firebase app for the second account with a different name
-const app3 = initializeApp(firebaseConfig3, 'app2');
+const app3 = initializeApp(firebaseConfig3, 'app3');
 export const db3 = getFirestore(app3);
