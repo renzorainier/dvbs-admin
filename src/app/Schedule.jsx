@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
-import { db2 } from "./firebase.js"; // Import your Firebase config
+import { db3 } from "./firebaseConfig3.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
@@ -11,22 +11,22 @@ function Schedule() {
   const configurations = [
     {
       name: "Primary",
-      db2Path: "sched/primary",
+      db3Path: "sched/primary",
       color: "#FFC100",
     },
     {
       name: "Middlers",
-      db2Path: "sched/middlers",
+      db3Path: "sched/middlers",
       color: "#04d924",
     },
     {
       name: "Juniors",
-      db2Path: "sched/juniors",
+      db3Path: "sched/juniors",
       color: "#027df7",
     },
     {
       name: "Youth",
-      db2Path: "sched/youth",
+      db3Path: "sched/youth",
       color: "#f70233",
     },
   ];
@@ -36,9 +36,9 @@ function Schedule() {
   useEffect(() => {
     const fetchSchedule = async () => {
       const docRef = doc(
-        db2,
-        currentConfig.db2Path.split("/")[0],
-        currentConfig.db2Path.split("/")[1]
+        db3,
+        currentConfig.db3Path.split("/")[0],
+        currentConfig.db3Path.split("/")[1]
       );
       const scheduleSnapshot = await getDoc(docRef);
       if (scheduleSnapshot.exists()) {
@@ -51,7 +51,7 @@ function Schedule() {
     };
 
     fetchSchedule();
-  }, [currentConfig.db2Path]);
+  }, [currentConfig.db3Path]);
 
   const renderSchedule = () => {
     const segments = Object.keys(scheduleData).filter((key) => key.length === 1);
