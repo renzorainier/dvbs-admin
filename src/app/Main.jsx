@@ -40,7 +40,7 @@ function Main() {
         return (
           <div className="flex justify-center h-screen">
             <div className="mt-4 ax-w-screen-lg mx-auto">
-              <div className="ml-5 text-white mr-5 mt-3 grid grid-cols-2 gap-4">
+              <div className="ml-5 text-white mr-5 mt-3 grid gap-4">
                 <button
                   className="bg-blue-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 font-bold text-xl py-10 rounded-lg shadow-lg"
                   onClick={() => handleButtonClick("Tab")}
@@ -68,6 +68,7 @@ function Main() {
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Attendance
                 </button>
+
                 <button
                   className="bg-violet-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 font-bold text-xl py-10 rounded-lg shadow-lg"
                   onClick={() => handleButtonClick("Schedule")}
@@ -78,6 +79,7 @@ function Main() {
             </div>
           </div>
         );
+
     }
   };
 
