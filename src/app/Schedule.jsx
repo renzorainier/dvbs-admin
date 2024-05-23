@@ -7,6 +7,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 function Schedule() {
   const [scheduleData, setScheduleData] = useState({});
   const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const configurations = [
     {
@@ -51,6 +52,11 @@ function Schedule() {
     };
 
     fetchSchedule();
+    const intervalId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
   }, [currentConfig.db3Path]);
 
   const renderSchedule = () => {
@@ -75,15 +81,30 @@ function Schedule() {
       return currentTime >= startTime && currentTime < endTime;
     };
 
+    const calculateRemainingTime = (end) => {
+      const [endHour, endMinute] = end.split(":").map(Number);
+      const endTime = new Date();
+      endTime.setHours(endHour, endMinute, 0, 0);
+
+      const diff = endTime - currentTime;
+      const minutes = Math.floor(diff / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+
+      return `${minutes}m ${seconds}s`;
+    };
+
     return segments.map((segment) => {
       const startTime = scheduleData[`${segment}start`];
       const endTime = scheduleData[`${segment}end`];
       const isCurrent = isCurrentEvent(startTime, endTime);
+      const remainingTime = isCurrent ? calculateRemainingTime(endTime) : "";
 
       return (
         <div
           key={segment}
-          className={`mb-4 p-4 border rounded-lg shadow-sm ${isCurrent ? "bg-green-200" : "bg-white"}`}>
+          className={`mb-4 p-4 border rounded-lg shadow-sm ${
+            isCurrent ? "bg-green-500 text-white" : "bg-white"
+          }`}>
           <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
           <p>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
@@ -91,6 +112,11 @@ function Schedule() {
           <p>
             <strong>Time:</strong> {startTime} - {endTime}
           </p>
+          {isCurrent && (
+            <p className="mt-2 text-lg font-bold">
+              Remaining Time: {remainingTime}
+            </p>
+          )}
         </div>
       );
     });
