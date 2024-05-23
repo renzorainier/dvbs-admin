@@ -58,7 +58,6 @@ function Schedule() {
 
     return () => clearInterval(intervalId);
   }, [currentConfig.db3Path]);
-
   const renderSchedule = () => {
     const segments = Object.keys(scheduleData)
       .filter((key) => key.length === 1)
@@ -124,13 +123,15 @@ function Schedule() {
 
       return (
         <div
-        key={segment}
-        className="mb-4 p-4 border rounded-lg shadow-sm"
-        style={{
-          backgroundColor: isCurrent ? currentConfig.color : "white",
-          color: isCurrent ? "white" : "black"
-        }}
-      >
+          key={segment}
+          className={`mb-4 p-4 border rounded-lg shadow-sm ${
+            isCurrent ? "text-xl font-bold" : "" // Add font size class here
+          }`}
+          style={{
+            backgroundColor: isCurrent ? currentConfig.color : "white",
+            color: isCurrent ? "white" : "black"
+          }}
+        >
           <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
           <p>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
@@ -155,6 +156,7 @@ function Schedule() {
       );
     });
   };
+
 
   return (
     <div
