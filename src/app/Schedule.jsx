@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
-import { db3 } from "./firebaseConfig3.js"; // Import your Firebase config
+import { db2 } from "./firebase.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 function Schedule() {
-  const [primaryData, setPrimaryData] = useState({});
+  const [scheduleData, setScheduleData] = useState({});
   const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
 
   const configurations = [
@@ -36,7 +36,7 @@ function Schedule() {
   useEffect(() => {
     const fetchSchedule = async () => {
       const docRef = doc(
-        db3,
+        db2,
         currentConfig.db2Path.split("/")[0],
         currentConfig.db2Path.split("/")[1]
       );
@@ -44,7 +44,7 @@ function Schedule() {
       if (scheduleSnapshot.exists()) {
         const data = scheduleSnapshot.data();
         console.log(data);
-        setPrimaryData(data);
+        setScheduleData(data);
       } else {
         console.error("No such document!");
       }
@@ -52,6 +52,18 @@ function Schedule() {
 
     fetchSchedule();
   }, [currentConfig.db2Path]);
+
+  const renderSchedule = () => {
+    const segments = Object.keys(scheduleData).filter((key) => key.length === 1);
+    return segments.map((segment) => (
+      <div key={segment} className="mb-4 p-4 border rounded-lg shadow-sm bg-white">
+        <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
+        <p><strong>Location:</strong> {scheduleData[`${segment}loc`]}</p>
+        <p><strong>Start Time:</strong> {scheduleData[`${segment}start`]}</p>
+        <p><strong>End Time:</strong> {scheduleData[`${segment}end`]}</p>
+      </div>
+    ));
+  };
 
   return (
     <div
@@ -101,8 +113,11 @@ function Schedule() {
       </Menu>
 
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-        <p className="text-center font-bold text-xl mb-4">Schedule Data</p>
-        <pre>{JSON.stringify(primaryData, null, 2)}</pre>
+        {Object.keys(scheduleData).length > 0 ? (
+          renderSchedule()
+        ) : (
+          <p className="text-center font-bold text-xl">Loading...</p>
+        )}
       </div>
     </div>
   );
