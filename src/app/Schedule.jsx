@@ -62,8 +62,7 @@ function Schedule() {
       <div key={segment} className="mb-4 p-4 border rounded-lg shadow-sm bg-white">
         <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
         <p><strong>Location:</strong> {scheduleData[`${segment}loc`]}</p>
-        <p><strong>Start Time:</strong> {scheduleData[`${segment}start`]}</p>
-        <p><strong>End Time:</strong> {scheduleData[`${segment}end`]}</p>
+        <p><strong>Time:</strong> {scheduleData[`${segment}start`]} -  {scheduleData[`${segment}end`]}</p>
       </div>
     ));
   };
