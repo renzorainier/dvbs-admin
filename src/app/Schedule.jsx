@@ -188,7 +188,9 @@ function Schedule() {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div  style={{
+      backgroundColor: `${configurations[currentConfigIndex].color}`,
+    }} className="flex flex-col items-center">
            <Menu
             as="div"
             className="relative inline-block justify-center text-center mt-4">
