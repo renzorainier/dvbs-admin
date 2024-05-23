@@ -54,7 +54,10 @@ function Schedule() {
   }, [currentConfig.db3Path]);
 
   const renderSchedule = () => {
-    const segments = Object.keys(scheduleData).filter((key) => key.length === 1);
+    const segments = Object.keys(scheduleData)
+      .filter((key) => key.length === 1)
+      .sort(); // Sort the segments to ensure proper order
+
     return segments.map((segment) => (
       <div key={segment} className="mb-4 p-4 border rounded-lg shadow-sm bg-white">
         <h3 className="text-xl font-semibold">{scheduleData[segment]}</h3>
