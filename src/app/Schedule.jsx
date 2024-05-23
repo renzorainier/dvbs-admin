@@ -130,7 +130,7 @@ function Schedule() {
             color: isCurrent ? "white" : "black"
           }}
         >
-          <h3 className={`text-2xl font-bold mb-2`}>{scheduleData[segment]}</h3>
+          <h3 className="text-2xl font-bold mb-2">{scheduleData[segment]}</h3>
           <p className="text-lg">
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
           </p>
