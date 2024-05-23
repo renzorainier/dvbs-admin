@@ -45,7 +45,7 @@ function Main() {
                   className="focus:outline-none bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Tab")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  Tab
+                  Attendance
                 </button>
 
                 <button
@@ -59,21 +59,21 @@ function Main() {
                   className="focus:outline-none bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Point")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  Point
+                  Points
                 </button>
 
                 <button
                   className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Attendance")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  Attendance
+                  List
                 </button>
 
                 <button
                   className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Schedule")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  Schedule
+                  Schedules
                 </button>
               </div>
             </div>
