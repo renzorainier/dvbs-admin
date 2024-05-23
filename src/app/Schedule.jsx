@@ -130,11 +130,11 @@ function Schedule() {
             color: isCurrent ? "white" : "black"
           }}
         >
-          <h3 className="text-2xl font-bold mb-2">{scheduleData[segment]}</h3>
-          <p className="text-lg">
+          <h3 className={`${isCurrent ? "text-4xl" : "text-2xl"} font-bold mb-2`}>{scheduleData[segment]}</h3>
+          <p className={`${isCurrent ? "text-lg" : "text-base"}`}>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
           </p>
-          <p className="text-lg">
+          <p className={`${isCurrent ? "text-lg" : "text-base"}`}>
             <strong>Time:</strong> {startTime} - {endTime}
           </p>
           {isCurrent && (
@@ -152,6 +152,7 @@ function Schedule() {
           )}
         </div>
       );
+
 
     });
   };
