@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "./firebase.js"; // Import your Firebase config
+import { db2 } from "./firebase.js"; // Import your Firebase config
 import { Menu, Transition, Switch } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Confetti from "react-confetti";
@@ -20,28 +20,28 @@ function Schedule() {
     {
       name: "Primary",
       colors: { present: "bg-[#FFC100]", absent: "bg-gray-400" },
-      dbPath: "dvbs/primary",
+      db2Path: "sched/primary",
       color: "#FFC100",
       ageRange: [4, 5, 6],
     },
     {
       name: "Middlers",
       colors: { present: "bg-[#04d924]", absent: "bg-gray-500" },
-      dbPath: "dvbs/middlers",
+      db2Path: "sched/middlers",
       color: "#04d924",
       ageRange: [7, 8, 9],
     },
     {
       name: "Juniors",
       colors: { present: "bg-[#027df7]", absent: "bg-gray-500" },
-      dbPath: "dvbs/juniors",
+      db2Path: "sched/juniors",
       color: "#027df7",
       ageRange: [10, 11, 12],
     },
     {
       name: "Youth",
       colors: { present: "bg-[#f70233]", absent: "bg-gray-500" },
-      dbPath: "dvbs/youth",
+      db2Path: "sched/youth",
       color: "#f70233",
       ageRange: [13, 14, 15],
     },
@@ -54,9 +54,9 @@ function Schedule() {
   useEffect(() => {
     const fetchPrimary = async () => {
       const docRef = doc(
-        db,
-        currentConfig.dbPath.split("/")[0],
-        currentConfig.dbPath.split("/")[1]
+        db2,
+        currentConfig.db2Path.split("/")[0],
+        currentConfig.db2Path.split("/")[1]
       );
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
@@ -67,7 +67,7 @@ function Schedule() {
     };
 
     fetchPrimary();
-  }, [currentConfig.dbPath]);
+  }, [currentConfig.db2Path]);
 
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E"];
@@ -91,9 +91,9 @@ function Schedule() {
   const updateStudentAttendance = async (fieldName, fieldToUpdate) => {
     try {
       const docRef = doc(
-        db,
-        currentConfig.dbPath.split("/")[0],
-        currentConfig.dbPath.split("/")[1]
+        db2,
+        currentConfig.db2Path.split("/")[0],
+        currentConfig.db2Path.split("/")[1]
       );
       const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
       const bibleField = `${fieldToUpdate}bible`;
@@ -125,9 +125,9 @@ function Schedule() {
   const updateBibleStatus = async (fieldName, broughtBible) => {
     try {
       const docRef = doc(
-        db,
-        currentConfig.dbPath.split("/")[0],
-        currentConfig.dbPath.split("/")[1]
+        db2,
+        currentConfig.db2Path.split("/")[0],
+        currentConfig.db2Path.split("/")[1]
       );
       const dayLetter = getCurrentDayLetter();
       const bibleField = `${fieldName.slice(0, 2)}${dayLetter}bible`;
