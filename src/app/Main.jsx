@@ -10,7 +10,7 @@ import StudentOutTime from "./StudentOutTime";
 import PointingSystemGraph from "./PointingSystemGraph";
 import ScrollToTopButton from "./Scroll";
 import Schedule from "./Schedule";
-import CopyScheduleData from "./CopyScheduleData"
+import CopyScheduleData from "./CopyScheduleData";
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -61,7 +61,6 @@ function Main() {
                   Schedules
                 </button>
 
-
                 <button
                   className="focus:outline-none bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Point")}
@@ -69,21 +68,16 @@ function Main() {
                   Points
                 </button>
 
-
-
-
                 <button
                   className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Out")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Out
                 </button>
-
               </div>
             </div>
           </div>
         );
-
     }
   };
 
@@ -91,8 +85,8 @@ function Main() {
   const backButton = currentComponent ? (
     <div className="fixed bottom-4 left-4 z-50">
       <button
-className="bg-violet-400 bg-opacity-50 hover:from-blue-500 hover:to-violet-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500"
-onClick={handleBackButtonClick}>
+        className="bg-gray-500 bg-opacity-50 hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        onClick={handleBackButtonClick}>
         <svg
           className="w-6 h-6"
           fill="none"
