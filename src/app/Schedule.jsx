@@ -128,12 +128,29 @@ function Schedule() {
       return (elapsedTime / totalDuration) * 100;
     };
 
-    return segments.map((segment) => {
+    const filteredSegments = segments.filter((segment) => {
+      const endTime = scheduleData[`${segment}end`];
+      const [endHour, endMinute] = endTime.split(":").map(Number);
+      const endDateTime = new Date(0, 0, 0, endHour, endMinute);
+      return new Date() <= endDateTime;
+    });
+
+    const lastPastSegment = segments
+      .filter((segment) => {
+        const endTime = scheduleData[`${segment}end`];
+        const [endHour, endMinute] = endTime.split(":").map(Number);
+        const endDateTime = new Date(0, 0, 0, endHour, endMinute);
+        return new Date() > endDateTime;
+      })
+      .pop();
+
+    return [...filteredSegments, lastPastSegment].map((segment, index, array) => {
       const startTime = scheduleData[`${segment}start`];
       const endTime = scheduleData[`${segment}end`];
       const isCurrent = isCurrentEvent(startTime, endTime);
       const remainingTime = isCurrent ? calculateRemainingTime(endTime) : "";
       const progressWidth = isCurrent ? calculateProgressWidth(startTime, endTime) : 0;
+      const isLastPast = segment === lastPastSegment && index === array.length - 1;
 
       if (isCurrent && remainingTime === "0m 0s") {
         playEnterSound();
@@ -142,13 +159,17 @@ function Schedule() {
       return (
         <div
           key={segment}
-          className={`mb-4 p-4 border rounded-lg shadow-sm`}
+          className={`mb-4 p-4 border rounded-lg shadow-sm break-words`}
           style={{
-            backgroundColor: isCurrent ? currentConfig.color : "white",
-            color: isCurrent ? "white" : "black"
+            backgroundColor: isCurrent
+              ? currentConfig.color
+              : isLastPast
+              ? "#cccccc" // Slightly darker gray for the last past event
+              : "white",
+            color: isCurrent || isLastPast ? "black" : "black",
           }}
         >
-          <h3 className={`${isCurrent ? "text-2xl text-black" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
+          <h3 className={`${isCurrent ? "text-2xl" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
           <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
           </p>
@@ -163,14 +184,14 @@ function Schedule() {
               <div className="w-full h-2 bg-white rounded-full mt-2">
                 <div
                   className="h-2 bg-gray-500 rounded-full"
-                  style={{ width: `${progressWidth}%`, transition: 'width 1s linear' }}
+                  style={{ width: `${progressWidth}%`, transition: "width 1s linear" }}
                 ></div>
               </div>
             </>
           )}
         </div>
       );
-    });CopyScheduleData
+    });
   };
 
   return (
@@ -227,7 +248,7 @@ function Schedule() {
           </Menu>
 
           <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mt-4 mx-auto">
-          {Object.keys(scheduleData).length > 0 ? (
+            {Object.keys(scheduleData).length > 0 ? (
               renderSchedule()
             ) : (
               <p className="text-center font-bold text-xl">Loading...</p>
