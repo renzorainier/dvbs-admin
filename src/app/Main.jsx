@@ -85,7 +85,7 @@ function Main() {
   const backButton = currentComponent ? (
     <div className="fixed bottom-4 left-4 z-50">
       <button
-        className="bg-gray-500 bg-opacity-50 hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="bg-gray-500 bg-opacity-50  text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500"
         onClick={handleBackButtonClick}>
         <svg
           className="w-6 h-6"
