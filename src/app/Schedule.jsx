@@ -171,11 +171,11 @@ function Schedule() {
             color: isCurrent || isLastPast ? "black" : "black",
           }}
         >
-          <h3 className={`${isCurrent ? "text-2xl" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
-          <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
+          <h3 className={`${isCurrent ? "text-2xl text-center" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
+          <p className={`${isCurrent ? "text-lg text-center" : "text-sm"}`}>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
           </p>
-          <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
+          <p className={`${isCurrent ? "text-lg text-center" : "text-sm"}`}>
             <strong>Time:</strong> {startTime} - {endTime}
           </p>
           {isCurrent && (
