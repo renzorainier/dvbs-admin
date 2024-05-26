@@ -45,6 +45,7 @@ function Schedule() {
       const scheduleSnapshot = await getDoc(docRef);
       if (scheduleSnapshot.exists()) {
         const data = scheduleSnapshot.data();
+        console.log(data);
         setScheduleData(data);
       } else {
         console.error("No such document!");
@@ -127,32 +128,31 @@ function Schedule() {
       return (elapsedTime / totalDuration) * 100;
     };
 
-    const currentTimestamp = new Date().getTime();
-
-    const pastSegments = segments.filter((segment) => {
+    const filteredSegments = segments.filter((segment) => {
       const endTime = scheduleData[`${segment}end`];
       const [endHour, endMinute] = endTime.split(":").map(Number);
-      const endTimestamp = new Date(0, 0, 0, endHour, endMinute).getTime();
-      return endTimestamp <= currentTimestamp;
+      const endDateTime = new Date();
+      endDateTime.setHours(endHour, endMinute, 0, 0);
+      return currentTime <= endDateTime;
     });
 
-    const futureSegments = segments.filter((segment) => {
-      const endTime = scheduleData[`${segment}end`];
-      const [endHour, endMinute] = endTime.split(":").map(Number);
-      const endTimestamp = new Date(0, 0, 0, endHour, endMinute).getTime();
-      return endTimestamp > currentTimestamp;
-    });
+    const lastPastSegment = segments
+      .filter((segment) => {
+        const endTime = scheduleData[`${segment}end`];
+        const [endHour, endMinute] = endTime.split(":").map(Number);
+        const endDateTime = new Date();
+        endDateTime.setHours(endHour, endMinute, 0, 0);
+        return currentTime > endDateTime;
+      })
+      .pop();
 
-    const lastPastSegment = pastSegments.length > 0 ? pastSegments[pastSegments.length - 1] : null;
-    const filteredSegments = lastPastSegment ? [...futureSegments, lastPastSegment] : futureSegments;
-
-    return filteredSegments.map((segment) => {
+    return [...(lastPastSegment ? [lastPastSegment] : []), ...filteredSegments].map((segment, index, array) => {
       const startTime = scheduleData[`${segment}start`];
       const endTime = scheduleData[`${segment}end`];
       const isCurrent = isCurrentEvent(startTime, endTime);
       const remainingTime = isCurrent ? calculateRemainingTime(endTime) : "";
       const progressWidth = isCurrent ? calculateProgressWidth(startTime, endTime) : 0;
-      const isLastPast = segment === lastPastSegment;
+      const isLastPast = segment === lastPastSegment && index === 0;
 
       if (isCurrent && remainingTime === "0m 0s") {
         playEnterSound();
