@@ -148,7 +148,7 @@ function Schedule() {
             color: isCurrent ? "white" : "black"
           }}
         >
-          <h3 className={`${isCurrent ? "text-4xl" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
+          <h3 className={`${isCurrent ? "text-3xl" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
           <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
           </p>
@@ -170,7 +170,7 @@ function Schedule() {
           )}
         </div>
       );
-    });CopyScheduleData 
+    });CopyScheduleData
   };
 
   return (
