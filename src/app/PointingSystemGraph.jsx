@@ -10,6 +10,8 @@ const getDefaultDay = () => {
   return today === 0 || today === 6 ? "E" : String.fromCharCode(65 + today - 1);
 };
 
+const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 function PointingSystemGraph() {
   const [pointsData, setPointsData] = useState({
     primary: { Apoints: 0, Bpoints: 0, Cpoints: 0, Dpoints: 0, Epoints: 0 },
@@ -216,7 +218,7 @@ function PointingSystemGraph() {
   return (
     <div className="points-system-container h-screen bg-black flex flex-col md:flex-row">
       {/* Graph Section */}
-      <div className="h-full md:w-2/3">
+      <div className="h-full md:w-2/3 p-4">
         <div className="bg-white rounded-lg shadow-lg p-4 w-full h-full">
           <div className="w-full h-full">
             <canvas id="pointsChart"></canvas>
@@ -225,7 +227,7 @@ function PointingSystemGraph() {
       </div>
       {/* Right Section */}
       <div className="md:w-1/3 flex flex-col items-center p-4">
-        <Menu as="div" className="relative inline-block text-left mb-2">
+        <Menu as="div" className="relative inline-block text-left mb-4">
           <Menu.Button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
             {getDayLabel(selectedDay)}
@@ -259,7 +261,7 @@ function PointingSystemGraph() {
             className="h-full md:h-full w-full flex flex-col items-center rounded-lg m-2 justify-center cursor-pointer"
             onClick={() => handleGroupClick(group, true)}>
             <div className="text-5xl md:text-9xl text-white font-bold">
-              {pointsData[group][`${selectedDay}points`]}
+              {formatNumber(pointsData[group][`${selectedDay}points)}
             </div>
             <div className="md:text-7xl text-white font-bold">{group}</div>
           </div>
