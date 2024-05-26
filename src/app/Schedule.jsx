@@ -45,7 +45,6 @@ function Schedule() {
       const scheduleSnapshot = await getDoc(docRef);
       if (scheduleSnapshot.exists()) {
         const data = scheduleSnapshot.data();
-        console.log(data);
         setScheduleData(data);
       } else {
         console.error("No such document!");
@@ -128,12 +127,32 @@ function Schedule() {
       return (elapsedTime / totalDuration) * 100;
     };
 
-    return segments.map((segment) => {
+    const currentTimestamp = new Date().getTime();
+
+    const pastSegments = segments.filter((segment) => {
+      const endTime = scheduleData[`${segment}end`];
+      const [endHour, endMinute] = endTime.split(":").map(Number);
+      const endTimestamp = new Date(0, 0, 0, endHour, endMinute).getTime();
+      return endTimestamp <= currentTimestamp;
+    });
+
+    const futureSegments = segments.filter((segment) => {
+      const endTime = scheduleData[`${segment}end`];
+      const [endHour, endMinute] = endTime.split(":").map(Number);
+      const endTimestamp = new Date(0, 0, 0, endHour, endMinute).getTime();
+      return endTimestamp > currentTimestamp;
+    });
+
+    const lastPastSegment = pastSegments.length > 0 ? pastSegments[pastSegments.length - 1] : null;
+    const filteredSegments = lastPastSegment ? [...futureSegments, lastPastSegment] : futureSegments;
+
+    return filteredSegments.map((segment) => {
       const startTime = scheduleData[`${segment}start`];
       const endTime = scheduleData[`${segment}end`];
       const isCurrent = isCurrentEvent(startTime, endTime);
       const remainingTime = isCurrent ? calculateRemainingTime(endTime) : "";
       const progressWidth = isCurrent ? calculateProgressWidth(startTime, endTime) : 0;
+      const isLastPast = segment === lastPastSegment;
 
       if (isCurrent && remainingTime === "0m 0s") {
         playEnterSound();
@@ -142,13 +161,17 @@ function Schedule() {
       return (
         <div
           key={segment}
-          className={`mb-4 p-4 border rounded-lg shadow-sm`}
+          className={`mb-4 p-4 border rounded-lg shadow-sm break-words`}
           style={{
-            backgroundColor: isCurrent ? currentConfig.color : "white",
-            color: isCurrent ? "white" : "black"
+            backgroundColor: isCurrent
+              ? currentConfig.color
+              : isLastPast
+              ? "#cccccc" // Slightly darker gray for the last past event
+              : "white",
+            color: isCurrent || isLastPast ? "black" : "black",
           }}
         >
-          <h3 className={`${isCurrent ? "text-2xl text-" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
+          <h3 className={`${isCurrent ? "text-2xl" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
           <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
             <strong>Location:</strong> {scheduleData[`${segment}loc`]}
           </p>
@@ -163,14 +186,14 @@ function Schedule() {
               <div className="w-full h-2 bg-white rounded-full mt-2">
                 <div
                   className="h-2 bg-gray-500 rounded-full"
-                  style={{ width: `${progressWidth}%`, transition: 'width 1s linear' }}
+                  style={{ width: `${progressWidth}%`, transition: "width 1s linear" }}
                 ></div>
               </div>
             </>
           )}
         </div>
       );
-    });CopyScheduleData
+    });
   };
 
   return (
@@ -206,38 +229,39 @@ function Schedule() {
               leave="transition ease-in duration-75"
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
-                {configurations.map((config, index) => (
-                  <Menu.Item key={index}>
-                    {({ active }) => (
-                      <button
-                        onClick={() => setCurrentConfigIndex(index)}
-                        className={`${
-                          active ? "bg-blue-500 text-white" : "text-gray-900"
-                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
-                      >
-                        {config.name}
-                      </button>
-                    )}
-                  </Menu.Item>
-                ))}
-              </Menu.Items>
-            </Transition>
-          </Menu>
+              >
+                <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
+                  {configurations.map((config, index) => (
+                    <Menu.Item key={index}>
+                      {({ active }) => (
+                        <button
+                          onClick={() => setCurrentConfigIndex(index)}
+                          className={`${
+                            active ? "bg-blue-500 text-white" : "text-gray-900"
+                          } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
+                        >
+                          {config.name}
+                        </button>
+                      )}
+                    </Menu.Item>
+                  ))}
+                </Menu.Items>
+              </Transition>
+            </Menu>
 
-          <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mt-4 mx-auto">
-          {Object.keys(scheduleData).length > 0 ? (
-              renderSchedule()
-            ) : (
-              <p className="text-center font-bold text-xl">Loading...</p>
-            )}
+            <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mt-4 mx-auto">
+              {Object.keys(scheduleData).length > 0 ? (
+                renderSchedule()
+              ) : (
+                <p className="text-center font-bold text-xl">Loading...</p>
+              )}
+            </div>
           </div>
         </div>
+        <audio ref={audioRef} />
       </div>
-      <audio ref={audioRef} />
-    </div>
-  );
-}
+    );
+  }
 
-export default Schedule;
+  export default Schedule;
+
