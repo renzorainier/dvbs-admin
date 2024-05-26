@@ -157,42 +157,52 @@ function Schedule() {
       if (isCurrent && remainingTime === "0m 0s") {
         playEnterSound();
       }
-
       return (
         <div
           key={segment}
-          className={`mb-4 p-4 border rounded-lg shadow-sm break-words`}
+          className={`mb-6 p-5 border rounded-lg shadow-md `}
           style={{
             backgroundColor: isCurrent
               ? currentConfig.color
               : isLastPast
-              ? "#cccccc" // Slightly darker gray for the last past event
+              ? "#f0f0f0" // Slightly darker gray for the last past event
               : "white",
             color: isCurrent || isLastPast ? "black" : "black",
           }}
         >
-          <h3 className={`${isCurrent ? "text-2xl" : "text-lg"} font-bold`}>{scheduleData[segment]}</h3>
-          <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
-            <strong>Location:</strong> {scheduleData[`${segment}loc`]}
-          </p>
-          <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
-            <strong>Time:</strong> {startTime} - {endTime}
-          </p>
-          {isCurrent && (
-            <>
-              <p className="mt-2 text-base font-bold">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className={`${isCurrent ? "text-2xl" : "text-lg"} font-bold`}>
+              {scheduleData[segment]}
+            </h3>
+            {isCurrent && (
+              <div className="text-right text-base font-bold">
                 Remaining Time: {remainingTime}
-              </p>
-              <div className="w-full h-2 bg-white rounded-full mt-2">
+              </div>
+            )}
+          </div>
+
+          <div className="mb-2">
+            <p className={`${isCurrent ? "text-lg" : "text-sm"} mb-1`}>
+              <strong>Location:</strong> {scheduleData[`${segment}loc`]}
+            </p>
+            <p className={`${isCurrent ? "text-lg" : "text-sm"}`}>
+              <strong>Time:</strong> {startTime} - {endTime}
+            </p>
+          </div>
+
+          {isCurrent && (
+            <div className="mt-4">
+              <div className="w-full h-3 bg-gray-200 rounded-full">
                 <div
-                  className="h-2 bg-gray-500 rounded-full"
+                  className="h-3 bg-green-500 rounded-full"
                   style={{ width: `${progressWidth}%`, transition: "width 1s linear" }}
                 ></div>
               </div>
-            </>
+            </div>
           )}
         </div>
       );
+
     });
   };
 
