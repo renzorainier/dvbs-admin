@@ -261,7 +261,7 @@ function PointingSystemGraph() {
             <div className="text-5xl md:text-9xl text-white font-bold">
               {pointsData[group][`${selectedDay}points`]}
             </div>
-            <div className="md:text-4xl text-white font-bold">{group}</div>
+            <div className="md:text-7xl text-white font-bold">{group}</div>
           </div>
         ))}
       </div>
