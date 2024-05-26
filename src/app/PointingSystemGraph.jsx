@@ -261,7 +261,7 @@ function PointingSystemGraph() {
             className="h-full md:h-full w-full flex flex-col items-center rounded-lg m-2 justify-center cursor-pointer"
             onClick={() => handleGroupClick(group, true)}>
             <div className="text-5xl md:text-9xl text-white font-bold">
-              {formatNumber(pointsData[group][`${selectedDay}points])}
+              {formatNumber(pointsData[group][`${selectedDay}[points])}
             </div>
             <div className="md:text-7xl text-white font-bold">{group}</div>
           </div>
