@@ -157,7 +157,8 @@ function DailyRewards() {
     const dayLetter = getCurrentDayLetter();
     const fieldToCheck = `${prefix}${dayLetter}`;
     return primaryData[fieldToCheck]
-
+      ? configurations.colors.present
+      : configurations.colors.absent;
   };
 
   const countPresentForToday = () => {
@@ -307,7 +308,8 @@ function DailyRewards() {
                         key={dayLetter}
                         className={`w-4 h-9 rounded-lg ${
                           primaryData[fieldName]
-
+                            ? configurations.colors.present
+                            : configurations.colors.absent
                         } mr-1`}></div>
                     );
                   })}
