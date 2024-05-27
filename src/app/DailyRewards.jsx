@@ -23,31 +23,23 @@ function DailyRewards() {
   const configurations = [
     {
       name: "Primary",
-      colors: { present: "bg-[#FFC100]", absent: "bg-gray-400" },
       dbPath: "dvbs/primary",
       color: "#FFC100",
-      ageRange: [4, 5, 6],
     },
     {
       name: "Middlers",
-      colors: { present: "bg-[#04d924]", absent: "bg-gray-500" },
       dbPath: "dvbs/middlers",
       color: "#04d924",
-      ageRange: [7, 8, 9],
     },
     {
       name: "Juniors",
-      colors: { present: "bg-[#027df7]", absent: "bg-gray-500" },
       dbPath: "dvbs/juniors",
       color: "#027df7",
-      ageRange: [10, 11, 12],
     },
     {
       name: "Youth",
-      colors: { present: "bg-[#f70233]", absent: "bg-gray-500" },
       dbPath: "dvbs/youth",
       color: "#f70233",
-      ageRange: [13, 14, 15],
     },
   ];
 
@@ -157,8 +149,6 @@ function DailyRewards() {
     const dayLetter = getCurrentDayLetter();
     const fieldToCheck = `${prefix}${dayLetter}`;
     return primaryData[fieldToCheck]
-      ? configurations.colors.present
-      : configurations.colors.absent;
   };
 
   const countPresentForToday = () => {
@@ -283,7 +273,7 @@ function DailyRewards() {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
         />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col  gap-4">
           {filteredNames.map((name, index) => {
             const studentIndex = Object.keys(primaryData).find(
               (key) => primaryData[key] === name
@@ -306,10 +296,8 @@ function DailyRewards() {
                     return (
                       <div
                         key={dayLetter}
-                        className={`w-4 h-9 rounded-lg ${
+                        className={`w-4 h-9  rounded-lg ${
                           primaryData[fieldName]
-                            ? configurations.colors.present
-                            : configurations.colors.absent
                         } mr-1`}></div>
                     );
                   })}
