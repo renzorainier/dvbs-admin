@@ -117,7 +117,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}Bpoints`]: 0,
         [`${paddedIndex}Cpoints`]: 0,
         [`${paddedIndex}Dpoints`]: 0,
-        [`${paddedIndex}Epoints`]: 0,
+        [`${paddedIndex}Epoints`]: 0,hindi 
       };
 
       const currentDayLetter = getCurrentDayLetter();
