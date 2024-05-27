@@ -112,7 +112,12 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}Bbible`]: false,
         [`${paddedIndex}Cbible`]: false,
         [`${paddedIndex}Dbible`]: false,
-        [`${paddedIndex}Ebible`]: false,
+        [`${paddedIndex}Epoints`]: 0,
+        [`${paddedIndex}Apoints`]: 0,
+        [`${paddedIndex}Bpoints`]: 0,
+        [`${paddedIndex}Cpoints`]: 0,
+        [`${paddedIndex}Dpoints`]: 0,
+        [`${paddedIndex}Epoints`]: 0,
       };
 
       const currentDayLetter = getCurrentDayLetter();
