@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
+import { Menu, Transition } from "@headlessui/react";
+
 
 function DailyRewards() {
   const [primaryData, setPrimaryData] = useState({});
@@ -15,8 +17,6 @@ function DailyRewards() {
 
 
   const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
-
-
 
 
 
@@ -157,8 +157,7 @@ function DailyRewards() {
     const dayLetter = getCurrentDayLetter();
     const fieldToCheck = `${prefix}${dayLetter}`;
     return primaryData[fieldToCheck]
-      ? config.colors.present
-      : config.colors.absent;
+
   };
 
   const countPresentForToday = () => {
@@ -244,7 +243,6 @@ function DailyRewards() {
         <div>
           <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
             <h2 className="text-4xl font-bold">{configurations[currentConfigIndex].name}</h2>
-            <ChevronDownIcon className="ml-2 -mr-1 h-10 w-10" aria-hidden="true" />
           </Menu.Button>
         </div>
         <Transition
@@ -309,8 +307,7 @@ function DailyRewards() {
                         key={dayLetter}
                         className={`w-4 h-9 rounded-lg ${
                           primaryData[fieldName]
-                            ? config.colors.present
-                            : config.colors.absent
+
                         } mr-1`}></div>
                     );
                   })}
