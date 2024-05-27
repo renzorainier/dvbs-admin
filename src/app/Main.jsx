@@ -11,6 +11,7 @@ import PointingSystemGraph from "./PointingSystemGraph";
 import ScrollToTopButton from "./Scroll";
 import Schedule from "./Schedule";
 import CopyScheduleData from "./CopyScheduleData";
+import DailyRewards from "./DailyRewards"
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -35,6 +36,8 @@ function Main() {
         return <AttendanceChart />;
       case "Schedule":
         return <Schedule />;
+        case "Rewards":
+          return <DailyRewards />;
       // render other components as needed
       default:
         return (
@@ -71,6 +74,14 @@ function Main() {
                 <button
                   className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Out")}
+                  style={{ animation: "slide-from-right 1s ease forwards" }}>
+                  Out
+                </button>
+
+
+                <button
+                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Rewards")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Out
                 </button>
