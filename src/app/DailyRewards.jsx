@@ -72,7 +72,7 @@ function DailyRewards() {
     };
 
     fetchPrimary();
-  }, [config.dbPath]);
+  }, [currentConfig.dbPath]);
 
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E"];
