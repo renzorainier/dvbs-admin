@@ -4,12 +4,13 @@ import { db } from "./firebase.js";
 import { Menu, Transition } from "@headlessui/react";
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
-  const [newVisitorName, setNewVisitorName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [newVisitorAddress, setNewVisitorAddress] = useState("");
   const [invitedBy, setInvitedBy] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [age, setAge] = useState("");
-  const [broughtBible, setBroughtBible] = useState(false); // New state for Bible toggle
+  const [broughtBible, setBroughtBible] = useState(false);
   const [primaryData, setPrimaryData] = useState({});
   const [showPopup, setShowPopup] = useState(false);
   const [visitorID, setVisitorID] = useState(null);
@@ -43,8 +44,11 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
   const handleInputChange = (event, field) => {
     switch (field) {
-      case "name":
-        setNewVisitorName(event.target.value);
+      case "firstName":
+        setFirstName(event.target.value);
+        break;
+      case "lastName":
+        setLastName(event.target.value);
         break;
       case "loc":
         setNewVisitorAddress(event.target.value);
@@ -68,94 +72,99 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     setNewVisitorAddress(route);
   };
 
-  const addVisitor = async () => {
-    if (
-      newVisitorName.trim() === "" ||
-      newVisitorAddress.trim() === "" ||
-      invitedBy.trim() === "" ||
-      age === ""
-    ) {
-      console.error("Please fill in all required fields.");
-      setShowPopup(true);
-      return;
-    }
+const addVisitor = async () => {
+  if (
+    firstName.trim() === "" ||
+    lastName.trim() === "" ||
+    newVisitorAddress.trim() === "" ||
+    invitedBy.trim() === "" ||
+    age === ""
+  ) {
+    console.error("Please fill in all required fields.");
+    setShowPopup(true);
+    return;
+  }
 
-    try {
-      const docRef = doc(
-        db,
-        config.dbPath.split("/")[0],
-        config.dbPath.split("/")[1]
-      );
+  try {
+    const docRef = doc(
+      db,
+      config.dbPath.split("/")[0],
+      config.dbPath.split("/")[1]
+    );
+    const existingIndexes = Object.keys(primaryData)
+      .filter((key) => key.match(/^\d+/))
+      .map((key) => parseInt(key.match(/^\d+/)[0]));
+    const newIndex = existingIndexes.length
+      ? Math.max(...existingIndexes) + 1
+      : 1;
+    const paddedIndex = String(newIndex).padStart(2, "0");
 
-      const existingIndexes = Object.keys(primaryData)
-        .filter((key) => key.match(/^\d+/))
-        .map((key) => parseInt(key.match(/^\d+/)[0]));
-      const newIndex = existingIndexes.length
-        ? Math.max(...existingIndexes) + 1
-        : 1;
+    const visitorName = `${
+      lastName.trim().charAt(0).toUpperCase() + lastName.trim().slice(1)
+    }, ${
+      firstName.trim().charAt(0).toUpperCase() + firstName.trim().slice(1)
+    }`;
 
-      const paddedIndex = String(newIndex).padStart(2, "0");
+    const newFields = {
+      [`${paddedIndex}name`]: visitorName,
+      [`${paddedIndex}loc`]: newVisitorAddress,
+      [`${paddedIndex}invitedBy`]: invitedBy,
+      [`${paddedIndex}contactNumber`]: contactNumber,
+      [`${paddedIndex}age`]: age,
+      [`${paddedIndex}Aout`]: "",
+      [`${paddedIndex}Bout`]: "",
+      [`${paddedIndex}Cout`]: "",
+      [`${paddedIndex}Dout`]: "",
+      [`${paddedIndex}Eout`]: "",
+      [`${paddedIndex}Abible`]: false,
+      [`${paddedIndex}Bbible`]: false,
+      [`${paddedIndex}Cbible`]: false,
+      [`${paddedIndex}Dbible`]: false,
+      [`${paddedIndex}Ebible`]: false,
+      [`${paddedIndex}Apoints`]: getCurrentDayLetter() === "A" ? 1 : 0,
+      [`${paddedIndex}Bpoints`]: getCurrentDayLetter() === "B" ? 1 : 0,
+      [`${paddedIndex}Cpoints`]: getCurrentDayLetter() === "C" ? 1 : 0,
+      [`${paddedIndex}Dpoints`]: getCurrentDayLetter() === "D" ? 1 : 0,
+      [`${paddedIndex}Epoints`]: getCurrentDayLetter() === "E" ? 1 : 0,
+    };
 
-      const newFields = {
-        [`${paddedIndex}name`]: newVisitorName,
-        [`${paddedIndex}loc`]: newVisitorAddress,
-        [`${paddedIndex}invitedBy`]: invitedBy,
-        [`${paddedIndex}contactNumber`]: contactNumber,
-        [`${paddedIndex}age`]: age,
-        [`${paddedIndex}Aout`]: "",
-        [`${paddedIndex}Bout`]: "",
-        [`${paddedIndex}Cout`]: "",
-        [`${paddedIndex}Dout`]: "",
-        [`${paddedIndex}Eout`]: "",
-        [`${paddedIndex}Abible`]: false,
-        [`${paddedIndex}Bbible`]: false,
-        [`${paddedIndex}Cbible`]: false,
-        [`${paddedIndex}Dbible`]: false,
-        [`${paddedIndex}Epoints`]: 0,
-        [`${paddedIndex}Apoints`]: 0,
-        [`${paddedIndex}Bpoints`]: 0,
-        [`${paddedIndex}Cpoints`]: 0,
-        [`${paddedIndex}Dpoints`]: 0,
-        [`${paddedIndex}Epoints`]: 0,
-      };
+    const currentDayLetter = getCurrentDayLetter();
+    const currentTime = new Date().toLocaleString();
+    ["A", "B", "C", "D", "E"].forEach((letter) => {
+      newFields[`${paddedIndex}${letter}`] =
+        letter === currentDayLetter ? currentTime : "";
+      newFields[`${paddedIndex}${letter}bible`] =
+        letter === currentDayLetter ? broughtBible : false;
+    });
 
-      const currentDayLetter = getCurrentDayLetter();
-      const currentTime = new Date().toLocaleString();
-      ["A", "B", "C", "D", "E"].forEach((letter) => {
-        newFields[`${paddedIndex}${letter}`] =
-          letter === currentDayLetter ? currentTime : "";
-        newFields[`${paddedIndex}${letter}bible`] =
-          letter === currentDayLetter ? broughtBible : false; // Update Bible field for current day
-      });
+    await updateDoc(docRef, newFields);
 
-      await updateDoc(docRef, newFields);
+    setFirstName("");
+    setLastName("");
+    setNewVisitorAddress("");
+    setInvitedBy("");
+    setContactNumber("");
+    setAge("");
+    setBroughtBible(false);
+    console.log("Visitor added successfully!");
 
-      setNewVisitorName("");
-      setNewVisitorAddress("");
-      setInvitedBy("");
-      setContactNumber("");
-      setAge("");
-      setBroughtBible(false); // Reset Bible toggle
-      console.log("Visitor added successfully!");
+    setPrimaryData((prevData) => ({
+      ...prevData,
+      ...newFields,
+    }));
 
-      setPrimaryData((prevData) => ({
-        ...prevData,
-        ...newFields,
-      }));
+    setVisitorID({
+      id: `${config.dbPath.split("/")[1][0].toUpperCase()}${paddedIndex}`,
+      name: visitorName,
+      location: newVisitorAddress,
+    });
 
-      // Set visitor ID for the floating div
-      setVisitorID(`P${paddedIndex}`);
+    playEnterSound();
+  } catch (error) {
+    console.error("Error adding visitor: ", error);
+  }
+};
 
-      // Hide the floating div after 3 seconds
-      setTimeout(() => {
-        setVisitorID(null);
-      }, 3000);
-
-      playEnterSound(); // Play sound
-    } catch (error) {
-      console.error("Error adding visitor: ", error);
-    }
-  };
 
   const ageOptions = [
     config.ageRange[0],
@@ -177,8 +186,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             <p className="mb-2">Please fill in all required fields.</p>
             <button
               className={`bg-[${config.color}] hover:bg-[${config.color}] text-white font-bold py-2 px-4 rounded`}
-              onClick={() => setShowPopup(false)}
-            >
+              onClick={() => setShowPopup(false)}>
               OK
             </button>
           </div>
@@ -186,30 +194,47 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       )}
 
       {visitorID && (
-        <div className="fixed top-5 right-5 bg-gray-700 text-white p-3 rounded-lg shadow-lg">
-          New Visitor ID: {visitorID}
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50" />
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="text-5xl font-bold text-gray-800">{visitorID.id}</p>
+            <p className="text-lg text-gray-800">{visitorID.name}</p>
+            <p className="text-md text-gray-800">{visitorID.location}</p>
+            <button
+              className={`bg-[${config.color}] text-white font-bold py-2 px-4 rounded mt-4`}
+              onClick={() => setVisitorID(null)}>
+              OK
+            </button>
+          </div>
         </div>
       )}
 
-      <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto ">
+      <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Add New Visitor
           </h2>
           <div className="space-y-6">
-            <input
-              type="text"
-              value={newVisitorName}
-              onChange={(e) => handleInputChange(e, "name")}
-              placeholder="Visitor's Name"
-              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
-            />
-
+            <div className="flex items-center space-x-4">
+              <input
+                type="text"
+                value={firstName}
+                onChange={(e) => handleInputChange(e, "firstName")}
+                placeholder="First Name"
+                className="border border-gray-300 rounded-lg px-4 py-2 w-1/2 focus:outline-none focus:border-[${config.color}]"
+              />
+              <input
+                type="text"
+                value={lastName}
+                onChange={(e) => handleInputChange(e, "lastName")}
+                placeholder="Last Name"
+                className="border border-gray-300 rounded-lg px-4 py-2 w-1/2 focus:outline-none focus:border-[${config.color}]"
+              />
+            </div>
             <div className="flex items-center space-x-4">
               <Menu
                 as="div"
-                className="relative inline-block text-left w-full z-40"
-              >
+                className="relative inline-block text-left w-full z-40">
                 <div>
                   <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     {age ? `Age: ${age}` : "Select Age"}
@@ -222,8 +247,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   enterTo="transform opacity-100 scale-100"
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
+                  leaveTo="transform opacity-0 scale-95">
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {ageOptions.map((ageOption) => (
@@ -235,8 +259,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                                 active
                                   ? "bg-gray-100 text-gray-900"
                                   : "text-gray-700"
-                              } block w-full text-left px-4 py-2 text-sm`}
-                            >
+                              } block w-full text-left px-4 py-2 text-sm`}>
                               {ageOption}
                             </button>
                           )}
@@ -280,8 +303,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   enterTo="transform opacity-100 scale-100"
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
+                  leaveTo="transform opacity-0 scale-95">
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {predefinedRoutes.map((route) => (
@@ -293,8 +315,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                                 active
                                   ? "bg-gray-100 text-gray-900"
                                   : "text-gray-700"
-                              } block w-full text-left px-4 py-2 text-sm`}
-                            >
+                              } block w-full text-left px-4 py-2 text-sm`}>
                               {route}
                             </button>
                           )}
@@ -323,15 +344,13 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
             <button
               className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
-              onClick={addVisitor}
-            >
+              onClick={addVisitor}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 mr-2"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+                stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -350,4 +369,3 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
 }
 
 export default Visitors;
-

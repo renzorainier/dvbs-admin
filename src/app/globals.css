@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --present-color: #FFC100; /* Default value */
-}
 
 
 body {
