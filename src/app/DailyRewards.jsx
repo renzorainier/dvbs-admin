@@ -122,22 +122,6 @@ function DailyRewards() {
       : currentConfig.colors.absent;
   };
 
-  const countPresentForToday = () => {
-    const dayLetter = getCurrentDayLetter();
-    return Object.keys(primaryData).filter(
-      (key) => key.endsWith(dayLetter) && primaryData[key]
-    ).length;
-  };
-
-  const countAbsentForToday = () => {
-    const dayLetter = getCurrentDayLetter();
-    const totalStudents = Object.keys(primaryData).filter((key) =>
-      key.endsWith(dayLetter)
-    ).length;
-    const presentCount = countPresentForToday();
-    return totalStudents - presentCount;
-  };
-
   const sortedNames = Object.keys(primaryData)
     .filter((fieldName) => fieldName.endsWith("name"))
     .map((fieldName) => primaryData[fieldName])
@@ -207,66 +191,65 @@ function DailyRewards() {
                       className={`${
                         active ? "bg-blue-500 text-white" : "text-gray-900"
                       } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
-                    >
+                      >
                       {config.name}
-                    </button>
-                  )}
-                </Menu.Item>
-              ))}
-            </Menu.Items>
-          </Transition>
-        </Menu>
+                      </button>
+                      )}
+                      </Menu.Item>
+                      ))}
+                      </Menu.Items>
+                      </Transition>
+                      </Menu>
 
-        <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-          <input
-            type="text"
-            placeholder="Search names..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
-          />
-          <div className="flex flex-col gap-4">
-            {filteredNames.map((name, index) => {
-              const studentIndex = Object.keys(primaryData).find(
-                (key) => primaryData[key] === name
-              );
+                      <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+                      <input
+                      type="text"
+                      placeholder="Search names..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
+                      />
+                      <div className="flex flex-col gap-4">
+                      {filteredNames.map((name, index) => {
+                      const studentIndex = Object.keys(primaryData).find(
+                      (key) => primaryData[key] === name
+                      );
 
-              return (
-                <div key={index} className="flex items-center">
-                  <button
-                    className={`w-70percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
+                      return (
+                      <div key={index} className="flex items-center">
+                      <button
+                      className={`w-70percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
                       studentIndex
-                    )}`}
-                    onClick={() => {
+                      )}`}
+                      onClick={() => {
                       handleClick(studentIndex);
-                    }}
-                  >
-                    {name}
-                  </button>
+                      }}
+                      >
+                      {name}
+                      </button>
 
-                  <div className="flex flex-row ml-1">
-                    {["A", "B", "C", "D", "E"].map((dayLetter) => {
+                      <div className="flex flex-row ml-1">
+                      {["A", "B", "C", "D", "E"].map((dayLetter) => {
                       const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
                       return (
-                        <div
-                          key={dayLetter}
-                          className={`w-4 h-9 rounded-lg ${
-                            primaryData[fieldName]
-                              ? config.colors.present
-                              : config.colors.absent
-                          } mr-1`}
-                        ></div>
+                      <div
+                      key={dayLetter}
+                      className={`w-4 h-9 rounded-lg ${
+                        primaryData[fieldName]
+                          ? config.colors.present
+                          : config.colors.absent
+                      } mr-1`}
+                      ></div>
                       );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <audio ref={audioRef} />
-      </div>
-    );
-  }
-  export default DailyRewards;
-
+                      })}
+                      </div>
+                      </div>
+                      );
+                      })}
+                      </div>
+                      </div>
+                      <audio ref={audioRef} />
+                      </div>
+                      );
+                      }
+                      export default DailyRewards;
