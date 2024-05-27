@@ -7,10 +7,6 @@ import { Menu, Transition } from "@headlessui/react";
 function DailyRewards() {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [studentToMarkAbsent, setStudentToMarkAbsent] = useState(null);
-  const [showBiblePopup, setShowBiblePopup] = useState(false);
-  const [studentToUpdateBible, setStudentToUpdateBible] = useState(null);
   const [selectedField, setSelectedField] = useState(null); // New state for selected field
   const audioRef = useRef(null);
 
@@ -96,67 +92,6 @@ function DailyRewards() {
     }
   };
 
-  const updateStudentAttendance = async (fieldName, fieldToUpdate) => {
-    try {
-      const docRef = doc(
-        db,
-        currentConfig.dbPath.split("/")[0],
-        currentConfig.dbPath.split("/")[1]
-      );
-      const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
-      const bibleField = `${fieldToUpdate}bible`;
-
-      await updateDoc(docRef, {
-        [fieldToUpdate]: newValue,
-        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
-      });
-
-      setPrimaryData((prevData) => ({
-        ...prevData,
-        [fieldToUpdate]: newValue,
-        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
-      }));
-
-      // Play sound if student is marked present
-      if (newValue) {
-        playEnterSound();
-        setStudentToUpdateBible(fieldName);
-        setShowBiblePopup(true);
-      }
-    } catch (error) {
-      console.error("Error updating Firebase: ", error);
-    }
-
-    setShowConfirmation(false);
-    setStudentToMarkAbsent(null);
-  };
-
-  const updateBibleStatus = async (fieldName, broughtBible) => {
-    try {
-      const docRef = doc(
-        db,
-        currentConfig.dbPath.split("/")[0],
-        currentConfig.dbPath.split("/")[1]
-      );
-      const dayLetter = getCurrentDayLetter();
-      const bibleField = `${fieldName.slice(0, 2)}${dayLetter}bible`;
-
-      await updateDoc(docRef, {
-        [bibleField]: broughtBible ? true : false,
-      });
-
-      setPrimaryData((prevData) => ({
-        ...prevData,
-        [bibleField]: broughtBible ? true : false,
-      }));
-    } catch (error) {
-      console.error("Error updating Firebase: ", error);
-    }
-
-    setShowBiblePopup(false);
-    setStudentToUpdateBible(null);
-  };
-
   const getButtonColor = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
@@ -180,52 +115,6 @@ function DailyRewards() {
 
   return (
     <div className="flex flex-col items-center">
-      {showConfirmation && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black opacity-50" />
-          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-            <p className="mb-2">Mark student as absent?</p>
-            <div className="flex space-x-4">
-              <button
-                className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() =>
-                  updateStudentAttendance(
-                    studentToMarkAbsent.fieldName,
-                    studentToMarkAbsent.fieldToUpdate
-                  )
-                }>
-                Yes
-              </button>
-              <button
-                className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setShowConfirmation(false)}>
-                No
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showBiblePopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black opacity-50" />
-          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-            <p className="mb-2">Did the student bring their Bible today?</p>
-            <div className="flex space-x-4">
-              <button
-                className="bg-green-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => updateBibleStatus(studentToUpdateBible, true)}>
-                Yes
-              </button>
-              <button
-                className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => updateBibleStatus(studentToUpdateBible, false)}>
-                No
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
       <Menu as="div" className="relative inline-block mt-4">
         <div>
           <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
@@ -275,7 +164,7 @@ function DailyRewards() {
           leave="transition ease-in duration-75"
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95">
-          <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
+          <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 -black/5 focus:outline-none flex flex-col items-center z-50">
             {/* Menu items for different fields */}
             <Menu.Item>
               {({ active }) => (
@@ -360,3 +249,4 @@ function DailyRewards() {
 }
 
 export default DailyRewards;
+
