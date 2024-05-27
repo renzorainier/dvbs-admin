@@ -1,49 +1,25 @@
-import React, { useState, useEffect, useRef, Fragment } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
-import { Menu, Transition } from "@headlessui/react";
 
-const configurations = [
-  {
-    name: "Primary",
-    dbPath: "dvbs/primary",
-    color: "#FFC100",
-  },
-  {
-    name: "Middlers",
-    dbPath: "dvbs/middlers",
-    color: "#04d924",
-  },
-  {
-    name: "Juniors",
-    dbPath: "dvbs/juniors",
-    color: "#027df7",
-  },
-  {
-    name: "Youth",
-    dbPath: "dvbs/youth",
-    color: "#f70233",
-  },
-];
-
-function DailyRewards() {
-  const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
+function DailyRewards({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [studentToMarkAbsent, setStudentToMarkAbsent] = useState(null);
+  const [showBiblePopup, setShowBiblePopup] = useState(false);
+  const [studentToUpdateBible, setStudentToUpdateBible] = useState(null);
   const audioRef = useRef(null);
 
-  const currentConfig = configurations[currentConfigIndex];
   const uploadTime = new Date().toLocaleString();
 
   useEffect(() => {
     const fetchPrimary = async () => {
       const docRef = doc(
         db,
-        currentConfig.dbPath.split("/")[0],
-        currentConfig.dbPath.split("/")[1]
+        config.dbPath.split("/")[0],
+        config.dbPath.split("/")[1]
       );
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
@@ -54,7 +30,7 @@ function DailyRewards() {
     };
 
     fetchPrimary();
-  }, [currentConfig.dbPath]);
+  }, [config.dbPath]);
 
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E"];
@@ -68,6 +44,7 @@ function DailyRewards() {
     const fieldToUpdate = `${prefix}${dayLetter}`;
 
     if (primaryData[fieldToUpdate]) {
+      // Show confirmation prompt
       setStudentToMarkAbsent({ fieldName, fieldToUpdate });
       setShowConfirmation(true);
     } else {
@@ -79,22 +56,28 @@ function DailyRewards() {
     try {
       const docRef = doc(
         db,
-        currentConfig.dbPath.split("/")[0],
-        currentConfig.dbPath.split("/")[1]
+        config.dbPath.split("/")[0],
+        config.dbPath.split("/")[1]
       );
       const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
+      const bibleField = `${fieldToUpdate}bible`;
 
       await updateDoc(docRef, {
         [fieldToUpdate]: newValue,
+        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [fieldToUpdate]: newValue,
+        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
       }));
 
+      // Play sound if student is marked present
       if (newValue) {
         playEnterSound();
+        setStudentToUpdateBible(fieldName);
+        setShowBiblePopup(true);
       }
     } catch (error) {
       console.error("Error updating Firebase: ", error);
@@ -104,13 +87,55 @@ function DailyRewards() {
     setStudentToMarkAbsent(null);
   };
 
+  const updateBibleStatus = async (fieldName, broughtBible) => {
+    try {
+      const docRef = doc(
+        db,
+        config.dbPath.split("/")[0],
+        config.dbPath.split("/")[1]
+      );
+      const dayLetter = getCurrentDayLetter();
+      const bibleField = `${fieldName.slice(0, 2)}${dayLetter}bible`;
+
+      await updateDoc(docRef, {
+        [bibleField]: broughtBible ? true : false,
+      });
+
+      setPrimaryData((prevData) => ({
+        ...prevData,
+        [bibleField]: broughtBible ? true : false,
+      }));
+    } catch (error) {
+      console.error("Error updating Firebase: ", error);
+    }
+
+    setShowBiblePopup(false);
+    setStudentToUpdateBible(null);
+  };
+
   const getButtonColor = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
     const fieldToCheck = `${prefix}${dayLetter}`;
     return primaryData[fieldToCheck]
-      ? currentConfig.colors.present
-      : currentConfig.colors.absent;
+      ? config.colors.present
+      : config.colors.absent;
+  };
+
+  const countPresentForToday = () => {
+    const dayLetter = getCurrentDayLetter();
+    return Object.keys(primaryData).filter(
+      (key) => key.endsWith(dayLetter) && primaryData[key]
+    ).length;
+  };
+
+  const countAbsentForToday = () => {
+    const dayLetter = getCurrentDayLetter();
+    const totalStudents = Object.keys(primaryData).filter((key) =>
+      key.endsWith(dayLetter)
+    ).length;
+    const presentCount = countPresentForToday();
+    return totalStudents - presentCount;
   };
 
   const sortedNames = Object.keys(primaryData)
@@ -154,41 +179,28 @@ function DailyRewards() {
           </div>
         </div>
       )}
-      
-<Menu as="div" className="relative inline-block justify-center text-center mt-4">
-  <div>
-    <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-      <h2 className="text-4xl font-bold">{currentConfig.name}</h2>
-    </Menu.Button>
 
-    <Transition
-      as={Fragment}
-      enter="transition ease-out duration-200"
-      enterFrom="transform opacity-0 scale-95"
-      enterTo="transform opacity-100 scale-100"
-      leave="transition ease-in duration-75"
-      leaveFrom="transform opacity-100 scale-100"
-      leaveTo="transform opacity-0 scale-95"
-    >
-      <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
-        {configurations.map((config, index) => (
-          <Menu.Item key={index}>
-            {({ active }) => (
+      {showBiblePopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50" />
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="mb-2">Did the student bring their Bible today?</p>
+            <div className="flex space-x-4">
               <button
-                onClick={() => setCurrentConfigIndex(index)}
-                className={`${
-                  active ? "bg-blue-500 text-white" : "text-gray-900"
-                } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
-              >
-                {config.name}
+                className="bg-green-500 text-white font-bold py-2 px-4 rounded"
+                onClick={() => updateBibleStatus(studentToUpdateBible, true)}>
+                Yes
               </button>
-            )}
-          </Menu.Item>
-        ))}
-      </Menu.Items>
-    </Transition>
-  </div>
-</Menu>
+              <button
+                className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                onClick={() => updateBibleStatus(studentToUpdateBible, false)}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
 
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
@@ -215,7 +227,6 @@ function DailyRewards() {
                   }}>
                   {name}
                 </button>
-
                 <div className="flex flex-row ml-1">
                   {["A", "B", "C", "D", "E"].map((dayLetter) => {
                     const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
@@ -239,4 +250,5 @@ function DailyRewards() {
     </div>
   );
 }
+
 export default DailyRewards;
