@@ -3,7 +3,7 @@ import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
 
-function DailyRewards({ config, currentConfigIndex, setCurrentConfigIndex }) {
+function DailyRewards() {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -11,6 +11,44 @@ function DailyRewards({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [showBiblePopup, setShowBiblePopup] = useState(false);
   const [studentToUpdateBible, setStudentToUpdateBible] = useState(null);
   const audioRef = useRef(null);
+
+
+
+
+
+  const configurations = [
+    {
+      name: "Primary",
+      colors: { present: "bg-[#FFC100]", absent: "bg-gray-400" },
+      dbPath: "dvbs/primary",
+      color: "#FFC100",
+      ageRange: [4, 5, 6],
+    },
+    {
+      name: "Middlers",
+      colors: { present: "bg-[#04d924]", absent: "bg-gray-500" },
+      dbPath: "dvbs/middlers",
+      color: "#04d924",
+      ageRange: [7, 8, 9],
+    },
+    {
+      name: "Juniors",
+      colors: { present: "bg-[#027df7]", absent: "bg-gray-500" },
+      dbPath: "dvbs/juniors",
+      color: "#027df7",
+      ageRange: [10, 11, 12],
+    },
+    {
+      name: "Youth",
+      colors: { present: "bg-[#f70233]", absent: "bg-gray-500" },
+      dbPath: "dvbs/youth",
+      color: "#f70233",
+      ageRange: [13, 14, 15],
+    },
+  ];
+
+  const currentConfig = configurations[currentConfigIndex];
+
 
   const uploadTime = new Date().toLocaleString();
 
