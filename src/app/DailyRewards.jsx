@@ -14,6 +14,10 @@ function DailyRewards() {
 
 
 
+  const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
+
+
+
 
 
   const configurations = [
