@@ -3,7 +3,6 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu, Transition } from "@headlessui/react";
 
-
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [newVisitorName, setNewVisitorName] = useState("");
   const [newVisitorAddress, setNewVisitorAddress] = useState("");
@@ -13,8 +12,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [broughtBible, setBroughtBible] = useState(false); // New state for Bible toggle
   const [primaryData, setPrimaryData] = useState({});
   const [showPopup, setShowPopup] = useState(false);
+  const [visitorID, setVisitorID] = useState(null);
   const audioRef = useRef(null);
-
 
   const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
 
@@ -117,7 +116,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}Bpoints`]: 0,
         [`${paddedIndex}Cpoints`]: 0,
         [`${paddedIndex}Dpoints`]: 0,
-        [`${paddedIndex}Epoints`]: 0,hindi 
+        [`${paddedIndex}Epoints`]: 0,
       };
 
       const currentDayLetter = getCurrentDayLetter();
@@ -143,11 +142,19 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         ...prevData,
         ...newFields,
       }));
+
+      // Set visitor ID for the floating div
+      setVisitorID(`P${paddedIndex}`);
+
+      // Hide the floating div after 3 seconds
+      setTimeout(() => {
+        setVisitorID(null);
+      }, 3000);
+
+      playEnterSound(); // Play sound
     } catch (error) {
       console.error("Error adding visitor: ", error);
     }
-    playEnterSound(); // Play sound
-
   };
 
   const ageOptions = [
@@ -155,7 +162,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     config.ageRange[1],
     config.ageRange[2],
   ];
-
 
   const playEnterSound = () => {
     const audio = new Audio("/point.wav");
@@ -171,15 +177,21 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             <p className="mb-2">Please fill in all required fields.</p>
             <button
               className={`bg-[${config.color}] hover:bg-[${config.color}] text-white font-bold py-2 px-4 rounded`}
-              onClick={() => setShowPopup(false)}>
+              onClick={() => setShowPopup(false)}
+            >
               OK
             </button>
           </div>
         </div>
       )}
 
-      <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto ">
+      {visitorID && (
+        <div className="fixed top-5 right-5 bg-gray-700 text-white p-3 rounded-lg shadow-lg">
+          New Visitor ID: {visitorID}
+        </div>
+      )}
 
+      <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto ">
         <div className="p-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Add New Visitor
@@ -196,7 +208,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             <div className="flex items-center space-x-4">
               <Menu
                 as="div"
-                className="relative inline-block text-left w-full z-40">
+                className="relative inline-block text-left w-full z-40"
+              >
                 <div>
                   <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     {age ? `Age: ${age}` : "Select Age"}
@@ -209,7 +222,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   enterTo="transform opacity-100 scale-100"
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95">
+                  leaveTo="transform opacity-0 scale-95"
+                >
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {ageOptions.map((ageOption) => (
@@ -221,7 +235,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                                 active
                                   ? "bg-gray-100 text-gray-900"
                                   : "text-gray-700"
-                              } block w-full text-left px-4 py-2 text-sm`}>
+                              } block w-full text-left px-4 py-2 text-sm`}
+                            >
                               {ageOption}
                             </button>
                           )}
@@ -265,7 +280,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   enterTo="transform opacity-100 scale-100"
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95">
+                  leaveTo="transform opacity-0 scale-95"
+                >
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {predefinedRoutes.map((route) => (
@@ -277,7 +293,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                                 active
                                   ? "bg-gray-100 text-gray-900"
                                   : "text-gray-700"
-                              } block w-full text-left px-4 py-2 text-sm`}>
+                              } block w-full text-left px-4 py-2 text-sm`}
+                            >
                               {route}
                             </button>
                           )}
@@ -306,13 +323,15 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
             <button
               className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
-              onClick={addVisitor}>
+              onClick={addVisitor}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 mr-2"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor">
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -326,9 +345,9 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         </div>
       </div>
       <audio ref={audioRef} />
-
     </div>
   );
 }
 
 export default Visitors;
+
