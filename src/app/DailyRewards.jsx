@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
 import { Menu, Transition } from "@headlessui/react";
@@ -64,27 +64,26 @@ function DailyRewards() {
   const handleClick = async (fieldName) => {
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
-    const fieldToUpdate = `${prefix}${dayLetter}`;
+    const fieldToUpdate = `${prefix}${dayLetter}${selectedField}`;
 
     if (selectedField) {
       try {
         const docRef = doc(
           db,
           currentConfig.dbPath.split("/")[0],
-          currentConfig.dbPath.split("/")[1],
-          `${fieldName}${dayLetter}${selectedField}` // Constructing the document ID
+          currentConfig.dbPath.split("/")[1]
         );
 
-        // Add the document to Firebase with the selected field set to true
-        await setDoc(docRef, { [selectedField]: true });
+        // Update the document in Firebase with the selected field set to true
+        await updateDoc(docRef, { [fieldToUpdate]: true });
 
         // Update the local state to reflect the change
         setPrimaryData((prevData) => ({
           ...prevData,
-          [`${fieldName}${dayLetter}${selectedField}`]: true,
+          [fieldToUpdate]: true,
         }));
       } catch (error) {
-        console.error("Error adding document: ", error);
+        console.error("Error updating document: ", error);
       }
     } else {
       // Handle if no field is selected
