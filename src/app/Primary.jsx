@@ -38,38 +38,39 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const getPreviousDayLetter = () => {
-    const days = ["A", "B", "C", "D", "E"];
-    const dayIndex = new Date().getDay();
-    return days[(dayIndex === 0 ? 6 : dayIndex - 1) - 1];
-  };
-
   const handleClick = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
-    const currentDayLetter = getCurrentDayLetter();
-    const previousDayLetter = getPreviousDayLetter();
-    const currentFieldToUpdate = `${prefix}${currentDayLetter}`;
-    const previousFieldToCopy = `${prefix}${previousDayLetter}`;
+    const dayLetter = getCurrentDayLetter();
+    const fieldToUpdate = `${prefix}${dayLetter}`;
 
-    updateStudentAttendance(fieldName, currentFieldToUpdate, previousFieldToCopy);
+    if (primaryData[fieldToUpdate]) {
+      // Show confirmation prompt
+      setStudentToMarkAbsent({ fieldName, fieldToUpdate });
+      setShowConfirmation(true);
+    } else {
+      updateStudentAttendance(fieldName, fieldToUpdate);
+    }
   };
 
-  const updateStudentAttendance = async (fieldName, currentFieldToUpdate, previousFieldToCopy) => {
+  const updateStudentAttendance = async (fieldName, fieldToUpdate) => {
     try {
       const docRef = doc(
         db,
         config.dbPath.split("/")[0],
         config.dbPath.split("/")[1]
       );
-      const newValue = primaryData[previousFieldToCopy] || "";
+      const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
+      const bibleField = `${fieldToUpdate}bible`;
 
       await updateDoc(docRef, {
-        [currentFieldToUpdate]: newValue,
+        [fieldToUpdate]: newValue,
+        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
-        [currentFieldToUpdate]: newValue,
+        [fieldToUpdate]: newValue,
+        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
       }));
 
       // Play sound if student is marked present
@@ -142,6 +143,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     .map((fieldName) => primaryData[fieldName])
     .sort();
 
+  // Updated filteredNames to also search for field indexes
   const filteredNames = sortedNames.filter((name) => {
     const studentIndex = Object.keys(primaryData).find(
       (key) => primaryData[key] === name
@@ -205,6 +207,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
           </div>
         </div>
       )}
+
 
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
