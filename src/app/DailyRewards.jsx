@@ -105,14 +105,23 @@ function DailyRewards() {
   const getButtonColor = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
-    const fieldToCheck = `${prefix}${dayLetter}`;
+    const fieldToCheck = `${prefix}${dayLetter}${selectedField}`;
     return primaryData[fieldToCheck];
   };
 
   const sortedNames = Object.keys(primaryData)
     .filter((fieldName) => fieldName.endsWith("name"))
-    .map((fieldName) => primaryData[fieldName])
-    .sort();
+    .map((fieldName) => {
+      const prefix = fieldName.slice(0, 2);
+      const dayLetter = getCurrentDayLetter();
+      const fieldToCheck = `${prefix}${dayLetter}${selectedField}`;
+      return {
+        name: primaryData[fieldName],
+        isMarked: primaryData[fieldToCheck],
+      };
+    })
+    .sort((a, b) => (a.isMarked === b.isMarked ? 0 : a.isMarked ? -1 : 1))
+    .map((student) => student.name);
 
   const filteredNames = sortedNames.filter((name) =>
     name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -123,7 +132,7 @@ function DailyRewards() {
       className="h-screen overflow-auto"
       style={{ backgroundColor: currentConfig.color }}>
       <div className="flex justify-center items-center overflow-auto">
-        <div className="w-full rounded-lg mx-auto " style={{ maxWidth: "90%" }}>
+        <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
           <div className="flex flex-col gap-4">
             <div className="w-full">
               <Menu as="div" className="relative inline-block mt-4">
@@ -203,7 +212,11 @@ function DailyRewards() {
                               active
                                 ? "bg-blue-500 text-white"
                                 : "text-gray-900"
-                            } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
+                            } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover
+
+
+
+:bg-blue-100 transition-colors duration-200`}>
                             {field
                               .replace(/([A-Z])/g, " $1")
                               .trim()
@@ -218,7 +231,7 @@ function DailyRewards() {
             </div>
           </div>
 
-          <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg           shadow-lg mx-auto">
+          <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
             <input
               type="text"
               placeholder="Search names..."
@@ -261,7 +274,7 @@ function DailyRewards() {
                         )}${dayLetter}${selectedField}`;
                         const indicatorColor = primaryData[fieldName]
                           ? currentConfig.color
-                          : "#E5E7EB"; // Use currentConfig.color for the indicator color
+                          : "#E5E7EB";
                         return (
                           <div
                             key={dayLetter}
@@ -281,11 +294,16 @@ function DailyRewards() {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-4 rounded-lg shadow-lg">
             <h2 className="text-lg font-semibold mb-4">Unmark Confirmation</h2>
-            <p className="mb-4">Unmark this student?</p>
+            <p className="mb-4">
+              Are you sure you want to unmark this student?
+            </p>
             <div className="flex justify-end">
               <button
-                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
-                onClick={() => updateStudentAttendance(studentToUnmark.fieldToUpdate, false)}>
+                class
+                Name="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                onClick={() =>
+                  updateStudentAttendance(studentToUnmark.fieldToUpdate, false)
+                }>
                 Yes
               </button>
               <button
@@ -303,4 +321,3 @@ function DailyRewards() {
 }
 
 export default DailyRewards;
-
