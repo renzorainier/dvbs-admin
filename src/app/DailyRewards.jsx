@@ -233,11 +233,12 @@ function DailyRewards() {
                         )}${dayLetter}${selectedField}`;
                         const indicatorColor = primaryData[fieldName]
                           ? currentConfig.color
-                          : "bg-gray-200";
+                          : "#E5E7EB"; // Use currentConfig.color for the indicator color
                         return (
                           <div
                             key={dayLetter}
-                            className={`w-4 h-9 rounded-lg ${indicatorColor} mr-1`}></div>
+                            className={`w-4 h-9 rounded-lg mr-1`}
+                            style={{ backgroundColor: indicatorColor }}></div>
                         );
                       })}
                     </div>
