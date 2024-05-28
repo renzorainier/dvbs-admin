@@ -82,20 +82,17 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const prevPointsField = `${fieldName.slice(0, 2)}${prevDayLetter}points`;
       const prevPoints = primaryData[prevPointsField] || 0;
 
-      // Increment current day's point by 1 if the student is marked present
-      const newPoints = newValue ? prevPoints + 1 : prevPoints;
-
       await updateDoc(docRef, {
         [fieldToUpdate]: newValue,
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
-        [pointsField]: newPoints, // Set current day's points to previous day's points
+        [pointsField]: prevPoints , // Set current day's points to previous day's points
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [fieldToUpdate]: newValue,
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
-        [pointsField]: newPoints, // Update local state with the new points value
+        [pointsField]: prevPoints, // Update local state with the new points value
       }));
 
       // Play sound if student is marked present
@@ -111,7 +108,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     setShowConfirmation(false);
     setStudentToMarkAbsent(null);
   };
-
 
   const updateBibleStatus = async (fieldName, broughtBible) => {
     try {
