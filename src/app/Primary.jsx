@@ -38,28 +38,31 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const handleClick = (fieldName) => {
-    const prefix = fieldName.slice(0, 2);
-    const dayLetter = getCurrentDayLetter();
-    const fieldToUpdate = `${prefix}${dayLetter}`;
-
-    if (primaryData[fieldToUpdate]) {
-      // Show confirmation prompt
-      setStudentToMarkAbsent({ fieldName, fieldToUpdate });
-      setShowConfirmation(true);
-    } else {
-      updateStudentAttendance(fieldName, fieldToUpdate);
-    }
+  const getPreviousDayLetter = () => {
+    const days = ["A", "B", "C", "D", "E"];
+    const dayIndex = new Date().getDay();
+    return days[dayIndex === 0 ? 5 : dayIndex - 2];
   };
 
-  const updateStudentAttendance = async (fieldName, fieldToUpdate) => {
+  const handleClick = async (fieldName) => {
+    const prefix = fieldName.slice(0, 2);
+    const dayLetter = getCurrentDayLetter();
+    const previousDayLetter = getPreviousDayLetter();
+    const fieldToUpdate = `${prefix}${dayLetter}`;
+    const previousField = `${prefix}${previousDayLetter}`;
+
+    const previousDayValue = primaryData[previousField] || "";
+
+    await updateStudentAttendance(fieldName, fieldToUpdate, previousDayValue);
+  };
+
+  const updateStudentAttendance = async (fieldName, fieldToUpdate, newValue) => {
     try {
       const docRef = doc(
         db,
         config.dbPath.split("/")[0],
         config.dbPath.split("/")[1]
       );
-      const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
       const bibleField = `${fieldToUpdate}bible`;
 
       await updateDoc(docRef, {
@@ -143,7 +146,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     .map((fieldName) => primaryData[fieldName])
     .sort();
 
-  // Updated filteredNames to also search for field indexes
   const filteredNames = sortedNames.filter((name) => {
     const studentIndex = Object.keys(primaryData).find(
       (key) => primaryData[key] === name
@@ -172,7 +174,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 onClick={() =>
                   updateStudentAttendance(
                     studentToMarkAbsent.fieldName,
-                    studentToMarkAbsent.fieldToUpdate
+                    studentToMarkAbsent.fieldToUpdate,
+                    ""
                   )
                 }>
                 Yes
@@ -265,6 +268,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
           </p>
         </div>
       </div>
+
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
