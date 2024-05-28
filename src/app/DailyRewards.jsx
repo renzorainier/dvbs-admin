@@ -214,31 +214,26 @@ function DailyRewards() {
                 return (
                   <div key={index} className="flex items-center">
                     <button
-                      className={`w-70-percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
-                        studentIndex
-                      )}`}
+                      className={`w-70-percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(studentIndex)}`}
                       onClick={() => {
                         handleClick(studentIndex);
-                      }}
-                    >
+                      }}>
                       {name}
                     </button>
                     <div className="flex flex-row ml-1">
                       {["A", "B", "C", "D", "E"].map((dayLetter) => {
-                        const fieldName = `${studentIndex.slice(
-                          0,
-                          2
-                        )}${dayLetter}`;
+                        const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
                         return (
                           <div
                             key={dayLetter}
-                            className={`w-4 h-9 rounded-lg                             ${primaryData[fieldName] ? "bg-green-500" : "bg-gray-200"} mr-1`}
-                            ></div>
-                          );
-                        })}
-                      </div>
+                            className={`w-4 h-9 rounded-lg ${primaryData[fieldName] ? "bg-green-500" : "bg-gray-200"} mr-1`}
+                          ></div>
+                        );
+                      })}
                     </div>
-                  );
+                  </div>
+                );
+
                 })}
               </div>
             </div>
