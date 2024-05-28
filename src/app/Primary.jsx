@@ -143,9 +143,16 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     .map((fieldName) => primaryData[fieldName])
     .sort();
 
-  const filteredNames = sortedNames.filter((name) =>
-    name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Updated filteredNames to also search for field indexes
+  const filteredNames = sortedNames.filter((name) => {
+    const studentIndex = Object.keys(primaryData).find(
+      (key) => primaryData[key] === name
+    );
+    return (
+      name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (studentIndex && studentIndex.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  });
 
   const playEnterSound = () => {
     const audio = new Audio("/point.wav");
@@ -227,14 +234,14 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 sm:h-10 lg:w-12 lg:h-12">
+            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
-          <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text           text-lg lg:text-xl">
+          <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
             {countAbsentForToday()}
           </p>
         </div>
@@ -261,7 +268,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
-          placeholder="Search names..."
+          placeholder="Search names or indexes..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
@@ -308,3 +315,4 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 }
 
 export default Primary;
+
