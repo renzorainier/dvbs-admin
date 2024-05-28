@@ -117,25 +117,23 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         config.dbPath.split("/")[1]
       );
       const dayLetter = getCurrentDayLetter();
+      const prevDayLetter = getPreviousDayLetter(dayLetter);
+      const bibleField = `${fieldName.slice(0, 2)}${dayLetter}bible`;
       const pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
-      const prevPointsField = `${fieldName.slice(0, 2)}${getPreviousDayLetter(dayLetter)}points`;
+      const prevPointsField = `${fieldName.slice(0, 2)}${prevDayLetter}points`;
 
-      // Get the current day's points value
-      const currentPointsSnapshot = await getDoc(docRef);
-      const currentPointsData = currentPointsSnapshot.data();
-      const currentPoints = currentPointsData[pointsField] || 0;
-
-      // Increment the current day's points if it hasn't been incremented already
-      const newPoints = broughtBible ? currentPoints + 1 : currentPoints;
+      // Get previous day's points and set as today's initial points
+      const prevPoints = primaryData[prevPointsField] || 0;
+      const newPoints = broughtBible ? prevPoints + 1 : prevPoints;
 
       await updateDoc(docRef, {
-        [`${fieldName.slice(0, 2)}${dayLetter}bible`]: broughtBible ? true : false,
+        [bibleField]: broughtBible ? true : false,
         [pointsField]: newPoints,
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
-        [`${fieldName.slice(0, 2)}${dayLetter}bible`]: broughtBible ? true : false,
+        [bibleField]: broughtBible ? true : false,
         [pointsField]: newPoints,
       }));
     } catch (error) {
