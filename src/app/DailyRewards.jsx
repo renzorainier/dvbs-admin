@@ -155,13 +155,16 @@ function DailyRewards() {
           <Menu as="div" className="relative inline-block mt-4">
             <div>
               <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                <h2 className="text-4xl font-bold">
+                <h2 className="text-2xl font-bold">
                   {selectedField
-                    ? selectedField.replace(/([A-Z])/g, " $1").trim()
+                    ? selectedField
+                        .replace(/([A-Z])/g, " $1")
+                        .trim()
+                        .replace(/\b\w/g, (char) => char.toUpperCase())
                     : "Select Field to Modify"}
                 </h2>
                 <ChevronDownIcon
-                  className="ml-2 -mr-1 h-10 w-10"
+                  className="ml-2 -mr-1 h-8 w-10"
                   aria-hidden="true"
                 />
               </Menu.Button>
@@ -183,7 +186,10 @@ function DailyRewards() {
                         className={`${
                           active ? "bg-blue-500 text-white" : "text-gray-900"
                         } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
-                        {field.replace(/([A-Z])/g, " $1").trim()}
+                        {field
+                          .replace(/([A-Z])/g, " $1")
+                          .trim()
+                          .replace(/\b\w/g, (char) => char.toUpperCase())}
                       </button>
                     )}
                   </Menu.Item>
