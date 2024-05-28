@@ -212,11 +212,7 @@ function DailyRewards() {
                               active
                                 ? "bg-blue-500 text-white"
                                 : "text-gray-900"
-                            } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover
-
-
-
-:bg-blue-100 transition-colors duration-200`}>
+                            } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
                             {field
                               .replace(/([A-Z])/g, " $1")
                               .trim()
