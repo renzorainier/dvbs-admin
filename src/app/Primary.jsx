@@ -86,6 +86,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     setShowConfirmation(false);
     setStudentToMarkAbsent(null);
   };
+
   const updateBibleStatus = async (fieldName, broughtBible) => {
     try {
       const docRef = doc(
@@ -94,14 +95,12 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         config.dbPath.split("/")[1]
       );
       const dayLetter = getCurrentDayLetter();
-      const prevDayLetter = getPreviousDayLetter(dayLetter); // Function to get previous day's letter
-      const prevPointsField = `${fieldName.slice(0, 2)}${prevDayLetter}points`;
       const bibleField = `${fieldName.slice(0, 2)}${dayLetter}bible`;
       const pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
 
-      // Copy previous day's points to current day's points
-      const prevPoints = primaryData[prevPointsField] || 0;
-      const newPoints = broughtBible ? prevPoints + 1 : prevPoints;
+      const newPoints = broughtBible
+        ? (primaryData[pointsField] || 0) + 1
+        : primaryData[pointsField] || 0;
 
       await updateDoc(docRef, {
         [bibleField]: broughtBible ? true : false,
@@ -158,8 +157,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     );
     return (
       name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (studentIndex &&
-        studentIndex.toLowerCase().includes(searchQuery.toLowerCase()))
+      (studentIndex && studentIndex.toLowerCase().includes(searchQuery.toLowerCase()))
     );
   });
 
@@ -217,6 +215,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         </div>
       )}
 
+
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
@@ -244,7 +243,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 </button>
                 <div className="flex flex-row ml-1">
                   {["A", "B", "C", "D", "E"].map((dayLetter) => {
-                    const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
+                    const fieldName =  `${studentIndex.slice(0, 2)}${dayLetter}`;
                     return (
                       <div
                         key={dayLetter}
@@ -267,6 +266,16 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 }
 
 export default Primary;
+
+
+
+
+
+
+
+
+
+
 
 // <div className="flex justify-center mb-5 font-bold">
 // <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
