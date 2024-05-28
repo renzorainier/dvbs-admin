@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
@@ -11,6 +11,8 @@ function DailyRewards() {
   const [selectedField, setSelectedField] = useState("memoryVerse");
   const audioRef = useRef(null);
   const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [studentToUnmark, setStudentToUnmark] = useState(null);
 
   const configurations = [
     {
@@ -65,33 +67,39 @@ function DailyRewards() {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const handleClick = async (fieldName) => {
+  const handleClick = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
     const fieldToUpdate = `${prefix}${dayLetter}${selectedField}`;
 
-    if (selectedField) {
-      try {
-        const docRef = doc(
-          db,
-          currentConfig.dbPath.split("/")[0],
-          currentConfig.dbPath.split("/")[1]
-        );
-
-        await updateDoc(docRef, { [fieldToUpdate]: true });
-
-        console.log("done");
-
-        setPrimaryData((prevData) => ({
-          ...prevData,
-          [fieldToUpdate]: true,
-        }));
-      } catch (error) {
-        console.error("Error updating document: ", error);
-      }
+    if (primaryData[fieldToUpdate]) {
+      setStudentToUnmark({ fieldName, fieldToUpdate });
+      setShowConfirmation(true);
     } else {
-      console.error("No field selected!");
+      updateStudentAttendance(fieldToUpdate, true);
     }
+  };
+
+  const updateStudentAttendance = async (fieldToUpdate, markAs) => {
+    try {
+      const docRef = doc(
+        db,
+        currentConfig.dbPath.split("/")[0],
+        currentConfig.dbPath.split("/")[1]
+      );
+
+      await updateDoc(docRef, { [fieldToUpdate]: markAs });
+
+      setPrimaryData((prevData) => ({
+        ...prevData,
+        [fieldToUpdate]: markAs,
+      }));
+    } catch (error) {
+      console.error("Error updating document: ", error);
+    }
+
+    setShowConfirmation(false);
+    setStudentToUnmark(null);
   };
 
   const getButtonColor = (fieldName) => {
@@ -131,7 +139,7 @@ function DailyRewards() {
                   </Menu.Button>
                 </div>
                 <Transition
-                  as={React.Fragment}
+                  as={Fragment}
                   enter="transition ease-out duration-200"
                   enterFrom="transform opacity-0 scale-95"
                   enterTo="transform opacity-100 scale-100"
@@ -178,7 +186,7 @@ function DailyRewards() {
                   </Menu.Button>
                 </div>
                 <Transition
-                  as={React.Fragment}
+                  as={Fragment}
                   enter="transition ease-out duration-200"
                   enterFrom="transform opacity-0 scale-95"
                   enterTo="transform opacity-100 scale-100"
@@ -210,7 +218,7 @@ function DailyRewards() {
             </div>
           </div>
 
-          <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+          <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg           shadow-lg mx-auto">
             <input
               type="text"
               placeholder="Search names..."
@@ -269,9 +277,30 @@ function DailyRewards() {
           </div>
         </div>
       </div>
+      {showConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg">
+            <h2 className="text-lg font-semibold mb-4">Unmark Confirmation</h2>
+            <p className="mb-4">Are you sure you want to unmark this student?</p>
+            <div className="flex justify-end">
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                onClick={() => updateStudentAttendance(studentToUnmark.fieldToUpdate, false)}>
+                Yes
+              </button>
+              <button
+                className="bg-gray-300 text-black px-4 py-2 rounded"
+                onClick={() => setShowConfirmation(false)}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <audio ref={audioRef} />
     </div>
   );
 }
 
 export default DailyRewards;
+
