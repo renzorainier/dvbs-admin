@@ -5,13 +5,11 @@ import Confetti from "react-confetti";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-
 function DailyRewards() {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedField, setSelectedField] = useState(null); // New state for selected field
+  const [selectedField, setSelectedField] = useState(null);
   const audioRef = useRef(null);
-
   const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
 
   const configurations = [
@@ -80,10 +78,8 @@ function DailyRewards() {
           currentConfig.dbPath.split("/")[1]
         );
 
-        // Update the document in Firebase with the selected field set to true
         await updateDoc(docRef, { [fieldToUpdate]: true });
 
-        // Update the local state to reflect the change
         setPrimaryData((prevData) => ({
           ...prevData,
           [fieldToUpdate]: true,
@@ -92,7 +88,6 @@ function DailyRewards() {
         console.error("Error updating document: ", error);
       }
     } else {
-      // Handle if no field is selected
       console.error("No field selected!");
     }
   };
@@ -113,18 +108,8 @@ function DailyRewards() {
     name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const playEnterSound = () => {
-    const audio = new Audio("/point.wav");
-    audio.play();
-  };
-
   return (
-    <div
-      className="h-screen overflow-auto"
-      style={{
-        backgroundColor: `${configurations[currentConfigIndex].color}`,
-      }}
-    >
+    <div className="h-screen overflow-auto" style={{ backgroundColor: currentConfig.color }}>
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto " style={{ maxWidth: "90%" }}>
           <Menu as="div" className="relative inline-block mt-4">
@@ -133,10 +118,7 @@ function DailyRewards() {
                 <h2 className="text-4xl font-bold">
                   {configurations[currentConfigIndex].name}
                 </h2>
-                <ChevronDownIcon
-                  className="ml-2 -mr-1 h-10 w-10"
-                  aria-hidden="true"
-                />
+                <ChevronDownIcon className="ml-2 -mr-1 h-10 w-10" aria-hidden="true" />
               </Menu.Button>
             </div>
             <Transition
@@ -167,17 +149,13 @@ function DailyRewards() {
             </Transition>
           </Menu>
 
-          {/* New menu selector for choosing the field to modify */}
           <Menu as="div" className="relative inline-block mt-4">
             <div>
               <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                 {selectedField
                   ? selectedField.replace(/([A-Z])/g, " $1").trim()
                   : "Select Field to Modify"}
-                    <ChevronDownIcon
-                  className="ml-2 -mr-1 h-10 w-10"
-                  aria-hidden="true"
-                />
+                <ChevronDownIcon className="ml-2 -mr-1 h-10 w-10" aria-hidden="true" />
               </Menu.Button>
             </div>
             <Transition
@@ -190,7 +168,6 @@ function DailyRewards() {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
-                {/* Dynamically create menu items for different fields */}
                 {currentConfig.fields.map((field, index) => (
                   <Menu.Item key={index}>
                     {({ active }) => (
@@ -235,11 +212,12 @@ function DailyRewards() {
                     <div className="flex flex-row ml-1">
                       {["A", "B", "C", "D", "E"].map((dayLetter) => {
                         const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
-                        return
-                        (
+                        return (
                           <div
                             key={dayLetter}
-                            className={`w-4 h-9 rounded-lg ${primaryData[fieldName] ? "bg-green-500" : "bg-gray-200"} mr-1`}
+                            className={`w-4 h-9 rounded-lg ${
+                              primaryData[fieldName] ? "bg-green-500" : "bg-gray-200"
+                            } mr-1`}
                           ></div>
                         );
                       })}
@@ -257,3 +235,4 @@ function DailyRewards() {
 }
 
 export default DailyRewards;
+
