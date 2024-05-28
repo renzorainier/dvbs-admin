@@ -80,8 +80,7 @@ function DailyRewards() {
 
         await updateDoc(docRef, { [fieldToUpdate]: true });
 
-
-        console.log("done")
+        console.log("done");
 
         setPrimaryData((prevData) => ({
           ...prevData,
@@ -114,8 +113,7 @@ function DailyRewards() {
   return (
     <div
       className="h-screen overflow-auto"
-      style={{ backgroundColor: currentConfig.color }}
-    >
+      style={{ backgroundColor: currentConfig.color }}>
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto " style={{ maxWidth: "90%" }}>
           <Menu as="div" className="relative inline-block mt-4">
@@ -137,8 +135,7 @@ function DailyRewards() {
               enterTo="transform opacity-100 scale-100"
               leave="transition ease-in duration-75"
               leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
+              leaveTo="transform opacity-0 scale-95">
               <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
                 {configurations.map((config, index) => (
                   <Menu.Item key={index}>
@@ -147,8 +144,7 @@ function DailyRewards() {
                         onClick={() => setCurrentConfigIndex(index)}
                         className={`${
                           active ? "bg-blue-500 text-white" : "text-gray-900"
-                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
-                      >
+                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
                         {config.name}
                       </button>
                     )}
@@ -182,8 +178,7 @@ function DailyRewards() {
               enterTo="transform opacity-100 scale-100"
               leave="transition ease-in duration-75"
               leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
+              leaveTo="transform opacity-0 scale-95">
               <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
                 {currentConfig.fields.map((field, index) => (
                   <Menu.Item key={index}>
@@ -192,8 +187,7 @@ function DailyRewards() {
                         onClick={() => setSelectedField(field)}
                         className={`${
                           active ? "bg-blue-500 text-white" : "text-gray-900"
-                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
-                      >
+                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
                         {field
                           .replace(/([A-Z])/g, " $1")
                           .trim()
@@ -228,20 +222,22 @@ function DailyRewards() {
                       )}`}
                       onClick={() => {
                         handleClick(studentIndex);
-                      }}
-                    >
+                      }}>
                       {name}
                     </button>
                     <div className="flex flex-row ml-1">
-                    {["A", "B", "C", "D", "E"].map((dayLetter) => {
-                        const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}${selectedField}`;
+                      {["A", "B", "C", "D", "E"].map((dayLetter) => {
+                        const fieldName = `${studentIndex.slice(
+                          0,
+                          2
+                        )}${dayLetter}${selectedField}`;
+                        const indicatorColor = primaryData[fieldName]
+                          ? currentConfig.color
+                          : "bg-gray-200";
                         return (
                           <div
                             key={dayLetter}
-                            className={`w-4 h-9 rounded-lg ${
-                              primaryData[fieldName] ? "bg-green-500" : "bg-gray-200"
-                            } mr-1`}
-                          ></div>
+                            className={`w-4 h-9 rounded-lg ${indicatorColor} mr-1`}></div>
                         );
                       })}
                     </div>
@@ -258,4 +254,3 @@ function DailyRewards() {
 }
 
 export default DailyRewards;
-
