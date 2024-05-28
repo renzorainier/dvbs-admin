@@ -80,6 +80,9 @@ function DailyRewards() {
 
         await updateDoc(docRef, { [fieldToUpdate]: true });
 
+
+        console.log("done")
+
         setPrimaryData((prevData) => ({
           ...prevData,
           [fieldToUpdate]: true,
