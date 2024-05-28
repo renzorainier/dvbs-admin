@@ -127,87 +127,87 @@ function DailyRewards() {
     >
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto " style={{ maxWidth: "90%" }}>
-          <Menu as="div" className="relative inline-block mt-4">
-            <div>
-              <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                <h2 className="text-4xl font-bold">
-                  {configurations[currentConfigIndex].name}
-                </h2>
-                <ChevronDownIcon
-                  className="ml-2 -mr-1 h-10 w-10"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-            </div>
-            <Transition
-              as={React.Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
+        <Menu as="div" className="relative inline-block mt-4">
+  <div>
+    <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+      <h2 className="text-4xl font-bold">
+        {configurations[currentConfigIndex].name}
+      </h2>
+      <ChevronDownIcon
+        className="ml-2 -mr-1 h-10 w-10"
+        aria-hidden="true"
+      />
+    </Menu.Button>
+  </div>
+  <Transition
+    as={React.Fragment}
+    enter="transition ease-out duration-200"
+    enterFrom="transform opacity-0 scale-95"
+    enterTo="transform opacity-100 scale-100"
+    leave="transition ease-in duration-75"
+    leaveFrom="transform opacity-100 scale-100"
+    leaveTo="transform opacity-0 scale-95"
+  >
+    <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
+      {configurations.map((config, index) => (
+        <Menu.Item key={index}>
+          {({ active }) => (
+            <button
+              onClick={() => setCurrentConfigIndex(index)}
+              className={`${
+                active ? "bg-blue-500 text-white" : "text-gray-900"
+              } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
             >
-              <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
-                {configurations.map((config, index) => (
-                  <Menu.Item key={index}>
-                    {({ active }) => (
-                      <button
-                        onClick={() => setCurrentConfigIndex(index)}
-                        className={`${
-                          active ? "bg-blue-500 text-white" : "text-gray-900"
-                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
-                      >
-                        {config.name}
-                      </button>
-                    )}
-                  </Menu.Item>
-                ))}
-              </Menu.Items>
-            </Transition>
-          </Menu>
+              {config.name}
+            </button>
+          )}
+        </Menu.Item>
+      ))}
+    </Menu.Items>
+  </Transition>
+</Menu>
 
-          {/* New menu selector for choosing the field to modify */}
-          <Menu as="div" className="relative inline-block mt-4">
-            <div>
-              <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                {selectedField
-                  ? selectedField.replace(/([A-Z])/g, " $1").trim()
-                  : "Select Field to Modify"}
-                    <ChevronDownIcon
-                  className="ml-2 -mr-1 h-10 w-10"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-            </div>
-            <Transition
-              as={React.Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
+{/* New menu selector for choosing the field to modify */}
+<Menu as="div" className="relative inline-block mt-4">
+  <div>
+    <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+      {selectedField
+        ? selectedField.replace(/([A-Z])/g, " $1").trim()
+        : "Select Field to Modify"}
+      <ChevronDownIcon
+        className="ml-2 -mr-1 h-10 w-10"
+        aria-hidden="true"
+      />
+    </Menu.Button>
+  </div>
+  <Transition
+    as={React.Fragment}
+    enter="transition ease-out duration-200"
+    enterFrom="transform opacity-0 scale-95"
+    enterTo="transform opacity-100 scale-100"
+    leave="transition ease-in duration-75"
+    leaveFrom="transform opacity-100 scale-100"
+    leaveTo="transform opacity-0 scale-95"
+  >
+    <Menu.Items className="absolute mt-12 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
+      {/* Dynamically create menu items for different fields */}
+      {currentConfig.fields.map((field, index) => (
+        <Menu.Item key={index}>
+          {({ active }) => (
+            <button
+              onClick={() => setSelectedField(field)}
+              className={`${
+                active ? "bg-blue-500 text-white" : "text-gray-900"
+              } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
             >
-              <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
-                {/* Dynamically create menu items for different fields */}
-                {currentConfig.fields.map((field, index) => (
-                  <Menu.Item key={index}>
-                    {({ active }) => (
-                      <button
-                        onClick={() => setSelectedField(field)}
-                        className={`${
-                          active ? "bg-blue-500 text-white" : "text-gray-900"
-                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}
-                      >
-                        {field.replace(/([A-Z])/g, " $1").trim()}
-                      </button>
-                    )}
-                  </Menu.Item>
-                ))}
-              </Menu.Items>
-            </Transition>
-          </Menu>
+              {field.replace(/([A-Z])/g, " $1").trim()}
+            </button>
+          )}
+        </Menu.Item>
+      ))}
+    </Menu.Items>
+  </Transition>
+</Menu>
 
           <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
             <input
