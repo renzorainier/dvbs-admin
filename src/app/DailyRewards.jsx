@@ -165,7 +165,9 @@ function DailyRewards() {
           <Menu as="div" className="relative inline-block mt-4">
             <div>
               <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                Select Field to Modify
+                {selectedField
+                  ? selectedField.replace(/([A-Z])/g, " $1").trim()
+                  : "Select Field to Modify"}
               </Menu.Button>
             </div>
             <Transition
@@ -223,7 +225,8 @@ function DailyRewards() {
                     <div className="flex flex-row ml-1">
                       {["A", "B", "C", "D", "E"].map((dayLetter) => {
                         const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
-                        return (
+                        return
+                        (
                           <div
                             key={dayLetter}
                             className={`w-4 h-9 rounded-lg ${primaryData[fieldName] ? "bg-green-500" : "bg-gray-200"} mr-1`}
@@ -233,16 +236,14 @@ function DailyRewards() {
                     </div>
                   </div>
                 );
-
-                })}
-              </div>
+              })}
             </div>
           </div>
         </div>
-        <audio ref={audioRef} />
       </div>
-    );
-  }
+      <audio ref={audioRef} />
+    </div>
+  );
+}
 
-  export default DailyRewards;
-
+export default DailyRewards;
