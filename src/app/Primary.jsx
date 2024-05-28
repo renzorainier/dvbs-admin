@@ -75,15 +75,24 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
       const bibleField = `${fieldToUpdate}bible`;
 
+      // Set the current day's points value back to the previous day's points value
+      const dayLetter = getCurrentDayLetter();
+      const prevDayLetter = getPreviousDayLetter(dayLetter);
+      const pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
+      const prevPointsField = `${fieldName.slice(0, 2)}${prevDayLetter}points`;
+      const prevPoints = primaryData[prevPointsField] || 0;
+
       await updateDoc(docRef, {
         [fieldToUpdate]: newValue,
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
+        [pointsField]: prevPoints, // Set current day's points to previous day's points
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [fieldToUpdate]: newValue,
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
+        [pointsField]: prevPoints, // Update local state with the new points value
       }));
 
       // Play sound if student is marked present
