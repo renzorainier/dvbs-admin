@@ -17,25 +17,25 @@ function DailyRewards() {
       name: "Primary",
       dbPath: "dvbs/primary",
       color: "#FFC100",
-      fields: ["memoryVerse", "bestInCraft", "bestInActivitySheet"],
+      fields: ["memoryVerse", "bestInCraft", "bestInActivitySheet", "bible"],
     },
     {
       name: "Middlers",
       dbPath: "dvbs/middlers",
       color: "#04d924",
-      fields: ["memoryVerse", "bestInCraft", "bestInActivitySheet"],
+      fields: ["memoryVerse", "bestInCraft", "bestInActivitySheet", "bible"],
     },
     {
       name: "Juniors",
       dbPath: "dvbs/juniors",
       color: "#027df7",
-      fields: ["memoryVerse", "bestInCraft", "bestInActivitySheet"],
+      fields: ["memoryVerse", "bestInCraft", "bestInActivitySheet", "bible"],
     },
     {
       name: "Youth",
       dbPath: "dvbs/youth",
       color: "#f70233",
-      fields: ["memoryVerse", "bestInCraft", "bestInActivitySheet"],
+      fields: ["memoryVerse", "bestInCraft", "bestInActivitySheet", "bible"],
     },
   ];
 
