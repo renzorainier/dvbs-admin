@@ -174,6 +174,10 @@ function DailyRewards() {
                 {selectedField
                   ? selectedField.replace(/([A-Z])/g, " $1").trim()
                   : "Select Field to Modify"}
+                    <ChevronDownIcon
+                  className="ml-2 -mr-1 h-10 w-10"
+                  aria-hidden="true"
+                />
               </Menu.Button>
             </div>
             <Transition
