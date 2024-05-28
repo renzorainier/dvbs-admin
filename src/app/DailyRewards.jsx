@@ -113,135 +113,144 @@ function DailyRewards() {
   };
 
   return (
-    <div className="flex flex-col items-center"   style={{
-      backgroundColor: `${configurations[currentConfigIndex].color}`,
-    }}>
-      <Menu as="div" className="relative inline-block mt-4">
-        <div>
-          <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-            <h2 className="text-4xl font-bold">
-              {configurations[currentConfigIndex].name}
-            </h2>
-          </Menu.Button>
-        </div>
-        <Transition
-          as={React.Fragment}
-          enter="transition ease-out duration-200"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95">
-          <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
-            {configurations.map((config, index) => (
-              <Menu.Item key={index}>
-                {({ active }) => (
-                  <button
-                    onClick={() => setCurrentConfigIndex(index)}
-                    className={`${
-                      active ? "bg-blue-500 text-white" : "text-gray-900"
-                    } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
-                    {config.name}
-                  </button>
-                )}
-              </Menu.Item>
-            ))}
-          </Menu.Items>
-        </Transition>
-      </Menu>
+    <div
+      className=" h-screen overflow-auto"
+      style={{
+        backgroundColor: `${configurations[currentConfigIndex].color}`,
+      }}>
+      <div className="flex justify-center items-center overflow-auto">
+        <div className="w-full rounded-lg mx-auto " style={{ maxWidth: "90%" }}>
+          <Menu as="div" className="relative inline-block mt-4">
+            <div>
+              <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                <h2 className="text-4xl font-bold">
+                  {configurations[currentConfigIndex].name}
+                </h2>
+              </Menu.Button>
+            </div>
+            <Transition
+              as={React.Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95">
+              <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
+                {configurations.map((config, index) => (
+                  <Menu.Item key={index}>
+                    {({ active }) => (
+                      <button
+                        onClick={() => setCurrentConfigIndex(index)}
+                        className={`${
+                          active ? "bg-blue-500 text-white" : "text-gray-900"
+                        } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
+                        {config.name}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ))}
+              </Menu.Items>
+            </Transition>
+          </Menu>
 
-      {/* New menu selector for choosing the field to modify */}
-      <Menu as="div" className="relative inline-block mt-4">
-        <div>
-          <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-            Select Field to Modify
-          </Menu.Button>
-        </div>
-        <Transition
-          as={React.Fragment}
-          enter="transition ease-out duration-200"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95">
-          <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 -black/5 focus:outline-none flex flex-col items-center z-50">
-            {/* Menu items for different fields */}
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={() => setSelectedField("memoryVerse")} // Update the selected field
-                  className={`${
-                    active ? "bg-blue-500 text-white" : "text-gray-900"
-                  } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
-                  Memory Verse
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={() => setSelectedField("bestInCraft")} // Update the selected field
-                  className={`${
-                    active ? "bg-blue-500 text-white" : "text-gray-900"
-                  } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
-                  Best in Craft
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={() => setSelectedField("bestInActivitySheet")} // Update the selected field
-                  className={`${
-                    active ? "bg-blue-500 text-white" : "text-gray-900"
-                  } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
-                  Best in Activity Sheet
-                </button>
-              )}
-            </Menu.Item>
-          </Menu.Items>
-        </Transition>
-      </Menu>
+          {/* New menu selector for choosing the field to modify */}
+          <Menu as="div" className="relative inline-block mt-4">
+            <div>
+              <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                Select Field to Modify
+              </Menu.Button>
+            </div>
+            <Transition
+              as={React.Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95">
+              <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 -black/5 focus:outline-none flex flex-col items-center z-50">
+                {/* Menu items for different fields */}
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() => setSelectedField("memoryVerse")} // Update the selected field
+                      className={`${
+                        active ? "bg-blue-500 text-white" : "text-gray-900"
+                      } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
+                      Memory Verse
+                    </button>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() => setSelectedField("bestInCraft")} // Update the selected field
+                      className={`${
+                        active ? "bg-blue-500 text-white" : "text-gray-900"
+                      } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
+                      Best in Craft
+                    </button>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() => setSelectedField("bestInActivitySheet")} // Update the selected field
+                      className={`${
+                        active ? "bg-blue-500 text-white" : "text-gray-900"
+                      } flex w-full items-center rounded-lg px-4 py-4 text-2xl font-semibold hover:bg-blue-100 transition-colors duration-200`}>
+                      Best in Activity Sheet
+                    </button>
+                  )}
+                </Menu.Item>
+              </Menu.Items>
+            </Transition>
+          </Menu>
 
-      <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-        <input
-          type="text"
-          placeholder="Search names..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
-        />
-        <div className="flex flex-col gap-4">
-          {filteredNames.map((name, index) => {
-            const studentIndex = Object.keys(primaryData).find(
-              (key) => primaryData[key] === name
-            );
+          <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+            <input
+              type="text"
+              placeholder="Search names..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
+            />
+            <div className="flex flex-col gap-4">
+              {filteredNames.map((name, index) => {
+                const studentIndex = Object.keys(primaryData).find(
+                  (key) => primaryData[key] === name
+                );
 
-            return (
-              <div key={index} className="flex items-center">
-                <button
-                  className={`w-70-percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
-                    studentIndex
-                  )}`}
-                  onClick={() => {
-                    handleClick(studentIndex);
-                  }}>
-                  {name}
-                </button>
-                <div className="flex flex-row ml-1">
-                  {["A", "B", "C", "D", "E"].map((dayLetter) => {
-                    const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
-                    return (
-                      <div
-                        key={dayLetter}
-                        className={`w-4 h-9  rounded-lg ${primaryData[fieldName]} mr-1`}></div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+                return (
+                  <div key={index} className="flex items-center">
+                    <button
+                      className={`w-70-percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
+                        studentIndex
+                      )}`}
+                      onClick={() => {
+                        handleClick(studentIndex);
+                      }}>
+                      {name}
+                    </button>
+                    <div className="flex flex-row ml-1">
+                      {["A", "B", "C", "D", "E"].map((dayLetter) => {
+                        const fieldName = `${studentIndex.slice(
+                          0,
+                          2
+                        )}${dayLetter}`;
+                        return (
+                          <div
+                            key={dayLetter}
+                            className={`w-4 h-9  rounded-lg ${primaryData[fieldName]} mr-1`}></div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
       <audio ref={audioRef} />
@@ -250,4 +259,3 @@ function DailyRewards() {
 }
 
 export default DailyRewards;
-
