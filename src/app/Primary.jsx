@@ -38,43 +38,45 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
+  const getPreviousDayLetter = () => {
+    const days = ["A", "B", "C", "D", "E"];
+    const dayIndex = new Date().getDay();
+    return days[dayIndex === 0 ? 5 : dayIndex === 1 ? 4 : dayIndex - 2];
+  };
+
   const handleClick = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
+    const previousDayLetter = getPreviousDayLetter();
     const fieldToUpdate = `${prefix}${dayLetter}`;
+    const previousField = `${prefix}${previousDayLetter}`;
 
-    if (primaryData[fieldToUpdate]) {
-      // Show confirmation prompt
-      setStudentToMarkAbsent({ fieldName, fieldToUpdate });
-      setShowConfirmation(true);
-    } else {
-      updateStudentAttendance(fieldName, fieldToUpdate);
-    }
+    updateStudentAttendance(fieldName, fieldToUpdate, previousField);
   };
 
-  const updateStudentAttendance = async (fieldName, fieldToUpdate) => {
+  const updateStudentAttendance = async (fieldName, fieldToUpdate, previousField) => {
     try {
       const docRef = doc(
         db,
         config.dbPath.split("/")[0],
         config.dbPath.split("/")[1]
       );
-      const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
+      const previousValue = primaryData[previousField];
       const bibleField = `${fieldToUpdate}bible`;
 
       await updateDoc(docRef, {
-        [fieldToUpdate]: newValue,
-        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
+        [fieldToUpdate]: previousValue,
+        [bibleField]: previousValue ? false : false, // Reset Bible status to false instead of null
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
-        [fieldToUpdate]: newValue,
-        [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
+        [fieldToUpdate]: previousValue,
+        [bibleField]: previousValue ? false : false, // Reset Bible status to false instead of null
       }));
 
       // Play sound if student is marked present
-      if (newValue) {
+      if (previousValue) {
         playEnterSound();
         setStudentToUpdateBible(fieldName);
         setShowBiblePopup(true);
