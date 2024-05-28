@@ -38,78 +38,38 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const getPreviousDayLetter = () => {
-    const days = ["A", "B", "C", "D", "E"];
-    const dayIndex = new Date().getDay();
-    return days[dayIndex === 0 ? 4 : dayIndex - 2];
-  };
-
-  const handleClick = async (fieldName) => {
+  const handleClick = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
-    const currentDayLetter = getCurrentDayLetter();
-    const previousDayLetter = getPreviousDayLetter();
-    const currentField = `${prefix}${currentDayLetter}`;
-    const previousField = `${prefix}${previousDayLetter}`;
+    const dayLetter = getCurrentDayLetter();
+    const fieldToUpdate = `${prefix}${dayLetter}`;
 
-    if (primaryData[currentField]) {
+    if (primaryData[fieldToUpdate]) {
       // Show confirmation prompt
-      setStudentToMarkAbsent({ fieldName, currentField });
+      setStudentToMarkAbsent({ fieldName, fieldToUpdate });
       setShowConfirmation(true);
     } else {
-      await setPreviousPoints(fieldName, previousField, currentField);
+      updateStudentAttendance(fieldName, fieldToUpdate);
     }
   };
 
-  const setPreviousPoints = async (fieldName, previousField, currentField) => {
-    try {
-      const previousPoints = primaryData[previousField] || "";
-
-      const docRef = doc(
-        db,
-        config.dbPath.split("/")[0],
-        config.dbPath.split("/")[1]
-      );
-
-      await updateDoc(docRef, {
-        [currentField]: previousPoints,
-      });
-
-      setPrimaryData((prevData) => ({
-        ...prevData,
-        [currentField]: previousPoints,
-      }));
-
-      if (previousPoints) {
-        playEnterSound();
-        setStudentToUpdateBible(fieldName);
-        setShowBiblePopup(true);
-      }
-    } catch (error) {
-      console.error("Error updating Firebase: ", error);
-    }
-
-    setShowConfirmation(false);
-    setStudentToMarkAbsent(null);
-  };
-
-  const updateStudentAttendance = async (fieldName, currentField) => {
+  const updateStudentAttendance = async (fieldName, fieldToUpdate) => {
     try {
       const docRef = doc(
         db,
         config.dbPath.split("/")[0],
         config.dbPath.split("/")[1]
       );
-      const newValue = primaryData[currentField] ? "" : uploadTime;
-      const bibleField = `${currentField}bible`;
+      const newValue = primaryData[fieldToUpdate] ? "" : uploadTime;
+      const bibleField = `${fieldToUpdate}bible`;
 
       await updateDoc(docRef, {
-        [currentField]: newValue,
+        [fieldToUpdate]: newValue,
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
-        [currentField]: newValue,
+        [fieldToUpdate]: newValue,
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
       }));
 
@@ -212,7 +172,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 onClick={() =>
                   updateStudentAttendance(
                     studentToMarkAbsent.fieldName,
-                    studentToMarkAbsent.currentField
+                    studentToMarkAbsent.fieldToUpdate
                   )
                 }>
                 Yes
@@ -355,3 +315,4 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 }
 
 export default Primary;
+
