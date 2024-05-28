@@ -141,9 +141,15 @@ function DailyRewards() {
     .sort((a, b) => (a.isMarked === b.isMarked ? 0 : a.isMarked ? -1 : 1))
     .map((student) => student.name);
 
-  const filteredNames = sortedNames.filter((name) =>
-    name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredNames = sortedNames.filter((name) => {
+    const nameMatches = name.toLowerCase().includes(searchQuery.toLowerCase());
+    const fieldIndexMatches = Object.keys(primaryData).some(
+      (key) =>
+        primaryData[key] === name &&
+        key.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    return nameMatches || fieldIndexMatches;
+  });
 
   return (
     <div
@@ -220,7 +226,7 @@ function DailyRewards() {
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95">
-                  <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white                   shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
+                  <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
                     {currentConfig.fields.map((field, index) => (
                       <Menu.Item key={index}>
                         {({ active }) => (
@@ -248,7 +254,7 @@ function DailyRewards() {
           <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
             <input
               type="text"
-              placeholder="Search names..."
+              placeholder="Search names or field indexes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
