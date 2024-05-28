@@ -96,14 +96,21 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       );
       const dayLetter = getCurrentDayLetter();
       const bibleField = `${fieldName.slice(0, 2)}${dayLetter}bible`;
+      const pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
+
+      const newPoints = broughtBible
+        ? (primaryData[pointsField] || 0) + 1
+        : primaryData[pointsField] || 0;
 
       await updateDoc(docRef, {
         [bibleField]: broughtBible ? true : false,
+        [pointsField]: newPoints,
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [bibleField]: broughtBible ? true : false,
+        [pointsField]: newPoints,
       }));
     } catch (error) {
       console.error("Error updating Firebase: ", error);
@@ -236,7 +243,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 </button>
                 <div className="flex flex-row ml-1">
                   {["A", "B", "C", "D", "E"].map((dayLetter) => {
-                    const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
+                    const fieldName =  `${studentIndex.slice(0, 2)}${dayLetter}`;
                     return (
                       <div
                         key={dayLetter}
@@ -259,6 +266,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 }
 
 export default Primary;
+
+
 
 
 
