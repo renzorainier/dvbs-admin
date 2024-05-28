@@ -108,12 +108,14 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         config.dbPath.split("/")[1]
       );
       const dayLetter = getCurrentDayLetter();
+      const prevDayLetter = getPreviousDayLetter(dayLetter);
       const bibleField = `${fieldName.slice(0, 2)}${dayLetter}bible`;
       const pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
+      const prevPointsField = `${fieldName.slice(0, 2)}${prevDayLetter}points`;
 
-      const newPoints = broughtBible
-        ? (primaryData[pointsField] || 0) + 1
-        : primaryData[pointsField] || 0;
+      // Get previous day's points and set as today's initial points
+      const prevPoints = primaryData[prevPointsField] || 0;
+      const newPoints = broughtBible ? prevPoints + 1 : prevPoints;
 
       await updateDoc(docRef, {
         [bibleField]: broughtBible ? true : false,
@@ -235,49 +237,51 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
-        />
-        <div className="flex flex-col gap-4">
-          {filteredNames.map((name, index) => {
-            const studentIndex = Object.keys(primaryData).find(
-              (key) => primaryData[key] === name
-            );
+          />
+          <div className="flex flex-col gap-4">
+            {filteredNames.map((name, index) => {
+              const studentIndex = Object.keys(primaryData).find(
+                (key) => primaryData[key] === name
+              );
 
-            return (
-              <div key={index} className="flex items-center">
-                <button
-                  className={`w-70percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
-                    studentIndex
-                  )}`}
-                  onClick={() => {
-                    handleClick(studentIndex);
-                  }}>
-                  {name}
-                </button>
-                <div className="flex flex-row ml-1">
-                  {["A", "B", "C", "D", "E"].map((dayLetter) => {
-                    const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
-                    return (
-                      <div
-                        key={dayLetter}
-                        className={`w-4 h-9 rounded-lg ${
-                          primaryData[fieldName]
-                            ? config.colors.present
-                            : config.colors.absent
-                        } mr-1`}></div>
-                    );
-                  })}
+              return (
+                <div key={index} className="flex items-center">
+                  <button
+                    className={`w-70percent hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
+                      studentIndex
+                    )}`}
+                    onClick={() => {
+                      handleClick(studentIndex);
+                    }}>
+                    {name}
+                  </button>
+                  <div className="flex flex-row ml-1">
+                    {["A", "B", "C", "D", "E"].map((dayLetter) => {
+                      const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
+                      return (
+                        <div
+                          key={dayLetter}
+                          className={`w-4 h-9 rounded-lg ${
+                            primaryData[fieldName]
+                              ? config.colors.present
+                              : config.colors.absent
+                          } mr-1`}></div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
+        <audio ref={audioRef} />
       </div>
-      <audio ref={audioRef} />
-    </div>
-  );
-}
+    );
+  }
 
-export default Primary;
+  export default Primary;
+
+
 
 
 
