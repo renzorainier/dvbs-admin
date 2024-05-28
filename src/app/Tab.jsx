@@ -3,6 +3,7 @@ import { Menu, Transition, Switch } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Visitors from "./Visitors.jsx";
 import Primary from "./Primary.jsx";
+import  CopyPointsButton from "./CopyPointsButton.jsx"
 
 function Tab() {
   // const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
@@ -138,11 +139,19 @@ function Tab() {
                 setCurrentConfigIndex={setCurrentConfigIndex}
               />
             ) : (
-              <Primary
-                config={currentConfig}
-                currentConfigIndex={currentConfigIndex}
-                setCurrentConfigIndex={setCurrentConfigIndex}
-              />
+
+
+              <div>
+
+
+                <Primary
+                  config={currentConfig}
+                  currentConfigIndex={currentConfigIndex}
+                  setCurrentConfigIndex={setCurrentConfigIndex}
+                />
+
+                <CopyPointsButton config={currentConfig}/>
+              </div>
             )}
           </div>
         </div>
