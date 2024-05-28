@@ -254,7 +254,7 @@ function DailyRewards() {
           <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
             <input
               type="text"
-              placeholder="Search names or field indexes..."
+              placeholder="Search by name or ID no..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
