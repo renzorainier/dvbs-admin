@@ -29,6 +29,12 @@ function CopyPointsButton({ config }) {
       const dayLetter = getCurrentDayLetter();
       const prevDayLetter = getPreviousDayLetter(dayLetter);
 
+      const docRef = doc(
+        db,
+        config.dbPath.split("/")[0],
+        config.dbPath.split("/")[1]
+      );
+
       for (const fieldName in primaryData) {
         if (fieldName.endsWith(prevDayLetter + "points")) {
           const currentPointsField = fieldName.replace(prevDayLetter, dayLetter);
