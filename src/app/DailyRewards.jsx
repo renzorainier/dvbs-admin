@@ -177,7 +177,7 @@ function DailyRewards() {
             </div>
 
             <div className="w-full">
-              <Menu as="div" className="relative inline-block mb-4">
+              <Menu as="div" className="relative inline-block w-full mb-4">
                 <div>
                   <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                     <h2 className="text-2xl font-bold">
