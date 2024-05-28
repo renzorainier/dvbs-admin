@@ -89,7 +89,8 @@ function DailyRewards() {
 
   const updateStudentAttendance = async (fieldToUpdate, markAs) => {
     const prefix = fieldToUpdate.slice(0, 2);
-    const pointField = `${prefix}${selectedField}points`;
+    const dayLetter = getCurrentDayLetter();
+    const pointField = `${prefix}${dayLetter}points`;
     const increment = pointsMapping[selectedField];
 
     try {
@@ -101,13 +102,15 @@ function DailyRewards() {
 
       await updateDoc(docRef, {
         [fieldToUpdate]: markAs,
-        [pointField]: (primaryData[pointField] || 0) + (markAs ? increment : -increment),
+        [pointField]:
+          (primaryData[pointField] || 0) + (markAs ? increment : -increment),
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [fieldToUpdate]: markAs,
-        [pointField]: (prevData[pointField] || 0) + (markAs ? increment : -increment),
+        [pointField]:
+          (prevData[pointField] || 0) + (markAs ? increment : -increment),
       }));
     } catch (error) {
       console.error("Error updating document: ", error);
@@ -331,4 +334,3 @@ function DailyRewards() {
 }
 
 export default DailyRewards;
-
