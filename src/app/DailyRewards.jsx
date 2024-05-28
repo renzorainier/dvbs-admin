@@ -3,6 +3,8 @@ import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
 import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+
 
 function DailyRewards() {
   const [primaryData, setPrimaryData] = useState({});
@@ -131,6 +133,10 @@ function DailyRewards() {
                 <h2 className="text-4xl font-bold">
                   {configurations[currentConfigIndex].name}
                 </h2>
+                <ChevronDownIcon
+                  className="ml-2 -mr-1 h-10 w-10"
+                  aria-hidden="true"
+                />
               </Menu.Button>
             </div>
             <Transition
