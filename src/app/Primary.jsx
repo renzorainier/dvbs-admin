@@ -38,10 +38,23 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
+  const getPreviousDayLetter = (currentDayLetter) => {
+    const days = ["A", "B", "C", "D", "E"];
+    const currentIndex = days.indexOf(currentDayLetter);
+    const prevIndex = currentIndex === 0 ? 4 : currentIndex - 1;
+    return days[prevIndex];
+  };
+
   const handleClick = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
+    const prevDayLetter = getPreviousDayLetter(dayLetter);
     const fieldToUpdate = `${prefix}${dayLetter}`;
+    const prevPointsField = `${prefix}${prevDayLetter}points`;
+
+    // Log the previous day's points value
+    const prevPoints = primaryData[prevPointsField] || 0;
+    console.log(`Previous day (${prevDayLetter}) points for ${fieldName}: ${prevPoints}`);
 
     if (primaryData[fieldToUpdate]) {
       // Show confirmation prompt
@@ -215,7 +228,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         </div>
       )}
 
-
       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
@@ -243,7 +255,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 </button>
                 <div className="flex flex-row ml-1">
                   {["A", "B", "C", "D", "E"].map((dayLetter) => {
-                    const fieldName =  `${studentIndex.slice(0, 2)}${dayLetter}`;
+                    const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
                     return (
                       <div
                         key={dayLetter}
@@ -266,8 +278,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 }
 
 export default Primary;
-
-
 
 
 
