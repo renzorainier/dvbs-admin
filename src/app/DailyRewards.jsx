@@ -41,6 +41,13 @@ function DailyRewards() {
     },
   ];
 
+  const pointsMapping = {
+    memoryVerse: 3,
+    bestInCraft: 2,
+    bestInActivitySheet: 2,
+    bible: 1,
+  };
+
   const currentConfig = configurations[currentConfigIndex];
 
   useEffect(() => {
@@ -81,6 +88,10 @@ function DailyRewards() {
   };
 
   const updateStudentAttendance = async (fieldToUpdate, markAs) => {
+    const prefix = fieldToUpdate.slice(0, 2);
+    const pointField = `${prefix}${selectedField}points`;
+    const increment = pointsMapping[selectedField];
+
     try {
       const docRef = doc(
         db,
@@ -88,11 +99,15 @@ function DailyRewards() {
         currentConfig.dbPath.split("/")[1]
       );
 
-      await updateDoc(docRef, { [fieldToUpdate]: markAs });
+      await updateDoc(docRef, {
+        [fieldToUpdate]: markAs,
+        [pointField]: (primaryData[pointField] || 0) + (markAs ? increment : -increment),
+      });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [fieldToUpdate]: markAs,
+        [pointField]: (prevData[pointField] || 0) + (markAs ? increment : -increment),
       }));
     } catch (error) {
       console.error("Error updating document: ", error);
@@ -202,7 +217,7 @@ function DailyRewards() {
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95">
-                  <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
+                  <Menu.Items className="absolute mt-2 origin-top divide-y divide-gray-100 rounded-lg bg-gradient-to-b from-gray-100 to-white                   shadow-xl ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
                     {currentConfig.fields.map((field, index) => (
                       <Menu.Item key={index}>
                         {({ active }) => (
@@ -295,8 +310,7 @@ function DailyRewards() {
             </p>
             <div className="flex justify-end">
               <button
-                class
-                Name="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
                 onClick={() =>
                   updateStudentAttendance(studentToUnmark.fieldToUpdate, false)
                 }>
@@ -317,3 +331,4 @@ function DailyRewards() {
 }
 
 export default DailyRewards;
+
