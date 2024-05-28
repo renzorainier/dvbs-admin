@@ -116,7 +116,9 @@ function DailyRewards() {
       style={{ backgroundColor: currentConfig.color }}>
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto " style={{ maxWidth: "90%" }}>
-          <Menu as="div" className="relative inline-block mt-4">
+          <div className="flex flex-col gap-4">
+            <div className="w-full">
+            <Menu as="div" className="relative inline-block mt-4">
             <div>
               <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                 <h2 className="text-4xl font-bold">
@@ -153,8 +155,10 @@ function DailyRewards() {
               </Menu.Items>
             </Transition>
           </Menu>
+            </div>
 
-          <Menu as="div" className="relative inline-block mt-4">
+            <div className="w-full">
+            <Menu as="div" className="relative inline-block mb-4">
             <div>
               <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                 <h2 className="text-2xl font-bold">
@@ -199,6 +203,12 @@ function DailyRewards() {
               </Menu.Items>
             </Transition>
           </Menu>
+            </div>
+          </div>
+
+
+
+
 
           <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
             <input
@@ -208,44 +218,46 @@ function DailyRewards() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
             />
-   <div className="flex flex-col gap-4 w-full max-w-md">
-  {filteredNames.map((name, index) => {
-    const studentIndex = Object.keys(primaryData).find(
-      (key) => primaryData[key] === name
-    );
+            <div className="flex flex-col gap-4 w-full max-w-md">
+              {filteredNames.map((name, index) => {
+                const studentIndex = Object.keys(primaryData).find(
+                  (key) => primaryData[key] === name
+                );
 
-    return (
-      <div key={index} className="flex items-center justify-between">
-        <button
-          className={`flex-grow hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
-            studentIndex
-          )}`}
-          onClick={() => {
-            handleClick(studentIndex);
-          }}
-        >
-          {name}
-        </button>
-        <div className="flex ml-1">
-          {["A", "B", "C", "D", "E"].map((dayLetter) => {
-            const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}${selectedField}`;
-            const indicatorColor = primaryData[fieldName]
-              ? currentConfig.color
-              : "#E5E7EB"; // Use currentConfig.color for the indicator color
-            return (
-              <div
-                key={dayLetter}
-                className="w-4 h-9 rounded-lg mr-1"
-                style={{ backgroundColor: indicatorColor }}
-              ></div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  })}
-</div>
-
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between">
+                    <button
+                      className={`flex-grow hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
+                        studentIndex
+                      )}`}
+                      onClick={() => {
+                        handleClick(studentIndex);
+                      }}>
+                      {name}
+                    </button>
+                    <div className="flex ml-1">
+                      {["A", "B", "C", "D", "E"].map((dayLetter) => {
+                        const fieldName = `${studentIndex.slice(
+                          0,
+                          2
+                        )}${dayLetter}${selectedField}`;
+                        const indicatorColor = primaryData[fieldName]
+                          ? currentConfig.color
+                          : "#E5E7EB"; // Use currentConfig.color for the indicator color
+                        return (
+                          <div
+                            key={dayLetter}
+                            className="w-4 h-9 rounded-lg mr-1"
+                            style={{ backgroundColor: indicatorColor }}></div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
