@@ -85,7 +85,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       await updateDoc(docRef, {
         [fieldToUpdate]: newValue,
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
-        [pointsField]: prevPoints, // Set current day's points to previous day's points
+        [pointsField]: (prevPoints + 1), // Set current day's points to previous day's points
       });
 
       setPrimaryData((prevData) => ({
