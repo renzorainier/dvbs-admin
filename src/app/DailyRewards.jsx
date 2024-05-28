@@ -8,7 +8,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 function DailyRewards() {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedField, setSelectedField] = useState(null);
+  const [selectedField, setSelectedField] = useState("memoryVerse");
   const audioRef = useRef(null);
   const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
 
