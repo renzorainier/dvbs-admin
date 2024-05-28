@@ -226,32 +226,39 @@ function DailyRewards() {
 
     return (
       <div key={index} className="flex items-center justify-between">
-        <button
-          className="flex-grow hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg"
-          style={{ backgroundColor: indicatorColor}} // Set background color dynamically
-          onClick={() => {
-            handleClick(studentIndex);
-          }}>
-          {name}
-        </button>
-        <div className="flex ml-1">
-          {["A", "B", "C", "D", "E"].map((dayLetter) => {
+        {(() => {
+          // Define indicatorColor inside a function scope
+          const indicatorColor = ["A", "B", "C", "D", "E"].map((dayLetter) => {
             const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}${selectedField}`;
-            const indicatorColor = primaryData[fieldName]
-              ? currentConfig.color
-              : "#E5E7EB"; // Use currentConfig.color for the indicator color
-            return (
-              <div
-                key={dayLetter}
-                className="w-4 h-9 rounded-lg mr-1"
-                style={{ backgroundColor: indicatorColor }}></div>
-            );
-          })}
-        </div>
+            return primaryData[fieldName] ? currentConfig.color : "#E5E7EB";
+          });
+
+          return (
+            <>
+              <button
+                className="flex-grow hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg"
+                style={{ backgroundColor: indicatorColor[0] }} // Set background color dynamically
+                onClick={() => {
+                  handleClick(studentIndex);
+                }}>
+                {name}
+              </button>
+              <div className="flex ml-1">
+                {indicatorColor.map((color, dayIndex) => (
+                  <div
+                    key={dayIndex}
+                    className="w-4 h-9 rounded-lg mr-1"
+                    style={{ backgroundColor: color }}></div>
+                ))}
+              </div>
+            </>
+          );
+        })()}
       </div>
     );
   })}
 </div>
+
 
           </div>
         </div>
