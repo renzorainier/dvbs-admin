@@ -70,14 +70,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const bibleField = `${fieldToUpdate}bible`;
 
       // Calculate the new points value
-      const pointsField = `${fieldName.slice(
-        0,
-        2
-      )}${getCurrentDayLetter()}points`;
-      const previousDayPointsField = `${fieldName.slice(
-        0,
-        2
-      )}${getPreviousDayLetter()}points`;
+      const pointsField = `${fieldName.slice(0, 2)}${getCurrentDayLetter()}points`;
+      const previousDayPointsField = `${fieldName.slice(0, 2)}${getPreviousDayLetter()}points`;
       const previousPoints = primaryData[previousDayPointsField] || 0;
       const newPoints = newValue ? previousPoints + 1 : previousPoints;
 
@@ -117,14 +111,21 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       );
       const dayLetter = getCurrentDayLetter();
       const bibleField = `${fieldName.slice(0, 2)}${dayLetter}bible`;
+      const pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
+
+      // Update Bible status and points
+      const currentPoints = primaryData[pointsField] || 0;
+      const newPoints = broughtBible ? currentPoints + 3 : currentPoints;
 
       await updateDoc(docRef, {
         [bibleField]: broughtBible ? true : false,
+        [pointsField]: newPoints, // Update points with Bible bonus
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [bibleField]: broughtBible ? true : false,
+        [pointsField]: newPoints, // Update local state with the new points value
       }));
     } catch (error) {
       console.error("Error updating Firebase: ", error);
@@ -185,7 +186,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     <div className="flex flex-col items-center">
       {showConfirmation && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black opacity-50" />
+          <div className="fixed inset-0 bg-black opacity-50"
+          ></div>
           <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
             <p className="mb-2">Mark student as absent?</p>
             <div className="flex space-x-4">
@@ -196,12 +198,14 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                     studentToMarkAbsent.fieldName,
                     studentToMarkAbsent.fieldToUpdate
                   )
-                }>
+                }
+              >
                 Yes
               </button>
               <button
                 className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setShowConfirmation(false)}>
+                onClick={() => setShowConfirmation(false)}
+              >
                 No
               </button>
             </div>
@@ -217,12 +221,14 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
             <div className="flex space-x-4">
               <button
                 className="bg-green-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => updateBibleStatus(studentToUpdateBible, true)}>
+                onClick={() => updateBibleStatus(studentToUpdateBible, true)}
+              >
                 Yes
               </button>
               <button
                 className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => updateBibleStatus(studentToUpdateBible, false)}>
+                onClick={() => updateBibleStatus(studentToUpdateBible, false)}
+              >
                 No
               </button>
             </div>
@@ -253,7 +259,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   )}`}
                   onClick={() => {
                     handleClick(studentIndex);
-                  }}>
+                  }}
+                >
                   <span className="mr-2">{name}</span> {/* Name */}
                   {primaryData[savedFieldName] && <FaCheckCircle />}{" "}
                   {/* Check if saved is true */}
@@ -268,7 +275,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
                           primaryData[fieldName]
                             ? config.colors.present
                             : config.colors.absent
-                        } mr-1`}></div>
+                        } mr-1`}
+                      ></div>
                     );
                   })}
                 </div>
@@ -283,6 +291,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 }
 
 export default Primary;
+
 
 // <div className="flex justify-center mb-5 font-bold">
 // <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
