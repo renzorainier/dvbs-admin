@@ -70,9 +70,18 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const bibleField = `${fieldToUpdate}bible`;
 
       // Calculate the new points value
-      const pointsField = `${fieldName.slice(0, 2)}${getCurrentDayLetter()}points`;
-      const previousDayPointsField = `${fieldName.slice(0, 2)}${getPreviousDayLetter()}points`;
-      const previousPoints = primaryData[previousDayPointsField] || 0;
+      let pointsField = `${fieldName.slice(0, 2)}${getCurrentDayLetter()}points`;
+      let previousDayPointsField = `${fieldName.slice(0, 2)}${getPreviousDayLetter()}points`;
+      let previousPoints = primaryData[previousDayPointsField] || 0;
+
+      // Check if previous day's points are 0 and the student was absent
+      while (previousPoints === 0 && !primaryData[previousDayPointsField]) {
+        // Get the day before the current previous day
+        previousDayPointsField = `${fieldName.slice(0, 2)}${getPreviousDayLetter(previousDayPointsField)}points`;
+        previousPoints = primaryData[previousDayPointsField] || 0;
+      }
+
+      // Update points accordingly
       const newPoints = newValue ? previousPoints + 1 : previousPoints;
 
       await updateDoc(docRef, {
