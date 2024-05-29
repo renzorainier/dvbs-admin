@@ -11,7 +11,9 @@ import PointingSystemGraph from "./PointingSystemGraph";
 import ScrollToTopButton from "./Scroll";
 import Schedule from "./Schedule";
 import CopyScheduleData from "./CopyScheduleData";
-import DailyRewards from "./DailyRewards"
+import DailyRewards from "./DailyRewards";
+import SalvationDecision from "./SalvationDecision";
+import CopyPreviousDayPoints from "./CopyPreviousDayPoints"
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -38,6 +40,10 @@ function Main() {
         return <Schedule />;
         case "Rewards":
           return <DailyRewards />;
+          case "SalvationDecision":
+            return <SalvationDecision/>;
+            case "Copy":
+              return <CopyPreviousDayPoints/>;
       // render other components as needed
       default:
         return (
@@ -71,12 +77,6 @@ function Main() {
                   Points
                 </button>
 
-                <button
-                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Out")}
-                  style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  Out
-                </button>
 
 
                 <button
@@ -85,6 +85,26 @@ function Main() {
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Rewards
                 </button>
+                <button
+                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("SalvationDecision")}
+                  style={{ animation: "slide-from-right 1s ease forwards" }}>
+                  Salvation
+                </button>
+
+                <button
+                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Out")}
+                  style={{ animation: "slide-from-right 1s ease forwards" }}>
+                  Out
+                </button>
+                <button
+                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Copy")}
+                  style={{ animation: "slide-from-right 1s ease forwards" }}>
+                  Copy
+                </button>
+
               </div>
             </div>
           </div>

@@ -3,6 +3,8 @@ import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { FaCheckCircle } from "react-icons/fa";
+
 
 function StudentOutTime() {
   const [students, setStudents] = useState([]);
@@ -264,7 +266,11 @@ function StudentOutTime() {
             onChange={handleSearchChange}
           />
 
+
+
           {filteredStudents.map((student) => (
+
+            
             <div
               key={`${student.id}-${student.prefix}`}
               className="flex items-center mb-4">
@@ -283,6 +289,8 @@ function StudentOutTime() {
                     student.outTime
                   )
                 }>
+
+
                 {student.name}
               </button>
               <div

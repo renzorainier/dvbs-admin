@@ -126,6 +126,9 @@ const addVisitor = async () => {
       [`${paddedIndex}Cpoints`]: getCurrentDayLetter() === "C" ? 1 : 0,
       [`${paddedIndex}Dpoints`]: getCurrentDayLetter() === "D" ? 1 : 0,
       [`${paddedIndex}Epoints`]: getCurrentDayLetter() === "E" ? 1 : 0,
+      [`${paddedIndex}saved`]: false,
+      [`${paddedIndex}savedDate`]: "",
+      [`${paddedIndex}savedOnDvbs`]: false,
     };
 
     const currentDayLetter = getCurrentDayLetter();
