@@ -39,6 +39,12 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
+  const getPreviousDayLetter = () => {
+    const days = ["A", "B", "C", "D", "E"];
+    const dayIndex = new Date().getDay();
+    return days[dayIndex === 0 ? 5 : dayIndex - 2];
+  };
+
   const handleClick = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
@@ -64,9 +70,16 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const bibleField = `${fieldToUpdate}bible`;
 
       // Calculate the new points value
-      const pointsField = `${fieldName.slice(0, 2)}${getCurrentDayLetter()}points`;
-      const currentPoints = primaryData[pointsField] || 0;
-      const newPoints = newValue ? currentPoints + 1 : currentPoints - 1;
+      const pointsField = `${fieldName.slice(
+        0,
+        2
+      )}${getCurrentDayLetter()}points`;
+      const previousDayPointsField = `${fieldName.slice(
+        0,
+        2
+      )}${getPreviousDayLetter()}points`;
+      const previousPoints = primaryData[previousDayPointsField] || 0;
+      const newPoints = newValue ? previousPoints + 1 : previousPoints;
 
       await updateDoc(docRef, {
         [fieldToUpdate]: newValue,
@@ -271,9 +284,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
 export default Primary;
 
-
-
-
 // <div className="flex justify-center mb-5 font-bold">
 // <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
 //   <svg
@@ -331,85 +341,6 @@ export default Primary;
 //   </p>
 // </div>
 // </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState, useEffect, useRef } from "react";
 // import { doc, updateDoc, getDoc } from "firebase/firestore";
@@ -656,9 +587,6 @@ export default Primary;
 //         </div>
 //       )}
 
-
-
-
 //       <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
 //         <input
 //           type="text"
@@ -712,4 +640,3 @@ export default Primary;
 // }
 
 // export default Primary;
-
