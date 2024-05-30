@@ -42,36 +42,34 @@ function Main() {
           return <DailyRewards />;
           case "SalvationDecision":
             return <SalvationDecision/>;
-            // case "Copy":
-            //   return <CopyPreviousDayPoints/>;
-      // render other components as needed
+
       default:
         return (
           <div className="flex justify-center backdrop-blur-3xl items-center h-screen ">
             <div className="container mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border  text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Tab")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
                   Attendance
                 </button>
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Attendance")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   List
                 </button>
 
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Schedule")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Schedules
                 </button>
 
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Point")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
                   Points
@@ -80,30 +78,24 @@ function Main() {
 
 
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Rewards")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Rewards
                 </button>
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("SalvationDecision")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Salvation
                 </button>
 
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Out")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Out
                 </button>
-                {/* <button
-                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Copy")}
-                  style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  Copy
-                </button> */}
 
               </div>
             </div>
