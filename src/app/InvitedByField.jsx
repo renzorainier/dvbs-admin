@@ -156,7 +156,7 @@ function InvitedByField({
         />
       ) : (
         <div>
-          <Menu as="div" className="relative inline-block text-center mt-4">
+          <Menu as="div" className="relative inline-block text-center ">
             <div>
               <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                 {selectedDocument ? selectedDocument.charAt(0).toUpperCase() + selectedDocument.slice(1) : "Select Document"}
