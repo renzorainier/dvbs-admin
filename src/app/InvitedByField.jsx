@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect, Fragment } from "react";
-import { Combobox, Transition } from "@headlessui/react";
+import { Combobox, Transition, Menu } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
 import { getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 function InvitedByField({
   invitedBy,
@@ -13,7 +15,7 @@ function InvitedByField({
   paddedIndex,
   visitorName,
 }) {
-  const [isStudent, setIsStudent] = useState(true);
+  const [isStudent, setIsStudent] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState("");
   const [entries, setEntries] = useState([]);
   const [selectedName, setSelectedName] = useState(invitedBy);
@@ -154,20 +156,42 @@ function InvitedByField({
         />
       ) : (
         <div>
-          <div className="grid grid-cols-2 gap-4">
-            {documentPaths.map((documentPath) => (
-              <button
-                key={documentPath}
-                className={`bg-[${
-                  selectedDocument === documentPath ? config.color : "#61677A"
-                }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
-                onClick={() => handleDocumentChange(documentPath)}>
-                {documentPath.charAt(0).toUpperCase() + documentPath.slice(1)}
-              </button>
-            ))}
-          </div>
+          <Menu as="div" className="relative inline-block text-center mt-4">
+            <div>
+              <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                {selectedDocument ? selectedDocument.charAt(0).toUpperCase() + selectedDocument.slice(1) : "Select Document"}
+                <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
+              </Menu.Button>
+            </div>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute mt-1 w-full rounded-md bg-gradient-to-b from-gray-100 to-white shadow-lg ring-1 ring-black/5 focus:outline-none flex flex-col items-center z-50">
+                {documentPaths.map((documentPath) => (
+                  <Menu.Item key={documentPath}>
+                    {({ active }) => (
+                      <button
+                        onClick={() => handleDocumentChange(documentPath)}
+                        className={`${
+                          active ? "bg-blue-500 text-white" : "text-gray-900"
+                        } flex w-full items-center rounded-lg px-4 py-2 text-lg font-semibold hover:bg-blue-100 transition-colors duration-200`}
+                      >
+                        {documentPath.charAt(0).toUpperCase() + documentPath.slice(1)}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ))}
+              </Menu.Items>
+            </Transition>
+          </Menu>
           <Combobox value={selectedName} onChange={handleSelectionChange}>
-            <div className="relative mt-1">
+            <div className="relative mt-4">
               <Combobox.Input
                 className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-${config.color}`}
                 onChange={(event) => setQuery(event.target.value)}
@@ -178,7 +202,8 @@ function InvitedByField({
                 leave="transition ease-in duration-100"
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
-                afterLeave={() => setQuery("")}>
+                afterLeave={() => setQuery("")}
+              >
                 <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                   {filteredEntries.length === 0 && query !== "" ? (
                     <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
@@ -193,20 +218,23 @@ function InvitedByField({
                             active ? "bg-blue-600 text-white" : "text-gray-900"
                           }`
                         }
-                        value={entry.name}>
+                        value={entry.name}
+                      >
                         {({ selected, active }) => (
                           <>
                             <span
                               className={`block truncate ${
                                 selected ? "font-medium" : "font-normal"
-                              }`}>
+                              }`}
+                            >
                               {entry.id} - {entry.name}
                             </span>
                             {selected ? (
                               <span
                                 className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
                                   active ? "text-white" : "text-blue-600"
-                                }`}></span>
+                                }`}
+                              ></span>
                             ) : null}
                           </>
                         )}
@@ -224,20 +252,6 @@ function InvitedByField({
 }
 
 export default InvitedByField;
-;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
