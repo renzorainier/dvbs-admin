@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
-import { getDoc, doc, updateDoc } from "firebase/firestore";
+import { getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 
 function InvitedByField({
@@ -88,6 +88,7 @@ function InvitedByField({
     const inviterId = invitedBy.split("-")[0].slice(1); // Extract inviter ID
     const pointsField = `${inviterId}${dayLetter}points`;
     const inviterDocRef = doc(db, "dvbs", documentPath);
+    const visitorId = getVisitorId();
 
     try {
       const inviterDocSnap = await getDoc(inviterDocRef);
@@ -100,8 +101,10 @@ function InvitedByField({
 
         await updateDoc(inviterDocRef, {
           [pointsField]: updatedPoints,
+          invites: arrayUnion(visitorId), // Update the invites array
         });
         console.log(`Updated ${pointsField} to ${updatedPoints}`);
+        console.log(`Added ${visitorId} to invites array`);
       } else {
         console.log("No such document for the inviter!");
       }
@@ -123,7 +126,7 @@ function InvitedByField({
 
   useEffect(() => {
     if (addVisitorClicked) {
-      // Function to run when the button is clicked\
+      // Function to run when the button is clicked
       handleAddButtonClick();
       console.log("Add Visitor button was clicked!");
       console.log(paddedIndex);
