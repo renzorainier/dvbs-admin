@@ -123,12 +123,7 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
         >
           {isStudent ? "Switch to Teacher" : "Switch to Student"}
         </button>
-        {/* <button
-          className="bg-green-500 text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out"
-          onClick={handleAddButtonClick}
-        >
-          Add
-        </button> */}
+        
       </div>
       <div className="grid grid-cols-2 gap-4">
         {documentPaths.map((documentPath) => (
