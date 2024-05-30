@@ -4,6 +4,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu, Transition, Combobox } from "@headlessui/react";
 import InvitedByField from "./InvitedByField";
+import { IoMdPersonAdd } from "react-icons/io";
 
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
@@ -376,21 +377,9 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             />
 
             <button
-              className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
+              className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
               onClick={addVisitor}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-              </svg>
+             <IoMdPersonAdd/>
               Add Visitor
             </button>
           </div>
