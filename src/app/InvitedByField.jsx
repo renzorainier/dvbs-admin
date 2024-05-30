@@ -80,8 +80,6 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }
         const currentPoints = inviterData[pointsField] || 0;
         const updatedPoints = currentPoints + 5;
 
-        console.log(`Field name to update: ${pointsField}`); // Log the field name
-
         await updateDoc(inviterDocRef, {
           [pointsField]: updatedPoints
         });
