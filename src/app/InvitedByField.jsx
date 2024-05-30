@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getDoc,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 
 function InvitedByField({ invitedBy, handleInputChange, config }) {
@@ -32,14 +38,12 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
     }
   };
 
-
   return (
     <div className="space-y-4">
       <div className="flex space-x-4">
         <button
           className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
-          onClick={handleToggle}
-        >
+          onClick={handleToggle}>
           {isStudent ? "Switch to Teacher" : "Switch to Student"}
         </button>
       </div>
@@ -47,9 +51,10 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
         {documentPaths.map((documentPath) => (
           <button
             key={documentPath}
-            className={`bg-[${selectedDocument === documentPath ? config.color : "#61677A" }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
-            onClick={() => handleDocumentChange(documentPath)}
-          >
+            className={`bg-[${
+              selectedDocument === documentPath ? config.color : "#61677A"
+            }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
+            onClick={() => handleDocumentChange(documentPath)}>
             {documentPath.charAt(0).toUpperCase() + documentPath.slice(1)}
           </button>
         ))}

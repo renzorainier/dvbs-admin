@@ -270,7 +270,7 @@ function StudentOutTime() {
 
           {filteredStudents.map((student) => (
 
-            
+
             <div
               key={`${student.id}-${student.prefix}`}
               className="flex items-center mb-4">
