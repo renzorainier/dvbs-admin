@@ -129,6 +129,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}saved`]: false,
         [`${paddedIndex}savedDate`]: "",
         [`${paddedIndex}savedOnDvbs`]: false,
+        [`${paddedIndex}invites`]: [],
+
       };
 
       const currentDayLetter = getCurrentDayLetter();
