@@ -16,6 +16,7 @@ import SalvationDecision from "./SalvationDecision";
 import CopyPreviousDayPoints from "./CopyPreviousDayPoints";
 import { FaListCheck } from "react-icons/fa6";
 import { FiClock } from "react-icons/fi";
+import { HiMiniUserGroup } from "react-icons/hi2";
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -106,7 +107,7 @@ function Main() {
                       flexDirection: "column",
                       alignItems: "center",
                     }}>
-                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <HiMiniUserGroup  style={{ fontSize: "3.5em" }} />{" "}
                     <span style={{ marginTop: "0.5em" }}>Points</span>
                   </div>
                 </button>
