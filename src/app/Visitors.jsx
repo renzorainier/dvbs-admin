@@ -381,37 +381,37 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]`}
               />
             </div>
-
-
           </div>
-
-
         </div>
-
-
       </div>
-
 
       <audio ref={audioRef} />
 
-      <div>
-              <InvitedByField
-                invitedBy={invitedBy}
-                handleInputChange={handleInputChange}
-                config={config}
-                clearInvitedBy={clearInvitedByField}
-                addVisitorClicked={addVisitorClicked}
-                paddedIndex={paddedIndex}
-                visitorName={visitorName}
-              />
 
-              <button
-                className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
-                onClick={addVisitor}>
-                <IoMdPersonAdd />
-                Add Visitor
-              </button>
-            </div>
+      <div className="w-full mt-5 bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
+        <div className="p-6">
+          <div>
+            invited by:
+          </div>
+          <InvitedByField
+            invitedBy={invitedBy}
+            handleInputChange={handleInputChange}
+            config={config}
+            clearInvitedBy={clearInvitedByField}
+            addVisitorClicked={addVisitorClicked}
+            paddedIndex={paddedIndex}
+            visitorName={visitorName}
+          />
+          <button
+            className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
+            onClick={addVisitor}>
+            <IoMdPersonAdd />
+            Add Visitor
+          </button>
+        </div>
+      </div>
+
+
     </div>
   );
 }
