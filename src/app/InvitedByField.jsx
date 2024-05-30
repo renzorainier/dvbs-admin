@@ -7,7 +7,7 @@ import { db } from "./firebase.js"; // Import your Firebase config
 function InvitedByField({ invitedBy, handleInputChange, config }) {
   const [isStudent, setIsStudent] = useState(true);
   const [selectedDocument, setSelectedDocument] = useState("primary");
-  const [names, setNames] = useState([]);
+  const [entries, setEntries] = useState([]);
   const [selectedName, setSelectedName] = useState(invitedBy);
   const [query, setQuery] = useState("");
 
@@ -25,19 +25,19 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
-        const extractedNames = Object.keys(data)
+        const extractedEntries = Object.keys(data)
           .filter(key => key.endsWith("name"))
-          .map(key => data[key])
-          .filter(Boolean);
-        setNames(extractedNames);
-        console.log("Fetched names:", extractedNames);  // Log the names
+          .map(key => ({ id: key.substring(0, 2), name: data[key] }))
+          .filter(entry => entry.name);
+        setEntries(extractedEntries);
+        console.log("Fetched entries:", extractedEntries);  // Log the entries
       } else {
         console.log("No such document!");
-        setNames([]);
+        setEntries([]);
       }
     } catch (error) {
       console.error("Error fetching document:", error);
-      setNames([]);
+      setEntries([]);
     }
   };
 
@@ -45,11 +45,12 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
     handleDocumentChange(selectedDocument);
   }, [selectedDocument]);
 
-  const filteredNames =
+  const filteredEntries =
     query === ""
-      ? names
-      : names.filter((name) =>
-          name.toLowerCase().includes(query.toLowerCase())
+      ? entries
+      : entries.filter((entry) =>
+          entry.name.toLowerCase().includes(query.toLowerCase()) ||
+          entry.id.includes(query)
         );
 
   return (
@@ -100,20 +101,20 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
               afterLeave={() => setQuery("")}
             >
               <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {filteredNames.length === 0 && query !== "" ? (
+                {filteredEntries.length === 0 && query !== "" ? (
                   <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                     Nothing found.
                   </div>
                 ) : (
-                  filteredNames.map((name) => (
+                  filteredEntries.map((entry) => (
                     <Combobox.Option
-                      key={name}
+                      key={entry.id}
                       className={({ active }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
                           active ? "bg-blue-600 text-white" : "text-gray-900"
                         }`
                       }
-                      value={name}
+                      value={entry.name}
                     >
                       {({ selected, active }) => (
                         <>
@@ -122,7 +123,7 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
                               selected ? "font-medium" : "font-normal"
                             }`}
                           >
-                            {name}
+                            {entry.id} - {entry.name}
                           </span>
                           {selected ? (
                             <span
@@ -145,6 +146,5 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
     </div>
   );
 }
-
 
 export default InvitedByField;
