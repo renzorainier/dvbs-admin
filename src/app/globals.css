@@ -13,7 +13,7 @@ body {
 
 title {
   font: x-large;
-} 
+}
 
 /* 67a852 */
 
@@ -37,7 +37,7 @@ title {
 body {
   margin:0;
   height: 100v;
-  background: linear-gradient(-45deg, #4158D0, #e560dc, #ffb374, #ef5f5f, #d840b6);
+  background: linear-gradient(-45deg, #FFC100, #04d924, #027df7, #ef5f5f, #f70233);
   background-size: 400% 400%;
   animation:  bg 12s ease infinite;
 
