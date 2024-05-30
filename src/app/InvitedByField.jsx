@@ -196,6 +196,8 @@ function InvitedByField({
                 className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-${config.color}`}
                 onChange={(event) => setQuery(event.target.value)}
                 displayValue={(name) => name}
+                placeholder="Select a Student"
+
               />
               <Transition
                 as={Fragment}
