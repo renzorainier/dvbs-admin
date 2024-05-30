@@ -53,7 +53,7 @@ function Main() {
       default:
         return (
           <div className="flex justify-center backdrop-blur-3xl items-center h-screen ">
-            <div className="font-bold text-white text-2xl">
+            <div className="font-bold text-white text-9xl">
               DVBS
             </div>
             <div className="container mx-auto">
@@ -88,81 +88,7 @@ function Main() {
                   </div>
                 </button>
 
-                <button
-                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Schedule")}
-                  style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}>
-                    <FiClock  style={{ fontSize: "3.5em" }} />{" "}
-                    <span style={{ marginTop: "0.5em" }}>Schedule</span>
-                  </div>
-                </button>
 
-
-                <button
-                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Point")}
-                  style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}>
-                    <HiMiniUserGroup  style={{ fontSize: "3.5em" }} />{" "}
-                    <span style={{ marginTop: "0.5em" }}>Points</span>
-                  </div>
-                </button>
-
-                <button
-                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Rewards")}
-                  style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}>
-                    <FaMedal  style={{ fontSize: "3.5em" }} />{" "}
-                    <span style={{ marginTop: "0.5em" }}>Rewards</span>
-                  </div>
-                </button>
-
-                <button
-                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("SalvationDecision")}
-                  style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}>
-                    <FaCross style={{ fontSize: "3.5em" }} />{" "}
-                    <span style={{ marginTop: "0.5em" }}>Salvation</span>
-                  </div>
-                </button>
-
-                <button
-                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Out")}
-                  style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}>
-                    <TbDoorExit  style={{ fontSize: "3.5em" }} />{" "}
-                    <span style={{ marginTop: "0.5em" }}>Out</span>
-                  </div>
-                </button>
 
               </div>
             </div>
@@ -210,6 +136,118 @@ function Main() {
 }
 
 export default Main;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// <button
+// className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+// onClick={() => handleButtonClick("Schedule")}
+// style={{ animation: "slide-from-left 1s ease forwards" }}>
+// <div
+//   style={{
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//   }}>
+//   <FiClock  style={{ fontSize: "3.5em" }} />{" "}
+//   <span style={{ marginTop: "0.5em" }}>Schedule</span>
+// </div>
+// </button>
+
+
+// <button
+// className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+// onClick={() => handleButtonClick("Point")}
+// style={{ animation: "slide-from-left 1s ease forwards" }}>
+// <div
+//   style={{
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//   }}>
+//   <HiMiniUserGroup  style={{ fontSize: "3.5em" }} />{" "}
+//   <span style={{ marginTop: "0.5em" }}>Points</span>
+// </div>
+// </button>
+
+// <button
+// className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+// onClick={() => handleButtonClick("Rewards")}
+// style={{ animation: "slide-from-left 1s ease forwards" }}>
+// <div
+//   style={{
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//   }}>
+//   <FaMedal  style={{ fontSize: "3.5em" }} />{" "}
+//   <span style={{ marginTop: "0.5em" }}>Rewards</span>
+// </div>
+// </button>
+
+// <button
+// className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+// onClick={() => handleButtonClick("SalvationDecision")}
+// style={{ animation: "slide-from-left 1s ease forwards" }}>
+// <div
+//   style={{
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//   }}>
+//   <FaCross style={{ fontSize: "3.5em" }} />{" "}
+//   <span style={{ marginTop: "0.5em" }}>Salvation</span>
+// </div>
+// </button>
+
+// <button
+// className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+// onClick={() => handleButtonClick("Out")}
+// style={{ animation: "slide-from-left 1s ease forwards" }}>
+// <div
+//   style={{
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//   }}>
+//   <TbDoorExit  style={{ fontSize: "3.5em" }} />{" "}
+//   <span style={{ marginTop: "0.5em" }}>Out</span>
+// </div>
+// </button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // "use client";
 
