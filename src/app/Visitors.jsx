@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment, useRef } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu, Transition } from "@headlessui/react";
-import { Combobox } from '@headlessui/react'
+import { Combobox } from "@headlessui/react";
 import InvitedByField from "./InvitedByField";
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
@@ -30,7 +30,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
         setPrimaryData(primarySnapshot.data());
-        console.log(primarySnapshot.data())
+        console.log(primarySnapshot.data());
       } else {
         console.error("No such document!");
       }
@@ -133,7 +133,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}savedDate`]: "",
         [`${paddedIndex}savedOnDvbs`]: false,
         [`${paddedIndex}invites`]: [],
-
       };
 
       const currentDayLetter = getCurrentDayLetter();
@@ -179,8 +178,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       console.error("Error adding visitor: ", error);
     }
   };
-
-
 
   const ageOptions = [
     config.ageRange[0],
@@ -343,13 +340,19 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </Menu>
             </div>
 
-            <input
+            <InvitedByField
+              invitedBy={invitedBy}
+              handleInputChange={handleInputChange}
+              config={config}
+            />
+
+            {/* <input
               type="text"
               value={invitedBy}
               onChange={(e) => handleInputChange(e, "invitedBy")}
               placeholder="Invited by"
               className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
-            />
+            /> */}
             <input
               type="text"
               value={contactNumber}
