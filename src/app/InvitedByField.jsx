@@ -25,7 +25,7 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
-        const extractedNames = Object.values(data).map(student => student.name).filter(Boolean);
+        const extractedNames = Object.keys(data).map(key => data[key].name).filter(Boolean);
         setNames(extractedNames);
         console.log("Fetched names:", extractedNames);  // Log the names
       } else {
