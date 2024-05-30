@@ -114,7 +114,9 @@ function InvitedByField({
   };
 
   const handleAddButtonClick = () => {
-    updateInviterPoints(selectedDocument);
+    if (isStudent) {
+      updateInviterPoints(selectedDocument);
+    }
   };
 
   useEffect(() => {
@@ -151,70 +153,70 @@ function InvitedByField({
           config={config}
         />
       ) : (
-<div>
-        <div className="grid grid-cols-2 gap-4">
-        {documentPaths.map((documentPath) => (
-          <button
-            key={documentPath}
-            className={`bg-[${
-              selectedDocument === documentPath ? config.color : "#61677A"
-            }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
-            onClick={() => handleDocumentChange(documentPath)}>
-            {documentPath.charAt(0).toUpperCase() + documentPath.slice(1)}
-          </button>
-        ))}
-      </div>
-        <Combobox value={selectedName} onChange={handleSelectionChange}>
-          <div className="relative mt-1">
-            <Combobox.Input
-              className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-${config.color}`}
-              onChange={(event) => setQuery(event.target.value)}
-              displayValue={(name) => name}
-            />
-            <Transition
-              as={Fragment}
-              leave="transition ease-in duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-              afterLeave={() => setQuery("")}>
-              <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {filteredEntries.length === 0 && query !== "" ? (
-                  <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                    Nothing found.
-                  </div>
-                ) : (
-                  filteredEntries.map((entry) => (
-                    <Combobox.Option
-                      key={entry.id}
-                      className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                          active ? "bg-blue-600 text-white" : "text-gray-900"
-                        }`
-                      }
-                      value={entry.name}>
-                      {({ selected, active }) => (
-                        <>
-                          <span
-                            className={`block truncate ${
-                              selected ? "font-medium" : "font-normal"
-                            }`}>
-                            {entry.id} - {entry.name}
-                          </span>
-                          {selected ? (
-                            <span
-                              className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                active ? "text-white" : "text-blue-600"
-                              }`}></span>
-                          ) : null}
-                        </>
-                      )}
-                    </Combobox.Option>
-                  ))
-                )}
-              </Combobox.Options>
-            </Transition>
+        <div>
+          <div className="grid grid-cols-2 gap-4">
+            {documentPaths.map((documentPath) => (
+              <button
+                key={documentPath}
+                className={`bg-[${
+                  selectedDocument === documentPath ? config.color : "#61677A"
+                }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
+                onClick={() => handleDocumentChange(documentPath)}>
+                {documentPath.charAt(0).toUpperCase() + documentPath.slice(1)}
+              </button>
+            ))}
           </div>
-        </Combobox>
+          <Combobox value={selectedName} onChange={handleSelectionChange}>
+            <div className="relative mt-1">
+              <Combobox.Input
+                className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-${config.color}`}
+                onChange={(event) => setQuery(event.target.value)}
+                displayValue={(name) => name}
+              />
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+                afterLeave={() => setQuery("")}>
+                <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  {filteredEntries.length === 0 && query !== "" ? (
+                    <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                      Nothing found.
+                    </div>
+                  ) : (
+                    filteredEntries.map((entry) => (
+                      <Combobox.Option
+                        key={entry.id}
+                        className={({ active }) =>
+                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                            active ? "bg-blue-600 text-white" : "text-gray-900"
+                          }`
+                        }
+                        value={entry.name}>
+                        {({ selected, active }) => (
+                          <>
+                            <span
+                              className={`block truncate ${
+                                selected ? "font-medium" : "font-normal"
+                              }`}>
+                              {entry.id} - {entry.name}
+                            </span>
+                            {selected ? (
+                              <span
+                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                  active ? "text-white" : "text-blue-600"
+                                }`}></span>
+                            ) : null}
+                          </>
+                        )}
+                      </Combobox.Option>
+                    ))
+                  )}
+                </Combobox.Options>
+              </Transition>
+            </div>
+          </Combobox>
         </div>
       )}
     </div>
@@ -222,6 +224,7 @@ function InvitedByField({
 }
 
 export default InvitedByField;
+;
 
 
 
