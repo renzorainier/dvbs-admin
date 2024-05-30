@@ -27,6 +27,7 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
         const data = docSnap.data();
         const extractedNames = Object.values(data).map(student => student.name).filter(Boolean);
         setNames(extractedNames);
+        console.log("Fetched names:", extractedNames);  // Log the names
       } else {
         console.log("No such document!");
         setNames([]);
