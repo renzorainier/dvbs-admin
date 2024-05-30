@@ -6,7 +6,6 @@ import { Menu, Transition, Combobox } from "@headlessui/react";
 import InvitedByField from "./InvitedByField";
 import { IoMdPersonAdd } from "react-icons/io";
 
-
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -321,9 +320,10 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 placeholder="Address or Select Route"
                 className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
               />
-              <Menu as="div" className="relative inline-block text-left w-1/2">
+              <Menu as="div" className="relative inline-block  w-1/2">
                 <div>
-                  <Menu.Button className={`bg-[${config.color}] flex justify-center inline-flex justify-between w-full rounded-md  shadow-sm px-4 py-2 text-sm font-medium text-gray-700 `}>
+                  <Menu.Button
+                    className={`bg-[${config.color}] flex justify-center text-center inline-flex justify-between w-full rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700`}>
                     {"Route"}
                   </Menu.Button>
                 </div>
@@ -379,7 +379,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             <button
               className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
               onClick={addVisitor}>
-             <IoMdPersonAdd/>
+              <IoMdPersonAdd />
               Add Visitor
             </button>
           </div>
@@ -391,31 +391,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
 }
 
 export default Visitors;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState, useEffect, Fragment, useRef } from "react";
 // import { doc, getDoc, updateDoc } from "firebase/firestore";
