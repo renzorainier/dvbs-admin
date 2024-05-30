@@ -25,7 +25,10 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
-        const extractedNames = Object.keys(data).map(key => data[key].name).filter(Boolean);
+        const extractedNames = Object.keys(data)
+          .filter(key => key.endsWith("name"))
+          .map(key => data[key])
+          .filter(Boolean);
         setNames(extractedNames);
         console.log("Fetched names:", extractedNames);  // Log the names
       } else {
@@ -40,7 +43,7 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
 
   useEffect(() => {
     handleDocumentChange(selectedDocument);
-  }, []);
+  }, [selectedDocument]);
 
   const filteredNames =
     query === ""
