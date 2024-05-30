@@ -159,7 +159,7 @@ function InvitedByField({
           <Menu as="div" className="relative inline-block text-center ">
             <div>
               <Menu.Button className="inline-flex justify-center w-full rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                {selectedDocument ? selectedDocument.charAt(0).toUpperCase() + selectedDocument.slice(1) : "Select Document"}
+                {selectedDocument ? selectedDocument.charAt(0).toUpperCase() + selectedDocument.slice(1) : "Select Group"}
                 <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
               </Menu.Button>
             </div>
