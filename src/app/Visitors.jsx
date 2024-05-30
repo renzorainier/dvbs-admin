@@ -354,12 +354,12 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </Menu>
               <div className="flex items-center space-x-4">
                 <label className="flex items-center space-x-2">
-                  <input
+                  {/* <input
                     type="checkbox"
                     checked={broughtBible}
                     onChange={() => setBroughtBible(!broughtBible)}
                     className={`form-checkbox h-6 w-6 text-[${config.color}] rounded focus:ring-2 focus:ring-offset-2 focus:ring-${config.color} transition duration-200`}
-                  />
+                  /> */}
                   <span className="text-gray-800 font-medium">Bible</span>
 
                   <Checkbox
