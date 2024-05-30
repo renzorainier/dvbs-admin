@@ -19,7 +19,7 @@ import { FiClock } from "react-icons/fi";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaMedal } from "react-icons/fa";
 import { FaCross } from "react-icons/fa";
-
+import { TbDoorExit } from "react-icons/tb";
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
 
@@ -154,7 +154,7 @@ function Main() {
                       flexDirection: "column",
                       alignItems: "center",
                     }}>
-                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <TbDoorExit  style={{ fontSize: "3.5em" }} />{" "}
                     <span style={{ marginTop: "0.5em" }}>Out</span>
                   </div>
                 </button>
