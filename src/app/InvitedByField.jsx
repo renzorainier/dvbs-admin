@@ -143,7 +143,16 @@ function InvitedByField({
           {isStudent ? "Switch to Teacher" : "Switch to Student"}
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+
+      {!isStudent ? (
+        <TeacherCombobox
+          invitedBy={invitedBy}
+          handleInputChange={handleInputChange}
+          config={config}
+        />
+      ) : (
+<div>
+        <div className="grid grid-cols-2 gap-4">
         {documentPaths.map((documentPath) => (
           <button
             key={documentPath}
@@ -155,13 +164,6 @@ function InvitedByField({
           </button>
         ))}
       </div>
-      {!isStudent ? (
-        <TeacherCombobox
-          invitedBy={invitedBy}
-          handleInputChange={handleInputChange}
-          config={config}
-        />
-      ) : (
         <Combobox value={selectedName} onChange={handleSelectionChange}>
           <div className="relative mt-1">
             <Combobox.Input
@@ -213,6 +215,7 @@ function InvitedByField({
             </Transition>
           </div>
         </Combobox>
+        </div>
       )}
     </div>
   );
