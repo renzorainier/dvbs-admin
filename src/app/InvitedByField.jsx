@@ -11,7 +11,7 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
     handleInputChange({ target: { value: "" } }, "invitedBy");
   };
 
-  const documentPaths = ["dvbs/primary", "dvbs/middlers", "dvbs/juniors", "dvbs/youth"];
+  const documentPaths = ["primary", "middlers", "juniors", "youth"];
 
   const handleDocumentChange = (documentPath) => {
     setSelectedDocument(documentPath);
