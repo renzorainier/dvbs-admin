@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 
-
 body {
   font-family: "Urbanist";
 }
@@ -14,7 +13,7 @@ body {
 
 title {
   font: x-large;
-}
+} 
 
 /* 67a852 */
 
@@ -32,3 +31,28 @@ title {
 
 
 
+
+
+
+body {
+  margin:0;
+  height: 100v;
+  background: linear-gradient(-45deg, #4158D0, #e560dc, #ffb374, #ef5f5f, #d840b6);
+  background-size: 400% 400%;
+  animation:  bg 12s ease infinite;
+
+}
+
+@keyframes bg {
+
+0%{
+  background-position: 0% 50%;
+}
+50%{
+  background-position: 100% 100%;
+}
+100%{
+  background-position: 0% 50%;
+}
+
+}
