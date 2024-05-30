@@ -19,6 +19,14 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
 
   const documentPaths = ["primary", "middlers", "juniors", "youth"];
 
+
+  const getCurrentDayLetter = () => {
+    const days = ["A", "B", "C", "D", "E"];
+    const dayIndex = new Date().getDay();
+    return days[dayIndex === 0 ? 6 : dayIndex - 1];
+  };
+
+
   const handleDocumentChange = async (documentPath) => {
     setSelectedDocument(documentPath);
     const docRef = doc(db, "dvbs", documentPath);
