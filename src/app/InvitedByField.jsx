@@ -15,8 +15,18 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
 
   const documentPaths = ["primary", "middlers", "juniors", "youth"];
 
-  const handleDocumentChange = (documentPath) => {
+  const handleDocumentChange = async (documentPath) => {
     setSelectedDocument(documentPath);
+    // Fetch the document from the 'dvbs' collection and log its structure
+    const docRef = doc(db, "dvbs", documentPath);
+    try {
+      const docSnap = await getDocs(docRef);
+      docSnap.forEach((doc) => {
+        console.log("Document data:", doc.data());
+      });
+    } catch (error) {
+      console.error("Error fetching document:", error);
+    }
   };
 
   return (
@@ -36,7 +46,7 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
             className={`bg-[${selectedDocument === documentPath ? config.color : "#61677A" }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
             onClick={() => handleDocumentChange(documentPath)}
           >
-            {documentPath.split("/")[1].charAt(0).toUpperCase() + documentPath.split("/")[1].slice(1)}
+            {documentPath.charAt(0).toUpperCase() + documentPath.slice(1)}
           </button>
         ))}
       </div>
