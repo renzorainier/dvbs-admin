@@ -20,6 +20,8 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaMedal } from "react-icons/fa";
 import { FaCross } from "react-icons/fa";
 import { TbDoorExit } from "react-icons/tb";
+import { BsGraphUpArrow } from "react-icons/bs";
+
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
 
@@ -78,7 +80,7 @@ function Main() {
                       flexDirection: "column",
                       alignItems: "center",
                     }}>
-                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <BsGraphUpArrow  style={{ fontSize: "3.5em" }} />{" "}
                     <span style={{ marginTop: "0.5em" }}>List</span>
                   </div>
                 </button>
