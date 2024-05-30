@@ -5,6 +5,7 @@ import { db } from "./firebase.js";
 import { Menu, Transition } from "@headlessui/react";
 import InvitedByField from "./InvitedByField";
 
+
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -17,6 +18,9 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [showPopup, setShowPopup] = useState(false);
   const [visitorID, setVisitorID] = useState(null);
   const audioRef = useRef(null);
+  const [invitePoint, setInvitePoint] = useState(false);
+
+
 
   const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
 

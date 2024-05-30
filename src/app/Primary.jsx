@@ -12,7 +12,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [showBiblePopup, setShowBiblePopup] = useState(false);
   const [studentToUpdateBible, setStudentToUpdateBible] = useState(null);
   const audioRef = useRef(null);
-  const [setInvite, setStudentToUpdateBible] = useState(null);
 
 
   const uploadTime = new Date().toLocaleString();
