@@ -53,7 +53,7 @@ function Main() {
       default:
         return (
           <div className="flex justify-center backdrop-blur-3xl items-center h-screen ">
-            <div className="font-bold text-white fon">
+            <div className="font-bold text-white text-2xl">
               DVBS
             </div>
             <div className="container mx-auto">
