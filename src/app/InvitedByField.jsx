@@ -20,6 +20,11 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
           teacher.toLowerCase().includes(query.toLowerCase())
         );
 
+  const handleTeacherChange = (teacher) => {
+    setSelectedTeacher(teacher);
+    handleInputChange({ target: { value: teacher } }, "invitedBy");
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center space-x-4">
@@ -39,14 +44,11 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
           className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-${config.color}`}
         />
       ) : (
-        <Combobox value={selectedTeacher} onChange={setSelectedTeacher}>
+        <Combobox value={selectedTeacher} onChange={handleTeacherChange}>
           <div className="relative">
             <Combobox.Input
               className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-${config.color}`}
-              onChange={(event) => {
-                setQuery(event.target.value);
-                handleInputChange(event, "invitedBy");
-              }}
+              onChange={(event) => setQuery(event.target.value)}
               displayValue={(teacher) => teacher}
               placeholder="Select a Teacher"
             />
