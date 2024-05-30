@@ -53,10 +53,10 @@ function Main() {
       default:
         return (
           <div className="flex flex-col justify-center items-center h-screen">
-            <div className="flex flex-col justify-center items-center h-screen">
-  <div className="font-bold text-white text-6xl mb-4 tracking-wide">DVBS</div>
-  <div className="text-gray-400 text-xl mb-8">2024</div>
-  <div className="text-gray-400 text-lg">Rescue Zone</div>
+         <div className="text-white text-center mb-10">
+  <h1 className="font-bold text-7xl mb-2">DVBS</h1>
+  <h2 className="text-2xl font-light">2024</h2>
+  <h3 className="text-lg font-semibold">Rescue Zone</h3>
 </div>
 
           <div className="container mx-auto">
