@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { db } from "./firebase.js"; // Import your Firebase config
 
 function InvitedByField({ invitedBy, handleInputChange, config }) {
   const [isStudent, setIsStudent] = useState(true);
