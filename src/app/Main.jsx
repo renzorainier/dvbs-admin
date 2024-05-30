@@ -13,8 +13,9 @@ import Schedule from "./Schedule";
 import CopyScheduleData from "./CopyScheduleData";
 import DailyRewards from "./DailyRewards";
 import SalvationDecision from "./SalvationDecision";
-import CopyPreviousDayPoints from "./CopyPreviousDayPoints"
+import CopyPreviousDayPoints from "./CopyPreviousDayPoints";
 import { FaListCheck } from "react-icons/fa6";
+import { FiClock } from "react-icons/fi";
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -39,68 +40,120 @@ function Main() {
         return <AttendanceChart />;
       case "Schedule":
         return <Schedule />;
-        case "Rewards":
-          return <DailyRewards />;
-          case "SalvationDecision":
-            return <SalvationDecision/>;
+      case "Rewards":
+        return <DailyRewards />;
+      case "SalvationDecision":
+        return <SalvationDecision />;
 
       default:
         return (
           <div className="flex justify-center backdrop-blur-3xl items-center h-screen ">
             <div className="container mx-auto">
               <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
-              <button
-  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-  onClick={() => handleButtonClick("Tab")}
-  style={{ animation: "slide-from-left 1s ease forwards" }}
->
-  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-    <FaListCheck style={{ fontSize: "3.5em" }} /> {/* Adjust the size as needed */}
-    <span style={{ marginTop: "0.5em" }}>Attendance</span>
-  </div>
-</button>
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Tab")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Attendance</span>
+                  </div>
+                </button>
 
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Attendance")}
-                  style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  List
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>List</span>
+                  </div>
                 </button>
 
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Schedule")}
-                  style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  Schedules
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FiClock  style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Schedule</span>
+                  </div>
                 </button>
 
+
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Point")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  Points
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Points</span>
+                  </div>
                 </button>
 
-
-
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Rewards")}
-                  style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  Rewards
-                </button>
-                <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("SalvationDecision")}
-                  style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  Salvation
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Rewards</span>
+                  </div>
                 </button>
 
                 <button
-                  className="focus:outline-none bg-white/5  backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("SalvationDecision")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Salvation</span>
+                  </div>
+                </button>
+
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Out")}
-                  style={{ animation: "slide-from-right 1s ease forwards" }}>
-                  Out
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Out</span>
+                  </div>
                 </button>
 
               </div>
