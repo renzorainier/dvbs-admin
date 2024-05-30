@@ -50,8 +50,11 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     let points = primaryData[pointsField] || 0;
     while (points === 0 && dayLetter !== "A") {
       dayLetter = getPreviousDayLetter(dayLetter);
-      pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
-      points = primaryData[pointsField] || 0;
+      const attendanceField = `${fieldName.slice(0, 2)}${dayLetter}`;
+      if (primaryData[attendanceField]) {
+        pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
+        points = primaryData[pointsField] || 0;
+      }
     }
     return points;
   };
@@ -83,7 +86,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       // Calculate the new points value
       const pointsField = `${fieldName.slice(0, 2)}${getCurrentDayLetter()}points`;
       const previousDayLetter = getPreviousDayLetter(getCurrentDayLetter());
-      const previousDayPointsField = `${fieldName.slice(0, 2)}${previousDayLetter}points`;
       const previousPoints = getLastValidPoints(fieldName, previousDayLetter);
       const newPoints = newValue ? previousPoints + 1 : previousPoints;
 
@@ -223,6 +225,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
           </div>
         </div>
       )}
+
 
       {showBiblePopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
