@@ -2,11 +2,11 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
-import { Menu, Transition, Combobox, } from "@headlessui/react";
+import { Menu, Transition, Combobox } from "@headlessui/react";
 import InvitedByField from "./InvitedByField";
 import { IoMdPersonAdd } from "react-icons/io";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Checkbox } from '@headlessui/react'
+import { Checkbox } from "@headlessui/react";
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [firstName, setFirstName] = useState("");
@@ -315,9 +315,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             </div>
 
             <div className="flex items-center ">
-              <Menu
-                as="div"
-                className="relative inline-block  w-full z-10">
+              <Menu as="div" className="relative inline-block  w-full z-10">
                 <div>
                   <Menu.Button className="inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700">
                     {age ? `Age: ${age}` : "Select Age"}
@@ -384,26 +382,36 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               />
             </div>
 
-            <InvitedByField
-              invitedBy={invitedBy}
-              handleInputChange={handleInputChange}
-              config={config}
-              clearInvitedBy={clearInvitedByField}
-              addVisitorClicked={addVisitorClicked}
-              paddedIndex={paddedIndex}
-              visitorName={visitorName}
-            />
 
-            <button
-              className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
-              onClick={addVisitor}>
-              <IoMdPersonAdd />
-              Add Visitor
-            </button>
           </div>
+
+
         </div>
+
+
       </div>
+
+
       <audio ref={audioRef} />
+
+      <div>
+              <InvitedByField
+                invitedBy={invitedBy}
+                handleInputChange={handleInputChange}
+                config={config}
+                clearInvitedBy={clearInvitedByField}
+                addVisitorClicked={addVisitorClicked}
+                paddedIndex={paddedIndex}
+                visitorName={visitorName}
+              />
+
+              <button
+                className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
+                onClick={addVisitor}>
+                <IoMdPersonAdd />
+                Add Visitor
+              </button>
+            </div>
     </div>
   );
 }
