@@ -72,101 +72,109 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     setNewVisitorAddress(route);
   };
 
-const addVisitor = async () => {
-  if (
-    firstName.trim() === "" ||
-    lastName.trim() === "" ||
-    newVisitorAddress.trim() === "" ||
-    invitedBy.trim() === "" ||
-    age === ""
-  ) {
-    console.error("Please fill in all required fields.");
-    setShowPopup(true);
-    return;
-  }
+  const addVisitor = async () => {
+    if (
+      firstName.trim() === "" ||
+      lastName.trim() === "" ||
+      newVisitorAddress.trim() === "" ||
+      invitedBy.trim() === "" ||
+      age === ""
+    ) {
+      console.error("Please fill in all required fields.");
+      setShowPopup(true);
+      return;
+    }
 
-  try {
-    const docRef = doc(
-      db,
-      config.dbPath.split("/")[0],
-      config.dbPath.split("/")[1]
-    );
-    const existingIndexes = Object.keys(primaryData)
-      .filter((key) => key.match(/^\d+/))
-      .map((key) => parseInt(key.match(/^\d+/)[0]));
-    const newIndex = existingIndexes.length
-      ? Math.max(...existingIndexes) + 1
-      : 1;
-    const paddedIndex = String(newIndex).padStart(2, "0");
+    try {
+      const docRef = doc(
+        db,
+        config.dbPath.split("/")[0],
+        config.dbPath.split("/")[1]
+      );
+      const existingIndexes = Object.keys(primaryData)
+        .filter((key) => key.match(/^\d+/))
+        .map((key) => parseInt(key.match(/^\d+/)[0]));
+      const newIndex = existingIndexes.length
+        ? Math.max(...existingIndexes) + 1
+        : 1;
+      const paddedIndex = String(newIndex).padStart(2, "0");
 
-    const visitorName = `${
-      lastName.trim().charAt(0).toUpperCase() + lastName.trim().slice(1)
-    }, ${
-      firstName.trim().charAt(0).toUpperCase() + firstName.trim().slice(1)
-    }`;
+      const visitorName = `${
+        lastName.trim().charAt(0).toUpperCase() + lastName.trim().slice(1)
+      }, ${
+        firstName.trim().charAt(0).toUpperCase() + firstName.trim().slice(1)
+      }`;
 
-    const newFields = {
-      [`${paddedIndex}name`]: visitorName,
-      [`${paddedIndex}loc`]: newVisitorAddress,
-      [`${paddedIndex}invitedBy`]: invitedBy,
-      [`${paddedIndex}contactNumber`]: contactNumber,
-      [`${paddedIndex}age`]: age,
-      [`${paddedIndex}Aout`]: "",
-      [`${paddedIndex}Bout`]: "",
-      [`${paddedIndex}Cout`]: "",
-      [`${paddedIndex}Dout`]: "",
-      [`${paddedIndex}Eout`]: "",
-      [`${paddedIndex}Abible`]: false,
-      [`${paddedIndex}Bbible`]: false,
-      [`${paddedIndex}Cbible`]: false,
-      [`${paddedIndex}Dbible`]: false,
-      [`${paddedIndex}Ebible`]: false,
-      [`${paddedIndex}Apoints`]: getCurrentDayLetter() === "A" ? 1 : 0,
-      [`${paddedIndex}Bpoints`]: getCurrentDayLetter() === "B" ? 1 : 0,
-      [`${paddedIndex}Cpoints`]: getCurrentDayLetter() === "C" ? 1 : 0,
-      [`${paddedIndex}Dpoints`]: getCurrentDayLetter() === "D" ? 1 : 0,
-      [`${paddedIndex}Epoints`]: getCurrentDayLetter() === "E" ? 1 : 0,
-      [`${paddedIndex}saved`]: false,
-      [`${paddedIndex}savedDate`]: "",
-      [`${paddedIndex}savedOnDvbs`]: false,
-    };
+      const newFields = {
+        [`${paddedIndex}name`]: visitorName,
+        [`${paddedIndex}loc`]: newVisitorAddress,
+        [`${paddedIndex}invitedBy`]: invitedBy,
+        [`${paddedIndex}contactNumber`]: contactNumber,
+        [`${paddedIndex}age`]: age,
+        [`${paddedIndex}Aout`]: "",
+        [`${paddedIndex}Bout`]: "",
+        [`${paddedIndex}Cout`]: "",
+        [`${paddedIndex}Dout`]: "",
+        [`${paddedIndex}Eout`]: "",
+        [`${paddedIndex}Abible`]: false,
+        [`${paddedIndex}Bbible`]: false,
+        [`${paddedIndex}Cbible`]: false,
+        [`${paddedIndex}Dbible`]: false,
+        [`${paddedIndex}Ebible`]: false,
+        [`${paddedIndex}Apoints`]: getCurrentDayLetter() === "A" ? 1 : 0,
+        [`${paddedIndex}Bpoints`]: getCurrentDayLetter() === "B" ? 1 : 0,
+        [`${paddedIndex}Cpoints`]: getCurrentDayLetter() === "C" ? 1 : 0,
+        [`${paddedIndex}Dpoints`]: getCurrentDayLetter() === "D" ? 1 : 0,
+        [`${paddedIndex}Epoints`]: getCurrentDayLetter() === "E" ? 1 : 0,
+        [`${paddedIndex}saved`]: false,
+        [`${paddedIndex}savedDate`]: "",
+        [`${paddedIndex}savedOnDvbs`]: false,
+      };
 
-    const currentDayLetter = getCurrentDayLetter();
-    const currentTime = new Date().toLocaleString();
-    ["A", "B", "C", "D", "E"].forEach((letter) => {
-      newFields[`${paddedIndex}${letter}`] =
-        letter === currentDayLetter ? currentTime : "";
-      newFields[`${paddedIndex}${letter}bible`] =
-        letter === currentDayLetter ? broughtBible : false;
-    });
+      const currentDayLetter = getCurrentDayLetter();
+      const currentTime = new Date().toLocaleString();
+      ["A", "B", "C", "D", "E"].forEach((letter) => {
+        newFields[`${paddedIndex}${letter}`] =
+          letter === currentDayLetter ? currentTime : "";
+        newFields[`${paddedIndex}${letter}bible`] =
+          letter === currentDayLetter ? broughtBible : false;
 
-    await updateDoc(docRef, newFields);
+        // Add 3 points if Bible is brought
+        if (broughtBible && letter === currentDayLetter) {
+          const pointsField = `${paddedIndex}${letter}points`;
+          const currentPoints = primaryData[pointsField] || 0;
+          newFields[pointsField] = currentPoints + 3;
+        }
+      });
 
-    setFirstName("");
-    setLastName("");
-    setNewVisitorAddress("");
-    setInvitedBy("");
-    setContactNumber("");
-    setAge("");
-    setBroughtBible(false);
-    console.log("Visitor added successfully!");
+      await updateDoc(docRef, newFields);
 
-    setPrimaryData((prevData) => ({
-      ...prevData,
-      ...newFields,
-    }));
+      setFirstName("");
+      setLastName("");
+      setNewVisitorAddress("");
+      setInvitedBy("");
+      setContactNumber("");
+      setAge("");
+      setBroughtBible(false);
+      console.log("Visitor added successfully!");
 
-    setVisitorID({
-      id: `${config.dbPath.split("/")[1][0].toUpperCase()}${paddedIndex}`,
-      name: visitorName,
-      location: newVisitorAddress,
-    });
+      setPrimaryData((prevData) => ({
+        ...prevData,
+        ...newFields,
+      }));
 
-    playEnterSound();
-  } catch (error) {
-    console.error("Error adding visitor: ", error);
-  }
-};
+      setVisitorID({
+        id: `${config.dbPath.split("/")[1][0].toUpperCase()}${paddedIndex}`,
+        name: visitorName,
+        location: newVisitorAddress,
+      });
+
+      playEnterSound();
+    } catch (error) {
+      console.error("Error adding visitor: ", error);
+    }
+  };
+
 
 
   const ageOptions = [
