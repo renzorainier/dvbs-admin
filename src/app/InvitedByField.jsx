@@ -33,10 +33,12 @@ function InvitedByField({
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const getFormattedDocumentPath = () => {
+  const getVisitorId = () => {
     const path = config.dbPath.replace("dvbs/", "");
-    return path.charAt(0).toUpperCase();
+    const documentInitial = path.charAt(0).toUpperCase();
+    return `${documentInitial}${paddedIndex}-${visitorName}`;
   };
+
 
   const handleDocumentChange = async (documentPath) => {
     setSelectedDocument(documentPath);
