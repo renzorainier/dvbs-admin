@@ -12,14 +12,12 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [contactNumber, setContactNumber] = useState("");
   const [age, setAge] = useState("");
   const [broughtBible, setBroughtBible] = useState(false);
-  const [invitedByTeacher, setInvitedByTeacher] = useState(false); // State to track if invited by a teacher
   const [primaryData, setPrimaryData] = useState({});
   const [showPopup, setShowPopup] = useState(false);
   const [visitorID, setVisitorID] = useState(null);
   const audioRef = useRef(null);
 
   const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
-  const teacherNames = ["Teacher 1", "Teacher 2", "Teacher 3"]; // Predefined list of teacher names
 
   useEffect(() => {
     const fetchPrimary = async () => {
@@ -76,12 +74,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     setNewVisitorAddress(route);
   };
 
-  const handleInvitedByChange = (value) => {
-    setInvitedBy(value);
-    // Check if the selected value is a teacher, then set invitedByTeacher to true
-    setInvitedByTeacher(teacherNames.includes(value));
-  };
-
   const addVisitor = async () => {
     if (
       firstName.trim() === "" ||
@@ -118,8 +110,32 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const newFields = {
         [`${paddedIndex}name`]: visitorName,
         [`${paddedIndex}loc`]: newVisitorAddress,
-        [`${paddedIndex}invitedBy]: invitedBy, [${paddedIndex}contactNumber]: contactNumber, [${paddedIndex}age]: age, [${paddedIndex}Aout]: "", [${paddedIndex}Bout]: "", [${paddedIndex}Cout]: "", [${paddedIndex}Dout]: "", [${paddedIndex}Eout]: "", [${paddedIndex}Abible]: false, [${paddedIndex}Bbible]: false, [${paddedIndex}Cbible]: false, [${paddedIndex}Dbible]: false, [${paddedIndex}Ebible]: false, [${paddedIndex}Apoints]: getCurrentDayLetter() === "A" ? 1 : 0, [${paddedIndex}Bpoints]: getCurrentDayLetter() === "B" ? 1 : 0, [${paddedIndex}Cpoints]: getCurrentDayLetter() === "C" ? 1 : 0, [${paddedIndex}Dpoints]: getCurrentDayLetter() === "D" ? 1 : 0, [${paddedIndex}Epoints]: getCurrentDayLetter() === "E" ? 1 : 0, [${paddedIndex}saved]: false, [${paddedIndex}savedDate]: "", [${paddedIndex}savedOnDvbs]: false, [${paddedIndex}invites`]: [],
-      };  const currentDayLetter = getCurrentDayLetter();
+        [`${paddedIndex}invitedBy`]: invitedBy,
+        [`${paddedIndex}contactNumber`]: contactNumber,
+        [`${paddedIndex}age`]: age,
+        [`${paddedIndex}Aout`]: "",
+        [`${paddedIndex}Bout`]: "",
+        [`${paddedIndex}Cout`]: "",
+        [`${paddedIndex}Dout`]: "",
+        [`${paddedIndex}Eout`]: "",
+        [`${paddedIndex}Abible`]: false,
+        [`${paddedIndex}Bbible`]: false,
+        [`${paddedIndex}Cbible`]: false,
+        [`${paddedIndex}Dbible`]: false,
+        [`${paddedIndex}Ebible`]: false,
+        [`${paddedIndex}Apoints`]: getCurrentDayLetter() === "A" ? 1 : 0,
+        [`${paddedIndex}Bpoints`]: getCurrentDayLetter() === "B" ? 1 : 0,
+        [`${paddedIndex}Cpoints`]: getCurrentDayLetter() === "C" ? 1 : 0,
+        [`${paddedIndex}Dpoints`]: getCurrentDayLetter() === "D" ? 1 : 0,
+        [`${paddedIndex}Epoints`]: getCurrentDayLetter() === "E" ? 1 : 0,
+        [`${paddedIndex}saved`]: false,
+        [`${paddedIndex}savedDate`]: "",
+        [`${paddedIndex}savedOnDvbs`]: false,
+        [`${paddedIndex}invites`]: [],
+
+      };
+
+      const currentDayLetter = getCurrentDayLetter();
       const currentTime = new Date().toLocaleString();
       ["A", "B", "C", "D", "E"].forEach((letter) => {
         newFields[`${paddedIndex}${letter}`] =
@@ -163,91 +179,95 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     }
   };
 
+
+
   const ageOptions = [
-  config.ageRange[0],
-  config.ageRange[1],
-  config.ageRange[2],
+    config.ageRange[0],
+    config.ageRange[1],
+    config.ageRange[2],
   ];
 
   const playEnterSound = () => {
-  const audio = new Audio("/point.wav");
-  audio.play();
+    const audio = new Audio("/point.wav");
+    audio.play();
   };
 
   return (
-  <div className="flex flex-col items-center pb-5">
-  {showPopup && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center">
-  <div className="fixed inset-0 bg-black opacity-50" />
-  <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-  <p className="mb-2">Please fill in all required fields.</p>
-  <button
-  className={`bg-[${config.color}] hover:bg-[${config.color}] text-white font-bold py-2 px-4 rounded`}
-  onClick={() => setShowPopup(false)}>
-  OK
-  </button>
-  </div>
-  </div>
-  )}  {visitorID && (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="fixed inset-0 bg-black opacity-50" />
-      <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-        <p className="text-5xl font-bold text-gray-800">{visitorID.id}</p>
-        <p className="text-lg text-gray-800">{visitorID.name}</p>
-        <p className="text-md text-gray-800">{visitorID.location}</p>
-        <button
-          className={`bg-[${config.color}] text-white font-bold py-2 px-4 rounded mt-4`}
-          onClick={() => setVisitorID(null)}>
-          OK
-        </button>
-      </div>
-    </div>
-  )}
-
-  <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
-    <div className="p-6">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">
-        Add New Visitor
-      </h2>
-      <div className="space-y-6">
-        <div className="flex items-center space-x-4">
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => handleInputChange(e, "firstName")}
-            placeholder="First Name"
-            className="border border-gray-300 rounded-lg px-4 py-2 w-1/2 focus:outline-none focus:border-[${config.color}]"
-          />
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => handleInputChange(e, "lastName")}
-            placeholder="Last Name"
-            className="border border-gray-300 rounded-lg px-4 py-2 w-1/2 focus:outline-none focus:border-[${config.color}]"
-          />
+    <div className="flex flex-col items-center pb-5">
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50" />
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="mb-2">Please fill in all required fields.</p>
+            <button
+              className={`bg-[${config.color}] hover:bg-[${config.color}] text-white font-bold py-2 px-4 rounded`}
+              onClick={() => setShowPopup(false)}>
+              OK
+            </button>
+          </div>
         </div>
-        <div className="flex items-center space-x-4">
-          <Menu
-            as="div"
-            className="relative inline-block text-left w-full z-40">
-            <div>
-              <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {age ? `Age: ${age}` : "Select Age"}
-              </Menu.Button>
+      )}
+
+      {visitorID && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50" />
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="text-5xl font-bold text-gray-800">{visitorID.id}</p>
+            <p className="text-lg text-gray-800">{visitorID.name}</p>
+            <p className="text-md text-gray-800">{visitorID.location}</p>
+            <button
+              className={`bg-[${config.color}] text-white font-bold py-2 px-4 rounded mt-4`}
+              onClick={() => setVisitorID(null)}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
+        <div className="p-6">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            Add New Visitor
+          </h2>
+          <div className="space-y-6">
+            <div className="flex items-center space-x-4">
+              <input
+                type="text"
+                value={firstName}
+                onChange={(e) => handleInputChange(e, "firstName")}
+                placeholder="First Name"
+                className="border border-gray-300 rounded-lg px-4 py-2 w-1/2 focus:outline-none focus:border-[${config.color}]"
+              />
+              <input
+                type="text"
+                value={lastName}
+                onChange={(e) => handleInputChange(e, "lastName")}
+                placeholder="Last Name"
+                className="border border-gray-300 rounded-lg px-4 py-2 w-1/2 focus:outline-none focus:border-[${config.color}]"
+              />
             </div>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95">
-              <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="py-1">
-                  {ageOptions.map((ageOption) => (
-                    <Menu.Item key={ageOption}>
-                      {({active }) => (
+            <div className="flex items-center space-x-4">
+              <Menu
+                as="div"
+                className="relative inline-block text-left w-full z-40">
+                <div>
+                  <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    {age ? `Age: ${age}` : "Select Age"}
+                  </Menu.Button>
+                </div>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95">
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      {ageOptions.map((ageOption) => (
+                        <Menu.Item key={ageOption}>
+                          {({ active }) => (
                             <button
                               onClick={() => handleAgeSelect(ageOption)}
                               className={`${
@@ -322,23 +342,13 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </Menu>
             </div>
 
-            {invitedByTeacher ? ( // Conditionally render based on invitedByTeacher state
-              <Combobox
-                items={teacherNames}
-                onChange={(value) => handleInvitedByChange(value)}
-                placeholder="Invited by (Teacher)"
-                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
-              />
-            ) : (
-              <input
-                type="text"
-                value={invitedBy}
-                onChange={(e) => handleInputChange(e, "invitedBy")}
-                placeholder="Invited by (Student)"
-                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
-              />
-            )}
-
+            <input
+              type="text"
+              value={invitedBy}
+              onChange={(e) => handleInputChange(e, "invitedBy")}
+              placeholder="Invited by"
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
+            />
             <input
               type="text"
               value={contactNumber}
@@ -374,4 +384,3 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
 }
 
 export default Visitors;
-
