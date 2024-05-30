@@ -57,21 +57,21 @@ function Main() {
                   Attendance
                 </button>
                 <button
-                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Attendance")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   List
                 </button>
 
                 <button
-                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Schedule")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Schedules
                 </button>
 
                 <button
-                  className="focus:outline-none bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Point")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
                   Points
@@ -80,20 +80,20 @@ function Main() {
 
 
                 <button
-                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Rewards")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Rewards
                 </button>
                 <button
-                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("SalvationDecision")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Salvation
                 </button>
 
                 <button
-                  className="focus:outline-none bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5  backdrop-blur-2xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Out")}
                   style={{ animation: "slide-from-right 1s ease forwards" }}>
                   Out
