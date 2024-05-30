@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 
 function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }) {
@@ -24,7 +24,6 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }
     const dayIndex = new Date().getDay();
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
-
 
   const handleDocumentChange = async (documentPath) => {
     setSelectedDocument(documentPath);
@@ -67,6 +66,37 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }
     }
   };
 
+  const updateInviterPoints = async () => {
+    const dayLetter = getCurrentDayLetter();
+    const inviterDocumentPath = invitedBy.split("-")[0];
+    const inviterDocRef = doc(db, "dvbs", inviterDocumentPath);
+
+    try {
+      const inviterDocSnap = await getDoc(inviterDocRef);
+      if (inviterDocSnap.exists()) {
+        const inviterData = inviterDocSnap.data();
+        const inviterId = invitedBy.split("-")[0].slice(1); // Extract inviter ID
+        const pointsField = `${inviterId}${dayLetter}points`;
+        const currentPoints = inviterData[pointsField] || 0;
+        const updatedPoints = currentPoints + 5;
+
+        await updateDoc(inviterDocRef, {
+          [pointsField]: updatedPoints
+        });
+        console.log(`Updated ${pointsField} to ${updatedPoints}`);
+      } else {
+        console.log("No such document for the inviter!");
+      }
+    } catch (error) {
+      console.error("Error updating inviter points:", error);
+    }
+  };
+
+  const handleAddButtonClick = () => {
+    clearInvitedBy();
+    updateInviterPoints();
+  };
+
   useEffect(() => {
     if (invitedBy === "") {
       setSelectedName("");
@@ -81,6 +111,12 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }
           onClick={handleToggle}
         >
           {isStudent ? "Switch to Teacher" : "Switch to Student"}
+        </button>
+        <button
+          className="bg-green-500 text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out"
+          onClick={handleAddButtonClick}
+        >
+          Add
         </button>
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -165,16 +201,6 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }
 }
 
 export default InvitedByField;
-
-
-
-
-
-
-
-
-
-
 
 
 
