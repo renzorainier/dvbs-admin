@@ -1,5 +1,5 @@
 // InvitedByField.js
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
 import { getDoc, doc } from "firebase/firestore";
@@ -41,10 +41,6 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
       setEntries([]);
     }
   };
-
-  useEffect(() => {
-    handleDocumentChange(selectedDocument);
-  }, [selectedDocument]);
 
   const filteredEntries =
     query === ""
