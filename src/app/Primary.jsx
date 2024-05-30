@@ -42,23 +42,18 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const getPreviousDayLetter = (dayLetter) => {
     const days = ["A", "B", "C", "D", "E"];
     const index = days.indexOf(dayLetter);
-    return index > 0 ? days[index - 1] : null;
+    return index === 0 ? days[4] : days[index - 1];
   };
 
   const getLastValidPoints = (fieldName, dayLetter) => {
-    let currentLetter = dayLetter;
-    let previousPoints = 0;
-
-    while (currentLetter) {
-      const pointsField = `${fieldName.slice(0, 2)}${currentLetter}points`;
-      previousPoints = primaryData[pointsField] || 0;
-      if (previousPoints > 0) {
-        break;
-      }
-      currentLetter = getPreviousDayLetter(currentLetter);
+    let pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
+    let points = primaryData[pointsField] || 0;
+    while (points === 0 && dayLetter !== "A") {
+      dayLetter = getPreviousDayLetter(dayLetter);
+      pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
+      points = primaryData[pointsField] || 0;
     }
-
-    return previousPoints;
+    return points;
   };
 
   const handleClick = (fieldName) => {
@@ -87,20 +82,22 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
       // Calculate the new points value
       const pointsField = `${fieldName.slice(0, 2)}${getCurrentDayLetter()}points`;
-      const lastValidPoints = getLastValidPoints(fieldName, getCurrentDayLetter());
-      const newPoints = newValue ? lastValidPoints + 1 : lastValidPoints;
+      const previousDayLetter = getPreviousDayLetter(getCurrentDayLetter());
+      const previousDayPointsField = `${fieldName.slice(0, 2)}${previousDayLetter}points`;
+      const previousPoints = getLastValidPoints(fieldName, previousDayLetter);
+      const newPoints = newValue ? previousPoints + 1 : previousPoints;
 
       await updateDoc(docRef, {
         [fieldToUpdate]: newValue,
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
-        [pointsField]: newPoints, // Update points field
+        [pointsField]: newValue ? newPoints : previousPoints, // Update points field or reset to previous points
       });
 
       setPrimaryData((prevData) => ({
         ...prevData,
         [fieldToUpdate]: newValue,
         [bibleField]: newValue ? "" : false, // Reset Bible status to false instead of null
-        [pointsField]: newPoints, // Update local state with the new points value
+        [pointsField]: newValue ? newPoints : previousPoints, // Update local state with the new points value
       }));
 
       // Play sound if student is marked present
@@ -234,7 +231,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
             <p className="mb-2">Did the student bring their Bible today?</p>
             <div className="flex space-x-4">
               <button
-                className="bg-green-500 text-white font-bold py-2 px-4 rounded"
+                className="bg-green-500 text-white font-bold py-2 px-4 rounded
+"
                 onClick={() => updateBibleStatus(studentToUpdateBible, true)}
               >
                 Yes
