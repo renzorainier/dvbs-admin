@@ -356,6 +356,16 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </Menu>
             </div>
 
+
+
+            <input
+              type="text"
+              value={contactNumber}
+              onChange={(e) => handleInputChange(e, "contactNumber")}
+              placeholder="Contact Number (optional)"
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
+            />
+
             <InvitedByField
               invitedBy={invitedBy}
               handleInputChange={handleInputChange}
@@ -366,13 +376,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               visitorName={visitorName}
             />
 
-            <input
-              type="text"
-              value={contactNumber}
-              onChange={(e) => handleInputChange(e, "contactNumber")}
-              placeholder="Contact Number (optional)"
-              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
-            />
 
             <button
               className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
