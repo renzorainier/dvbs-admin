@@ -233,76 +233,81 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
               <button
                 className="bg-green-500 text-white font-bold py-2 px-4 rounded
 "
-                onClick={() => updateBibleStatus(studentToUpdateBible, true)}
+                onClick={() =>
+                  updateBibleStatus(studentToUpdateBible, true)
+                }
               >
                 Yes
               </button>
               <button
                 className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() =>                 updateBibleStatus(studentToUpdateBible, false)}
-                >
-                  No
-                </button>
-              </div>
+                onClick={() =>
+                  updateBibleStatus(studentToUpdateBible, false)
+                }
+              >
+                No
+              </button>
             </div>
           </div>
-        )}
-
-        <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-          <input
-            type="text"
-            placeholder="Search by name or ID no."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
-          />
-          <div className="flex flex-col gap-4">
-            {filteredNames.map((name, index) => {
-              const studentIndex = Object.keys(primaryData).find(
-                (key) => primaryData[key] === name
-              );
-              const savedFieldName = `${studentIndex.slice(0, -4)}saved`; // Construct the saved field name
-
-              return (
-                <div key={index} className="flex items-center">
-                  <button
-                    className={`w-70percent flex items-center justify-center hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
-                      studentIndex
-                    )}`}
-                    onClick={() => {
-                      handleClick(studentIndex);
-                    }}
-                  >
-                    <span className="mr-2">{name}</span> {/* Name */}
-                    {primaryData[savedFieldName] && <FaCheckCircle />}{" "}
-                    {/* Check if saved is true */}
-                  </button>
-                  <div className="flex flex-row ml-1">
-                    {["A", "B", "C", "D", "E"].map((dayLetter) => {
-                      const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
-                      return (
-                        <div
-                          key={dayLetter}
-                          className={`w-4 h-9 rounded-lg ${
-                            primaryData[fieldName]
-                              ? config.colors.present
-                              : config.colors.absent
-                          } mr-1`}
-                        ></div>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
-        <audio ref={audioRef} />
-      </div>
-    );
-  }
+      )}
 
-  export default Primary;
+      <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+        <input
+          type="text"
+          placeholder="Search by name or ID no."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
+        />
+        <div className="flex flex-col gap-4">
+          {filteredNames.map((name, index) => {
+            const studentIndex = Object.keys(primaryData).find(
+              (key) => primaryData[key] === name
+            );
+            const savedFieldName = `${studentIndex.slice(0, -4)}saved`; // Construct the saved field name
+
+            return (
+              <div key={index} className="flex items-center">
+                <button
+                  className={`w-70percent flex items-center justify-center hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
+                    studentIndex
+                  )}`}
+                  onClick={() => {
+                    handleClick(studentIndex);
+                  }}
+                >
+                  <span className="mr-2">{name}</span> {/* Name */}
+                  {primaryData[savedFieldName] && <FaCheckCircle />}{" "}
+                  {/* Check if saved is true */}
+                </button>
+                <div className="flex flex-row ml-1">
+                  {["A", "B", "C", "D", "E"].map((dayLetter) => {
+                    const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
+                    return (
+                      <div
+                        key={dayLetter}
+                        className={`w-4 h-9 rounded-lg ${
+                          primaryData[fieldName]
+                            ? config.colors.present
+                            : config.colors.absent
+                        } mr-1`}
+                      ></div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <audio ref={audioRef} />
+    </div>
+  );
+}
+
+export default Primary;
+
 
 
 
