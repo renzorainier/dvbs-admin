@@ -1,4 +1,3 @@
-// Visitors.js
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
@@ -17,6 +16,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [showPopup, setShowPopup] = useState(false);
   const [visitorID, setVisitorID] = useState(null);
   const audioRef = useRef(null);
+  const invitedByFieldRef = useRef(null);
 
   const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
 
@@ -156,6 +156,10 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       });
 
       await updateDoc(docRef, newFields);
+
+      if (invitedByFieldRef.current) {
+        invitedByFieldRef.current.updateInviterPoints();
+      }
 
       setFirstName("");
       setLastName("");
@@ -346,6 +350,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </div>
 
               <InvitedByField
+                ref={invitedByFieldRef}
                 invitedBy={invitedBy}
                 handleInputChange={handleInputChange}
                 config={config}
