@@ -47,7 +47,7 @@ function Main() {
       // render other components as needed
       default:
         return (
-          <div className="flex justify-center backdrop-blur-3xlxl items-center h-screen ">
+          <div className="flex justify-center backdrop-blur-3xl items-center h-screen ">
             <div className="container mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <button
