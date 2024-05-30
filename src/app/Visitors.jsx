@@ -5,6 +5,9 @@ import { db } from "./firebase.js";
 import { Menu, Transition, Combobox } from "@headlessui/react";
 import InvitedByField from "./InvitedByField";
 import { IoMdPersonAdd } from "react-icons/io";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+
+
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [firstName, setFirstName] = useState("");
@@ -325,7 +328,9 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   <Menu.Button
                     className={`bg-[${config.color}] flex justify-center text-center inline-flex justify-between w-full rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700`}>
                     {"Route"}
+                                  <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
                   </Menu.Button>
+
                 </div>
                 <Transition
                   as={Fragment}
