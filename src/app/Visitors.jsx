@@ -359,7 +359,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   <Checkbox
                     checked={broughtBible}
                     onChange={setBroughtBible}
-                    className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500">
+                    className={`group block size-7 rounded border  bg-[${config.color}]`}>
                     {/* Checkmark icon */}
                     <svg
                       className="stroke-white opacity-0 group-data-[checked]:opacity-100"
