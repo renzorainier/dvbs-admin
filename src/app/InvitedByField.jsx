@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
-import { collection, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 
 function InvitedByField({ invitedBy, handleInputChange, config }) {
@@ -55,8 +55,13 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
         );
 
   const handleSelectionChange = (selected) => {
-    setSelectedName(selected);
-    handleInputChange({ target: { value: selected } }, "invitedBy");
+    const selectedEntry = entries.find(entry => entry.name === selected);
+    if (selectedEntry) {
+      const documentInitial = selectedDocument.charAt(0).toUpperCase();
+      const formattedValue = `${documentInitial}${selectedEntry.id}-${selectedEntry.name}`;
+      setSelectedName(formattedValue);
+      handleInputChange({ target: { value: formattedValue } }, "invitedBy");
+    }
   };
 
   return (
