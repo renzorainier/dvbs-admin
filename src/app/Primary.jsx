@@ -252,7 +252,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         </div>
       )}
 
-      <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+      <div className="w-full max-w-md text-gray-700 bg-black p-5 border rounded-lg shadow-lg mx-auto">
         <input
           type="text"
           placeholder="Search by name or ID no."
