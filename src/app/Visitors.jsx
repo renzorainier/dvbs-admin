@@ -143,7 +143,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         if (broughtBible && letter === currentDayLetter) {
           const pointsField = `${paddedIndex}${letter}points`;
           const currentPoints = primaryData[pointsField] || 0;
-          newFields[pointsField] = currentPoints + 3;
+          newFields[pointsField] = currentPoints + 4;
         }
       });
 
