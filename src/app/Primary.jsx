@@ -39,10 +39,26 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const getPreviousDayLetter = () => {
+  const getPreviousDayLetter = (dayLetter) => {
     const days = ["A", "B", "C", "D", "E"];
-    const dayIndex = new Date().getDay();
-    return days[dayIndex === 0 ? 5 : dayIndex - 2];
+    const index = days.indexOf(dayLetter);
+    return index > 0 ? days[index - 1] : null;
+  };
+
+  const getLastValidPoints = (fieldName, dayLetter) => {
+    let currentLetter = dayLetter;
+    let previousPoints = 0;
+
+    while (currentLetter) {
+      const pointsField = `${fieldName.slice(0, 2)}${currentLetter}points`;
+      previousPoints = primaryData[pointsField] || 0;
+      if (previousPoints > 0) {
+        break;
+      }
+      currentLetter = getPreviousDayLetter(currentLetter);
+    }
+
+    return previousPoints;
   };
 
   const handleClick = (fieldName) => {
@@ -71,9 +87,8 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
       // Calculate the new points value
       const pointsField = `${fieldName.slice(0, 2)}${getCurrentDayLetter()}points`;
-      const previousDayPointsField = `${fieldName.slice(0, 2)}${getPreviousDayLetter()}points`;
-      const previousPoints = primaryData[previousDayPointsField] || 0;
-      const newPoints = newValue ? previousPoints + 1 : previousPoints;
+      const lastValidPoints = getLastValidPoints(fieldName, getCurrentDayLetter());
+      const newPoints = newValue ? lastValidPoints + 1 : lastValidPoints;
 
       await updateDoc(docRef, {
         [fieldToUpdate]: newValue,
@@ -186,8 +201,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
     <div className="flex flex-col items-center">
       {showConfirmation && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black opacity-50"
-          ></div>
+          <div className="fixed inset-0 bg-black opacity-50"></div>
           <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
             <p className="mb-2">Mark student as absent?</p>
             <div className="flex space-x-4">
@@ -227,70 +241,72 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </button>
               <button
                 className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() => updateBibleStatus(studentToUpdateBible, false)}
-              >
-                No
-              </button>
+                onClick={() =>                 updateBibleStatus(studentToUpdateBible, false)}
+                >
+                  No
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
-        <input
-          type="text"
-          placeholder="Search by name or ID no."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
-        />
-        <div className="flex flex-col gap-4">
-          {filteredNames.map((name, index) => {
-            const studentIndex = Object.keys(primaryData).find(
-              (key) => primaryData[key] === name
-            );
-            const savedFieldName = `${studentIndex.slice(0, -4)}saved`; // Construct the saved field name
+        <div className="w-full max-w-md text-gray-700 bg-white p-5 border rounded-lg shadow-lg mx-auto">
+          <input
+            type="text"
+            placeholder="Search by name or ID no."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
+          />
+          <div className="flex flex-col gap-4">
+            {filteredNames.map((name, index) => {
+              const studentIndex = Object.keys(primaryData).find(
+                (key) => primaryData[key] === name
+              );
+              const savedFieldName = `${studentIndex.slice(0, -4)}saved`; // Construct the saved field name
 
-            return (
-              <div key={index} className="flex items-center">
-                <button
-                  className={`w-70percent flex items-center justify-center hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
-                    studentIndex
-                  )}`}
-                  onClick={() => {
-                    handleClick(studentIndex);
-                  }}
-                >
-                  <span className="mr-2">{name}</span> {/* Name */}
-                  {primaryData[savedFieldName] && <FaCheckCircle />}{" "}
-                  {/* Check if saved is true */}
-                </button>
-                <div className="flex flex-row ml-1">
-                  {["A", "B", "C", "D", "E"].map((dayLetter) => {
-                    const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
-                    return (
-                      <div
-                        key={dayLetter}
-                        className={`w-4 h-9 rounded-lg ${
-                          primaryData[fieldName]
-                            ? config.colors.present
-                            : config.colors.absent
-                        } mr-1`}
-                      ></div>
-                    );
-                  })}
+              return (
+                <div key={index} className="flex items-center">
+                  <button
+                    className={`w-70percent flex items-center justify-center hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
+                      studentIndex
+                    )}`}
+                    onClick={() => {
+                      handleClick(studentIndex);
+                    }}
+                  >
+                    <span className="mr-2">{name}</span> {/* Name */}
+                    {primaryData[savedFieldName] && <FaCheckCircle />}{" "}
+                    {/* Check if saved is true */}
+                  </button>
+                  <div className="flex flex-row ml-1">
+                    {["A", "B", "C", "D", "E"].map((dayLetter) => {
+                      const fieldName = `${studentIndex.slice(0, 2)}${dayLetter}`;
+                      return (
+                        <div
+                          key={dayLetter}
+                          className={`w-4 h-9 rounded-lg ${
+                            primaryData[fieldName]
+                              ? config.colors.present
+                              : config.colors.absent
+                          } mr-1`}
+                        ></div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
+        <audio ref={audioRef} />
       </div>
-      <audio ref={audioRef} />
-    </div>
-  );
-}
+    );
+  }
 
-export default Primary;
+  export default Primary;
+
+
 
 // <div className="flex justify-center mb-5 font-bold">
 // <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
