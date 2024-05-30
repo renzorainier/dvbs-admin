@@ -29,6 +29,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
         setPrimaryData(primarySnapshot.data());
+        console.log(primarySnapshot.data())
       } else {
         console.error("No such document!");
       }
