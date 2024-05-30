@@ -52,6 +52,11 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       dayLetter = getPreviousDayLetter(dayLetter);
       pointsField = `${fieldName.slice(0, 2)}${dayLetter}points`;
       points = primaryData[pointsField] || 0;
+
+      const attendanceField = `${fieldName.slice(0, 2)}${dayLetter}`;
+      if (points === 0 && primaryData[attendanceField]) {
+        return 0; // Return 0 if the student was present but had 0 points
+      }
     }
     return points;
   };
@@ -83,7 +88,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       // Calculate the new points value
       const pointsField = `${fieldName.slice(0, 2)}${getCurrentDayLetter()}points`;
       const previousDayLetter = getPreviousDayLetter(getCurrentDayLetter());
-      const previousDayPointsField = `${fieldName.slice(0, 2)}${previousDayLetter}points`;
       const previousPoints = getLastValidPoints(fieldName, previousDayLetter);
       const newPoints = newValue ? previousPoints + 1 : previousPoints;
 
@@ -228,22 +232,17 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="fixed inset-0 bg-black opacity-50" />
           <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-            <p className="mb-2">Did the student bring their Bible today?</p>
+          <p className="mb-2">Did the student bring their Bible today?</p>
             <div className="flex space-x-4">
               <button
-                className="bg-green-500 text-white font-bold py-2 px-4 rounded
-"
-                onClick={() =>
-                  updateBibleStatus(studentToUpdateBible, true)
-                }
+                className="bg-green-500 text-white font-bold py-2 px-4 rounded"
+                onClick={() => updateBibleStatus(studentToUpdateBible, true)}
               >
                 Yes
               </button>
               <button
                 className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={() =>
-                  updateBibleStatus(studentToUpdateBible, false)
-                }
+                onClick={() => updateBibleStatus(studentToUpdateBible, false)}
               >
                 No
               </button>
