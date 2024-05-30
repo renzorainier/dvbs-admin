@@ -19,7 +19,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [visitorID, setVisitorID] = useState(null);
   const audioRef = useRef(null);
   const [addVisitorClicked, setAddVisitorClicked] = useState(false);
-
+  const [paddedIndex, setPaddedIndex] = useState("");
+  const [visitorName, setVisitorName] = useState("");
 
 
   const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
@@ -359,6 +360,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 config={config}
                 clearInvitedBy={clearInvitedByField}
                 addVisitorClicked={addVisitorClicked}
+                paddedIndex={paddedIndex}
+                visitorName={visitorName}
               />
 
               <input

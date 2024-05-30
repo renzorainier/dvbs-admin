@@ -5,7 +5,15 @@ import TeacherCombobox from "./TeacherCombobox";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 
-function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, addVisitorClicked }) {
+function InvitedByField({
+  invitedBy,
+  handleInputChange,
+  config,
+  clearInvitedBy,
+  addVisitorClicked,
+  paddedIndex,
+  visitorName,
+}) {
   const [isStudent, setIsStudent] = useState(true);
   const [selectedDocument, setSelectedDocument] = useState("");
   const [entries, setEntries] = useState([]);
@@ -33,11 +41,11 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
       if (docSnap.exists()) {
         const data = docSnap.data();
         const extractedEntries = Object.keys(data)
-          .filter(key => key.endsWith("name"))
-          .map(key => ({ id: key.substring(0, 2), name: data[key] }))
-          .filter(entry => entry.name);
+          .filter((key) => key.endsWith("name"))
+          .map((key) => ({ id: key.substring(0, 2), name: data[key] }))
+          .filter((entry) => entry.name);
         setEntries(extractedEntries);
-        console.log("Fetched entries:", extractedEntries);  // Log the entries
+        console.log("Fetched entries:", extractedEntries); // Log the entries
       } else {
         console.log("No such document!");
         setEntries([]);
@@ -51,13 +59,14 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
   const filteredEntries =
     query === ""
       ? entries
-      : entries.filter((entry) =>
-          entry.name.toLowerCase().includes(query.toLowerCase()) ||
-          entry.id.includes(query)
+      : entries.filter(
+          (entry) =>
+            entry.name.toLowerCase().includes(query.toLowerCase()) ||
+            entry.id.includes(query)
         );
 
   const handleSelectionChange = (selected) => {
-    const selectedEntry = entries.find(entry => entry.name === selected);
+    const selectedEntry = entries.find((entry) => entry.name === selected);
     if (selectedEntry) {
       const documentInitial = selectedDocument.charAt(0).toUpperCase();
       const formattedValue = `${documentInitial}${selectedEntry.id}-${selectedEntry.name}`;
@@ -82,7 +91,7 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
         console.log(`Field name to update: ${pointsField}`); // Log the field name
 
         await updateDoc(inviterDocRef, {
-          [pointsField]: updatedPoints
+          [pointsField]: updatedPoints,
         });
         console.log(`Updated ${pointsField} to ${updatedPoints}`);
       } else {
@@ -104,13 +113,13 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
     }
   }, [invitedBy]);
 
-
-
   useEffect(() => {
     if (addVisitorClicked) {
       // Function to run when the button is clicked\
       handleAddButtonClick();
       console.log("Add Visitor button was clicked!");
+      console.log(paddedIndex);
+      console.log(visitorName);
     }
   }, [addVisitorClicked]);
 
@@ -119,11 +128,9 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
       <div className="flex space-x-4">
         <button
           className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
-          onClick={handleToggle}
-        >
+          onClick={handleToggle}>
           {isStudent ? "Switch to Teacher" : "Switch to Student"}
         </button>
-        
       </div>
       <div className="grid grid-cols-2 gap-4">
         {documentPaths.map((documentPath) => (
@@ -132,8 +139,7 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
             className={`bg-[${
               selectedDocument === documentPath ? config.color : "#61677A"
             }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
-            onClick={() => handleDocumentChange(documentPath)}
-          >
+            onClick={() => handleDocumentChange(documentPath)}>
             {documentPath.charAt(0).toUpperCase() + documentPath.slice(1)}
           </button>
         ))}
@@ -157,8 +163,7 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
               leave="transition ease-in duration-100"
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
-              afterLeave={() => setQuery("")}
-            >
+              afterLeave={() => setQuery("")}>
               <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {filteredEntries.length === 0 && query !== "" ? (
                   <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
@@ -173,24 +178,20 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
                           active ? "bg-blue-600 text-white" : "text-gray-900"
                         }`
                       }
-                      value={entry.name}
-                    >
+                      value={entry.name}>
                       {({ selected, active }) => (
                         <>
                           <span
                             className={`block truncate ${
                               selected ? "font-medium" : "font-normal"
-                            }`}
-                          >
+                            }`}>
                             {entry.id} - {entry.name}
                           </span>
                           {selected ? (
                             <span
                               className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
                                 active ? "text-white" : "text-blue-600"
-                              }`}
-                            >
-                            </span>
+                              }`}></span>
                           ) : null}
                         </>
                       )}
@@ -207,18 +208,6 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, 
 }
 
 export default InvitedByField;
-
-
-
-
-
-
-
-
-
-
-
-
 
 // // InvitedByField.js
 // import React, { useState, Fragment } from "react";
@@ -241,13 +230,11 @@ export default InvitedByField;
 
 //   const documentPaths = ["primary", "middlers", "juniors", "youth"];
 
-
 //   const getCurrentDayLetter = () => {
 //     const days = ["A", "B", "C", "D", "E"];
 //     const dayIndex = new Date().getDay();
 //     return days[dayIndex === 0 ? 6 : dayIndex - 1];
 //   };
-
 
 //   const handleDocumentChange = async (documentPath) => {
 //     setSelectedDocument(documentPath);
