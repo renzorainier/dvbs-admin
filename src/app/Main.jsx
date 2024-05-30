@@ -52,14 +52,17 @@ function Main() {
 
       default:
         return (
-          <div className="flex justify-center items-center h-screen">
-          <div className="absolute top-1/4 font-bold text-white text-9xl z-10">
-            DVBS
-          </div>
-          <div className="container mx-auto relative z-0">
+          <div className="flex flex-col justify-center items-center h-screen">
+            <div>
+            <div className="font-bold text-white text-9xl mb-10">DVBS</div>
+          <div>2024</div>
+          <div>Rescue Zone</div>
+            </div>
+
+          <div className="container mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
               <button
-                className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105 relative"
+                className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                 onClick={() => handleButtonClick("Tab")}
                 style={{ animation: "slide-from-left 1s ease forwards" }}
               >
@@ -76,7 +79,7 @@ function Main() {
               </button>
 
               <button
-                className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105 relative"
+                className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                 onClick={() => handleButtonClick("Attendance")}
                 style={{ animation: "slide-from-left 1s ease forwards" }}
               >
