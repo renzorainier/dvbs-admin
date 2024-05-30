@@ -14,6 +14,7 @@ import CopyScheduleData from "./CopyScheduleData";
 import DailyRewards from "./DailyRewards";
 import SalvationDecision from "./SalvationDecision";
 import CopyPreviousDayPoints from "./CopyPreviousDayPoints"
+import { FaListCheck } from "react-icons/fa6";
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -52,6 +53,7 @@ function Main() {
                   className="focus:outline-none bg-white/5  backdrop-blur-5xl border  text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Tab")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
+                    <FaListCheck />
                   Attendance
                 </button>
                 <button
