@@ -5,7 +5,7 @@ import TeacherCombobox from "./TeacherCombobox";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 
-function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }) {
+function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy, addVisitorClicked }) {
   const [isStudent, setIsStudent] = useState(true);
   const [selectedDocument, setSelectedDocument] = useState("");
   const [entries, setEntries] = useState([]);
