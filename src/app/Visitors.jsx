@@ -319,7 +319,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 as="div"
                 className="relative inline-block  w-full z-10">
                 <div>
-                  <Menu.Button className="inline-flex justify-between rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <Menu.Button className="inline-flex justify-between rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700">
                     {age ? `Age: ${age}` : "Select Age"}
                   </Menu.Button>
                 </div>
