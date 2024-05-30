@@ -37,7 +37,7 @@ title {
 body {
   margin:0;
   height: 100v;
-  background: linear-gradient(-45deg, #f70233,  #FFC100, #e70253, #ef5f5f, #f70233);
+  background: linear-gradient(-43deg, #C40C0C,  #7D0A0A, #FF8A08, #B80000, #f70233);
   background-size: 400% 400%;
   animation:  bg 20s ease infinite;
 
