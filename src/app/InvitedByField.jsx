@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Combobox } from "@headlessui/react";
+import React, { useState } from "react";
+import { Combobox, Transition } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
 import {
   collection,
+  getDocs,
   getDoc,
+  updateDoc,
   doc,
 } from "firebase/firestore";
-import { db } from "./firebase.js";
+import { db } from "./firebase.js"; // Import your Firebase config
 
 function InvitedByField({ invitedBy, handleInputChange, config }) {
   const [isStudent, setIsStudent] = useState(true);
   const [selectedDocument, setSelectedDocument] = useState("dvbs/primary");
-  const [studentNames, setStudentNames] = useState([]);
 
   const handleToggle = () => {
     setIsStudent(!isStudent);
@@ -22,14 +23,13 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
 
   const handleDocumentChange = async (documentPath) => {
     setSelectedDocument(documentPath);
+    // Fetch the document from the 'dvbs' collection based on the selected location
+    const docRef = doc(db, "dvbs", documentPath);
     try {
-      const docRef = doc(db, "dvbs", documentPath);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        const data = docSnap.data();
-        // Assuming names are stored in 'name' fields
-        const names = Object.values(data).map((item) => item.name).filter(Boolean);
-        setStudentNames(names);
+        // Log the data of the selected document
+        console.log("Document data:", docSnap.data());
       } else {
         console.log("No such document!");
       }
@@ -38,18 +38,12 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
     }
   };
 
-  useEffect(() => {
-    // Fetch data for the default document path when component mounts
-    handleDocumentChange(selectedDocument);
-  }, []);
-
   return (
     <div className="space-y-4">
       <div className="flex space-x-4">
         <button
           className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
-          onClick={handleToggle}
-        >
+          onClick={handleToggle}>
           {isStudent ? "Switch to Teacher" : "Switch to Student"}
         </button>
       </div>
@@ -60,8 +54,7 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
             className={`bg-[${
               selectedDocument === documentPath ? config.color : "#61677A"
             }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
-            onClick={() => handleDocumentChange(documentPath)}
-          >
+            onClick={() => handleDocumentChange(documentPath)}>
             {documentPath.charAt(0).toUpperCase() + documentPath.slice(1)}
           </button>
         ))}
@@ -73,24 +66,13 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
           config={config}
         />
       ) : (
-        <Combobox
-          className="w-full"
-          aria-label="Student Name"
-          onChange={(value) => handleInputChange({ target: { value } }, "invitedBy")}
-        >
-          <Combobox.Input
-            value={invitedBy}
-            placeholder="Invited by Student"
-            className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-${config.color}`}
-          />
-          <Combobox.Listbox className="mt-1 bg-white shadow-lg max-h-60 overflow-y-auto z-10 rounded-lg">
-            {studentNames.map((name) => (
-              <Combobox.Option key={name} value={name}>
-                {name}
-              </Combobox.Option>
-            ))}
-          </Combobox.Listbox>
-        </Combobox>
+        <input
+          type="text"
+          value={invitedBy}
+          onChange={(e) => handleInputChange(e, "invitedBy")}
+          placeholder="Invited by Student"
+          className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-${config.color}`}
+        />
       )}
     </div>
   );
