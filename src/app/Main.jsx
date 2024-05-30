@@ -53,6 +53,9 @@ function Main() {
       default:
         return (
           <div className="flex justify-center backdrop-blur-3xl items-center h-screen ">
+            <div className="font-bold text-white fon">
+              DVBS
+            </div>
             <div className="container mx-auto">
               <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
                 <button
