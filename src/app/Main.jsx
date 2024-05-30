@@ -53,11 +53,11 @@ function Main() {
       default:
         return (
           <div className="flex flex-col justify-center items-center h-screen">
-            <div>
-            <div className="font-bold text-white text-9xl mb-10">DVBS</div>
-          <div>2024</div>
-          <div>Rescue Zone</div>
-            </div>
+            <div className="flex flex-col justify-center items-center h-screen">
+  <div className="font-bold text-white text-6xl mb-4 tracking-wide">DVBS</div>
+  <div className="text-gray-400 text-xl mb-8">2024</div>
+  <div className="text-gray-400 text-lg">Rescue Zone</div>
+</div>
 
           <div className="container mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
