@@ -31,7 +31,7 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
         {documentPaths.map((documentPath) => (
           <button
             key={documentPath}
-            className={`bg-[${selectedDocument === documentPath ? config.color : "gray" }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
+            className={`bg-[${selectedDocument === documentPath ? config.color : "#61677A" }] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
             onClick={() => handleDocumentChange(documentPath)}
           >
             {documentPath.split("/")[1].charAt(0).toUpperCase() + documentPath.split("/")[1].slice(1)}
