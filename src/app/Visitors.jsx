@@ -18,7 +18,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [showPopup, setShowPopup] = useState(false);
   const [visitorID, setVisitorID] = useState(null);
   const audioRef = useRef(null);
-  const [invitePoint, setInvitePoint] = useState(false);
+  const [addVisitorClicked, setAddVisitorClicked] = useState(false);
 
 
 
@@ -142,6 +142,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}savedOnDvbs`]: false,
         [`${paddedIndex}invites`]: [],
       };
+
+      setAddVisitorClicked(true);
 
       const currentDayLetter = getCurrentDayLetter();
       const currentTime = new Date().toLocaleString();
@@ -354,6 +356,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 handleInputChange={handleInputChange}
                 config={config}
                 clearInvitedBy={clearInvitedByField}
+                addVisitorClicked={addVisitorClicked}
               />
 
               <input

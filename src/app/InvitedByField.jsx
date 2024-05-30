@@ -104,6 +104,15 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }
     }
   }, [invitedBy]);
 
+
+
+  useEffect(() => {
+    if (addVisitorClicked) {
+      // Function to run when the button is clicked
+      console.log("Add Visitor button was clicked!");
+    }
+  }, [addVisitorClicked]);
+
   return (
     <div className="space-y-4">
       <div className="flex space-x-4">
