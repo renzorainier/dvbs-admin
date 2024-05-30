@@ -314,13 +314,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             </div>
 
             <div className="flex items-center space-x-4">
-              <input
-                type="text"
-                value={contactNumber}
-                onChange={(e) => handleInputChange(e, "contactNumber")}
-                placeholder="Contact Number (optional)"
-                className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]`}
-              />
+
               <Menu
                 as="div"
                 className="relative inline-block text-left w-full z-10">
@@ -369,6 +363,13 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   <span className="text-gray-800 font-medium">Bible</span>
                 </label>
               </div>
+              <input
+                type="text"
+                value={contactNumber}
+                onChange={(e) => handleInputChange(e, "contactNumber")}
+                placeholder="Contact Number (optional)"
+                className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]`}
+              />
             </div>
 
             <InvitedByField
