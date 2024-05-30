@@ -18,6 +18,7 @@ import { FaListCheck } from "react-icons/fa6";
 import { FiClock } from "react-icons/fi";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaMedal } from "react-icons/fa";
+import { FaCross } from "react-icons/fa";
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -138,7 +139,7 @@ function Main() {
                       flexDirection: "column",
                       alignItems: "center",
                     }}>
-                    <FaListCheck style={{ fontSize: "3.5em" }} />{" "}
+                    <FaCross style={{ fontSize: "3.5em" }} />{" "}
                     <span style={{ marginTop: "0.5em" }}>Salvation</span>
                   </div>
                 </button>
