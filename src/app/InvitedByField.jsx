@@ -36,9 +36,10 @@ function InvitedByField({
   const getVisitorId = () => {
     const path = config.dbPath.replace("dvbs/", "");
     const documentInitial = path.charAt(0).toUpperCase();
-    return `${documentInitial}${paddedIndex}-${visitorName}`;
+    const visitorId = `${documentInitial}${paddedIndex}-${visitorName}`;
+    console.log("Visitor ID:", visitorId); // Log the visitor ID
+    return visitorId;
   };
-
 
   const handleDocumentChange = async (documentPath) => {
     setSelectedDocument(documentPath);
@@ -127,6 +128,7 @@ function InvitedByField({
       console.log("Add Visitor button was clicked!");
       console.log(paddedIndex);
       console.log(visitorName);
+      getVisitorId();
     }
   }, [addVisitorClicked]);
 
