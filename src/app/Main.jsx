@@ -47,7 +47,7 @@ function Main() {
       // render other components as needed
       default:
         return (
-          <div className="flex justify-center items-center h-screen bg-gradient-to-br from-red-800 to-orange-950">
+          <div className="flex justify-center items-center h-screen bg-gradient-to-br from-[#7f1d1d] to-orange-950">
             <div className="container mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <button
