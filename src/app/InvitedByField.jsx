@@ -66,19 +66,20 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }
     }
   };
 
-  const updateInviterPoints = async () => {
+  const updateInviterPoints = async (documentPath) => {
     const dayLetter = getCurrentDayLetter();
-    const inviterDocumentPath = invitedBy.split("-")[0];
-    const inviterDocRef = doc(db, "dvbs", inviterDocumentPath);
+    const inviterId = invitedBy.split("-")[0].slice(1); // Extract inviter ID
+    const pointsField = `${inviterId}${dayLetter}points`;
+    const inviterDocRef = doc(db, "dvbs", documentPath);
 
     try {
       const inviterDocSnap = await getDoc(inviterDocRef);
       if (inviterDocSnap.exists()) {
         const inviterData = inviterDocSnap.data();
-        const inviterId = invitedBy.split("-")[0].slice(1); // Extract inviter ID
-        const pointsField = `${inviterId}${dayLetter}points`;
         const currentPoints = inviterData[pointsField] || 0;
         const updatedPoints = currentPoints + 5;
+
+        console.log(`Field name to update: ${pointsField}`); // Log the field name
 
         await updateDoc(inviterDocRef, {
           [pointsField]: updatedPoints
@@ -94,7 +95,7 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }
 
   const handleAddButtonClick = () => {
     clearInvitedBy();
-    updateInviterPoints();
+    updateInviterPoints(selectedDocument);
   };
 
   useEffect(() => {
@@ -201,6 +202,16 @@ function InvitedByField({ invitedBy, handleInputChange, config, clearInvitedBy }
 }
 
 export default InvitedByField;
+
+
+
+
+
+
+
+
+
+
 
 
 
