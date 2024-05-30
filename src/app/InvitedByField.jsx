@@ -33,6 +33,11 @@ function InvitedByField({
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
+  const getFormattedDocumentPath = () => {
+    const path = config.dbPath.replace("dvbs/", "");
+    return path.charAt(0).toUpperCase();
+  };
+
   const handleDocumentChange = async (documentPath) => {
     setSelectedDocument(documentPath);
     const docRef = doc(db, "dvbs", documentPath);
@@ -203,8 +208,6 @@ function InvitedByField({
           </div>
         </Combobox>
       )}
-
-
     </div>
   );
 }
