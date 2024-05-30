@@ -1,3 +1,4 @@
+// InvitedByField.js
 import React, { useState, useEffect, Fragment } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
@@ -8,6 +9,7 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
   const [isStudent, setIsStudent] = useState(true);
   const [selectedDocument, setSelectedDocument] = useState("primary");
   const [entries, setEntries] = useState([]);
+  const [selectedName, setSelectedName] = useState(invitedBy);
   const [query, setQuery] = useState("");
 
   const handleToggle = () => {
@@ -44,11 +46,6 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
     handleDocumentChange(selectedDocument);
   }, [selectedDocument]);
 
-  const handleSelectedName = (name) => {
-    setSelectedName(name);
-    handleInputChange({ target: { value: name } }, "invitedBy");
-  };
-
   const filteredEntries =
     query === ""
       ? entries
@@ -56,6 +53,11 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
           entry.name.toLowerCase().includes(query.toLowerCase()) ||
           entry.id.includes(query)
         );
+
+  const handleSelectionChange = (selected) => {
+    setSelectedName(selected);
+    handleInputChange({ target: { value: selected } }, "invitedBy");
+  };
 
   return (
     <div className="space-y-4">
@@ -87,14 +89,11 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
           config={config}
         />
       ) : (
-        <Combobox>
+        <Combobox value={selectedName} onChange={handleSelectionChange}>
           <div className="relative mt-1">
             <Combobox.Input
               className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-${config.color}`}
-              onChange={(event) => {
-                setQuery(event.target.value);
-                handleInputChange(event, "invitedBy");
-              }}
+              onChange={(event) => setQuery(event.target.value)}
               displayValue={(name) => name}
             />
             <Transition
@@ -119,7 +118,6 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
                         }`
                       }
                       value={entry.name}
-                      onClick={() => handleSelectedName(entry.name)} // Set selected name
                     >
                       {({ selected, active }) => (
                         <>
@@ -136,7 +134,6 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
                                 active ? "text-white" : "text-blue-600"
                               }`}
                             >
-                              {/* Add your check icon or indicator here */}
                             </span>
                           ) : null}
                         </>
@@ -154,4 +151,3 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
 }
 
 export default InvitedByField;
-
