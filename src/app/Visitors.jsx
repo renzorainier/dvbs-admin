@@ -3,6 +3,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu, Transition } from "@headlessui/react";
 import { Combobox } from '@headlessui/react'
+import InvitedByField from "./InvitedByField";
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [firstName, setFirstName] = useState("");
