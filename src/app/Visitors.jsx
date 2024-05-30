@@ -117,6 +117,9 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         firstName.trim().charAt(0).toUpperCase() + firstName.trim().slice(1)
       }`;
 
+      setPaddedIndex(paddedIndex);
+      setVisitorName(visitorName);
+
       const newFields = {
         [`${paddedIndex}name`]: visitorName,
         [`${paddedIndex}loc`]: newVisitorAddress,
@@ -190,8 +193,11 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       console.error("Error adding visitor: ", error);
     }
     setAddVisitorClicked(false);
-
   };
+
+  // In your JSX
+
+
 
   const ageOptions = [
     config.ageRange[0],
@@ -355,14 +361,14 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </div>
 
               <InvitedByField
-                invitedBy={invitedBy}
-                handleInputChange={handleInputChange}
-                config={config}
-                clearInvitedBy={clearInvitedByField}
-                addVisitorClicked={addVisitorClicked}
-                paddedIndex={paddedIndex}
-                visitorName={visitorName}
-              />
+    invitedBy={invitedBy}
+    handleInputChange={handleInputChange}
+    config={config}
+    clearInvitedBy={clearInvitedByField}
+    addVisitorClicked={addVisitorClicked}
+    paddedIndex={paddedIndex}
+    visitorName={visitorName}
+  />
 
               <input
                 type="text"
