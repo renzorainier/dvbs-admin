@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
-import { Menu, Transition, Combobox } from "@headlessui/react";
+import { Menu, Transition, Combobox, } from "@headlessui/react";
 import InvitedByField from "./InvitedByField";
 import { IoMdPersonAdd } from "react-icons/io";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -314,7 +314,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             </div>
 
             <div className="flex items-center space-x-4">
-
               <Menu
                 as="div"
                 className="relative inline-block text-left w-full z-10">
@@ -361,6 +360,24 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                     className={`form-checkbox h-6 w-6 text-[${config.color}] rounded focus:ring-2 focus:ring-offset-2 focus:ring-${config.color} transition duration-200`}
                   />
                   <span className="text-gray-800 font-medium">Bible</span>
+
+                  <Checkbox
+                    checked={broughtBible}
+                    onChange={setBroughtBible}
+                    className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500">
+                    {/* Checkmark icon */}
+                    <svg
+                      className="stroke-white opacity-0 group-data-[checked]:opacity-100"
+                      viewBox="0 0 14 14"
+                      fill="none">
+                      <path
+                        d="M3 8L6 11L11 3.5"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </Checkbox>
                 </label>
               </div>
               <input
