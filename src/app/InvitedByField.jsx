@@ -203,6 +203,11 @@ function InvitedByField({
           </div>
         </Combobox>
       )}
+
+      <div className= "font-black">
+        {paddedIndex}
+        {visitorName}
+      </div>
     </div>
   );
 }
