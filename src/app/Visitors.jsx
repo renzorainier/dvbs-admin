@@ -9,14 +9,12 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [lastName, setLastName] = useState("");
   const [newVisitorAddress, setNewVisitorAddress] = useState("");
   const [invitedBy, setInvitedBy] = useState("");
-  const [invitedByType, setInvitedByType] = useState("student");
   const [contactNumber, setContactNumber] = useState("");
   const [age, setAge] = useState("");
   const [broughtBible, setBroughtBible] = useState(false);
   const [primaryData, setPrimaryData] = useState({});
   const [showPopup, setShowPopup] = useState(false);
   const [visitorID, setVisitorID] = useState(null);
-  const [teacherOptions, setTeacherOptions] = useState([]);
   const audioRef = useRef(null);
 
   const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
@@ -31,6 +29,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
         setPrimaryData(primarySnapshot.data());
+        console.log(primarySnapshot.data())
       } else {
         console.error("No such document!");
       }
@@ -38,17 +37,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
     fetchPrimary();
   }, [config.dbPath]);
-
-  useEffect(() => {
-    // Fetch teacher options asynchronously and set the state
-    // Replace the following line with your logic to fetch teacher options
-    const fetchTeacherOptions = async () => {
-      // Simulated teacher options for demonstration
-      const teachers = ["Teacher 1", "Teacher 2", "Teacher 3"];
-      setTeacherOptions(teachers);
-    };
-    fetchTeacherOptions();
-  }, []);
 
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E", "F", "G"];
@@ -144,6 +132,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}savedDate`]: "",
         [`${paddedIndex}savedOnDvbs`]: false,
         [`${paddedIndex}invites`]: [],
+
       };
 
       const currentDayLetter = getCurrentDayLetter();
@@ -170,8 +159,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       setInvitedBy("");
       setContactNumber("");
       setAge("");
-      setBroughtBible(false
-      );
+      setBroughtBible(false);
       console.log("Visitor added successfully!");
 
       setPrimaryData((prevData) => ({
@@ -190,6 +178,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       console.error("Error adding visitor: ", error);
     }
   };
+
+
 
   const ageOptions = [
     config.ageRange[0],
@@ -318,7 +308,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               <Menu as="div" className="relative inline-block text-left w-1/2">
                 <div>
                   <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    {invitedByType === "teacher" ? "Select Teacher" : "Invited By"}
+                    {"Select Route"}
                   </Menu.Button>
                 </div>
                 <Transition
@@ -331,39 +321,34 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   leaveTo="transform opacity-0 scale-95">
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
-
-                    {invitedByType === "teacher" ? (
-                        teacherOptions.map((teacher) => (
-                          <Menu.Item key={teacher}>
-                            {({ active }) => (
-                              <button
-                                onClick={() => setInvitedBy(teacher)}
-                                className={`${
-                                  active
-                                    ? "bg-gray-100 text-gray-900"
-                                    : "text-gray-700"
-                                } block w-full text-left px-4 py-2 text-sm`}
-                              >
-                                {teacher}
-                              </button>
-                            )}
-                          </Menu.Item>
-                        ))
-                      ) : (
-                        <input
-                          type="text"
-                          value={invitedBy}
-                          onChange={(e) => handleInputChange(e, "invitedBy")}
-                          placeholder="Invited by"
-                          className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
-                        />
-                      )}
+                      {predefinedRoutes.map((route) => (
+                        <Menu.Item key={route}>
+                          {({ active }) => (
+                            <button
+                              onClick={() => handleRouteSelect(route)}
+                              className={`${
+                                active
+                                  ? "bg-gray-100 text-gray-900"
+                                  : "text-gray-700"
+                              } block w-full text-left px-4 py-2 text-sm`}>
+                              {route}
+                            </button>
+                          )}
+                        </Menu.Item>
+                      ))}
                     </div>
                   </Menu.Items>
                 </Transition>
               </Menu>
             </div>
 
+            <input
+              type="text"
+              value={invitedBy}
+              onChange={(e) => handleInputChange(e, "invitedBy")}
+              placeholder="Invited by"
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
+            />
             <input
               type="text"
               value={contactNumber}
@@ -374,15 +359,13 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
             <button
               className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
-              onClick={addVisitor}
-            >
+              onClick={addVisitor}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 mr-2"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+                stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
