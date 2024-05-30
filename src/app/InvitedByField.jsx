@@ -7,7 +7,7 @@ import { db } from "./firebase.js"; // Import your Firebase config
 
 function InvitedByField({ invitedBy, handleInputChange, config }) {
   const [isStudent, setIsStudent] = useState(true);
-  const [selectedDocument, setSelectedDocument] = useState("primary");
+  const [selectedDocument, setSelectedDocument] = useState("");
   const [entries, setEntries] = useState([]);
   const [selectedName, setSelectedName] = useState(invitedBy);
   const [query, setQuery] = useState("");
