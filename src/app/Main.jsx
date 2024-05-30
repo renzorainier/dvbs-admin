@@ -53,130 +53,121 @@ function Main() {
       default:
         return (
           <div className="flex flex-col justify-center items-center h-screen">
-         <div className="text-white text-center mb-10">
-  <h1 className="font-bold text-9xl mb-2">DVBS</h1>
-  <h2 className="text-4xl font-light">2024</h2>
-  <h3 className="text-3xl font-semibold">R e s c u e Z o n e</h3>
-</div>
+            <div className="text-white text-center mb-10">
+              <h1 className="font-bold text-9xl ">DVBS</h1>
+              <h2 className="text-2xl font-thin">2024</h2>
+              <h3 className="text-3xl font-semibold">R e s c u e Z o n e</h3>
+            </div>
 
-          <div className="container mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
-              <button
-                className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                onClick={() => handleButtonClick("Tab")}
-                style={{ animation: "slide-from-left 1s ease forwards" }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <FaListCheck style={{ fontSize: "3.5em" }} />
-                  <span style={{ marginTop: "0.5em" }}>Attendance</span>
-                </div>
-              </button>
+            <div className="container mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Tab")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FaListCheck style={{ fontSize: "3.5em" }} />
+                    <span style={{ marginTop: "0.5em" }}>Attendance</span>
+                  </div>
+                </button>
 
-              <button
-                className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                onClick={() => handleButtonClick("Attendance")}
-                style={{ animation: "slide-from-left 1s ease forwards" }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <BsGraphUpArrow style={{ fontSize: "3.5em" }} />
-                  <span style={{ marginTop: "0.5em" }}>List</span>
-                </div>
-              </button>
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Attendance")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <BsGraphUpArrow style={{ fontSize: "3.5em" }} />
+                    <span style={{ marginTop: "0.5em" }}>List</span>
+                  </div>
+                </button>
 
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Schedule")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FiClock style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Schedule</span>
+                  </div>
+                </button>
 
-              <button
-className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-onClick={() => handleButtonClick("Schedule")}
-style={{ animation: "slide-from-left 1s ease forwards" }}>
-<div
-  style={{
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}>
-  <FiClock  style={{ fontSize: "3.5em" }} />{" "}
-  <span style={{ marginTop: "0.5em" }}>Schedule</span>
-</div>
-</button>
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Point")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <HiMiniUserGroup style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Points</span>
+                  </div>
+                </button>
 
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Rewards")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FaMedal style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Rewards</span>
+                  </div>
+                </button>
 
-<button
-className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-onClick={() => handleButtonClick("Point")}
-style={{ animation: "slide-from-left 1s ease forwards" }}>
-<div
-  style={{
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}>
-  <HiMiniUserGroup  style={{ fontSize: "3.5em" }} />{" "}
-  <span style={{ marginTop: "0.5em" }}>Points</span>
-</div>
-</button>
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("SalvationDecision")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <FaCross style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Salvation</span>
+                  </div>
+                </button>
 
-<button
-className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-onClick={() => handleButtonClick("Rewards")}
-style={{ animation: "slide-from-left 1s ease forwards" }}>
-<div
-  style={{
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}>
-  <FaMedal  style={{ fontSize: "3.5em" }} />{" "}
-  <span style={{ marginTop: "0.5em" }}>Rewards</span>
-</div>
-</button>
-
-<button
-className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-onClick={() => handleButtonClick("SalvationDecision")}
-style={{ animation: "slide-from-left 1s ease forwards" }}>
-<div
-  style={{
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}>
-  <FaCross style={{ fontSize: "3.5em" }} />{" "}
-  <span style={{ marginTop: "0.5em" }}>Salvation</span>
-</div>
-</button>
-
-<button
-className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-onClick={() => handleButtonClick("Out")}
-style={{ animation: "slide-from-left 1s ease forwards" }}>
-<div
-  style={{
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}>
-  <TbDoorExit  style={{ fontSize: "3.5em" }} />{" "}
-  <span style={{ marginTop: "0.5em" }}>Out</span>
-</div>
-</button>
-
-
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Out")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <TbDoorExit style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Out</span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-
         );
     }
   };
@@ -220,42 +211,6 @@ style={{ animation: "slide-from-left 1s ease forwards" }}>
 }
 
 export default Main;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 
