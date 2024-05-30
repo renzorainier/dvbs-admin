@@ -6,6 +6,7 @@ import { Menu, Transition, Combobox, } from "@headlessui/react";
 import InvitedByField from "./InvitedByField";
 import { IoMdPersonAdd } from "react-icons/io";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Checkbox } from '@headlessui/react'
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [firstName, setFirstName] = useState("");
