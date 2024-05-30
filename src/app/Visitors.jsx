@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment, useRef } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu, Transition } from "@headlessui/react";
-import { Combobox } from '@headlessui/react'
+import { Combobox } from "@headlessui/react";
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [firstName, setFirstName] = useState("");
@@ -15,9 +15,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [primaryData, setPrimaryData] = useState({});
   const [showPopup, setShowPopup] = useState(false);
   const [visitorID, setVisitorID] = useState(null);
+  const [isTeacherInvite, setIsTeacherInvite] = useState(false); // New state for toggle button
   const audioRef = useRef(null);
-
-  const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
 
   useEffect(() => {
     const fetchPrimary = async () => {
@@ -29,7 +28,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
       const primarySnapshot = await getDoc(docRef);
       if (primarySnapshot.exists()) {
         setPrimaryData(primarySnapshot.data());
-        console.log(primarySnapshot.data())
+        console.log(primarySnapshot.data());
       } else {
         console.error("No such document!");
       }
@@ -132,7 +131,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         [`${paddedIndex}savedDate`]: "",
         [`${paddedIndex}savedOnDvbs`]: false,
         [`${paddedIndex}invites`]: [],
-
       };
 
       const currentDayLetter = getCurrentDayLetter();
@@ -172,14 +170,11 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         name: visitorName,
         location: newVisitorAddress,
       });
-
       playEnterSound();
     } catch (error) {
       console.error("Error adding visitor: ", error);
     }
   };
-
-
 
   const ageOptions = [
     config.ageRange[0],
@@ -206,8 +201,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             </button>
           </div>
         </div>
-      )}
-
+      )}{" "}
       {visitorID && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="fixed inset-0 bg-black opacity-50" />
@@ -223,7 +217,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
           </div>
         </div>
       )}
-
       <div className="w-full bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
@@ -305,50 +298,55 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 placeholder="Address or Select Route"
                 className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
               />
-              <Menu as="div" className="relative inline-block text-left w-1/2">
-                <div>
-                  <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    {"Select Route"}
-                  </Menu.Button>
-                </div>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95">
-                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      {predefinedRoutes.map((route) => (
-                        <Menu.Item key={route}>
-                          {({ active }) => (
-                            <button
-                              onClick={() => handleRouteSelect(route)}
-                              className={`${
-                                active
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "text-gray-700"
-                              } block w-full text-left px-4 py-2 text-sm`}>
-                              {route}
-                            </button>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+              {!isTeacherInvite ? (
+                <Menu
+                  as="div"
+                  className="relative inline-block text-left w-1/2">
+                  <div>
+                    <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                      {"Select Route"}
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95">
+                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div className="py-1">
+                        {predefinedRoutes.map((route) => (
+                          <Menu.Item key={route}>
+                            {({ active }) => (
+                              <button
+                                onClick={() => handleRouteSelect(route)}
+                                className={`${
+                                  active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text                              -gray-700"
+                                } block w-full text-left px-4 py-2 text-sm`}>
+                                {route}
+                              </button>
+                            )}
+                          </Menu.Item>
+                        ))}
+                      </div>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              ) : (
+                <input
+                  type="text"
+                  value={invitedBy}
+                  onChange={(e) => handleInputChange(e, "invitedBy")}
+                  placeholder="Invited by"
+                  className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
+                />
+              )}
             </div>
 
-            <input
-              type="text"
-              value={invitedBy}
-              onChange={(e) => handleInputChange(e, "invitedBy")}
-              placeholder="Invited by"
-              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
-            />
             <input
               type="text"
               value={contactNumber}
@@ -356,6 +354,20 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               placeholder="Contact Number (optional)"
               className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
             />
+
+            <div className="flex items-center space-x-4">
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  checked={isTeacherInvite}
+                  onChange={() => setIsTeacherInvite(!isTeacherInvite)}
+                  className={`form-checkbox h-6 w-6 text-[${config.color}] rounded focus:ring-2 focus:ring-offset-2 focus:ring-${config.color} transition duration-200`}
+                />
+                <span className="text-gray-800 font-medium">
+                  Invited by Teacher
+                </span>
+              </label>
+            </div>
 
             <button
               className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
