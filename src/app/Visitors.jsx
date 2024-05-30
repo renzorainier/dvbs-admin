@@ -317,7 +317,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             <div className="flex items-center ">
               <Menu
                 as="div"
-                className=" w-full z-10">
+                className="relative inline-block  w-full z-10">
                 <div>
                   <Menu.Button className="inline-flex justify-between rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700">
                     {age ? `Age: ${age}` : "Select Age"}
@@ -342,7 +342,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                                 active
                                   ? "bg-gray-100 text-gray-900"
                                   : "text-gray-700"
-                              } block w-full text-left px-4 py-2 text-sm`}>
+                              } block w-full  px-4 py-2 text-sm`}>
                               {ageOption}
                             </button>
                           )}
