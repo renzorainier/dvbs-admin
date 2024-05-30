@@ -7,6 +7,8 @@ import InvitedByField from "./InvitedByField";
 import { IoMdPersonAdd } from "react-icons/io";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
+
+
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -263,6 +265,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               />
             </div>
 
+
             <div className="flex items-center space-x-4">
               <input
                 type="text"
@@ -276,11 +279,9 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   <Menu.Button
                     className={`bg-[${config.color}] flex justify-center text-center inline-flex justify-between w-full rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700`}>
                     {"Route"}
-                    <ChevronDownIcon
-                      className="ml-2 -mr-1 h-5 w-5"
-                      aria-hidden="true"
-                    />
+                                  <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
                   </Menu.Button>
+
                 </div>
                 <Transition
                   as={Fragment}
@@ -313,6 +314,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </Menu>
             </div>
 
+            <div className="flex items-center space-x-4">
             <input
               type="text"
               value={contactNumber}
@@ -320,6 +322,57 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               placeholder="Contact Number (optional)"
               className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
             />
+              <Menu
+                as="div"
+                className="relative inline-block text-left w-full z-40">
+                <div>
+                  <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    {age ? `Age: ${age}` : "Select Age"}
+                  </Menu.Button>
+                </div>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95">
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      {ageOptions.map((ageOption) => (
+                        <Menu.Item key={ageOption}>
+                          {({ active }) => (
+                            <button
+                              onClick={() => handleAgeSelect(ageOption)}
+                              className={`${
+                                active
+                                  ? "bg-gray-100 text-gray-900"
+                                  : "text-gray-700"
+                              } block w-full text-left px-4 py-2 text-sm`}>
+                              {ageOption}
+                            </button>
+                          )}
+                        </Menu.Item>
+                      ))}
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={broughtBible}
+                    onChange={() => setBroughtBible(!broughtBible)}
+                    className={`form-checkbox h-6 w-6 text-[${config.color}] rounded focus:ring-2 focus:ring-offset-2 focus:ring-${config.color} transition duration-200`}
+                  />
+                  <span className="text-gray-800 font-medium">Bible</span>
+                </label>
+              </div>
+            </div>
+
+
 
             <InvitedByField
               invitedBy={invitedBy}
