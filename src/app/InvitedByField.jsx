@@ -17,17 +17,21 @@ function InvitedByField({ invitedBy, handleInputChange, config }) {
 
   const handleDocumentChange = async (documentPath) => {
     setSelectedDocument(documentPath);
-    // Fetch the document from the 'dvbs' collection and log its structure
+    // Fetch the document from the 'dvbs' collection based on the selected location
     const docRef = doc(db, "dvbs", documentPath);
     try {
-      const docSnap = await getDocs(docRef);
-      docSnap.forEach((doc) => {
-        console.log("Document data:", doc.data());
-      });
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        // Log the data of the selected document
+        console.log("Document data:", docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
     } catch (error) {
       console.error("Error fetching document:", error);
     }
   };
+
 
   return (
     <div className="space-y-4">
