@@ -1,4 +1,3 @@
-// InvitedByField.js
 import React, { useState, useEffect, Fragment } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import TeacherCombobox from "./TeacherCombobox";
@@ -87,6 +86,7 @@ function InvitedByField({
     const dayLetter = getCurrentDayLetter();
     const inviterId = invitedBy.split("-")[0].slice(1); // Extract inviter ID
     const pointsField = `${inviterId}${dayLetter}points`;
+    const invitesField = `${inviterId}invites`; // Create invites field specific to inviter ID
     const inviterDocRef = doc(db, "dvbs", documentPath);
     const visitorId = getVisitorId();
 
@@ -101,10 +101,10 @@ function InvitedByField({
 
         await updateDoc(inviterDocRef, {
           [pointsField]: updatedPoints,
-          invites: arrayUnion(visitorId), // Update the invites array
+          [invitesField]: arrayUnion(visitorId), // Update the specific invites array
         });
         console.log(`Updated ${pointsField} to ${updatedPoints}`);
-        console.log(`Added ${visitorId} to invites array`);
+        console.log(`Added ${visitorId} to ${invitesField} array`);
       } else {
         console.log("No such document for the inviter!");
       }
@@ -114,7 +114,6 @@ function InvitedByField({
   };
 
   const handleAddButtonClick = () => {
-    // clearInvitedBy();
     updateInviterPoints(selectedDocument);
   };
 
