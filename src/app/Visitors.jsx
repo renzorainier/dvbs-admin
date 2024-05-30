@@ -188,6 +188,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     } catch (error) {
       console.error("Error adding visitor: ", error);
     }
+    setAddVisitorClicked(false);
+
   };
 
   const ageOptions = [
