@@ -57,7 +57,7 @@ function Main() {
 
       default:
         return (
-          <div className="flex flex-col justify-center items-center h-screen" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.1))" }}>
+          <div className="flex flex-col justify-center items-center h-screen" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.1))" }}>
           <div className="text-white text-center mb-10">
             <h1 className="font-bold text-9xl">DVBS</h1>
             <h2 className="text-2xl font-thin">2024</h2>
