@@ -280,7 +280,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 type="text"
                 value={newVisitorAddress}
                 onChange={(e) => handleInputChange(e, "loc")}
-                placeholder="Address or Select Route"
+                placeholder="Address/Select Route"
                 className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]"
               />
               <Menu as="div" className="relative w-1/2">
@@ -289,7 +289,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                     className={`bg-[${config.color}] flex justify-center text-white text-center inline-flex justify-between w-full rounded-md shadow-sm px-4 py-2 text-xl font-bold text-gray-700`}>
                     {"Route"}
                     <ChevronDownIcon
-                      className="ml-2 -mr-1 h-5 w-5"
+                      className="ml-2 -mr-1 h-7 w-7"
                       aria-hidden="true"
                     />
                   </Menu.Button>
