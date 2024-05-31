@@ -24,7 +24,18 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [paddedIndex, setPaddedIndex] = useState("");
   const [visitorName, setVisitorName] = useState("");
 
-  const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4", "Route 5", "Route 6", "Route 7", "Route 8", "Route 9", "Route 10"];
+  const predefinedRoutes = [
+    "Route 1",
+    "Route 2",
+    "Route 3",
+    "Route 4",
+    "Route 5",
+    "Route 6",
+    "Route 7",
+    "Route 8",
+    "Route 9",
+    "Route 10",
+  ];
 
   useEffect(() => {
     const fetchPrimary = async () => {
@@ -382,28 +393,25 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               />
             </div>
 
-      <div className="w-full mt-5 py-5 bg-[#9ca3af] shadow-md rounded-lg border  mx-auto">
-        <div className="p-6">
-
-          <InvitedByField
-            invitedBy={invitedBy}
-            handleInputChange={handleInputChange}
-            config={config}
-            clearInvitedBy={clearInvitedByField}
-            addVisitorClicked={addVisitorClicked}
-            paddedIndex={paddedIndex}
-            visitorName={visitorName}
-          />
-
-        </div>
-      </div>
-      <button
-            className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
-            onClick={addVisitor}>
-            <IoMdPersonAdd />
-            Add Visitor
-          </button>
-
+            <div className="w-full mt-5  bg-[#9ca3af] shadow-md rounded-lg border  mx-auto">
+              <div className="p-6">
+                <InvitedByField
+                  invitedBy={invitedBy}
+                  handleInputChange={handleInputChange}
+                  config={config}
+                  clearInvitedBy={clearInvitedByField}
+                  addVisitorClicked={addVisitorClicked}
+                  paddedIndex={paddedIndex}
+                  visitorName={visitorName}
+                />
+              </div>
+            </div>
+            <button
+              className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
+              onClick={addVisitor}>
+              <IoMdPersonAdd />
+              Add Visitor
+            </button>
           </div>
         </div>
       </div>

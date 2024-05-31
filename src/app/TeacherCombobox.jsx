@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 
-const predefinedTeachers = ["Renz", "Vince", "Aljon", "Lance"];
+const predefinedTeachers = ["Renz", "Vince", "Aljon", "Lance", "Jane", "Albert", "Rainier", "Adiel"];
 
 function TeacherCombobox({ invitedBy, handleInputChange, config }) {
   const [query, setQuery] = useState("");
