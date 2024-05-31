@@ -5,6 +5,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { FaCheckCircle } from "react-icons/fa";
 
+
 function StudentOutTime() {
   const [students, setStudents] = useState([]);
   const [locations, setLocations] = useState([]);
@@ -25,6 +26,8 @@ function StudentOutTime() {
           ...doc.data(),
         }));
 
+        console.log("Fetched Student Data:", studentData);
+
         const currentDayLetter = getCurrentDayLetter();
         const presentStudents = studentData
           .map((group) => {
@@ -43,7 +46,6 @@ function StudentOutTime() {
                     name: group[`${prefix}name`],
                     location: group[`${prefix}loc`],
                     outTime: group[outTimeField],
-                    saved: group[`${prefix}saved`], // Check if saved is true
                   });
                 }
               }
@@ -131,13 +133,13 @@ function StudentOutTime() {
 
   const getBackgroundColor = (prefix) => {
     switch (prefix) {
-      case "pr": // Assuming 'pr' stands for primary
+      case "primary": // Assuming 'pr' stands for primary
         return "#FFC100";
-      case "mi": // Assuming 'mi' stands for middlers
+      case "middlers": // Assuming 'mi' stands for middlers
         return "#04d924";
-      case "ju": // Assuming 'ju' stands for juniors
+      case "juniors": // Assuming 'ju' stands for juniors
         return "#027df7";
-      case "yo": // Assuming 'yo' stands for youth
+      case "youth": // Assuming 'yo' stands for youth
         return "#f70233";
       default:
         return "#FFFFFF"; // Default color if no match
@@ -160,195 +162,178 @@ function StudentOutTime() {
 
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto ">
-      <div className="flex justify-center items-center overflow-auto">
-        <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
-          <Menu as="div" className="relative inline-block mt-5 mb-5">
-            <div>
-              <Menu.Button className="inline-flex rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                <h2 className="text-4xl font-bold">
-                  {selectedLocation || "All Locations"}
-                </h2>
-                <ChevronDownIcon
-                  className="ml-2 -mr-1 h-10 w-10"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-            </div>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95">
-              <Menu.Items className="absolute z-10 mt-2 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="py-1">
-                  <Menu.Item>
+
+    <div className="flex justify-center items-center overflow-auto">
+      <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
+        <Menu as="div" className="relative inline-block mt-5 mb-5">
+          <div>
+            <Menu.Button className="inline-flex rounded-md bg-black/20 px-4 py-2 text-sm font-bold text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+              <h2 className="text-4xl font-bold">
+                {selectedLocation || "All Locations"}
+              </h2>
+              <ChevronDownIcon
+                className="ml-2 -mr-1 h-10 w-10"
+                aria-hidden="true"
+              />
+            </Menu.Button>
+          </div>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95">
+            <Menu.Items className="absolute z-10 mt-2 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="py-1">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                      } block px-4 py-2 text-2xl font-semibold text-left`}
+                      onClick={() => handleLocationChange("")}>
+                      All Locations
+                    </button>
+                  )}
+                </Menu.Item>
+                {locations.map((location) => (
+                  <Menu.Item key={location}>
                     {({ active }) => (
                       <button
                         className={`${
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700"
+                          active ? "bg-gray-100 text-gray-900" : "text-gray-700"
                         } block px-4 py-2 text-2xl font-semibold text-left`}
-                        onClick={() => handleLocationChange("")}>
-                        All Locations
+                        onClick={() => handleLocationChange(location)}>
+                        {location}
                       </button>
                     )}
                   </Menu.Item>
-                  {locations.map((location) => (
-                    <Menu.Item key={location}>
-                      {({ active }) => (
-                        <button
-                          className={`${
-                            active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700"
-                          } block px-4 py-2 text-2xl font-semibold text-left`}
-                          onClick={() => handleLocationChange(location)}>
-                          {location}
-                        </button>
-                      )}
-                    </Menu.Item>
-                  ))}
-                </div>
-              </Menu.Items>
-            </Transition>
-          </Menu>
+                ))}
+              </div>
+            </Menu.Items>
+          </Transition>
+        </Menu>
 
-          <div className="flex justify-center mb-5 font-bold">
-            <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632"
-                />
-              </svg>
+        <div className="flex justify-center mb-5 font-bold">
+          <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632"
+              />
+            </svg>
 
-              <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
-                {markedCount}
-              </p>
-            </div>
-            <div className="flex items-center bg-white border rounded-lg shadow-md p-4 ml-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632"
-                />
-              </svg>
-
-              <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
-                {notMarkedCount}
-              </p>
-            </div>
-          </div>
-
-          <div className="mb-5">
-            <input
-              type="text"
-              className="w-full px-4 py-2 border rounded-lg shadow-sm"
-              placeholder="Search by student name..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-          </div>
-
-          {loading ? (
-            <p className="text-center text-2xl font-bold">Loading...</p>
-          ) : filteredStudents.length === 0 ? (
-            <p className="text-center text-2xl font-bold">No students found</p>
-          ) : (
-            <ul className="space-y-4">
-              {filteredStudents.map((student) => (
-                <li
-                  key={student.id}
-                  className={`p-4 border rounded-lg shadow-md flex justify-between items-center ${
-                    student.outTime ? "bg-gray-200" : "bg-white"
-                  }`}
-                  style={{
-                    backgroundColor: student.outTime
-                      ? "#e0e0e0"
-                      : getBackgroundColor(student.prefix),
-                  }}>
-                  <div className="flex items-center">
-                    <span className="text-xl font-bold">{student.name}</span>
-                    {student.saved && (
-                      <FaCheckCircle className="ml-2 text-green-500" />
-                    )}
-                  </div>
-                  <button
-                    onClick={() =>
-                      handleClick(
-                        student.id,
-                        student.prefix,
-                        student.inTimeField,
-                        student.outTimeField,
-                        student.outTime
-                      )
-                    }
-                    className={`px-4 py-2 rounded-lg font-bold text-white ${
-                      student.outTime ? "bg-red-500" : "bg-green-500"
-                    }`}>
-                    {student.outTime ? "Marked Out" : "Mark Out"}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-
-      {showConfirmation && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">
-              Confirm Marking Out
-            </h2>
-            <p className="mb-4">
-              Are you sure you want to mark out{" "}
-              {studentToMarkOut && studentToMarkOut.name}?
+            <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
+              {markedCount}
             </p>
-            <div className="flex justify-end">
-              <button
-                onClick={() => setShowConfirmation(false)}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-2">
-                Cancel
-              </button>
-              <button
-                onClick={() =>
-                  updateStudentOutTime(
-                    studentToMarkOut.groupId,
-                    studentToMarkOut.prefix,
-                    studentToMarkOut.inTimeField,
-                    studentToMarkOut.outTimeField,
-                    uploadTime
-                  )
-                }
-                className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-                Confirm
-              </button>
-            </div>
+          </div>
+          <div className="flex items-center bg-white border rounded-lg shadow-md p-4 ml-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+
+            <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
+              {notMarkedCount}
+            </p>
           </div>
         </div>
-      )}
+
+        <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
+          <input
+            type="text"
+            className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+            placeholder="Search by name"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+
+
+
+          {filteredStudents.map((student) => (
+
+
+            <div
+              key={`${student.id}-${student.prefix}`}
+              className="flex items-center mb-4">
+              <button
+                className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
+                  student.outTime
+                    ? "bg-green-500 hover:bg-green-700"
+                    : "bg-gray-400 hover:bg-gray-700"
+                }`}
+                onClick={() =>
+                  handleClick(
+                    student.id,
+                    student.prefix,
+                    student.inTimeField,
+                    student.outTimeField,
+                    student.outTime
+                  )
+                }>
+
+
+                {student.name}
+              </button>
+              <div
+                className="ml-4 h-10 p-2 rounded-lg"
+                style={{
+                  backgroundColor: getBackgroundColor(student.id),
+                }}></div>
+            </div>
+          ))}
+        </div>
+
+        {showConfirmation && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="fixed inset-0 bg-black opacity-50" />
+            <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+              <p className="mb-2">Unmark student as out?</p>
+              <div className="flex space-x-4">
+                <button
+                  className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                  onClick={() =>
+                    updateStudentOutTime(
+                      studentToMarkOut.groupId,
+                      studentToMarkOut.prefix,
+                      studentToMarkOut.inTimeField,
+                      studentToMarkOut.outTimeField,
+                      ""
+                    )
+                  }>
+                  Yes
+                </button>
+                <button
+                  className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => setShowConfirmation(false)}>
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
     </div>
   );
 }
 
 export default StudentOutTime;
-
