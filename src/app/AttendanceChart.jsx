@@ -21,16 +21,6 @@ function AttendanceChart() {
   const [previousAttendanceData, setPreviousAttendanceData] = useState({});
   const audioRef = useRef(null);
 
-
-
-  const shouldPlaySound = (previousData, newData, day) => {
-    if (!previousData || !newData) return false;
-    const previousCount = countPresentForDay(previousData, day);
-    const newCount = countPresentForDay(newData, day);
-    return newCount > previousCount;
-  };
-
-
   useEffect(() => {
     const fetchAttendanceData = async () => {
       const documents = ["primary", "middlers", "juniors", "youth"];
@@ -162,6 +152,12 @@ function AttendanceChart() {
     audio.play();
   };
 
+  const shouldPlaySound = (previousData, newData, day) => {
+    if (!previousData || !newData) return false;
+    const previousCount = countPresentForDay(previousData, day);
+    const newCount = countPresentForDay(newData, day);
+    return newCount > previousCount;
+  };
 
   return (
     <div className=" flex flex-col md:flex-row h-screen w-screen bg-black">
