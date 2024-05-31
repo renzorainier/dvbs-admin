@@ -67,7 +67,7 @@ function Main() {
           <div className="container mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
               <button
-                className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                className="focus:outline-none bg-white/5 backdrop-blur-5xl  text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                 onClick={() => handleButtonClick("Tab")}
                 style={{ animation: "slide-from-left 1s ease forwards" }}
               >
