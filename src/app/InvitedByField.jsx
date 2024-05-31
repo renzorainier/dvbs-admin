@@ -144,7 +144,7 @@ function InvitedByField({
         <button
           className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
           onClick={handleToggle}>
-          {isStudent ? "Switch to Teacher" : "Switch to Student"}
+          {isStudent ? "Student" : "Teacher"}
         </button>
       </div>
 
