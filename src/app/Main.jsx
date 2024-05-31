@@ -64,19 +64,7 @@ function Main() {
             position: "relative",
           }}
         >
-          <div
-            style={{
-              content: "",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundImage: "url('https://www.transparenttextures.com/patterns/noise.png')",
-              opacity: 0.2,
-              pointerEvents: "none",
-            }}
-          ></div>
+        
           <div className="text-white text-center mb-10 relative">
             <h1 className="font-bold text-9xl">DVBS</h1>
             <h2 className="text-2xl font-thin">2024</h2>
