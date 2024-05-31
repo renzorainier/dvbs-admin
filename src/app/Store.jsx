@@ -13,6 +13,7 @@ function Store() {
   const [currentPoints, setCurrentPoints] = useState(null);
   const [currentStudent, setCurrentStudent] = useState(null);
   const [showPoints, setShowPoints] = useState(false);
+  const [paymentAmount, setPaymentAmount] = useState("");
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -88,9 +89,14 @@ function Store() {
     setSearchQuery(e.target.value);
   };
 
-  const handleDeductPoints = async (amount) => {
-    if (currentStudent) {
+  const handlePayment = async () => {
+    const amount = parseFloat(paymentAmount);
+    if (currentStudent && !isNaN(amount) && amount > 0) {
       const newPoints = currentPoints - amount;
+      if (newPoints < 0) {
+        alert("Insufficient points");
+        return;
+      }
       const docRef = doc(db, "dvbs", currentStudent.id);
       const pointsField = currentStudent.pointsField;
 
@@ -108,9 +114,13 @@ function Store() {
               : student
           )
         );
+        setPaymentAmount("");
+        setShowPoints(false);
       } catch (error) {
         console.error("Error updating points: ", error);
       }
+    } else {
+      alert("Please enter a valid amount");
     }
   };
 
@@ -206,26 +216,19 @@ function Store() {
               <div className="fixed inset-0 bg-black opacity-50" onClick={() => setShowPoints(false)} />
               <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
                 <p className="text-xl font-bold mb-2">Points: {currentPoints}</p>
-                <div className="flex space-x-2 mb-4">
-                  <button
-                    className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleDeductPoints(1)}
-                  >
-                    -1
-                  </button>
-                  <button
-                    className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleDeductPoints(5)}
-                  >
-                    -5
-                  </button>
-                  <button
-                    className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleDeductPoints(10)}
-                  >
-                    -10
-                  </button>
-                </div>
+                <input
+                  type="number"
+                  className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+                  placeholder="Enter amount to pay"
+                  value={paymentAmount}
+                  onChange={(e) => setPaymentAmount(e.target.value)}
+                />
+                <button
+                  className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4"
+                  onClick={handlePayment}
+                >
+                  Confirm Payment
+                </button>
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
                   onClick={() => setShowPoints(false)}
