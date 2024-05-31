@@ -58,17 +58,30 @@ function Main() {
       default:
         return (
           <div
-            className="flex flex-col justify-center items-center h-screen"
+          className="flex flex-col justify-center items-center h-screen"
+          style={{
+            background: "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.05))",
+            position: "relative",
+          }}
+        >
+          <div
             style={{
-              background:
-                "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.05))",
-            }}>
-            <div className="text-white text-center mb-10">
-              <h1 id="front" className="font-bold text-6xl">Rescue Zone</h1>
-              <h2 className="text-2xl font-thin"></h2>
-              <h3 className="text-3xl font-semibold">DVBS 2024</h3>
-            </div>
-
+              content: "",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundImage: "url('https://www.transparenttextures.com/patterns/noise.png')",
+              opacity: 0.2,
+              pointerEvents: "none",
+            }}
+          ></div>
+          <div className="text-white text-center mb-10 relative">
+            <h1 className="font-bold text-9xl">DVBS</h1>
+            <h2 className="text-2xl font-thin">2024</h2>
+            <h3 className="text-3xl font-semibold">R e s c u e Z o n e</h3>
+          </div>
             <div className="container mx-auto">
               <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
                 <button
