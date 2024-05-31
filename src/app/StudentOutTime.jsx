@@ -289,10 +289,11 @@ function StudentOutTime() {
       }
     >
       {student.name}
-    </button>
-    {student.saved && (
-      <FaCheckCircle />
+      {student.saved && (
+      <FaCheckCircle className="text-white ml-2" />
     )}
+    </button>
+
     <div
       className="ml-4 h-10 p-2 rounded-lg"
       style={{
