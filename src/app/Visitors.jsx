@@ -38,6 +38,12 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     "Route 10",
   ];
 
+
+  const handleClick = () => {
+    setChecked(!broughtBible);
+  };
+
+
   useEffect(() => {
     const fetchPrimary = async () => {
       const docRef = doc(
