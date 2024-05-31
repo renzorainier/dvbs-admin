@@ -381,12 +381,6 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 className={`border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[${config.color}]`}
               />
             </div>
-          </div>
-        </div>
-      </div>
-
-      <audio ref={audioRef} />
-
 
       <div className="w-full mt-5 bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-6">
@@ -409,7 +403,10 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
         </div>
       </div>
 
-
+          </div>
+        </div>
+      </div>
+      <audio ref={audioRef} />
     </div>
   );
 }
