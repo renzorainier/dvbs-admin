@@ -377,7 +377,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               />
             </div>
 
-            <div className="w-full mt-5  bg-[#9ca3af] shadow-md rounded-xl border  mx-auto">
+            <div className="w-full mt-5  bg-[#9ca3af] shadow-md rounded-lg border  mx-auto">
               <div className="p-6">
                 <InvitedByField
                   invitedBy={invitedBy}
@@ -392,7 +392,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             </div>
             <div className="flex items-center space-x-4">
               <button
-                className={`flex items-center space-x-2 px-3 py-2 rounded-xl ${
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${
                   broughtBible
                     ? `bg-[${config.color}] text-white`
                     : "bg-[#9ca3af] text-gray-800"
