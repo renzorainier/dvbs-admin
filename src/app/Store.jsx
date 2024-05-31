@@ -127,6 +127,7 @@ function Store() {
   const filteredStudents = students
     .filter((student) =>
       student.name.toLowerCase().includes(searchQuery.toLowerCase())
+    
     )
     .filter((student) =>
       selectedLocation ? student.location === selectedLocation : true
