@@ -267,39 +267,41 @@ function StudentOutTime() {
           />
 
 
+{filteredStudents.map((student) => (
+  <div
+    key={`${student.id}-${student.prefix}`}
+    className="flex items-center mb-4"
+  >
+    <button
+      className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
+        student.outTime
+          ? "bg-green-500 hover:bg-green-700"
+          : "bg-gray-400 hover:bg-gray-700"
+      }`}
+      onClick={() =>
+        handleClick(
+          student.id,
+          student.prefix,
+          student.inTimeField,
+          student.outTimeField,
+          student.outTime
+        )
+      }
+    >
+      {student.name}
+    </button>
+    {student.saved && (
+      <FaCheckCircle />
+    )}
+    <div
+      className="ml-4 h-10 p-2 rounded-lg"
+      style={{
+        backgroundColor: getBackgroundColor(student.id),
+      }}
+    ></div>
+  </div>
+))}
 
-          {filteredStudents.map((student) => (
-
-
-            <div
-              key={`${student.id}-${student.prefix}`}
-              className="flex items-center mb-4">
-              <button
-                className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
-                  student.outTime
-                    ? "bg-green-500 hover:bg-green-700"
-                    : "bg-gray-400 hover:bg-gray-700"
-                }`}
-                onClick={() =>
-                  handleClick(
-                    student.id,
-                    student.prefix,
-                    student.inTimeField,
-                    student.outTimeField,
-                    student.outTime
-                  )
-                }>
-
-
-                {student.name}
-              </button>
-              <div
-                className="ml-4 h-10 p-2 rounded-lg"
-                style={{
-                  backgroundColor: getBackgroundColor(student.id),
-                }}></div>
-            </div>
-          ))}
         </div>
 
         {showConfirmation && (
