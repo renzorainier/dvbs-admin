@@ -289,10 +289,10 @@ function StudentOutTime() {
       }
     >
       {student.name}
-    </button>
     {student.saved && (
-      <FaCheckCircle className="text-white ml-5" />
+      <FaCheckCircle className="text-green-500 ml-2" />
     )}
+    </button>
     <div
       className="ml-4 h-10 p-2 rounded-lg"
       style={{
@@ -301,6 +301,7 @@ function StudentOutTime() {
     ></div>
   </div>
 ))}
+
 
         </div>
 
