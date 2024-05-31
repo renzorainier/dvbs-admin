@@ -191,7 +191,6 @@ function Store() {
               </Menu.Items>
             </Transition>
           </Menu>
-
           <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
             <input
               type="text"
@@ -213,7 +212,6 @@ function Store() {
               </div>
             ))}
           </div>
-
           {showPoints && (
             <div className="fixed inset-0 z-50 flex items-center justify-center">
               <div
@@ -240,10 +238,12 @@ function Store() {
                   onClick={handlePayment}>
                   Confirm Payment
                 </button>
+                {/* Remove the Close button */}
+                {/* Add the OK button */}
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
                   onClick={() => setShowPoints(false)}>
-                  Close
+                  OK
                 </button>
               </div>
             </div>
