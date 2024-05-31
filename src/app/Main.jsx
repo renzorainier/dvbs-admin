@@ -171,7 +171,7 @@ function Main() {
                 </button>
 
                 <button
-                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-3xl shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Out")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
                   <div
