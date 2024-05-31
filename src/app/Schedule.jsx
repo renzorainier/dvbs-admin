@@ -74,7 +74,10 @@ function Schedule() {
   const renderSchedule = () => {
     const segments = Object.keys(scheduleData).filter((key) => key.length === 1).sort();
 
-    if (currentTime.getHours() >= 12 && currentTime.getMinutes() >= 10 ) {
+    // if (currentTime.getHours() >= 12 && currentTime.getMinutes() >= 10 ) {
+      if ((currentTime.getHours() > 12 || (currentTime.getHours() === 12 && currentTime.getMinutes() >= 30))) {
+        // Your code to display all events
+
       return segments.map((segment) => {
         const startTime = scheduleData[`${segment}start`];
         const endTime = scheduleData[`${segment}end`];
