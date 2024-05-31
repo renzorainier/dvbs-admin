@@ -391,32 +391,11 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <label className="flex items-center space-x-2">
-                <FaBookBible />
-                <span className="text-gray-800 font-medium">Bible</span>
-
-                <Checkbox
-                  checked={broughtBible}
-                  onChange={setBroughtBible}
-                  className={`group block size-7 rounded border  data-[checked]:bg-blue-500`}>
-                  {/* Checkmark icon */}
-                  <svg
-                    className="stroke-white opacity-0 group-data-[checked]:opacity-100"
-                    viewBox="0 0 14 14"
-                    fill="none">
-                    <path
-                      d="M3 8L6 11L11 3.5"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </Checkbox>
-              </label>
-
               <button
                 className={`flex items-center space-x-2 px-3 py-2 rounded border border-gray-300 ${
-                  broughtBible ? "bg-blue-500 text-white" : "bg-white text-gray-800"
+                  broughtBible
+                    ? `bg-[${config.color}] text-white`
+                    : "bg-gray-200 text-gray-800"
                 }`}
                 onClick={handleClick}>
                 <FaBookBible />
