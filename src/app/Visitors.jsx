@@ -382,7 +382,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               />
             </div>
 
-      <div className="w-full mt-5 bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
+      <div className="w-full mt-5 bg-gray-500 shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-6">
 
           <InvitedByField
