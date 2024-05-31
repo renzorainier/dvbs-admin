@@ -57,49 +57,52 @@ function Main() {
 
       default:
         return (
-          <div className="flex flex-col justify-center items-center h-screen ">
-            <div className="text-white text-center mb-10">
-              <h1 className="font-bold text-9xl ">DVBS</h1>
-              <h2 className="text-2xl font-thin">2024</h2>
-              <h3 className="text-3xl font-semibold">R e s c u e Z o n e</h3>
-            </div>
+          <div className="flex flex-col justify-center items-center h-screen" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.1))" }}>
+          <div className="text-white text-center mb-10">
+            <h1 className="font-bold text-9xl">DVBS</h1>
+            <h2 className="text-2xl font-thin">2024</h2>
+            <h3 className="text-3xl font-semibold">R e s c u e Z o n e</h3>
+          </div>
 
-            <div className="container mx-auto">
-              <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
-                <button
-                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Tab")}
-                  style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}>
-                    <FaListCheck style={{ fontSize: "3.5em" }} />
-                    <span style={{ marginTop: "0.5em" }}>Attendance</span>
-                  </div>
-                </button>
+          <div className="container mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
+              <button
+                className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                onClick={() => handleButtonClick("Tab")}
+                style={{ animation: "slide-from-left 1s ease forwards" }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <FaListCheck style={{ fontSize: "3.5em" }} />
+                  <span style={{ marginTop: "0.5em" }}>Attendance</span>
+                </div>
+              </button>
 
-                <button
-                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Attendance")}
-                  style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}>
-                    <BsGraphUpArrow style={{ fontSize: "3.5em" }} />
-                    <span style={{ marginTop: "0.5em" }}>List</span>
-                  </div>
-                </button>
-
-
-              </div>
+              <button
+                className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                onClick={() => handleButtonClick("Attendance")}
+                style={{ animation: "slide-from-left 1s ease forwards" }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <BsGraphUpArrow style={{ fontSize: "3.5em" }} />
+                  <span style={{ marginTop: "0.5em" }}>List</span>
+                </div>
+              </button>
             </div>
           </div>
+        </div>
+
         );
     }
   };
