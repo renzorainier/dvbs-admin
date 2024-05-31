@@ -16,7 +16,7 @@ import SalvationDecision from "./SalvationDecision";
 import CopyPreviousDayPoints from "./CopyPreviousDayPoints";
 import Store from "./Store";
 
-
+import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { FaListCheck } from "react-icons/fa6";
 import { FiClock } from "react-icons/fi";
 import { HiMiniUserGroup } from "react-icons/hi2";
@@ -52,8 +52,8 @@ function Main() {
         return <DailyRewards />;
       case "SalvationDecision":
         return <SalvationDecision />;
-        case "Store":
-          return <Store />;
+      case "Store":
+        return <Store />;
 
       default:
         return (
@@ -155,6 +155,20 @@ function Main() {
                     <span style={{ marginTop: "0.5em" }}>Salvation</span>
                   </div>
                 </button>
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Store")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <MdOutlineLocalGroceryStore style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>Store</span>
+                  </div>
+                </button>
 
                 <button
                   className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
@@ -170,24 +184,6 @@ function Main() {
                     <span style={{ marginTop: "0.5em" }}>Out</span>
                   </div>
                 </button>
-
-
-
-                <button
-                  className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                  onClick={() => handleButtonClick("Store")}
-                  style={{ animation: "slide-from-left 1s ease forwards" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}>
-                    <TbDoorExit style={{ fontSize: "3.5em" }} />{" "}
-                    <span style={{ marginTop: "0.5em" }}>Store</span>
-                  </div>
-                </button>
-
               </div>
             </div>
           </div>

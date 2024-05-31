@@ -120,6 +120,8 @@ function Store() {
         );
         setPaymentAmount("");
         setPaymentStatus("Payment complete"); // Show payment complete text
+        playEnterSound();
+
       } catch (error) {
         console.error("Error updating points: ", error);
       }
