@@ -14,6 +14,7 @@ function Store() {
   const [currentStudent, setCurrentStudent] = useState(null);
   const [showPoints, setShowPoints] = useState(false);
   const [paymentAmount, setPaymentAmount] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState(null);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -79,6 +80,7 @@ function Store() {
     setCurrentPoints(student.points);
     setCurrentStudent(student);
     setShowPoints(true);
+    setPaymentStatus(null); // Reset payment status when showing points
   };
 
   const handleLocationChange = (location) => {
@@ -94,7 +96,7 @@ function Store() {
     if (currentStudent && !isNaN(amount) && amount > 0) {
       const newPoints = currentPoints - amount;
       if (newPoints < 0) {
-        alert("Insufficient points");
+        setPaymentStatus("Insufficient points"); // Show warning text
         return;
       }
       const docRef = doc(db, "dvbs", currentStudent.id);
@@ -116,18 +118,18 @@ function Store() {
         );
         setPaymentAmount("");
         setShowPoints(false);
+        setPaymentStatus("Payment complete"); // Show payment complete text
       } catch (error) {
         console.error("Error updating points: ", error);
       }
     } else {
-      alert("Please enter a valid amount");
+      setPaymentStatus("Please enter a valid amount"); // Show warning text
     }
   };
 
   const filteredStudents = students
     .filter((student) =>
       student.name.toLowerCase().includes(searchQuery.toLowerCase())
-    
     )
     .filter((student) =>
       selectedLocation ? student.location === selectedLocation : true
@@ -156,8 +158,7 @@ function Store() {
               enterTo="transform opacity-100 scale-100"
               leave="transition ease-in duration-75"
               leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
+              leaveTo="transform opacity-0 scale-95">
               <Menu.Items className="absolute z-10 mt-2 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1">
                   <Menu.Item>
@@ -166,8 +167,7 @@ function Store() {
                         className={`${
                           active ? "bg-gray-100 text-gray-900" : "text-gray-700"
                         } block px-4 py-2 text-2xl font-semibold text-left`}
-                        onClick={() => handleLocationChange("")}
-                      >
+                        onClick={() => handleLocationChange("")}>
                         All Locations
                       </button>
                     )}
@@ -177,10 +177,11 @@ function Store() {
                       {({ active }) => (
                         <button
                           className={`${
-                            active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                            active
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700"
                           } block px-4 py-2 text-2xl font-semibold text-left`}
-                          onClick={() => handleLocationChange(location)}
-                        >
+                          onClick={() => handleLocationChange(location)}>
                           {location}
                         </button>
                       )}
@@ -201,11 +202,12 @@ function Store() {
             />
 
             {filteredStudents.map((student) => (
-              <div key={`${student.id}-${student.prefix}`} className="flex items-center mb-4">
+              <div
+                key={`${student.id}-${student.prefix}`}
+                className="flex items-center mb-4">
                 <button
                   className="flex-1 text-white font-bold py-2 px-4 rounded-lg bg-gray-400 hover:bg-gray-700"
-                  onClick={() => handleClick(student)}
-                >
+                  onClick={() => handleClick(student)}>
                   {student.name}
                 </button>
               </div>
@@ -214,9 +216,18 @@ function Store() {
 
           {showPoints && (
             <div className="fixed inset-0 z-50 flex items-center justify-center">
-              <div className="fixed inset-0 bg-black opacity-50" onClick={() => setShowPoints(false)} />
+              <div
+                className="fixed inset-0 bg-black opacity-50"
+                onClick={() => setShowPoints(false)}
+              />
               <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-                <p className="text-xl font-bold mb-2">Points: {currentPoints}</p>
+                <p className="text-xl font-bold mb-2">
+                  Points: {currentPoints}
+                </p>
+                {paymentStatus && (
+                  <p className="text-red-500 mb-2">{paymentStatus}</p>
+                )}{" "}
+                {/* Show payment status */}
                 <input
                   type="number"
                   className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
@@ -226,14 +237,12 @@ function Store() {
                 />
                 <button
                   className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4"
-                  onClick={handlePayment}
-                >
+                  onClick={handlePayment}>
                   Confirm Payment
                 </button>
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => setShowPoints(false)}
-                >
+                  onClick={() => setShowPoints(false)}>
                   Close
                 </button>
               </div>
