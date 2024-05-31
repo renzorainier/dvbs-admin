@@ -134,6 +134,21 @@ function Store() {
       selectedLocation ? student.location === selectedLocation : true
     );
 
+  const getBackgroundColor = (prefix) => {
+    switch (prefix) {
+      case "primary": // Assuming 'pr' stands for primary
+        return "#FFC100";
+      case "middlers": // Assuming 'mi' stands for middlers
+        return "#04d924";
+      case "juniors": // Assuming 'ju' stands for juniors
+        return "#027df7";
+      case "youth": // Assuming 'yo' stands for youth
+        return "#f70233";
+      default:
+        return "#FFFFFF"; // Default color if no match
+    }
+  };
+
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto">
       <div className="flex justify-center items-center overflow-auto">
@@ -187,7 +202,7 @@ function Store() {
                     </Menu.Item>
                   ))}
                 </div>
-                </Menu.Items>
+              </Menu.Items>
             </Transition>
           </Menu>
 
@@ -209,6 +224,12 @@ function Store() {
                   onClick={() => handleClick(student)}>
                   {student.name}
                 </button>
+                <div
+                  className="ml-4 h-10 p-2 rounded-lg"
+                  style={{
+                    backgroundColor: getBackgroundColor(student.prefix),
+                  }}></div>{" "}
+                {/* Add colored div */}
               </div>
             ))}
           </div>
@@ -224,8 +245,16 @@ function Store() {
                   Points: {currentPoints}
                 </p>
                 {paymentStatus && (
-                  <p className={`mb-2 ${paymentStatus === "Payment complete" ? "text-green-500" : "text-red-500"}`}>{paymentStatus}</p>
-                )} {/* Show payment status */}
+                  <p
+                    className={`mb-2 ${
+                      paymentStatus === "Payment complete"
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }`}>
+                    {paymentStatus}
+                  </p>
+                )}{" "}
+                {/* Show payment status */}
                 <input
                   type="number"
                   className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
