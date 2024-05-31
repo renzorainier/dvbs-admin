@@ -57,7 +57,7 @@ function Main() {
 
       default:
         return (
-          <div className="flex flex-col justify-center items-center h-screen">
+          <div className="flex flex-col justify-center items-center h-screen ">
             <div className="text-white text-center mb-10">
               <h1 className="font-bold text-9xl ">DVBS</h1>
               <h2 className="text-2xl font-thin">2024</h2>
@@ -96,7 +96,74 @@ function Main() {
                   </div>
                 </button>
 
-                <button
+
+              </div>
+            </div>
+          </div>
+        );
+    }
+  };
+
+  // Style the back button with modern UI
+  const backButton = currentComponent ? (
+    <div className="fixed bottom-4 left-4 z-50">
+      <button
+        className="bg-gray-500   text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 "
+        onClick={handleBackButtonClick}>
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          style={{ transform: "rotate(270deg)" }}>
+          <path d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
+    </div>
+  ) : null;
+
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <div className="fade-in">
+      <div className="fade-in">
+        <div>
+          {backButton}
+          {/* <ScrollToTopButton /> */}
+          {renderCurrentComponent()}
+          {/* <CopyScheduleData/> */}
+          {/* <Analytics />  */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Main;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* <button
                   className="focus:outline-none bg-white/5 backdrop-blur-5xl border text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
                   onClick={() => handleButtonClick("Schedule")}
                   style={{ animation: "slide-from-left 1s ease forwards" }}>
@@ -183,53 +250,10 @@ function Main() {
                     <TbDoorExit style={{ fontSize: "3.5em" }} />{" "}
                     <span style={{ marginTop: "0.5em" }}>Out</span>
                   </div>
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-    }
-  };
+                </button> */}
 
-  // Style the back button with modern UI
-  const backButton = currentComponent ? (
-    <div className="fixed bottom-4 left-4 z-50">
-      <button
-        className="bg-gray-500   text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 "
-        onClick={handleBackButtonClick}>
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          style={{ transform: "rotate(270deg)" }}>
-          <path d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </button>
-    </div>
-  ) : null;
 
-  const currentYear = new Date().getFullYear();
 
-  return (
-    <div className="fade-in">
-      <div className="fade-in">
-        <div>
-          {backButton}
-          {/* <ScrollToTopButton /> */}
-          {renderCurrentComponent()}
-          {/* <CopyScheduleData/> */}
-          {/* <Analytics />  */}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default Main;
 
 // "use client";
 
