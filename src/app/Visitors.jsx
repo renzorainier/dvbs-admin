@@ -390,9 +390,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
 
       <div className="w-full mt-5 bg-white shadow-md rounded-lg border overflow-hidden mx-auto">
         <div className="p-6">
-          <div>
-            invited by:
-          </div>
+        
           <InvitedByField
             invitedBy={invitedBy}
             handleInputChange={handleInputChange}
