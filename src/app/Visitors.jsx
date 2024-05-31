@@ -420,7 +420,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 }`}
                 onClick={handleClick}>
                 <FaBookBible />
-                <span className="text-gray-800 font-medium">{label}</span>
+                <span className="text-gray-800 font-medium">Bible</span>
               </button>
             </div>
             <button
