@@ -205,7 +205,7 @@ function Store() {
                   className="flex-1 text-white font-bold py-2 px-4 rounded-lg bg-gray-400 hover:bg-gray-700"
                   onClick={() => handleClick(student)}
                 >
-                  {student.name} 
+                  {student.name}
                 </button>
               </div>
             ))}
@@ -219,7 +219,7 @@ function Store() {
                 <input
                   type="number"
                   className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
-                  placeholder="Enter amount to pay"
+                  placeholder="Enter points to pay"
                   value={paymentAmount}
                   onChange={(e) => setPaymentAmount(e.target.value)}
                 />
