@@ -61,7 +61,7 @@ function Main() {
             className="flex flex-col justify-center items-center h-screen"
             style={{
               background:
-                "linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.05))",
+                "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.05))",
             }}>
             <div className="text-white text-center mb-10">
               <h1 className="font-bold text-9xl">DVBS</h1>
