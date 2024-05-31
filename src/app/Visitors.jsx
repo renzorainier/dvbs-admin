@@ -385,7 +385,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 type="text"
                 value={contactNumber}
                 onChange={(e) => handleInputChange(e, "contactNumber")}
-                placeholder="Contact Number (optional)"
+                placeholder="Contact Number"
                 className="flex-grow ml-2 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[${config.color}]"
               />
             </div>
