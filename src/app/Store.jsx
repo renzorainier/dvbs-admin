@@ -134,7 +134,7 @@ function Store() {
       selectedLocation ? student.location === selectedLocation : true
     );
 
-  const getBackgroundColor = (prefix) => {
+  const  getBackgroundColor = (prefix) => {
     switch (prefix) {
       case "primary": // Assuming 'pr' stands for primary
         return "#FFC100";
