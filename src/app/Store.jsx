@@ -194,8 +194,7 @@ function Store() {
           <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
             <input
               type="text"
-              className="w-full p-2 mb
--4 border border-gray-300 rounded-lg"
+              className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
               placeholder="Search by name"
               value={searchQuery}
               onChange={handleSearchChange}
