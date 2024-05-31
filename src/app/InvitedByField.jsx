@@ -142,7 +142,7 @@ function InvitedByField({
   return (
     <div className="space-y-4">
       <div className="flex space-x-4">
-      <h2 className="text-xl font-semibold text-gray-800 ">
+      <h2 className="text-xl font-semibold text-white ">
             Invited by:
           </h2>
         <button
