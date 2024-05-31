@@ -38,11 +38,9 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     "Route 10",
   ];
 
-
   const handleClick = () => {
     setChecked(!broughtBible);
   };
-
 
   useEffect(() => {
     const fetchPrimary = async () => {
@@ -394,7 +392,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             </div>
             <div className="flex items-center space-x-4">
               <label className="flex items-center space-x-2">
-              <FaBookBible />
+                <FaBookBible />
                 <span className="text-gray-800 font-medium">Bible</span>
 
                 <Checkbox
@@ -415,6 +413,15 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   </svg>
                 </Checkbox>
               </label>
+
+              <button
+                className={`flex items-center space-x-2 px-3 py-2 rounded border border-gray-300 ${
+                  broughtBible ? "bg-blue-500 text-white" : "bg-white text-gray-800"
+                }`}
+                onClick={handleClick}>
+                <FaBookBible />
+                <span className="text-gray-800 font-medium">{label}</span>
+              </button>
             </div>
             <button
               className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
