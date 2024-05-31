@@ -394,14 +394,15 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             paddedIndex={paddedIndex}
             visitorName={visitorName}
           />
-          <button
+
+        </div>
+      </div>
+      <button
             className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
             onClick={addVisitor}>
             <IoMdPersonAdd />
             Add Visitor
           </button>
-        </div>
-      </div>
 
           </div>
         </div>
