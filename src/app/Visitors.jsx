@@ -39,7 +39,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   ];
 
   const handleClick = () => {
-    setChecked(!broughtBible);
+    setBroughtBible(!broughtBible);
   };
 
   useEffect(() => {
