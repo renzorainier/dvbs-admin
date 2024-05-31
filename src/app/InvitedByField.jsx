@@ -5,6 +5,7 @@ import TeacherCombobox from "./TeacherCombobox";
 import { getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { FaExchangeAlt } from "react-icons/fa";
 
 function InvitedByField({
   invitedBy,
@@ -142,9 +143,9 @@ function InvitedByField({
     <div className="space-y-4">
       <div className="flex space-x-4">
         <button
-          className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg w-full flex items-center justify-center transition duration-300 ease-in-out`}
+          className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg w-full gap-3 flex items-center justify-center transition duration-300 ease-in-out`}
           onClick={handleToggle}>
-          {isStudent ? "Student" : "Teacher"}
+         <FaExchangeAlt /> {isStudent ? "Student" : "Teacher"}
         </button>
       </div>
 
