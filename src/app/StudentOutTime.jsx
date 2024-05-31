@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
@@ -13,6 +13,8 @@ function StudentOutTime() {
   const [loading, setLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [studentToMarkOut, setStudentToMarkOut] = useState(null);
+  const audioRef = useRef(null);
+
 
   const uploadTime = new Date().toLocaleString();
 
@@ -120,6 +122,8 @@ function StudentOutTime() {
 
     setShowConfirmation(false);
     setStudentToMarkOut(null);
+    playEnterSound();
+
   };
 
   const handleLocationChange = (location) => {
@@ -158,6 +162,13 @@ function StudentOutTime() {
     (student) => student.outTime
   ).length;
   const notMarkedCount = filteredStudents.length - markedCount;
+
+
+  const playEnterSound = () => {
+    const audio = new Audio("/point.wav");
+    audio.play();
+  };
+
 
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto ">
@@ -314,6 +325,7 @@ function StudentOutTime() {
                         studentToMarkOut.inTimeField,
                         studentToMarkOut.outTimeField,
                         ""
+
                       )
                     }>
                     Yes
@@ -329,6 +341,8 @@ function StudentOutTime() {
           )}
         </div>
       </div>
+      <audio ref={audioRef} />
+
     </div>
   );
 }

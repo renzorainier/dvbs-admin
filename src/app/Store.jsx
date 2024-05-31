@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
@@ -15,6 +15,8 @@ function Store() {
   const [showPoints, setShowPoints] = useState(false);
   const [paymentAmount, setPaymentAmount] = useState("");
   const [paymentStatus, setPaymentStatus] = useState(null);
+  const audioRef = useRef(null);
+
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -149,6 +151,12 @@ function Store() {
     }
   };
 
+  const playEnterSound = () => {
+    const audio = new Audio("/point.wav");
+    audio.play();
+  };
+
+
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto">
       <div className="flex justify-center items-center overflow-auto">
@@ -280,6 +288,8 @@ function Store() {
           )}
         </div>
       </div>
+      <audio ref={audioRef} />
+
     </div>
   );
 }
