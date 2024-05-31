@@ -227,7 +227,7 @@ function Store() {
                 <div
                   className="ml-4 h-10 p-2 rounded-lg"
                   style={{
-                    backgroundColor: getBackgroundColor(student.prefix),
+                    backgroundColor: getBackgroundColor(student.id),
                   }}></div>{" "}
                 {/* Add colored div */}
               </div>
