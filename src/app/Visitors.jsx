@@ -325,51 +325,52 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </Menu>
             </div>
 
-            <div className="flex items-center">
-              <Menu as="div" className="relative w-full z-50">
-                <div>
-                  <Menu.Button className="inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700">
-                    {age ? `Age: ${age}` : "Select Age"}
-                  </Menu.Button>
-                </div>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95">
-                  <Menu.Items className="origin-top-left absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      {ageOptions.map((ageOption) => (
-                        <Menu.Item key={ageOption}>
-                          {({ active }) => (
-                            <button
-                              onClick={() => handleAgeSelect(ageOption)}
-                              className={`${
-                                active
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "text-gray-700"
-                              } block w-full px-4 py-2 text-sm`}>
-                              {ageOption}
-                            </button>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+          <div className="flex items-center">
+  <Menu as="div" className="relative w-full z-50">
+    <div>
+      <Menu.Button className={`bg-[${config.color}] inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700`}>
+        {age ? `Age: ${age}` : "Select Age"}
+      </Menu.Button>
+    </div>
+    <Transition
+      as={Fragment}
+      enter="transition ease-out duration-100"
+      enterFrom="transform opacity-0 scale-95"
+      enterTo="transform opacity-100 scale-100"
+      leave="transition ease-in duration-75"
+      leaveFrom="transform opacity-100 scale-100"
+      leaveTo="transform opacity-0 scale-95"
+    >
+      <Menu.Items className="origin-top-left absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="py-1">
+          {ageOptions.map((ageOption) => (
+            <Menu.Item key={ageOption}>
+              {({ active }) => (
+                <button
+                  onClick={() => handleAgeSelect(ageOption)}
+                  className={`${
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                  } block w-full px-4 py-2 text-sm`}
+                >
+                  {ageOption}
+                </button>
+              )}
+            </Menu.Item>
+          ))}
+        </div>
+      </Menu.Items>
+    </Transition>
+  </Menu>
 
-              <input
-                type="text"
-                value={contactNumber}
-                onChange={(e) => handleInputChange(e, "contactNumber")}
-                placeholder="Contact Number (optional)"
-                className={`ml-2 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[${config.color}]`}
-              />
-            </div>
+  <input
+    type="text"
+    value={contactNumber}
+    onChange={(e) => handleInputChange(e, "contactNumber")}
+    placeholder="Contact Number (optional)"
+    className={`ml-2 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[${config.color}]`}
+  />
+</div>
+
 
             <div className="w-full mt-5  bg-[#9ca3af] shadow-md rounded-lg border  mx-auto">
               <div className="p-6">
@@ -385,28 +386,28 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <label className="flex items-center space-x-2">
-                <span className="text-gray-800 font-medium">Bible</span>
+                <label className="flex items-center space-x-2">
+                  <span className="text-gray-800 font-medium">Bible</span>
 
-                <Checkbox
-                  checked={broughtBible}
-                  onChange={setBroughtBible}
-                  className={`group block size-7 rounded border  data-[checked]:bg-blue-500`}>
-                  {/* Checkmark icon */}
-                  <svg
-                    className="stroke-white opacity-0 group-data-[checked]:opacity-100"
-                    viewBox="0 0 14 14"
-                    fill="none">
-                    <path
-                      d="M3 8L6 11L11 3.5"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </Checkbox>
-              </label>
-            </div>
+                  <Checkbox
+                    checked={broughtBible}
+                    onChange={setBroughtBible}
+                    className={`group block size-7 rounded border  data-[checked]:bg-blue-500`}>
+                    {/* Checkmark icon */}
+                    <svg
+                      className="stroke-white opacity-0 group-data-[checked]:opacity-100"
+                      viewBox="0 0 14 14"
+                      fill="none">
+                      <path
+                        d="M3 8L6 11L11 3.5"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </Checkbox>
+                </label>
+              </div>
             <button
               className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
               onClick={addVisitor}>
