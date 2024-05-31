@@ -52,7 +52,7 @@ function AttendanceChart() {
     };
 
     fetchAttendanceData();
-  }, [selectedDay]);
+  }, [selectedDay, shouldPlaySound]);
 
   useEffect(() => {
     if (attendanceData) {
