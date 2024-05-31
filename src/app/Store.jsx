@@ -187,7 +187,7 @@ function Store() {
                     </Menu.Item>
                   ))}
                 </div>
-              </Menu.Items>
+                </Menu.Items>
             </Transition>
           </Menu>
 
@@ -224,9 +224,8 @@ function Store() {
                   Points: {currentPoints}
                 </p>
                 {paymentStatus && (
-                  <p className="text-red-500 mb-2">{paymentStatus}</p>
-                )}{" "}
-                {/* Show payment status */}
+                  <p className={`mb-2 ${paymentStatus === "Payment complete" ? "text-green-500" : "text-red-500"}`}>{paymentStatus}</p>
+                )} {/* Show payment status */}
                 <input
                   type="number"
                   className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
