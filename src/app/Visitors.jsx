@@ -367,6 +367,19 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   </Menu.Items>
                 </Transition>
               </Menu>
+              <div className="flex items-center space-x-4">
+              <button
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${
+                  broughtBible
+                    ? `bg-[${config.color}] text-white`
+                    : "bg-[#9ca3af] text-gray-800"
+                }`}
+                onClick={handleClick}>
+                <FaBookBible />
+                <span className="text-white font-medium">Bible</span>
+              </button>
+            </div>
+
 
               <input
                 type="text"
@@ -390,18 +403,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 />
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <button
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${
-                  broughtBible
-                    ? `bg-[${config.color}] text-white`
-                    : "bg-[#9ca3af] text-gray-800"
-                }`}
-                onClick={handleClick}>
-                <FaBookBible />
-                <span className="text-white font-medium">Bible</span>
-              </button>
-            </div>
+
             <button
               className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
               onClick={addVisitor}>
