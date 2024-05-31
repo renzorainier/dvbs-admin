@@ -142,11 +142,11 @@ function InvitedByField({
   return (
     <div className="space-y-4">
       <div className="flex space-x-4">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">
+      <h2 className="text-xl font-semibold text-gray-800 ">
             Invited by:
           </h2>
         <button
-          className={`bg-[${config.color}] text-white font-semibold py-3 px-6 rounded-lg  gap-3 flex items-center justify-center transition duration-300 ease-in-out`}
+          className={`bg-[${config.color}] text-white  font-semibold py-1 px-6 rounded-lg  gap-3 flex items-center justify-center transition duration-300 ease-in-out`}
           onClick={handleToggle}>
          <FaExchangeAlt /> {isStudent ? "Student" : "Teacher"}
         </button>
