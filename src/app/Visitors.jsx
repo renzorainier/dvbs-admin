@@ -392,10 +392,10 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             </div>
             <div className="flex items-center space-x-4">
               <button
-                className={`flex items-center space-x-2 px-3 py-2 rounded border border-gray-300 ${
+                className={`flex items-center space-x-2 px-3 py-2 rounded ${
                   broughtBible
                     ? `bg-[${config.color}] text-white`
-                    : "bg-gray-200 text-gray-800"
+                    : "bg-[#9ca3af] text-gray-800"
                 }`}
                 onClick={handleClick}>
                 <FaBookBible />
