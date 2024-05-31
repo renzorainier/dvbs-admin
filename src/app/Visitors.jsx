@@ -7,6 +7,7 @@ import InvitedByField from "./InvitedByField";
 import { IoMdPersonAdd } from "react-icons/io";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Checkbox } from "@headlessui/react";
+import { FaBookBible } from "react-icons/fa6";
 
 function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [firstName, setFirstName] = useState("");
@@ -387,6 +388,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             </div>
             <div className="flex items-center space-x-4">
               <label className="flex items-center space-x-2">
+              <FaBookBible />
                 <span className="text-gray-800 font-medium">Bible</span>
 
                 <Checkbox
