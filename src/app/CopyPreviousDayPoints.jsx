@@ -67,7 +67,7 @@ function CopyPreviousDayPoints() {
       <button
         onClick={copyPreviousDayPoints}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Copy Previous Day's Points to Today
+        Copy Previous Days Points to Today
       </button>
     </div>
   );
