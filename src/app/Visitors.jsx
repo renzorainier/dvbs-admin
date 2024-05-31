@@ -367,26 +367,14 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   </Menu.Items>
                 </Transition>
               </Menu>
-              <div className="flex items-center space-x-4">
-              <button
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${
-                  broughtBible
-                    ? `bg-[${config.color}] text-white`
-                    : "bg-[#9ca3af] text-gray-800"
-                }`}
-                onClick={handleClick}>
-                <FaBookBible />
-                <span className="text-white font-medium">Bible</span>
-              </button>
-            </div>
 
-            <input
-      type="text"
-      value={contactNumber}
-      onChange={(e) => handleInputChange(e, "contactNumber")}
-      placeholder="Contact Number"
-      className="flex-grow border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[${config.color}]"
-    />
+              <input
+                type="text"
+                value={contactNumber}
+                onChange={(e) => handleInputChange(e, "contactNumber")}
+                placeholder="Contact Number (optional)"
+                className="flex-grow ml-2 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[${config.color}]"
+              />
             </div>
 
             <div className="w-full mt-5  bg-[#9ca3af] shadow-md rounded-lg border  mx-auto">
@@ -402,7 +390,18 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 />
               </div>
             </div>
-
+            <div className="flex items-center space-x-4">
+              <button
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${
+                  broughtBible
+                    ? `bg-[${config.color}] text-white`
+                    : "bg-[#9ca3af] text-gray-800"
+                }`}
+                onClick={handleClick}>
+                <FaBookBible />
+                <span className="text-white font-medium">Bible</span>
+              </button>
+            </div>
             <button
               className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
               onClick={addVisitor}>
