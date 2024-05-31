@@ -328,7 +328,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
             <div className="flex items-center">
   <Menu as="div" className="relative">
     <div>
-      <Menu.Button className={`bg-[${config.color}] z-50 inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700`}>
+      <Menu.Button className={`bg-[${config.color}] mr-2 z-50 inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700`}>
         {age ? `Age: ${age}` : "Age"}
       </Menu.Button>
     </div>
