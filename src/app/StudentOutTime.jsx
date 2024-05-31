@@ -266,13 +266,14 @@ function StudentOutTime() {
             onChange={handleSearchChange}
           />
 
+
 {filteredStudents.map((student) => (
   <div
     key={`${student.id}-${student.prefix}`}
     className="flex items-center mb-4"
   >
     <button
-      className={`flex items-center flex-1 text-white font-bold py-2 px-4 rounded-lg ${
+      className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
         student.outTime
           ? "bg-green-500 hover:bg-green-700"
           : "bg-gray-400 hover:bg-gray-700"
@@ -287,10 +288,11 @@ function StudentOutTime() {
         )
       }
     >
-      <span className="mr-2">{student.name}</span>
-      {student.saved && <FaCheckCircle className="text-white" />}
+      {student.name}
     </button>
-
+    {student.saved && (
+      <FaCheckCircle className="text-white ml-2" />
+    )}
     <div
       className="ml-4 h-10 p-2 rounded-lg"
       style={{
