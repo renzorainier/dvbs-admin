@@ -361,29 +361,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                   </Menu.Items>
                 </Transition>
               </Menu>
-              <div className="flex items-center space-x-4">
-                <label className="flex items-center space-x-2">
-                  <span className="text-gray-800 font-medium">Bible</span>
 
-                  <Checkbox
-                    checked={broughtBible}
-                    onChange={setBroughtBible}
-                    className={`group block size-7 rounded border  data-[checked]:bg-blue-500`}>
-                    {/* Checkmark icon */}
-                    <svg
-                      className="stroke-white opacity-0 group-data-[checked]:opacity-100"
-                      viewBox="0 0 14 14"
-                      fill="none">
-                      <path
-                        d="M3 8L6 11L11 3.5"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </Checkbox>
-                </label>
-              </div>
               <input
                 type="text"
                 value={contactNumber}
@@ -406,6 +384,29 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
                 />
               </div>
             </div>
+            <div className="flex items-center space-x-4">
+                <label className="flex items-center space-x-2">
+                  <span className="text-gray-800 font-medium">Bible</span>
+
+                  <Checkbox
+                    checked={broughtBible}
+                    onChange={setBroughtBible}
+                    className={`group block size-7 rounded border  data-[checked]:bg-blue-500`}>
+                    {/* Checkmark icon */}
+                    <svg
+                      className="stroke-white opacity-0 group-data-[checked]:opacity-100"
+                      viewBox="0 0 14 14"
+                      fill="none">
+                      <path
+                        d="M3 8L6 11L11 3.5"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </Checkbox>
+                </label>
+              </div>
             <button
               className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
               onClick={addVisitor}>
