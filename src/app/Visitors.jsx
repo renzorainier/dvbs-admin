@@ -329,7 +329,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               <Menu as="div" className="relative w-full z-50">
                 <div>
                   <Menu.Button className="inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700">
-                    {age ? `Age: ${age}` : "Select Age"}
+                    {age ? `Age: ${age}` : "Age"}
                   </Menu.Button>
                 </div>
                 <Transition
