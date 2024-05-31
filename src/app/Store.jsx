@@ -1,9 +1,8 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { FaCheckCircle } from "react-icons/fa";
 
 function Store() {
   const [students, setStudents] = useState([]);
@@ -12,6 +11,7 @@ function Store() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [currentPoints, setCurrentPoints] = useState(null);
+  const [currentStudent, setCurrentStudent] = useState(null);
   const [showPoints, setShowPoints] = useState(false);
 
   useEffect(() => {
@@ -74,8 +74,9 @@ function Store() {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const handleClick = (points) => {
-    setCurrentPoints(points);
+  const handleClick = (student) => {
+    setCurrentPoints(student.points);
+    setCurrentStudent(student);
     setShowPoints(true);
   };
 
@@ -85,6 +86,32 @@ function Store() {
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleDeductPoints = async (amount) => {
+    if (currentStudent) {
+      const newPoints = currentPoints - amount;
+      const docRef = doc(db, "dvbs", currentStudent.id);
+      const pointsField = currentStudent.pointsField;
+
+      try {
+        await updateDoc(docRef, {
+          [pointsField]: newPoints,
+        });
+
+        setCurrentPoints(newPoints);
+        setStudents((prevStudents) =>
+          prevStudents.map((student) =>
+            student.id === currentStudent.id &&
+            student.prefix === currentStudent.prefix
+              ? { ...student, points: newPoints }
+              : student
+          )
+        );
+      } catch (error) {
+        console.error("Error updating points: ", error);
+      }
+    }
   };
 
   const filteredStudents = students
@@ -166,7 +193,7 @@ function Store() {
               <div key={`${student.id}-${student.prefix}`} className="flex items-center mb-4">
                 <button
                   className="flex-1 text-white font-bold py-2 px-4 rounded-lg bg-gray-400 hover:bg-gray-700"
-                  onClick={() => handleClick(student.points)}
+                  onClick={() => handleClick(student)}
                 >
                   {student.name}
                 </button>
@@ -179,6 +206,26 @@ function Store() {
               <div className="fixed inset-0 bg-black opacity-50" onClick={() => setShowPoints(false)} />
               <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
                 <p className="text-xl font-bold mb-2">Points: {currentPoints}</p>
+                <div className="flex space-x-2 mb-4">
+                  <button
+                    className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleDeductPoints(1)}
+                  >
+                    -1
+                  </button>
+                  <button
+                    className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleDeductPoints(5)}
+                  >
+                    -5
+                  </button>
+                  <button
+                    className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleDeductPoints(10)}
+                  >
+                    -10
+                  </button>
+                </div>
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
                   onClick={() => setShowPoints(false)}
