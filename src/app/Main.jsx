@@ -64,9 +64,9 @@ function Main() {
                 "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.05))",
             }}>
             <div className="text-white text-center mb-10">
-              <h1 id="front" className="font-bold text-7xl">Rescue Zone</h1>
+              <h1 id="front" className="font-bold text-6xl">Rescue Zone</h1>
               <h2 className="text-2xl font-thin"></h2>
-              <h3 className="text-3xl font-semibold"></h3>
+              <h3 className="text-3xl font-semibold">DVBS 2024</h3>
             </div>
 
             <div className="container mx-auto">
