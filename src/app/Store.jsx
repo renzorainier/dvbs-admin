@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -11,11 +11,8 @@ function Store() {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [studentToMarkOut, setStudentToMarkOut] = useState(null);
-  const [points, setPoints] = useState({});
-
-  const uploadTime = new Date().toLocaleString();
+  const [currentPoints, setCurrentPoints] = useState(null);
+  const [showPoints, setShowPoints] = useState(false);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -26,8 +23,6 @@ function Store() {
           ...doc.data(),
         }));
 
-        console.log("Fetched Student Data:", studentData);
-
         const currentDayLetter = getCurrentDayLetter();
         const presentStudents = studentData
           .map((group) => {
@@ -36,17 +31,16 @@ function Store() {
               if (key.endsWith(currentDayLetter)) {
                 const prefix = key.slice(0, 2);
                 const inTimeField = `${prefix}${currentDayLetter}`;
-                const outTimeField = `${prefix}${currentDayLetter}out`;
+                const pointsField = `${prefix}${currentDayLetter}points`;
                 if (group[inTimeField]) {
                   groupStudents.push({
                     id: group.id,
                     prefix,
                     inTimeField,
-                    outTimeField,
+                    pointsField,
                     name: group[`${prefix}name`],
                     location: group[`${prefix}loc`],
-                    outTime: group[outTimeField],
-                    points: group[`${prefix}${currentDayLetter}points`], // Assuming this field exists for points
+                    points: group[pointsField],
                   });
                 }
               }
@@ -80,50 +74,9 @@ function Store() {
     return days[dayIndex === 0 ? 6 : dayIndex - 1];
   };
 
-  const handleClick = (student) => {
-    if (student.outTime) {
-      setStudentToMarkOut(student);
-      setShowConfirmation(true);
-    } else {
-      updateStore(
-        student.id,
-        student.prefix,
-        student.inTimeField,
-        student.outTimeField,
-        uploadTime
-      );
-    }
-    // Display points
-    setPoints({ ...points, [student.id]: student.points });
-  };
-
-  const updateStore = async (
-    groupId,
-    prefix,
-    inTimeField,
-    outTimeField,
-    newValue
-  ) => {
-    const docRef = doc(db, "dvbs", groupId);
-
-    try {
-      await updateDoc(docRef, {
-        [outTimeField]: newValue,
-      });
-
-      setStudents((prevStudents) =>
-        prevStudents.map((student) =>
-          student.id === groupId && student.prefix === prefix
-            ? { ...student, outTime: newValue }
-            : student
-        )
-      );
-    } catch (error) {
-      console.error("Error updating Firebase: ", error);
-    }
-
-    setShowConfirmation(false);
-    setStudentToMarkOut(null);
+  const handleClick = (points) => {
+    setCurrentPoints(points);
+    setShowPoints(true);
   };
 
   const handleLocationChange = (location) => {
@@ -141,12 +94,6 @@ function Store() {
     .filter((student) =>
       selectedLocation ? student.location === selectedLocation : true
     );
-
-  // Count the number of marked and not marked students
-  const markedCount = filteredStudents.filter(
-    (student) => student.outTime
-  ).length;
-  const notMarkedCount = filteredStudents.length - markedCount;
 
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto">
@@ -192,15 +139,13 @@ function Store() {
                       {({ active }) => (
                         <button
                           className={`${
-                            active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700"
+                            active ? "bg-gray-100 text-gray-900" : "text-gray-700"
                           } block px-4 py-2 text-2xl font-semibold text-left`}
                           onClick={() => handleLocationChange(location)}
                         >
                           {location}
                         </button>
-                      ))}
+                      )}
                     </Menu.Item>
                   ))}
                 </div>
@@ -220,57 +165,33 @@ function Store() {
             {filteredStudents.map((student) => (
               <div key={`${student.id}-${student.prefix}`} className="flex items-center mb-4">
                 <button
-                  className={`flex-1 text-white font-bold py-2 px-4 rounded-lg ${
-                    student.outTime ? "bg-green-500 hover:bg-green-700" : "bg-gray-400 hover:bg-gray-700"
-                  }`}
-                  onClick={() => handleClick(student)}
+                  className="flex-1 text-white font-bold py-2 px-4 rounded-lg bg-gray-400 hover:bg-gray-700"
+                  onClick={() => handleClick(student.points)}
                 >
                   {student.name}
                 </button>
-                {points[student.id] !== undefined && (
-                  <div className="ml-4 p-2 rounded-lg bg-white border shadow-lg">
-                    Points: {points[student.id]}
-                  </div>
-                )}
               </div>
             ))}
           </div>
 
-          {showConfirmation && (
+          {showPoints && (
             <div className="fixed inset-0 z-50 flex items-center justify-center">
-              <div className="fixed inset-0 bg-black opacity-50" />
+              <div className="fixed inset-0 bg-black opacity-50" onClick={() => setShowPoints(false)} />
               <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-                <p className="mb-2">Unmark student as out?</p>
-                <div className="flex space-x-4">
-                  <button
-                    className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                    onClick={() =>
-                      updateStore(
-                        studentToMarkOut.groupId,
-                        studentToMarkOut.prefix,
-                        studentToMarkOut.inTimeField,
-                        studentToMarkOut.outTimeField,
-                        ""
-                      )
-                    }
-                  >
-                    Yes
-                  </button>
-                  <button
-                                 className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                                 onClick={() => setShowConfirmation(false)}
-                               >
-                                 No
-                               </button>
-                             </div>
-                           </div>
-                         </div>
-                       )}
-                     </div>
-                   </div>
-                 </div>
-               );
-             }
+                <p className="text-xl font-bold mb-2">Points: {currentPoints}</p>
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => setShowPoints(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-             export default Store;
-
+export default Store;
