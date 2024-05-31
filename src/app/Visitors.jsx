@@ -325,11 +325,11 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
               </Menu>
             </div>
 
-          <div className="flex items-center">
-  <Menu as="div" className="relative w-full z-50">
+            <div className="flex items-center">
+  <Menu as="div" className="relative">
     <div>
       <Menu.Button className={`bg-[${config.color}] inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700`}>
-        {age ? `Age: ${age}` : "Select Age"}
+        {age ? `Age: ${age}` : "Age"}
       </Menu.Button>
     </div>
     <Transition
@@ -367,9 +367,10 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     value={contactNumber}
     onChange={(e) => handleInputChange(e, "contactNumber")}
     placeholder="Contact Number (optional)"
-    className={`ml-2 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[${config.color}]`}
+    className="flex-grow ml-2 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[${config.color}]"
   />
 </div>
+
 
 
             <div className="w-full mt-5  bg-[#9ca3af] shadow-md rounded-lg border  mx-auto">
