@@ -287,7 +287,7 @@ function StudentOutTime() {
                   }>
                   {student.name}
                   {student.saved && (
-                    <FaCheckCircle className="text-white ml-2" />
+                    <FaCheckCircle className="text-black ml-2" />
                   )}
                 </button>
                 <div
