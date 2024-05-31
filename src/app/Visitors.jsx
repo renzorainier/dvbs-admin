@@ -24,7 +24,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [paddedIndex, setPaddedIndex] = useState("");
   const [visitorName, setVisitorName] = useState("");
 
-  const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4"];
+  const predefinedRoutes = ["Route 1", "Route 2", "Route 3", "Route 4", "Route 5", "Route 6", "Route 7", "Route 8", "Route 9", "Route 10"];
 
   useEffect(() => {
     const fetchPrimary = async () => {
