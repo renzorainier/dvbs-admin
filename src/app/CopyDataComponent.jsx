@@ -1,7 +1,8 @@
 import React from 'react';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs, setDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
-import { db4 } from './firebaseConfig4'
+import { db4 } from './firebaseConfig4';
+
 const CopyDataComponent = () => {
   const copyData = async () => {
     try {
@@ -12,10 +13,10 @@ const CopyDataComponent = () => {
         dvbsData.push({ id: doc.id, ...doc.data() });
       });
 
-      // Add each document to the "dvbs" collection in db4
-      for (const doc of dvbsData) {
-        const { id, ...data } = doc;
-        await addDoc(collection(db4, 'dvbs'), data);
+      // Add each document to the "dvbs" collection in db4 with the same document ID
+      for (const docData of dvbsData) {
+        const { id, ...data } = docData;
+        await setDoc(doc(db4, 'dvbs', id), data);
       }
 
       console.log('Data copied successfully');
@@ -26,7 +27,7 @@ const CopyDataComponent = () => {
 
   return (
     <div>
-      <button className= "bg-white"onClick={copyData}>Copy Data from db to db4</button>
+      <button className="bg-white" onClick={copyData}>Copy Data from db to db4</button>
     </div>
   );
 };
