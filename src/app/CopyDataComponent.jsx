@@ -26,7 +26,7 @@ const CopyDataComponent = () => {
 
   return (
     <div>
-      <button onClick={copyData}>Copy Data from db to db4</button>
+      <button className= "bg-white"onClick={copyData}>Copy Data from db to db4</button>
     </div>
   );
 };

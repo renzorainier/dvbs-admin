@@ -15,6 +15,7 @@ import DailyRewards from "./DailyRewards";
 import SalvationDecision from "./SalvationDecision";
 import CopyPreviousDayPoints from "./CopyPreviousDayPoints";
 import Store from "./Store";
+import CopyDataComponent from "./CopyDataComponent"
 
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { FaListCheck } from "react-icons/fa6";
@@ -54,6 +55,9 @@ function Main() {
         return <SalvationDecision />;
       case "Store":
         return <Store />;
+
+        case "CopyDataComponent":
+          return <CopyDataComponent />;
 
       default:
         return (
@@ -227,6 +231,7 @@ function Main() {
           {backButton}
           {/* <ScrollToTopButton /> */}
           {renderCurrentComponent()}
+          <CopyDataComponent />;
           {/* <CopyScheduleData/> */}
           {/* <Analytics />  */}
         </div>
