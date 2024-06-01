@@ -30,12 +30,12 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     "TakTak Road",
     "Town and Country",
     "Insular",
-    "Route 5",
-    "Route 6",
-    "Route 7",
-    "Route 8",
-    "Route 9",
-    "Route 10",
+    "Antipolo Hills",
+    "Samba Homes",
+    "",
+    "",
+    "",
+    "",
   ];
 
   const handleClick = () => {
