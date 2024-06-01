@@ -14,6 +14,8 @@ export default function RootLayout({ children }) {
           registration.onupdatefound = () => {
             const installingWorker = registration.installing;
             installingWorker.onstatechange = () => {
+              console.log('Service Worker state changed:', installingWorker.state);
+
               if (installingWorker.state === 'installed') {
                 if (navigator.serviceWorker.controller) {
                   // New update available
@@ -32,6 +34,8 @@ export default function RootLayout({ children }) {
 
       let refreshing;
       navigator.serviceWorker.addEventListener('controllerchange', () => {
+        console.log('Service Worker controller changed.');
+
         if (refreshing) return;
         window.location.reload();
         refreshing = true;
@@ -40,6 +44,8 @@ export default function RootLayout({ children }) {
   }, []);
 
   const showUpdateNotification = () => {
+    console.log('New version available. Please refresh.');
+
     const notification = document.createElement('div');
     notification.className = 'update-notification';
     notification.textContent = 'New version available. Please refresh.';
