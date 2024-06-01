@@ -5,8 +5,6 @@ import Head from "next/head.js";
 import React, { useState, Fragment } from "react";
 
 export default function Home() {
-
-
   return (
     <>
       <Head>
@@ -19,17 +17,7 @@ export default function Home() {
       </Head>
 
       <div>
-        {/* <div className="flex justify-center items-center overflow-auto">
-          <div
-            className="w-full rounded-lg mx-auto"
-            style={{ maxWidth: "90%" }}> */}
-            <Main
-            // configurations={configurations}
-            // currentConfigIndex={currentConfigIndex}
-            // setCurrentConfigIndex={setCurrentConfigIndex}
-            />
-          {/* </div>
-        </div> */}
+        <Main />
       </div>
     </>
   );
