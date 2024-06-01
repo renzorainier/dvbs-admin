@@ -75,6 +75,12 @@ const getCurrentDayLetter = () => {
     return days[dayIndex >= 1 && dayIndex <= 5 ? dayIndex - 1 : 4];
   };
 
+    // const getCurrentDayLetter = () => {
+  //   const days = ["A", "B", "C", "D", "E", "F", "G"];
+  //   const dayIndex = new Date().getDay();
+  //   return days[dayIndex === 0 ? 6 : dayIndex - 1];
+  // };
+
   const handleClick = (fieldName) => {
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
