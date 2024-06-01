@@ -28,8 +28,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const predefinedRoutes = [
     "Solid",
     "TakTak Road",
-    "Route 3",
-    "Route 4",
+    "Town and Country",
+    "Insular",
     "Route 5",
     "Route 6",
     "Route 7",
