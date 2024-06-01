@@ -75,8 +75,15 @@ function Store() {
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E"];
     const dayIndex = new Date().getDay();
-    return days[dayIndex === 0 ? 6 : dayIndex - 1];
+    return days[dayIndex >= 1 && dayIndex <= 5 ? dayIndex - 1 : 4];
   };
+
+
+  // const getCurrentDayLetter = () => {
+  //   const days = ["A", "B", "C", "D", "E", "F", "G"];
+  //   const dayIndex = new Date().getDay();
+  //   return days[dayIndex === 0 ? 6 : dayIndex - 1];
+  // };
 
   const handleClick = (student) => {
     setCurrentPoints(student.points);
