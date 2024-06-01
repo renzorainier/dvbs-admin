@@ -15,3 +15,16 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+
+
+
+
+
+
+//firebase config 1 (original)
+// apiKey: "AIzaSyCXreYlJwBRd27iqM4yGdPDd-jweh1ZjJg",
+// authDomain: "dvbs-f6778.firebaseapp.com",
+// projectId: "dvbs-f6778",
+// storageBucket: "dvbs-f6778.appspot.com",
+// messagingSenderId: "970229367594",
+// appId: "1:970229367594:web:3b65a45ad74ba0f951d453",
