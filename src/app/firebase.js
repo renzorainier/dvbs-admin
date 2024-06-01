@@ -27,4 +27,4 @@ export const db = getFirestore(app);
 // projectId: "dvbs-f6778",
 // storageBucket: "dvbs-f6778.appspot.com",
 // messagingSenderId: "970229367594",
-// appId: "1:970229367594:web:3b65a45ad74ba0f951d453",
+// appId: "1:970229367594:web:3b65a45ad74ba0f951d453",  
