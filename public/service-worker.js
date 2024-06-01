@@ -14,7 +14,11 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       console.log('Cache opened');
-      return cache.addAll(urlsToCache);
+      return cache.addAll(urlsToCache).catch(error => {
+        console.error('Failed to cache', error);
+      });
+    }).catch(error => {
+      console.error('Failed to open cache', error);
     })
   );
 
