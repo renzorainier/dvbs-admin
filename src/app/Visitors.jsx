@@ -35,7 +35,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     "Sarimanok",
     "Kaysipot",
     "LaSalle",
-    "",
+    "Mira Verde",
   ];
 
   const handleClick = () => {
