@@ -26,8 +26,8 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
   const [visitorName, setVisitorName] = useState("");
 
   const predefinedRoutes = [
-    "Route 1",
-    "Route 2",
+    "Solid",
+    "TakTak Road",
     "Route 3",
     "Route 4",
     "Route 5",
