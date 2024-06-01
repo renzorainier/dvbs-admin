@@ -61,6 +61,7 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     fetchPrimary();
   }, [config.dbPath]);
 
+//wala lang trey rey adfafdasfasfdaf
 
 
   const getCurrentDayLetter = () => {
