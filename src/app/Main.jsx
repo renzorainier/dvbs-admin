@@ -228,7 +228,7 @@ function Main() {
           {backButton}
           {/* <ScrollToTopButton /> */}
           {renderCurrentComponent()}
-          <CopyDataComponent />;
+          {/* <CopyDataComponent />; */}
           {/* <CopyScheduleData/> */}
           {/* <Analytics />  */}
         </div>
