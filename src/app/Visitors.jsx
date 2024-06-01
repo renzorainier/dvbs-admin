@@ -32,9 +32,9 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex }) {
     "Insular",
     "Antipolo Hills",
     "Samba Homes",
-    "",
-    "",
-    "",
+    "Sarimanok",
+    "Kaysipot",
+    "LaSalle",
     "",
   ];
 
