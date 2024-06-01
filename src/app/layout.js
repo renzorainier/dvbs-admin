@@ -1,5 +1,7 @@
 // src/app/RootLayout.js
 
+"use client";
+
 import "./globals.css";
 import { Urbanist } from 'next/font/google';
 import { useEffect } from 'react';
