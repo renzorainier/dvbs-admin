@@ -10,6 +10,11 @@ const getDefaultSelectedDay = () => {
   return days[today >= 1 && today <= 5 ? today - 1 : 4];
 };
 
+// const getDefaultSelectedDay = () => {
+//   const today = new Date().getDay();
+//   return today === 0 || today === 6 ? "E" : String.fromCharCode(65 + today - 1);
+// };
+
 function AttendanceChart() {
   const [attendanceData, setAttendanceData] = useState({
     primary: {},
