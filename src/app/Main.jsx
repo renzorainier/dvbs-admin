@@ -56,9 +56,6 @@ function Main() {
       case "Store":
         return <Store />;
 
-        case "CopyDataComponent":
-          return <CopyDataComponent />;
-
       default:
         return (
           <div
