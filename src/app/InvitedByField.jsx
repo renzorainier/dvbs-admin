@@ -148,7 +148,7 @@ function InvitedByField({
           className={`bg-[${config.color}] text-white  font-semibold py-1 px-6 rounded-lg  gap-3 flex items-center justify-center transition duration-300 ease-in-out`}
           onClick={handleToggle}
         >
-          <FaExchangeAlt /> {isStudent ? "Student" : "Teacher"}
+          <FaExchangeAlt /> {isStudent ? "Student" : "Member"}
         </button>
       </div>
 
