@@ -37,6 +37,7 @@ function AttendanceChart() {
         listeners[docName] = onSnapshot(docRef, (doc) => {
           if (doc.exists()) {
             const newData = doc.data();
+            console.log(`Data for document ${docName}:`, newData); // Log the fetched data
             setAttendanceData((prevData) => {
               if (shouldPlaySound(prevData[docName], newData, selectedDay)) {
                 playEnterSound();
