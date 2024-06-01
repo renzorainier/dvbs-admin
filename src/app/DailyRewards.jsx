@@ -69,7 +69,7 @@ function DailyRewards() {
     fetchPrimary();
   }, [currentConfig.dbPath]);
 
-  const getCurrentDayLetter = () => {
+const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E"];
     const dayIndex = new Date().getDay();
     return days[dayIndex >= 1 && dayIndex <= 5 ? dayIndex - 1 : 4];
