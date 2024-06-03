@@ -30,9 +30,10 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorV
       }
     };
 
-     if (isVisitorView) === true {
-      console.log("hehe")
-     };
+    if (isVisitorView) {
+      console.log("hehe");
+    }
+
     fetchPrimary();
   }, [config.dbPath]);
 
