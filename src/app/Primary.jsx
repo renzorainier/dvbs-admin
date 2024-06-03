@@ -263,14 +263,15 @@ function Primary({
 
 {showVisitorPrompt && (
   <div className="fixed inset-0 z-50 flex items-center justify-center">
-    <div className="fixed inset-0 bg-black opacity-50" />
+    <div className="fixed inset-0 bg-black opacity-50"></div>
     <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-      <p className="mb-2">
-        You are in visitor view. Button functionality is disabled.
+      <p className="mb-4 text-center">
+        You are in visitor view. This feature is disabled.
       </p>
       <button
-        className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
-        onClick={() => setShowVisitorPrompt(false)}>
+        className="bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        onClick={() => setShowVisitorPrompt(false)}
+      >
         OK
       </button>
     </div>
