@@ -4,6 +4,7 @@ const Password = ({ correctPassword, children }) => {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isVisitorView, setIsVisitorView] = useState(false);
 
   const handlePinChange = (event) => {
     setPin(event.target.value);
@@ -20,9 +21,14 @@ const Password = ({ correctPassword, children }) => {
     }
   };
 
+  const handleVisitorView = () => {
+    setIsAuthenticated(true); // Directly set isAuthenticated to true for visitor view
+    setIsVisitorView(true); // Set the state indicating visitor view
+  };
+
   return (
     <div>
-      {isAuthenticated ? (
+      {isAuthenticated || isVisitorView ? (
         children
       ) : (
         <div className="h-screen flex justify-center items-center bg-gray-200">
@@ -41,6 +47,11 @@ const Password = ({ correctPassword, children }) => {
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded block w-full">
                 Submit
+              </button>
+              <button
+                onClick={handleVisitorView}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded block w-full mt-4">
+                Enter Visitor View
               </button>
             </form>
           </div>
