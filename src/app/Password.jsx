@@ -18,7 +18,7 @@ const Password = ({ correctPassword, children }) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="">
       {isAuthenticated ? (
         children
       ) : (
