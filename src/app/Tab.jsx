@@ -136,7 +136,7 @@ function Tab() {
 
             <div>
               {state ? (
-                <Visitors
+                <Visitors 
                   config={currentConfig}
                   currentConfigIndex={currentConfigIndex}
                   setCurrentConfigIndex={setCurrentConfigIndex}
