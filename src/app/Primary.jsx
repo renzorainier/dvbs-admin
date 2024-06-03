@@ -4,7 +4,7 @@ import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
 import { FaCheckCircle } from "react-icons/fa";
 
-function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
+function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorView }) {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -30,6 +30,7 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex }) {
       }
     };
 
+     if
     fetchPrimary();
   }, [config.dbPath]);
 

@@ -149,6 +149,7 @@ function Tab() {
                     config={currentConfig}
                     currentConfigIndex={currentConfigIndex}
                     setCurrentConfigIndex={setCurrentConfigIndex}
+                    isVisitorView={isVisitorView}
                   />
 
                   {/* <CopyPointsButton config={currentConfig}/> */}
