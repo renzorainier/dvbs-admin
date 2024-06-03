@@ -4,6 +4,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Visitors from "./Visitors.jsx";
 import Primary from "./Primary.jsx";
 import CopyPointsButton from "./CopyPointsButton.jsx";
+import Password from "./Password.jsx"
 
 function Tab() {
   // const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
@@ -49,8 +50,11 @@ function Tab() {
         backgroundColor: `${configurations[currentConfigIndex].color}`,
       }}
       className=" h-screen overflow-auto ">
+                <Password correctPassword="password123">
+
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
+
           <Menu
             as="div"
             className="relative inline-block justify-center text-center mt-4">
@@ -151,6 +155,7 @@ function Tab() {
           </div>
         </div>
       </div>
+          </Password>
     </div>
   );
 }
