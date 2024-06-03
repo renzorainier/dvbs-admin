@@ -18,7 +18,7 @@ const Password = ({ correctPassword, children, mockComponent }) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center ">
       {isAuthenticated ? (
         mockComponent ? mockComponent : children
       ) : (
