@@ -434,12 +434,14 @@ function Visitors({ config, currentConfigIndex, setCurrentConfigIndex, isVisitor
               </button>
             </div>
             <button
-              className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
-              onClick={if (!isVisitorView) {
-                {addVisitor};
-              } else {
-                setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
-              }}>
+             className={`bg-[${config.color}] gap-2 text-white font-semibold py-3 px-6 rounded-lg mt-4 w-full flex items-center justify-center transition duration-300 ease-in-out`}
+             onClick={() => {
+               if (!isVisitorView) {
+                 addVisitor();
+               } else {
+                 setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
+               }
+             }}>
               <IoMdPersonAdd />
               Add Visitor
             </button>
