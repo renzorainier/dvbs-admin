@@ -261,21 +261,22 @@ function Primary({
         </div>
       )}
 
-      {showVisitorPrompt && ( // Show visitor prompt if in visitor view
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black opacity-50" />
-          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-            <p className="mb-2">
-              You are in visitor view. Button functionality is disabled.
-            </p>
-            <button
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
-              onClick={() => setShowVisitorPrompt(false)}>
-              OK
-            </button>
-          </div>
-        </div>
-      )}
+{showVisitorPrompt && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black opacity-50" />
+    <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+      <p className="mb-2">
+        You are in visitor view. Button functionality is disabled.
+      </p>
+      <button
+        className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
+        onClick={() => setShowVisitorPrompt(false)}>
+        OK
+      </button>
+    </div>
+  </div>
+)}
+
 
       <div className="flex justify-center mb-5 font-bold">
         <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
