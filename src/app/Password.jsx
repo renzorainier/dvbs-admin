@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-const Password = ({ correctPassword, children }) => {
+const Password = ({ correctPassword, children, isVisitorView }) => {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isVisitorView, setIsVisitorView] = useState(false);
+//   const [isVisitorView, setIsVisitorView] = useState(false);
 
   const handlePinChange = (event) => {
     setPin(event.target.value);
