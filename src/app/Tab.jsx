@@ -45,13 +45,13 @@ function Tab() {
 
   const [state, setState] = useState(false);
   return (
+    <Password correctPassword="pass">
     <div
       style={{
         backgroundColor: `${configurations[currentConfigIndex].color}`,
       }}
       className=" h-screen overflow-auto ">
       <div className="flex justify-center items-center overflow-auto">
-        <Password correctPassword="pass">
           <div
             className="w-full rounded-lg mx-auto"
             style={{ maxWidth: "90%" }}>
@@ -154,9 +154,9 @@ function Tab() {
               )}
             </div>
           </div>
-        </Password>
       </div>
     </div>
+        </Password>
   );
 }
 
