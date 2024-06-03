@@ -4,13 +4,19 @@ import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
 import { FaCheckCircle } from "react-icons/fa";
 
-function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorView }) {
+function Primary({
+  config,
+  currentConfigIndex,
+  setCurrentConfigIndex,
+  isVisitorView,
+}) {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [studentToMarkAbsent, setStudentToMarkAbsent] = useState(null);
   const [showBiblePopup, setShowBiblePopup] = useState(false);
   const [studentToUpdateBible, setStudentToUpdateBible] = useState(null);
+  const [showVisitorPrompt, setShowVisitorPrompt] = useState(false); // New state for visitor prompt
   const audioRef = useRef(null);
 
   const uploadTime = new Date().toLocaleString();
@@ -30,12 +36,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorV
       }
     };
 
-    if (isVisitorView) {
-      console.log("visitor");
-    } else {
-      console.log("admin");
-    }
-
     fetchPrimary();
   }, [config.dbPath]);
 
@@ -44,13 +44,6 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorV
     const dayIndex = new Date().getDay();
     return days[dayIndex >= 1 && dayIndex <= 5 ? dayIndex - 1 : 4];
   };
-
-
-  // const getCurrentDayLetter = () => {
-  //   const days = ["A", "B", "C", "D", "E"];
-  //   const dayIndex = new Date().getDay();
-  //   return days[dayIndex === 0 ? 6 : dayIndex - 1];
-  // };
 
   const getPreviousDayLetter = (dayLetter) => {
     const days = ["A", "B", "C", "D", "E"];
@@ -75,6 +68,11 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorV
   };
 
   const handleClick = (fieldName) => {
+    if (isVisitorView) {
+      setShowVisitorPrompt(true);
+      return;
+    }
+
     const prefix = fieldName.slice(0, 2);
     const dayLetter = getCurrentDayLetter();
     const fieldToUpdate = `${prefix}${dayLetter}`;
@@ -263,6 +261,22 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorV
         </div>
       )}
 
+      {showVisitorPrompt && ( // Show visitor prompt if in visitor view
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50" />
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="mb-2">
+              You are in visitor view. Button functionality is disabled.
+            </p>
+            <button
+              className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
+              onClick={() => setShowVisitorPrompt(false)}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="flex justify-center mb-5 font-bold">
         <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
           <svg
@@ -312,7 +326,26 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorV
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"
+              d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875
+"
+            />
+          </svg>
+          <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
+            {countPresentForToday()}
+          </p>
+        </div>
+        <div className="flex items-center bg-white border rounded-lg shadow-md p-4 ml-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
             />
           </svg>
           <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
@@ -343,7 +376,11 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorV
                     studentIndex
                   )}`}
                   onClick={() => {
-                    handleClick(studentIndex);
+                    if (!isVisitorView) {
+                      handleClick(studentIndex);
+                    } else {
+                      setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
+                    }
                   }}>
                   <span className="mr-2">{name}</span> {/* Name */}
                   {primaryData[savedFieldName] && <FaCheckCircle />}{" "}
