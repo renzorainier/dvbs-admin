@@ -9,6 +9,8 @@ import Password from "./Password.jsx";
 function Tab() {
   // const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
   const [currentConfigIndex, setCurrentConfigIndex] = useState(0);
+  const [isVisitorView, setIsVisitorView] = useState(false);
+
 
   const configurations = [
     {
@@ -136,7 +138,7 @@ function Tab() {
 
             <div>
               {state ? (
-                <Visitors 
+                <Visitors
                   config={currentConfig}
                   currentConfigIndex={currentConfigIndex}
                   setCurrentConfigIndex={setCurrentConfigIndex}
