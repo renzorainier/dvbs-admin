@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Password = ({ correctPassword, children, isVisitorView }) => {
+const Password = ({ correctPassword, children, isVisitorView, setIsVisitorView }) => {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
