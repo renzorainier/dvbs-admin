@@ -31,7 +31,9 @@ function Primary({ config, currentConfigIndex, setCurrentConfigIndex, isVisitorV
     };
 
     if (isVisitorView) {
-      console.log("hehe");
+      console.log("visitor");
+    } else {
+      console.log("admin");
     }
 
     fetchPrimary();

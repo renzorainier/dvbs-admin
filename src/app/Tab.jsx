@@ -144,6 +144,8 @@ function Tab() {
                   config={currentConfig}
                   currentConfigIndex={currentConfigIndex}
                   setCurrentConfigIndex={setCurrentConfigIndex}
+                  isVisitorView={isVisitorView}
+
                 />
               ) : (
                 <div>
