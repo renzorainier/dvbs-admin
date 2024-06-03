@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Password = ({ correctPassword, children }) => {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handlePasswordChange = (event) => {
@@ -13,30 +13,33 @@ const Password = ({ correctPassword, children }) => {
     if (password === correctPassword) {
       setIsAuthenticated(true);
     } else {
-      alert('Incorrect password. Please try again.');
+      alert("Incorrect password. Please try again.");
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div>
       {isAuthenticated ? (
         children
       ) : (
-        <form onSubmit={handleSubmit} className="bg-gray-100 p-8 rounded-lg">
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            className="border border-gray-400 rounded px-3 py-2 mb-4 block w-full"
-            placeholder="Enter password"
-          />
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Submit
-          </button>
-        </form>
+        <div className="h-screen flex justify-center items-center">
+          <div className="bg-gray-100 p-8 rounded-lg">
+            <form onSubmit={handleSubmit}>
+              <input
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                className="border border-gray-400 rounded px-3 py-2 mb-4 block w-full"
+                placeholder="Enter password"
+              />
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );
