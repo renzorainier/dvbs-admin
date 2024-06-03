@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Password = ({ correctPassword, children, mockComponent }) => {
+const Password = ({ correctPassword, children }) => {
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -18,9 +18,9 @@ const Password = ({ correctPassword, children, mockComponent }) => {
   };
 
   return (
-    <div className="flex justify-center items-center ">
+    <div className="flex justify-center items-center h-screen">
       {isAuthenticated ? (
-        mockComponent ? mockComponent : children
+        children
       ) : (
         <form onSubmit={handleSubmit} className="bg-gray-100 p-8 rounded-lg">
           <input
