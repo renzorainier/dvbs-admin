@@ -37,7 +37,7 @@ function Main() {
 
   const handleBackButtonClick = () => {
     setCurrentComponent(null);
-    setIsVisitorView(true);
+    setIsVisitorView(false);
   };
 
   const renderCurrentComponent = () => {
@@ -45,7 +45,6 @@ function Main() {
       case "Tab":
         return <Tab />;
       case "Out":
-        return;
         return (
           <Password
             isVisitorView={isVisitorView}
