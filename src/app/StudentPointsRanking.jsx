@@ -72,6 +72,21 @@ const StudentRanking = () => {
     return days[dayIndex >= 1 && dayIndex <= 5 ? dayIndex - 1 : 4];
   };
 
+  const getBackgroundColor = (prefix) => {
+    switch (prefix) {
+      case "pr": // Assuming 'pr' stands for primary
+        return "#FFC100";
+      case "mi": // Assuming 'mi' stands for middlers
+        return "#04d924";
+      case "ju": // Assuming 'ju' stands for juniors
+        return "#027df7";
+      case "yo": // Assuming 'yo' stands for youth
+        return "#f70233";
+      default:
+        return "#FFFFFF"; // Default color if no match
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -88,7 +103,8 @@ const StudentRanking = () => {
                 className="flex items-center mb-4"
               >
                 <button
-                  className="flex-1 text-white font-bold py-2 px-4 rounded-lg bg-gray-400 hover:bg-gray-700"
+                  className="flex-1 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700"
+                  style={{ backgroundColor: getBackgroundColor(student.prefix) }}
                   onClick={() => {}}
                 >
                   {student.name} - {student.points} points
@@ -106,7 +122,8 @@ const StudentRanking = () => {
                   className="flex items-center mb-4"
                 >
                   <button
-                    className="flex-1 text-white font-bold py-2 px-4 rounded-lg bg-gray-400 hover:bg-gray-700"
+                    className="flex-1 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700"
+                    style={{ backgroundColor: getBackgroundColor(student.prefix) }}
                     onClick={() => {}}
                   >
                     {student.name} - {student.points} points
