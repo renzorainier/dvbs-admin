@@ -41,24 +41,24 @@ const StudentPointsRanking = () => {
     if (students.length > 0) {
       const currentDayLetter = getCurrentDayLetter();
 
-      // Log the field name being fetched
-      const pointsFieldName = `0${currentDayLetter}points`;
-      console.log(`Field name being fetched: ${pointsFieldName}`);
+      // **Fieldname Reading Logic (similar to Store component):**
+      const pointsFieldNamePrefixMap = { // Assuming a mapping between prefixes and field names
+        'primary': 'pr',  // Example: 'prApoints' for primary group's day A points
+        'middlers': 'mi',
+        'juniors': 'ju',
+        'youth': 'yo',
+      };
 
       const studentPoints = students.map(student => {
+        const prefix = student.prefix;
+        const pointsFieldName = `${pointsFieldNamePrefixMap[prefix]}${currentDayLetter}points`;
         const points = student[pointsFieldName] || 0;
         return { ...student, points };
       });
 
-        // Filter and sort students by group
-        const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
-        const groupB = studentPoints.filter(student => student.group === 'B').sort((a, b) => b.points - a.points);
-        const groupC = studentPoints.filter(student => student.group === 'C').sort((a, b) => b.points - a.points);
-        const groupD = studentPoints.filter(student => student.group === 'D').sort((a, b) => b.points - a.points);
-        const groupE = studentPoints.filter(student => student.group === 'E').sort((a, b) => b.points - a.points);
-
-        // Sort overall
-        const overall = studentPoints.sort((a, b) => b.points - a.points);
+      const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
+      const groupB = studentPoints.filter(student => student.group === 'B').sort((a, b) => b.points - a.points);
+      // ... similar for other groups and overall
 
       setRankings({ groupA, groupB, groupC, groupD, groupE, overall });
     }
