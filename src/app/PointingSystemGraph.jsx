@@ -35,6 +35,8 @@ function PointingSystemGraph() {
   const [confettiActive, setConfettiActive] = useState(false);
   const audioRef = useRef(null);
   const previousPointsData = useRef(pointsData);
+  const [showVisitorPrompt, setShowVisitorPrompt] = useState(false); // New state for visitor prompt
+
 
   useEffect(() => {
     const fetchPointsData = async () => {
@@ -220,7 +222,27 @@ function PointingSystemGraph() {
   const colors = ["#FFC100", "#04d924", "#027df7", "#f70233"];
 
   return (
+
+
+
     <div className="points-system-container h-screen bg-black flex flex-col md:flex-row">
+      {showVisitorPrompt && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black opacity-50"></div>
+    <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+      <p className="mb-4 text-center">
+        You are in visitor view. This feature is disabled.
+      </p>
+      <button
+        className="bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        onClick={() => setShowVisitorPrompt(false)}
+      >
+        OK
+      </button>
+    </div>
+  </div>
+)}
+
       {/* Graph Section */}
       <div className="h-full md:w-2/3 p-4">
         <div className="bg-white rounded-lg shadow-lg p-4 w-full h-full">
