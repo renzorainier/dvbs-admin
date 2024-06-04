@@ -54,7 +54,7 @@ const Password = ({ correctPassword, children, isVisitorView, setIsVisitorView }
               <button
                 onClick={handleVisitorView}
                 className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded block w-full mt-4">
-                Enter Visitor View
+                Enter as Visitor
               </button>
             </form>
           </div>
