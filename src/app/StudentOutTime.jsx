@@ -16,8 +16,6 @@ function StudentOutTime({ isVisitorView }) {
   const audioRef = useRef(null);
   const [showVisitorPrompt, setShowVisitorPrompt] = useState(false); // New state for visitor prompt
 
-
-
   const uploadTime = new Date().toLocaleString();
 
   useEffect(() => {
@@ -82,7 +80,6 @@ function StudentOutTime({ isVisitorView }) {
     return days[dayIndex >= 1 && dayIndex <= 5 ? dayIndex - 1 : 4];
   };
 
-
   // const getCurrentDayLetter = () => {
   //   const days = ["A", "B", "C", "D", "E", "F", "G"];
   //   const dayIndex = new Date().getDay();
@@ -132,7 +129,6 @@ function StudentOutTime({ isVisitorView }) {
     setShowConfirmation(false);
     setStudentToMarkOut(null);
     playEnterSound();
-
   };
 
   const handleLocationChange = (location) => {
@@ -172,15 +168,28 @@ function StudentOutTime({ isVisitorView }) {
   ).length;
   const notMarkedCount = filteredStudents.length - markedCount;
 
-
   const playEnterSound = () => {
     const audio = new Audio("/point.wav");
     audio.play();
   };
 
-
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto ">
+      {showVisitorPrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="mb-4 text-center">
+              You are in visitor view. This feature is disabled.
+            </p>
+            <button
+              className="bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onClick={() => setShowVisitorPrompt(false)}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
           <Menu as="div" className="relative inline-block mt-5 mb-5">
@@ -327,16 +336,19 @@ function StudentOutTime({ isVisitorView }) {
                 <div className="flex space-x-4">
                   <button
                     className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                    onClick={() =>
-                      updateStudentOutTime(
-                        studentToMarkOut.groupId,
-                        studentToMarkOut.prefix,
-                        studentToMarkOut.inTimeField,
-                        studentToMarkOut.outTimeField,
-                        ""
-
-                      )
-                    }>
+                    onClick={() => {
+                      if (!isVisitorView) {
+                        updateStudentOutTime(
+                          studentToMarkOut.groupId,
+                          studentToMarkOut.prefix,
+                          studentToMarkOut.inTimeField,
+                          studentToMarkOut.outTimeField,
+                          ""
+                        );
+                      } else {
+                        setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
+                      }
+                    }}>
                     Yes
                   </button>
                   <button
@@ -351,7 +363,6 @@ function StudentOutTime({ isVisitorView }) {
         </div>
       </div>
       <audio ref={audioRef} />
-
     </div>
   );
 }
