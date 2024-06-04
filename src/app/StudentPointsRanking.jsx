@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore'; // Changed getDocs to onSnapshot
 import { db } from './firebase.js';
 
 const StudentRanking = () => {
@@ -8,62 +8,59 @@ const StudentRanking = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'dvbs'));
-        const studentData = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+    const unsubscribe = onSnapshot(collection(db, 'dvbs'), (querySnapshot) => {
+      const studentData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
 
-        const currentDayLetter = getCurrentDayLetter();
-        const presentStudents = studentData
-          .map(group => {
-            const groupStudents = [];
-            for (const key in group) {
-              if (key.endsWith(currentDayLetter)) {
-                const prefix = key.slice(0, 2);
-                const pointsField = `${prefix}${currentDayLetter}points`;
-                if (group[pointsField]) {
-                  groupStudents.push({
-                    id: group.id,
-                    group: group.id,
-                    prefix,
-                    name: group[`${prefix}name`],
-                    location: group[`${prefix}loc`],
-                    points: group[pointsField],
-                  });
-                }
+      const currentDayLetter = getCurrentDayLetter();
+      const presentStudents = studentData
+        .map(group => {
+          const groupStudents = [];
+          for (const key in group) {
+            if (key.endsWith(currentDayLetter)) {
+              const prefix = key.slice(0, 2);
+              const pointsField = `${prefix}${currentDayLetter}points`;
+              if (group[pointsField]) {
+                groupStudents.push({
+                  id: group.id,
+                  group: group.id,
+                  prefix,
+                  name: group[`${prefix}name`],
+                  location: group[`${prefix}loc`],
+                  points: group[pointsField],
+                });
               }
             }
-            return groupStudents;
-          })
-          .flat();
-
-        console.log('Fetched Students:', presentStudents);
-
-        // Sort students by points from highest to lowest
-        presentStudents.sort((a, b) => b.points - a.points);
-
-        // Group students by their group (document name)
-        const groups = presentStudents.reduce((acc, student) => {
-          if (!acc[student.group]) {
-            acc[student.group] = [];
           }
-          acc[student.group].push(student);
-          return acc;
-        }, {});
+          return groupStudents;
+        })
+        .flat();
 
-        setGroupedStudents(groups);
-        setOverallStudents(presentStudents);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching students: ', error);
-        setLoading(false);
-      }
+      console.log('Fetched Students:', presentStudents);
+
+      // Sort students by points from highest to lowest
+      presentStudents.sort((a, b) => b.points - a.points);
+
+      // Group students by their group (document name)
+      const groups = presentStudents.reduce((acc, student) => {
+        if (!acc[student.group]) {
+          acc[student.group] = [];
+        }
+        acc[student.group].push(student);
+        return acc;
+      }, {});
+
+      setGroupedStudents(groups);
+      setOverallStudents(presentStudents);
+      setLoading(false);
+    });
+
+    return () => {
+      // Unsubscribe from the snapshot listener when the component unmounts
+      unsubscribe();
     };
-
-    fetchStudents();
   }, []);
 
   const getCurrentDayLetter = () => {
