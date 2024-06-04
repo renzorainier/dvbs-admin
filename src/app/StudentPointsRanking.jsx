@@ -38,8 +38,10 @@ const StudentRanking = () => {
           })
           .flat();
 
-        // Sort students alphabetically by name
-        presentStudents.sort((a, b) => a.name.localeCompare(b.name));
+        console.log('Fetched Students:', presentStudents);
+
+        // Sort students by points from highest to lowest
+        presentStudents.sort((a, b) => b.points - a.points);
 
         setStudents(presentStudents);
         setLoading(false);

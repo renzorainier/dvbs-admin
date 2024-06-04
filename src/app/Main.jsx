@@ -73,7 +73,9 @@ function Main() {
         return <DailyRewards />;
       case "SalvationDecision":
         return <SalvationDecision />;
-      case "Store":
+        case "Rank":
+          return <StudentPointsRanking />;
+        case "Store":
         return (
           <Password
             isVisitorView={isVisitorView}
@@ -217,6 +219,20 @@ function Main() {
                     <span style={{ marginTop: "0.5em" }}>Out</span>
                   </div>
                 </button>
+                <button
+                  className="focus:outline-none bg-white/5 backdrop-blur-5xl text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+                  onClick={() => handleButtonClick("Rank")}
+                  style={{ animation: "slide-from-left 1s ease forwards" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <TbDoorExit style={{ fontSize: "3.5em" }} />{" "}
+                    <span style={{ marginTop: "0.5em" }}>StudentRanking</span>
+                  </div>
+                </button>
               </div>
             </div>
           </div>
@@ -254,7 +270,7 @@ function Main() {
           {backButton}
           {/* <ScrollToTopButton /> */}
           {renderCurrentComponent()}
-          <StudentPointsRanking/>
+          {/* <StudentPointsRanking/> */}
           {/* <AttendanceChart/> */}
           {/* <CopyDataComponent />; */}
           {/* <CopyScheduleData/> */}
