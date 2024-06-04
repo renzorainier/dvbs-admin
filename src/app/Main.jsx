@@ -60,7 +60,7 @@ function Main() {
             isVisitorView={isVisitorView}
             setIsVisitorView={setIsVisitorView}
             correctPassword="1234">
-            <PointingSystemGraph />
+            <PointingSystemGraph isVisitorView={isVisitorView}/>
           </Password>
         );
       case "Attendance":
