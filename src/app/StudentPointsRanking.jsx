@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from './firebase.js';
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/solid';
+// import { ChevronDownIcon } from '@heroicons/react/solid';
 
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
@@ -100,7 +100,7 @@ const StudentRanking = () => {
           <Menu as="div" className="relative inline-block text-left">
             <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
               {currentGroup}
-              <ChevronDownIcon className="w-5 h-5 ml-2 -mr-1" aria-hidden="true" />
+              {/* <ChevronDownIcon className="w-5 h-5 ml-2 -mr-1" aria-hidden="true" /> */}
             </Menu.Button>
             <Transition
               as={React.Fragment}
