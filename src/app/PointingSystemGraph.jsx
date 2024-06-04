@@ -13,7 +13,7 @@ const getDefaultDay = () => {
 const formatNumber = (num) =>
   num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-function PointingSystemGraph({isVisitorView}) {
+function PointingSystemGraph({ isVisitorView }) {
   const [pointsData, setPointsData] = useState({
     primary: { Apoints: 0, Bpoints: 0, Cpoints: 0, Dpoints: 0, Epoints: 0 },
     middlers: { Apoints: 0, Bpoints: 0, Cpoints: 0, Dpoints: 0, Epoints: 0 },
@@ -296,13 +296,7 @@ function PointingSystemGraph({isVisitorView}) {
             </div>
             <div className="flex justify-center mb-4">
               <button
-                onClick={() => {
-                  if (!isVisitorView) {
-                    setIsAdding(true);
-                  } else {
-                    setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
-                  }
-                }}
+                onClick={() => setIsAdding(true)}
                 className={`px-4 py-2 rounded-md mr-2 ${
                   isAdding
                     ? "bg-blue-500 text-white"
