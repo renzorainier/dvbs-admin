@@ -13,7 +13,7 @@ const getDefaultDay = () => {
 const formatNumber = (num) =>
   num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-function PointingSystemGraph() {
+function PointingSystemGraph({isVisitorView}) {
   const [pointsData, setPointsData] = useState({
     primary: { Apoints: 0, Bpoints: 0, Cpoints: 0, Dpoints: 0, Epoints: 0 },
     middlers: { Apoints: 0, Bpoints: 0, Cpoints: 0, Dpoints: 0, Epoints: 0 },

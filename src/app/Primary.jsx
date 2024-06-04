@@ -8,7 +8,7 @@ function Primary({
   config,
   currentConfigIndex,
   setCurrentConfigIndex,
-  isVisitorView={isVisitorView},
+  isVisitorView,
 }) {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
