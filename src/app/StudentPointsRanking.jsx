@@ -123,7 +123,7 @@ const StudentRanking = () => {
                 >
                   <button
                     className="flex-1 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700"
-                    style={{ backgroundColor: getBackgroundColor(student.prefix) }}
+                    style={{ backgroundColor: getBackgroundColor(student.group) }}
                     onClick={() => {}}
                   >
                     {student.name} - {student.points} points
