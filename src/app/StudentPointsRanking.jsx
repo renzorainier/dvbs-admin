@@ -22,15 +22,15 @@ const StudentRanking = () => {
             const groupStudents = [];
             for (const key in group) {
               if (key.endsWith(currentDayLetter)) {
-                const id = key.slice(0, 2);
-                const pointsField = `${id}${currentDayLetter}points`;
+                const prefix = key.slice(0, 2);
+                const pointsField = `${prefix}${currentDayLetter}points`;
                 if (group[pointsField]) {
                   groupStudents.push({
                     id: group.id,
                     group: group.id,
-                    id,
-                    name: group[`${id}name`],
-                    location: group[`${id}loc`],
+                    prefix,
+                    name: group[`${prefix}name`],
+                    location: group[`${prefix}loc`],
                     points: group[pointsField],
                   });
                 }
@@ -72,8 +72,8 @@ const StudentRanking = () => {
     return days[dayIndex >= 1 && dayIndex <= 5 ? dayIndex - 1 : 4];
   };
 
-  const getBackgroundColor = (id) => {
-    switch (id) {
+  const getBackgroundColor = (prefix) => {
+    switch (prefix) {
       case "pr": // Assuming 'pr' stands for primary
         return "#FFC100";
       case "mi": // Assuming 'mi' stands for middlers
@@ -99,12 +99,12 @@ const StudentRanking = () => {
             <h2 className="text-2xl font-bold mb-4">Overall Ranking</h2>
             {overallStudents.map(student => (
               <div
-                key={`${student.id}-${student.id}`}
+                key={`${student.id}-${student.prefix}`}
                 className="flex items-center mb-4"
               >
                 <button
                   className="flex-1 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700"
-                  style={{ backgroundColor: getBackgroundColor(student.id) }}
+                  style={{ backgroundColor: getBackgroundColor(student.prefix) }}
                   onClick={() => {}}
                 >
                   {student.name} - {student.points} points
@@ -118,12 +118,12 @@ const StudentRanking = () => {
               <h2 className="text-2xl font-bold mb-4">{group} Ranking</h2>
               {groupedStudents[group].map(student => (
                 <div
-                  key={`${student.id}-${student.id}`}
+                  key={`${student.id}-${student.prefix}`}
                   className="flex items-center mb-4"
                 >
                   <button
                     className="flex-1 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700"
-                    style={{ backgroundColor: getBackgroundColor(student.id) }}
+                    style={{ backgroundColor: getBackgroundColor(student.prefix) }}
                     onClick={() => {}}
                   >
                     {student.name} - {student.points} points
