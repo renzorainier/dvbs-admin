@@ -326,7 +326,6 @@ function PointingSystemGraph({ isVisitorView }) {
                 onClick={() => {
                   if (!isVisitorView) {
                     handlePointsSubmit();
-                    console.log("handle")
                   } else {
                     setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
                   }
