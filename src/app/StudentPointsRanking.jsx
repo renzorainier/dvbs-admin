@@ -72,15 +72,15 @@ const StudentRanking = () => {
     return days[dayIndex >= 1 && dayIndex <= 5 ? dayIndex - 1 : 4];
   };
 
-  const getBackgroundColor = (prefix) => {
-    switch (prefix) {
-      case "pr": // Assuming 'pr' stands for primary
+  const getBackgroundColor = (group) => {
+    switch (group) {
+      case "primary":
         return "#FFC100";
-      case "mi": // Assuming 'mi' stands for middlers
+      case "middlers": // Assuming 'mi' stands for middlers
         return "#04d924";
-      case "ju": // Assuming 'ju' stands for juniors
+      case "juniors": // Assuming 'ju' stands for juniors
         return "#027df7";
-      case "yo": // Assuming 'yo' stands for youth
+      case "youth": // Assuming 'yo' stands for youth
         return "#f70233";
       default:
         return "#FFFFFF"; // Default color if no match
@@ -104,7 +104,7 @@ const StudentRanking = () => {
               >
                 <button
                   className="flex-1 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700"
-                  style={{ backgroundColor: getBackgroundColor(student.prefix) }}
+                  style={{ backgroundColor: getBackgroundColor(student.group) }}
                   onClick={() => {}}
                 >
                   {student.name} - {student.points} points
