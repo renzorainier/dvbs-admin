@@ -40,9 +40,10 @@ const StudentPointsRanking = () => {
     if (students.length > 0) {
       const currentDayLetter = getCurrentDayLetter();
       const studentPoints = students.map(student => {
-        const pointsField = `${student.id.slice(0, 2)}${currentDayLetter}points`;
+        const nameField = `${student.id}name`;
+        const pointsField = `${student.id}${currentDayLetter}points`;
         const points = student[pointsField] || 0;
-        return { ...student, points };
+        return { ...student, name: student[nameField], points };
       });
 
       const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
