@@ -3,6 +3,7 @@ import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";
 import { FaCheckCircle } from "react-icons/fa";
+import { FaUserCheck } from "react-icons/fa";
 
 function Primary({
   config,
@@ -281,19 +282,7 @@ function Primary({
 
       <div className="flex justify-center mb-5 font-bold">
         <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 sm:h-10 lg:w-12 lg:h-12">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632"
-            />
-          </svg>
+        <FaUserCheck classname="h-5"/>
           <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
             {countPresentForToday()}
           </p>
