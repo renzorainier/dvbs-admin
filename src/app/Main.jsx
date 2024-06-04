@@ -29,7 +29,7 @@ import { BsGraphUpArrow } from "react-icons/bs";
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
-  const [isVisitorView, setIsVisitorView] = useState(true);
+  const [isVisitorView, setIsVisitorView] = useState(false);
 
   const handleButtonClick = (componentName) => {
     setCurrentComponent(componentName);
@@ -50,7 +50,7 @@ function Main() {
             isVisitorView={isVisitorView}
             setIsVisitorView={setIsVisitorView}
             correctPassword="1234">
-            <StudentOutTime />;
+            <StudentOutTime isVisitorView={isVisitorView} />;
           </Password>
         );
 
