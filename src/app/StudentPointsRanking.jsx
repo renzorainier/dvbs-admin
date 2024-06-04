@@ -52,6 +52,7 @@ const StudentPointsRanking = () => {
 
       const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
       const groupB = studentPoints.filter(student => student.group === 'B').sort((a, b) => b.points - a.points);
+      const groupC = studentPoints.filter(student => student.group === 'C').sort((a, b) => b.points - a.points);
       // ... similar for other groups and overall
 
       setRankings({ groupA, groupB, groupC, groupD, groupE, overall });
