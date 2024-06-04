@@ -15,6 +15,7 @@ const StudentPointsRanking = () => {
           id: doc.id,
           ...doc.data(),
         }));
+        console.log(data);
         setStudents(studentData);
         setLoading(false);
       } catch (error) {
