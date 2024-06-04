@@ -49,7 +49,7 @@ function Main() {
           <Password
             isVisitorView={isVisitorView}
             setIsVisitorView={setIsVisitorView}
-            correctPassword="1234">
+            correctPassword="1111">
             <StudentOutTime isVisitorView={isVisitorView} />;
           </Password>
         );
@@ -59,7 +59,7 @@ function Main() {
           <Password
             isVisitorView={isVisitorView}
             setIsVisitorView={setIsVisitorView}
-            correctPassword="1234">
+            correctPassword="0000">
             <PointingSystemGraph isVisitorView={isVisitorView} />
           </Password>
         );
@@ -77,7 +77,7 @@ function Main() {
           <Password
             isVisitorView={isVisitorView}
             setIsVisitorView={setIsVisitorView}
-            correctPassword="1234">
+            correctPassword="2024">
             <Store isVisitorView={isVisitorView} />
           </Password>
         );
