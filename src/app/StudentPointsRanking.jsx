@@ -15,13 +15,14 @@ const StudentPointsRanking = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log(data);
         setStudents(studentData);
+        console.log('Fetched Students:', studentData); // Log fetched data here
         setLoading(false);
       } catch (error) {
         console.error('Error fetching students: ', error);
         setLoading(false);
       }
+
     };
 
     fetchStudents();
