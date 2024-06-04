@@ -48,7 +48,11 @@ function Main() {
       case "Out":
         return <StudentOutTime />;
       case "Point":
-        return <PointingSystemGraph />;
+        return   <Password
+        isVisitorView={isVisitorView}
+        setIsVisitorView={setIsVisitorView} correctPassword="1234">
+          <PointingSystemGraph />
+          </Password>
       case "Attendance":
         return <AttendanceChart />;
       case "Schedule":

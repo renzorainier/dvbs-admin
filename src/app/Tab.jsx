@@ -52,7 +52,7 @@ function Tab() {
         backgroundColor: `${configurations[currentConfigIndex].color}`,
       }}
       className=" h-screen overflow-auto ">
-      <Password   correctPassword="1234"
+      <Password
         isVisitorView={isVisitorView}
         setIsVisitorView={setIsVisitorView} correctPassword="1234">
       <div className="flex justify-center items-center overflow-auto">
