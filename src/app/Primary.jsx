@@ -290,7 +290,7 @@ function Primary({
           </p>
         </div>
         <div className="flex items-center bg-white border rounded-lg shadow-md p-4 ml-4">
-        <ImCross style={{ fontSize: "1.5em" }}/>
+        <ImCross style={{ fontSize: "1.0em" }}/>
           <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
             {countAbsentForToday()}
           </p>

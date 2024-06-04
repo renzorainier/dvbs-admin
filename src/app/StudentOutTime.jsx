@@ -4,6 +4,8 @@ import { db } from "./firebase.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { FaCheckCircle } from "react-icons/fa";
+import { FaUserCheck } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 
 function StudentOutTime({ isVisitorView }) {
   const [students, setStudents] = useState([]);
@@ -247,39 +249,14 @@ function StudentOutTime({ isVisitorView }) {
 
           <div className="flex justify-center mb-5 font-bold">
             <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632"
-                />
-              </svg>
+            <FaUserCheck style={{ fontSize: "1.5em" }}/>
 
               <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
                 {markedCount}
               </p>
             </div>
             <div className="flex items-center bg-white border rounded-lg shadow-md p-4 ml-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-
+            <ImCross style={{ fontSize: "1.0em" }}/>
               <p className="text-gray-800 font-bold  ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
                 {notMarkedCount}
               </p>
