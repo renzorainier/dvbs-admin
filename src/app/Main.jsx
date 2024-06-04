@@ -254,6 +254,7 @@ function Main() {
           {backButton}
           {/* <ScrollToTopButton /> */}
           {renderCurrentComponent()}
+          <StudentPointsRanking/>
           {/* <AttendanceChart/> */}
           {/* <CopyDataComponent />; */}
           {/* <CopyScheduleData/> */}
