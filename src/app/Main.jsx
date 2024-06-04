@@ -253,7 +253,7 @@ function Main() {
           {backButton}
           {/* <ScrollToTopButton /> */}
           {renderCurrentComponent()}
-          <AttendanceChart/>
+          {/* <AttendanceChart/> */}
           {/* <CopyDataComponent />; */}
           {/* <CopyScheduleData/> */}
           {/* <Analytics />  */}
