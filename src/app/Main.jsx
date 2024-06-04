@@ -29,7 +29,7 @@ import { BsGraphUpArrow } from "react-icons/bs";
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
-  const [isVisitorView, setIsVisitorView] = useState(false);
+  const [isVisitorView, setIsVisitorView] = useState(true);
 
   const handleButtonClick = (componentName) => {
     setCurrentComponent(componentName);
