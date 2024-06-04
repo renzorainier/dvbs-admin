@@ -50,10 +50,15 @@ const StudentPointsRanking = () => {
         return { ...student, points };
       });
 
-      const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
-      const groupB = studentPoints.filter(student => student.group === 'B').sort((a, b) => b.points - a.points);
-      const groupC = studentPoints.filter(student => student.group === 'C').sort((a, b) => b.points - a.points);
-      // ... similar for other groups and overall
+        // Filter and sort students by group
+        const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
+        const groupB = studentPoints.filter(student => student.group === 'B').sort((a, b) => b.points - a.points);
+        const groupC = studentPoints.filter(student => student.group === 'C').sort((a, b) => b.points - a.points);
+        const groupD = studentPoints.filter(student => student.group === 'D').sort((a, b) => b.points - a.points);
+        const groupE = studentPoints.filter(student => student.group === 'E').sort((a, b) => b.points - a.points);
+
+        // Sort overall
+        const overall = studentPoints.sort((a, b) => b.points - a.points);
 
       setRankings({ groupA, groupB, groupC, groupD, groupE, overall });
     }
