@@ -282,7 +282,7 @@ function Primary({
 
       <div className="flex justify-center mb-5 font-bold">
         <div className="flex items-center bg-white border rounded-lg shadow-md p-4">
-        <FaUserCheck classname="h-5"/>
+        <FaUserCheck style={{ fontSize: "1.5em" }}/>
           <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
             {countPresentForToday()}
           </p>
