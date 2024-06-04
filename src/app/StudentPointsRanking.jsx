@@ -10,7 +10,7 @@ const StudentPointsRanking = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'students'));
+        const querySnapshot = await getDocs(collection(db, 'dvbs'));
         const studentData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
@@ -25,7 +25,7 @@ const StudentPointsRanking = () => {
 
     fetchStudents();
 
-    const unsubscribe = onSnapshot(collection(db, 'students'), snapshot => {
+    const unsubscribe = onSnapshot(collection(db, 'dvbs'), snapshot => {
       const studentData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
@@ -40,7 +40,8 @@ const StudentPointsRanking = () => {
     if (students.length > 0) {
       const currentDayLetter = getCurrentDayLetter();
       const studentPoints = students.map(student => {
-        const points = student[`0${currentDayLetter}points`] || 0;
+        const pointsField = `${student.id.slice(0, 2)}${currentDayLetter}points`;
+        const points = student[pointsField] || 0;
         return { ...student, points };
       });
 
