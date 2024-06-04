@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, onSnapshot } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from './firebase.js';
 
-const StudentPointsRanking = () => {
+const StudentRanking = () => {
   const [students, setStudents] = useState([]);
-  const [rankings, setRankings] = useState({ groupA: [], groupB: [], groupC: [], groupD: [], groupE: [], overall: [] });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,7 +14,34 @@ const StudentPointsRanking = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        setStudents(studentData);
+
+        const currentDayLetter = getCurrentDayLetter();
+        const presentStudents = studentData
+          .map(group => {
+            const groupStudents = [];
+            for (const key in group) {
+              if (key.endsWith(currentDayLetter)) {
+                const prefix = key.slice(0, 2);
+                const pointsField = `${prefix}${currentDayLetter}points`;
+                if (group[pointsField]) {
+                  groupStudents.push({
+                    id: group.id,
+                    prefix,
+                    name: group[`${prefix}name`],
+                    location: group[`${prefix}loc`],
+                    points: group[pointsField],
+                  });
+                }
+              }
+            }
+            return groupStudents;
+          })
+          .flat();
+
+        // Sort students alphabetically by name
+        presentStudents.sort((a, b) => a.name.localeCompare(b.name));
+
+        setStudents(presentStudents);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching students: ', error);
@@ -24,38 +50,7 @@ const StudentPointsRanking = () => {
     };
 
     fetchStudents();
-
-    const unsubscribe = onSnapshot(collection(db, 'dvbs'), snapshot => {
-      const studentData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setStudents(studentData);
-    });
-
-    return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    if (students.length > 0) {
-      const currentDayLetter = getCurrentDayLetter();
-      const studentPoints = students.map(student => {
-        const nameField = `${student.id}name`;
-        const pointsField = `${student.id}${currentDayLetter}points`;
-        const points = student[pointsField] || 0;
-        return { ...student, name: student[nameField], points };
-      });
-
-      const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
-      const groupB = studentPoints.filter(student => student.group === 'B').sort((a, b) => b.points - a.points);
-      const groupC = studentPoints.filter(student => student.group === 'C').sort((a, b) => b.points - a.points);
-      const groupD = studentPoints.filter(student => student.group === 'D').sort((a, b) => b.points - a.points);
-      const groupE = studentPoints.filter(student => student.group === 'E').sort((a, b) => b.points - a.points);
-      const overall = studentPoints.sort((a, b) => b.points - a.points);
-
-      setRankings({ groupA, groupB, groupC, groupD, groupE, overall });
-    }
-  }, [students]);
 
   const getCurrentDayLetter = () => {
     const days = ['A', 'B', 'C', 'D', 'E'];
@@ -64,42 +59,38 @@ const StudentPointsRanking = () => {
   };
 
   return (
-    <div className="ranking-component">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <h2>Overall Ranking</h2>
-          <RankingList students={rankings.overall} />
+    <div className="bg-[#9ca3af] h-screen overflow-auto">
+      <div className="flex justify-center items-center overflow-auto">
+        <div className="w-full rounded-lg mx-auto" style={{ maxWidth: '90%' }}>
+          <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
+            <input
+              type="text"
+              className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+              placeholder="Search by name"
+              value={''}
+              // onChange={handleSearchChange}
+            />
 
-          <h2>Group A Ranking</h2>
-          <RankingList students={rankings.groupA} />
+            {students.map(student => (
+              <div
+                key={`${student.id}-${student.prefix}`}
+                className="flex items-center mb-4"
+              >
+                <button
+                  className="flex-1 text-white font-bold py-2 px-4 rounded-lg bg-gray-400 hover:bg-gray-700"
+                  onClick={() => {}}
+                >
+                  {student.name}
+                </button>
 
-          <h2>Group B Ranking</h2>
-          <RankingList students={rankings.groupB} />
-
-          <h2>Group C Ranking</h2>
-          <RankingList students={rankings.groupC} />
-
-          <h2>Group D Ranking</h2>
-          <RankingList students={rankings.groupD} />
-
-          <h2>Group E Ranking</h2>
-          <RankingList students={rankings.groupE} />
-        </>
-      )}
+                {/* Add colored div */}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-const RankingList = ({ students }) => (
-  <ul>
-    {students.map((student, index) => (
-      <li key={student.id}>
-        {index + 1}. {student.name} - {student.points} points
-      </li>
-    ))}
-  </ul>
-);
-
-export default StudentPointsRanking;
+export default StudentRanking;
