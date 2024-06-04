@@ -8,7 +8,7 @@ function Primary({
   config,
   currentConfigIndex,
   setCurrentConfigIndex,
-  isVisitorView,
+  isVisitorView={isVisitorView},
 }) {
   const [primaryData, setPrimaryData] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
@@ -358,7 +358,11 @@ function Primary({
                   className={`w-70percent flex items-center justify-center hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg ${getButtonColor(
                     studentIndex
                   )}`}
-                  onClick={() => {
+                  onClick={(      if (!isVisitorView) {
+                      handleClick(studentIndex);
+                    } else {
+                      setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
+                    }) => {
                     if (!isVisitorView) {
                       handleClick(studentIndex);
                     } else {

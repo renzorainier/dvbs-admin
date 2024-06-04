@@ -37,7 +37,6 @@ function PointingSystemGraph() {
   const previousPointsData = useRef(pointsData);
   const [showVisitorPrompt, setShowVisitorPrompt] = useState(false); // New state for visitor prompt
 
-
   useEffect(() => {
     const fetchPointsData = async () => {
       const documents = ["primary", "middlers", "juniors", "youth"];
@@ -222,26 +221,22 @@ function PointingSystemGraph() {
   const colors = ["#FFC100", "#04d924", "#027df7", "#f70233"];
 
   return (
-
-
-
     <div className="points-system-container h-screen bg-black flex flex-col md:flex-row">
       {showVisitorPrompt && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center">
-    <div className="fixed inset-0 bg-black opacity-50"></div>
-    <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
-      <p className="mb-4 text-center">
-        You are in visitor view. This feature is disabled.
-      </p>
-      <button
-        className="bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        onClick={() => setShowVisitorPrompt(false)}
-      >
-        OK
-      </button>
-    </div>
-  </div>
-)}
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="mb-4 text-center">
+              You are in visitor view. This feature is disabled.
+            </p>
+            <button
+              className="bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onClick={() => setShowVisitorPrompt(false)}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Graph Section */}
       <div className="h-full md:w-2/3 p-4">
@@ -301,7 +296,13 @@ function PointingSystemGraph() {
             </div>
             <div className="flex justify-center mb-4">
               <button
-                onClick={() => setIsAdding(true)}
+                onClick={() => {
+                  if (!isVisitorView) {
+                    setIsAdding(true);
+                  } else {
+                    setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
+                  }
+                }}
                 className={`px-4 py-2 rounded-md mr-2 ${
                   isAdding
                     ? "bg-blue-500 text-white"
