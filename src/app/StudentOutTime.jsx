@@ -5,7 +5,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { FaCheckCircle } from "react-icons/fa";
 
-function StudentOutTime() {
+function StudentOutTime({ isVisitorView }) {
   const [students, setStudents] = useState([]);
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -14,6 +14,8 @@ function StudentOutTime() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [studentToMarkOut, setStudentToMarkOut] = useState(null);
   const audioRef = useRef(null);
+  const [showVisitorPrompt, setShowVisitorPrompt] = useState(false); // New state for visitor prompt
+
 
 
   const uploadTime = new Date().toLocaleString();
