@@ -4,7 +4,7 @@ import { db } from "./firebase.js"; // Import your Firebase config
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-function Store() {
+function Store({ isVisitorView }) {
   const [students, setStudents] = useState([]);
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -16,6 +16,9 @@ function Store() {
   const [paymentAmount, setPaymentAmount] = useState("");
   const [paymentStatus, setPaymentStatus] = useState(null);
   const audioRef = useRef(null);
+  const [showVisitorPrompt, setShowVisitorPrompt] = useState(false); // New state for visitor prompt
+
+
 
 
   useEffect(() => {
@@ -168,6 +171,21 @@ function Store() {
 
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto">
+        {showVisitorPrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white rounded-lg p-5 shadow-md z-10 flex flex-col items-center">
+            <p className="mb-4 text-center">
+              You are in visitor view. This feature is disabled.
+            </p>
+            <button
+              className="bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onClick={() => setShowVisitorPrompt(false)}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
           <Menu as="div" className="relative inline-block mt-5 mb-3">

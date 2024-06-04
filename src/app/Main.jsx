@@ -78,7 +78,7 @@ function Main() {
             isVisitorView={isVisitorView}
             setIsVisitorView={setIsVisitorView}
             correctPassword="1234">
-            <Store />
+            <Store isVisitorView={isVisitorView} />
           </Password>
         );
 
