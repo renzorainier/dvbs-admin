@@ -15,9 +15,8 @@ import DailyRewards from "./DailyRewards";
 import SalvationDecision from "./SalvationDecision";
 import CopyPreviousDayPoints from "./CopyPreviousDayPoints";
 import Store from "./Store";
-import CopyDataComponent from "./CopyDataComponent"
+import CopyDataComponent from "./CopyDataComponent";
 import Password from "./Password.jsx";
-
 
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { FaListCheck } from "react-icons/fa6";
@@ -32,13 +31,13 @@ function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
   const [isVisitorView, setIsVisitorView] = useState(false);
 
-
   const handleButtonClick = (componentName) => {
     setCurrentComponent(componentName);
   };
 
   const handleBackButtonClick = () => {
     setCurrentComponent(null);
+    setIsVisitorView(true);
   };
 
   const renderCurrentComponent = () => {
@@ -46,15 +45,28 @@ function Main() {
       case "Tab":
         return <Tab />;
       case "Out":
-        return <StudentOutTime />;
-      case "Point":
-        return   <Password
-        isVisitorView={isVisitorView}
-        setIsVisitorView={setIsVisitorView} correctPassword="1234">
-          <PointingSystemGraph />
+        return;
+        return (
+          <Password
+            isVisitorView={isVisitorView}
+            setIsVisitorView={setIsVisitorView}
+            correctPassword="1234">
+            <StudentOutTime />;
           </Password>
+        );
+
+      case "Point":
+        return (
+          <Password
+            isVisitorView={isVisitorView}
+            setIsVisitorView={setIsVisitorView}
+            correctPassword="1234">
+            <PointingSystemGraph />
+          </Password>
+        );
       case "Attendance":
-        return <AttendanceChart />;
+        return;
+        <AttendanceChart />;
       case "Schedule":
         return <Schedule />;
       case "Rewards":
@@ -67,18 +79,17 @@ function Main() {
       default:
         return (
           <div
-          className="flex flex-col justify-center items-center h-screen"
-          style={{
-            background: "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.05))",
-            position: "relative",
-          }}
-        >
-
-          <div className="text-white text-center mb-10 relative">
-            <h1 className="font-bold text-9xl">DVBS</h1>
-            <h2 className="text-2xl font-thin">2024</h2>
-            <h3 className="text-3xl font-semibold">R e s c u e‎  Z o n e</h3>
-          </div>
+            className="flex flex-col justify-center items-center h-screen"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.05))",
+              position: "relative",
+            }}>
+            <div className="text-white text-center mb-10 relative">
+              <h1 className="font-bold text-9xl">DVBS</h1>
+              <h2 className="text-2xl font-thin">2024</h2>
+              <h3 className="text-3xl font-semibold">R e s c u e‎ Z o n e</h3>
+            </div>
             <div className="container mx-auto">
               <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
                 <button
