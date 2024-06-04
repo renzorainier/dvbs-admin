@@ -31,7 +31,7 @@ const Password = ({ correctPassword, children, isVisitorView, setIsVisitorView }
       {isAuthenticated || isVisitorView ? (
         children
       ) : (
-        <div className="h-screen flex justify-center items-center bg-gray-200">
+        <div className="h-screen flex justify-center items-center ">
           <div className="bg-white p-8 rounded-lg shadow-lg">
             <h1>
               This is a restricted feature intended only for specific persons, enter password to edit data or view as visitor.
