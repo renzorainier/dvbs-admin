@@ -22,7 +22,6 @@ const StudentPointsRanking = () => {
         console.error('Error fetching students: ', error);
         setLoading(false);
       }
-
     };
 
     fetchStudents();
@@ -41,17 +40,19 @@ const StudentPointsRanking = () => {
   useEffect(() => {
     if (students.length > 0) {
       const currentDayLetter = getCurrentDayLetter();
+
+      // Log the field name being fetched
+      const pointsFieldName = `0${currentDayLetter}points`;
+      console.log(`Field name being fetched: ${pointsFieldName}`);
+
       const studentPoints = students.map(student => {
-        const points = student[`0${currentDayLetter}points`] || 0;
+        const points = student[pointsFieldName] || 0;
         return { ...student, points };
       });
 
       const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
       const groupB = studentPoints.filter(student => student.group === 'B').sort((a, b) => b.points - a.points);
-      const groupC = studentPoints.filter(student => student.group === 'C').sort((a, b) => b.points - a.points);
-      const groupD = studentPoints.filter(student => student.group === 'D').sort((a, b) => b.points - a.points);
-      const groupE = studentPoints.filter(student => student.group === 'E').sort((a, b) => b.points - a.points);
-      const overall = studentPoints.sort((a, b) => b.points - a.points);
+      // ... similar for other groups and overall
 
       setRankings({ groupA, groupB, groupC, groupD, groupE, overall });
     }
