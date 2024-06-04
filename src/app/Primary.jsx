@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+  import React, { useState, useEffect, useRef } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebase.js"; // Import your Firebase config
 import Confetti from "react-confetti";

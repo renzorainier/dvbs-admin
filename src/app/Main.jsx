@@ -16,6 +16,7 @@ import SalvationDecision from "./SalvationDecision";
 import CopyPreviousDayPoints from "./CopyPreviousDayPoints";
 import Store from "./Store";
 import CopyDataComponent from "./CopyDataComponent"
+import Password from "./Password.jsx";
 
 
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
@@ -29,6 +30,8 @@ import { BsGraphUpArrow } from "react-icons/bs";
 
 function Main() {
   const [currentComponent, setCurrentComponent] = useState(null);
+  const [isVisitorView, setIsVisitorView] = useState(false);
+
 
   const handleButtonClick = (componentName) => {
     setCurrentComponent(componentName);
