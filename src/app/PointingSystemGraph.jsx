@@ -323,7 +323,13 @@ function PointingSystemGraph({ isVisitorView }) {
             />
             <div className="flex justify-center mt-4">
               <button
-                onClick={handlePointsSubmit}
+                onClick={() => {
+                  if (!isVisitorView) {
+                    handlePointsSubmit();
+                  } else {
+                    setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
+                  }
+                }}
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md shadow-md">
                 Enter
               </button>
