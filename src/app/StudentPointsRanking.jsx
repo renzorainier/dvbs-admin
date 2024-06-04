@@ -10,13 +10,12 @@ const StudentPointsRanking = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'dvbs'));
+        const querySnapshot = await getDocs(collection(db, 'students'));
         const studentData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
         }));
         setStudents(studentData);
-        console.log('Fetched Students:', studentData); // Log fetched data here
         setLoading(false);
       } catch (error) {
         console.error('Error fetching students: ', error);
@@ -26,7 +25,7 @@ const StudentPointsRanking = () => {
 
     fetchStudents();
 
-    const unsubscribe = onSnapshot(collection(db, 'dvbs'), snapshot => {
+    const unsubscribe = onSnapshot(collection(db, 'students'), snapshot => {
       const studentData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
@@ -40,25 +39,17 @@ const StudentPointsRanking = () => {
   useEffect(() => {
     if (students.length > 0) {
       const currentDayLetter = getCurrentDayLetter();
-
-      // Log the field name being fetched
-      const pointsFieldName = `0${currentDayLetter}points`;
-      console.log(`Field name being fetched: ${pointsFieldName}`);
-
       const studentPoints = students.map(student => {
-        const points = student[pointsFieldName] || 0;
+        const points = student[`0${currentDayLetter}points`] || 0;
         return { ...student, points };
       });
 
-        // Filter and sort students by group
-        const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
-        const groupB = studentPoints.filter(student => student.group === 'B').sort((a, b) => b.points - a.points);
-        const groupC = studentPoints.filter(student => student.group === 'C').sort((a, b) => b.points - a.points);
-        const groupD = studentPoints.filter(student => student.group === 'D').sort((a, b) => b.points - a.points);
-        const groupE = studentPoints.filter(student => student.group === 'E').sort((a, b) => b.points - a.points);
-
-        // Sort overall
-        const overall = studentPoints.sort((a, b) => b.points - a.points);
+      const groupA = studentPoints.filter(student => student.group === 'A').sort((a, b) => b.points - a.points);
+      const groupB = studentPoints.filter(student => student.group === 'B').sort((a, b) => b.points - a.points);
+      const groupC = studentPoints.filter(student => student.group === 'C').sort((a, b) => b.points - a.points);
+      const groupD = studentPoints.filter(student => student.group === 'D').sort((a, b) => b.points - a.points);
+      const groupE = studentPoints.filter(student => student.group === 'E').sort((a, b) => b.points - a.points);
+      const overall = studentPoints.sort((a, b) => b.points - a.points);
 
       setRankings({ groupA, groupB, groupC, groupD, groupE, overall });
     }
