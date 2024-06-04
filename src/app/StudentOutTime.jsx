@@ -305,15 +305,19 @@ function StudentOutTime({ isVisitorView }) {
                       ? "bg-green-500 hover:bg-green-700"
                       : "bg-gray-400 hover:bg-gray-700"
                   }`}
-                  onClick={() =>
-                    handleClick(
-                      student.id,
-                      student.prefix,
-                      student.inTimeField,
-                      student.outTimeField,
-                      student.outTime
-                    )
-                  }>
+                  onClick={() => {
+                    if (!isVisitorView) {
+                      handleClick(
+                        student.id,
+                        student.prefix,
+                        student.inTimeField,
+                        student.outTimeField,
+                        student.outTime
+                      );
+                    } else {
+                      setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
+                    }
+                  }}>
                   {student.name}
                   {student.saved && (
                     <FaCheckCircle className="text-black ml-2" />
@@ -336,19 +340,15 @@ function StudentOutTime({ isVisitorView }) {
                 <div className="flex space-x-4">
                   <button
                     className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => {
-                      if (!isVisitorView) {
-                        updateStudentOutTime(
-                          studentToMarkOut.groupId,
-                          studentToMarkOut.prefix,
-                          studentToMarkOut.inTimeField,
-                          studentToMarkOut.outTimeField,
-                          ""
-                        );
-                      } else {
-                        setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
-                      }
-                    }}>
+                    onClick={() =>
+                      updateStudentOutTime(
+                        studentToMarkOut.groupId,
+                        studentToMarkOut.prefix,
+                        studentToMarkOut.inTimeField,
+                        studentToMarkOut.outTimeField,
+                        ""
+                      )
+                    }>
                     Yes
                   </button>
                   <button
