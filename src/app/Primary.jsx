@@ -5,6 +5,7 @@ import Confetti from "react-confetti";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
+import { HiClipboardList } from "react-icons/hi";
 
 function Primary({
   config,
@@ -296,19 +297,7 @@ function Primary({
         </div>
 
         <div className="flex items-center bg-white border rounded-lg shadow-md p-4 ml-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+        <HiClipboardList style={{ fontSize: "1.5em" }} />
           <p className="text-gray-800 font-bold ml-2 text-lg sm:text-base md:text-lg lg:text-xl">
             {countPresentForToday() + countAbsentForToday()}
           </p>
