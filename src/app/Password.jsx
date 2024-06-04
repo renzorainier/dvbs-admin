@@ -33,6 +33,9 @@ const Password = ({ correctPassword, children, isVisitorView, setIsVisitorView }
       ) : (
         <div className="h-screen flex justify-center items-center bg-gray-200">
           <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h1>
+              This is a restricted Feature intended only for specific persons, enter password to edit data or view as visitor.
+            </h1>
             <h2 className="text-lg font-semibold mb-4">Enter PIN</h2>
             <form onSubmit={handleSubmit}>
               <input
