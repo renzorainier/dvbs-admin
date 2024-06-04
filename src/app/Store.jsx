@@ -270,7 +270,7 @@ function Store({ isVisitorView }) {
           </div>
 
           {showPoints && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="fixed inset-0 z-40 flex items-center justify-center">
               <div
                 className="fixed inset-0 bg-black opacity-50"
                 onClick={() => setShowPoints(false)}
@@ -299,7 +299,13 @@ function Store({ isVisitorView }) {
                 />
                 <button
                   className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4"
-                  onClick={handlePayment}>
+                  onClick={() => {
+                    if (!isVisitorView) {
+                      handleClick();
+                    } else {
+                      setShowVisitorPrompt(true); // Show visitor prompt if in visitor view
+                    }
+                  }}>
                   Confirm Payment
                 </button>
                 <button
