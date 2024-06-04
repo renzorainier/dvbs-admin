@@ -73,7 +73,14 @@ function Main() {
       case "SalvationDecision":
         return <SalvationDecision />;
       case "Store":
-        return <Store />;
+        return (
+          <Password
+            isVisitorView={isVisitorView}
+            setIsVisitorView={setIsVisitorView}
+            correctPassword="1234">
+            <Store />
+          </Password>
+        );
 
       default:
         return (
