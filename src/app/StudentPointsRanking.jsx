@@ -10,7 +10,7 @@ const StudentPointsRanking = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'students'));
+        const querySnapshot = await getDocs(collection(db, 'dvbs'));
         const studentData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
