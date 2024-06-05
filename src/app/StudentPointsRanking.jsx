@@ -113,18 +113,23 @@ const StudentRanking = () => {
   }
 
   return (
-    <div className="bg-[#9ca3af] h-screen  overflow-auto">
-      <div className="flex justify-center items-center overflow-auto">
-        <div className="w-full rounded-lg mx-auto">
-          {Object.keys(groupedStudents).map((group) => (
-            <div
-              key={group}
-              className="w-full max-w-full text-gray-700 bg-white  p-5 border rounded-lg shadow-lg"
-            >
-              <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
-              {Object.keys(groupedStudents[group]).map((rank) => (
-                parseInt(rank) <= 5 && (
-                  <div key={rank} className="mb-4 flex items-center p-4 bg-gray-100 rounded-lg shadow-md">
+<div className="bg-[#9ca3af] h-screen overflow-auto">
+  <div className="flex justify-center items-center overflow-auto">
+    <div className="w-full rounded-lg mx-auto">
+      {Object.keys(groupedStudents)
+        .sort((a, b) => {
+          const order = ['primary', 'middlers', 'juniors', 'youth'];
+          return order.indexOf(a) - order.indexOf(b);
+        })
+        .map((group) => (
+          <div
+            key={group}
+            className="w-full max-w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg"
+          >
+            <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
+            {Object.keys(groupedStudents[group]).map((rank) => (
+              parseInt(rank) <= 5 && (
+                <div key={rank} className="mb-4 flex items-center p-4 bg-gray-100 rounded-lg shadow-md">
                   <div className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0" style={{ width: '120px' }}>
                     {rank}
                   </div>
@@ -151,15 +156,14 @@ const StudentRanking = () => {
                     </div>
                   </div>
                 </div>
-
-
-                )
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+              )
+            ))}
+          </div>
+        ))}
     </div>
+  </div>
+</div>
+
   );
 };
 
