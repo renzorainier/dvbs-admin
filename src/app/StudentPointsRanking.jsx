@@ -131,7 +131,7 @@ const StudentRanking = () => {
             <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
             {Object.keys(groupedStudents[group]).map((rank) => (
               <div key={rank} className="mb-4">
-                <div className="text-xl font-semibold mb-2">Rank {rank}</div>
+                <div className="text-xl font-bold mb-2">Rank {rank}</div>
                 <div className="flex flex-wrap">
                   {groupedStudents[group][rank].map((student) => (
                     <div
@@ -139,7 +139,7 @@ const StudentRanking = () => {
                       className="flex items-center m-2 w-full"
                     >
                       <div
-                        className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-6xl"
+                        className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
                         style={{
                           backgroundColor: getBackgroundColor(student.group),
                         }}
