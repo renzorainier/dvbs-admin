@@ -6,7 +6,7 @@ import { db2 } from "./firebaseConfig2.js";
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
   const [loading, setLoading] = useState(true);
-  const [groupToShow, setGroupToShow] = useState(null);
+  const [groupToShow, setGroupToShow] = useState("primary"); // Default group to show
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "dvbs"), (querySnapshot) => {
@@ -41,23 +41,17 @@ const StudentRanking = () => {
 
       console.log("Fetched Students:", presentStudents);
 
-      // Fetch the group to show from db2 config document
-      const configRef = collection(db2, "config");
-      const unsubscribeConfig = onSnapshot(configRef, (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const configData = doc.data();
-          const group = configData.group;
-          setGroupToShow(group);
-        });
-      });
-
       // Sort students by points from highest to lowest
       presentStudents.sort((a, b) => b.points - a.points);
 
-      // Filter students based on the group to show
-      const filteredStudents = groupToShow
-        ? presentStudents.filter((student) => student.group === groupToShow)
-        : presentStudents;
+      // Group students by their group (document name)
+      const groups = presentStudents.reduce((acc, student) => {
+        if (!acc[student.group]) {
+          acc[student.group] = [];
+        }
+        acc[student.group].push(student);
+        return acc;
+      }, {});
 
       // Group students by their ranks within each group
       const groupedByRank = {};
@@ -89,12 +83,18 @@ const StudentRanking = () => {
       setLoading(false);
     });
 
+    const unsubscribeConfig = onSnapshot(collection(db2, "config"), (doc) => {
+      if (doc.exists()) {
+        setGroupToShow(doc.data().group);
+      }
+    });
+
     return () => {
       // Unsubscribe from the snapshot listeners when the component unmounts
       unsubscribe();
       unsubscribeConfig();
     };
-  }, [groupToShow]); // Re-run effect when groupToShow changes
+  }, []);
 
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E"];
