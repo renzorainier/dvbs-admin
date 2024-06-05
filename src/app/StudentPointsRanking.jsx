@@ -155,7 +155,7 @@ const StudentRanking = () => {
           {currentGroup && groupedStudents[currentGroup] && (
             <div
               key={currentGroup}
-              className="w-full text-center text-gray-700 bg-black p-5  shadow-lg flex-grow">
+              className="w-full text-center text-black bg-black p-5  shadow-lg flex-grow">
               <h1 className="text-9xl text-white font-bold mb-4">
                 Highest points
               </h1>
@@ -169,7 +169,7 @@ const StudentRanking = () => {
                     parseInt(rank) <= 5 && (
                       <motion.div
                         key={rank}
-                        className="flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0"
+                        className="flex items-center p-4 bg-white rounded-lg shadow-md mb-4 last:mb-0"
                         initial={{ x: "100%" }}
                         animate={{ x: "0%" }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}>
