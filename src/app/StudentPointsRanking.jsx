@@ -139,7 +139,7 @@ const StudentRanking = () => {
                       className="flex items-center m-2 w-full"
                     >
                       <div
-                        className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                        className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-6xl"
                         style={{
                           backgroundColor: getBackgroundColor(student.group),
                         }}
