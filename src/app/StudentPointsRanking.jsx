@@ -130,24 +130,35 @@ const StudentRanking = () => {
 
   return (
     <div className="bg-[#9ca3af] min-h-screen h-screen overflow-auto">
-      <div className="flex justify-center items-center h-full overflow-auto">
-        <div className="w-full h-full rounded-lg mx-auto flex flex-col justify-center">
-          {configGroup &&
-            groupedStudents[configGroup] && ( // Check if configGroup is fetched and if the corresponding group data exists
-              <div
-                key={configGroup}
-                className="w-full text-center text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
-                <h1 className="text-9xl font-bold mb-4">Highest points </h1>
-                <h4 className="text-5xl font-bold mb-4"> {configGroup}</h4>
-                <div className="flex flex-col justify-between">
-                  {Object.keys(groupedStudents[configGroup]).map(
-                    (rank, index) =>
-                      parseInt(rank) <= 5 && (
+    <div className="flex justify-center items-center h-full overflow-auto">
+      <div className="w-full h-full rounded-lg mx-auto flex flex-col justify-center">
+        {configGroup &&
+          groupedStudents[configGroup] && ( // Check if configGroup is fetched and if the corresponding group data exists
+            <div
+              key={configGroup}
+              className="w-full text-center text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
+              <h1 className="text-9xl font-bold mb-4">Highest points </h1>
+              <h4 className="text-5xl font-bold mb-4"> {configGroup}</h4>
+              <div className="flex flex-col justify-between">
+                {Object.keys(groupedStudents[configGroup]).map(
+                  (rank, index) =>
+                    parseInt(rank) <= 5 && (
+                      <Transition
+                        key={rank}
+                        show={true}
+                        appear={true}
+                        enter={`transform transition ease-in-out duration-500 delay-${index + 1}00`}
+                        enterFrom="translate-x-full"
+                        enterTo="translate-x-0"
+                        leave={`transform transition ease-in-out duration-500 delay-${index + 1}00`}
+                        leaveFrom="translate-x-0"
+                        leaveTo="translate-x-full"
+                      >
                         <div
                           key={rank}
-                          className={`flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0 flex-grow transition-transform ease-in-out duration-500 delay-${index + 1}00`}
+                          className={`flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0 flex-grow`}
                           style={{
-                            transform: "translateX(100%)",
+                            transform: "translateX(50%)", // Adjusted transform property
                             transitionDelay: `${index * 100}ms`,
                           }}
                         >
@@ -184,14 +195,16 @@ const StudentRanking = () => {
                             </div>
                           </div>
                         </div>
-                      )
-                  )}
-                </div>
+                      </Transition>
+                    )
+                )}
               </div>
-            )}
-        </div>
+            </div>
+          )}
       </div>
     </div>
+  </div>
+
   );
 };
 
