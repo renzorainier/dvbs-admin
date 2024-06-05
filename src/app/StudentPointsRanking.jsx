@@ -140,62 +140,60 @@ const StudentRanking = () => {
                 <h1 className="text-9xl font-bold mb-4">Highest points </h1>
                 <h4 className="text-5xl font-bold mb-4"> {configGroup}</h4>
                 <div className="flex flex-col justify-between">
-                    {Object.keys(groupedStudents[configGroup]).map(
-                      (rank, index) =>
-                        parseInt(rank) <= 5 && (
+                  {Object.keys(groupedStudents[configGroup]).map(
+                    (rank, index) =>
+                      parseInt(rank) <= 5 && (
+                        <div
+                          key={rank}
+                          className={`flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0 flex-grow transition-transform ease-in-out duration-500 delay-${index + 1}00`}
+                          style={{
+                            transform: "translateX(-100%)",
+                            transitionDelay: `${index * 100}ms`,
+                          }}
+                        >
                           <div
-                            key={rank}
-                            className="mb-4 last:mb-0"
-                            style={{
-                              transition: `transform 0.5s ease-in-out ${
-                                index * 0.1
-                              }s`,
-                            }}
+                            className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0"
+                            style={{ width: "120px" }}
                           >
-                            <div className="flex items-center p-4 bg-gray-100 rounded-lg shadow-md">
-                              <div
-                                className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0"
-                                style={{ width: "120px" }}
-                              >
-                                {rank}
-                              </div>
-                              <div className="flex-grow">
-                                <div className="flex flex-wrap">
-                                  {groupedStudents[configGroup][rank].map(
-                                    (student) => (
-                                      <div
-                                        key={`${student.id}-${student.prefix}`}
-                                        className="flex items-center m-2 w-full"
-                                      >
-                                        <div
-                                          className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
-                                          style={{
-                                            backgroundColor: getBackgroundColor(
-                                              student.group
-                                            ),
-                                          }}
-                                        >
-                                          {student.name}
-                                        </div>
-                                        <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
-                                          {student.points}
-                                        </div>
-                                      </div>
-                                    )
-                                  )}
-                                </div>
-                              </div>
+                            {rank}
+                          </div>
+                          <div className="flex-grow">
+                            <div className="flex flex-wrap">
+                              {groupedStudents[configGroup][rank].map(
+                                (student) => (
+                                  <div
+                                    key={`${student.id}-${student.prefix}`}
+                                    className="flex items-center m-2 w-full"
+                                  >
+                                    <div
+                                      className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                                      style={{
+                                        backgroundColor: getBackgroundColor(
+                                          student.group
+                                        ),
+                                      }}
+                                    >
+                                      {student.name}
+                                    </div>
+                                    <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                                      {student.points}
+                                    </div>
+                                  </div>
+                                )
+                              )}
                             </div>
                           </div>
-                        )
-                    )}
-                  </div>
+                        </div>
+                      )
+                  )}
                 </div>
-              )}
-          </div>
+              </div>
+            )}
         </div>
       </div>
+    </div>
   );
 };
 
 export default StudentRanking;
+
