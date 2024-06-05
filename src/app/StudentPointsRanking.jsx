@@ -4,7 +4,6 @@ import { db } from './firebase.js';
 
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
-  const [overallStudents, setOverallStudents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -57,7 +56,6 @@ const StudentRanking = () => {
       for (const group in groups) {
         let rank = 0;
         let lastPoints = null;
-        let count = 0;
         topGroups[group] = groups[group].filter((student, index) => {
           if (index < 5 || student.points === lastPoints) {
             if (student.points !== lastPoints) {
@@ -65,7 +63,6 @@ const StudentRanking = () => {
             }
             student.rank = rank;
             lastPoints = student.points;
-            count++;
             return true;
           }
           return false;
@@ -73,7 +70,6 @@ const StudentRanking = () => {
       }
 
       setGroupedStudents(topGroups);
-      setOverallStudents(presentStudents);
       setLoading(false);
     });
 
@@ -112,24 +108,6 @@ const StudentRanking = () => {
     <div className="bg-[#9ca3af] h-screen overflow-auto">
       <div className="flex justify-center items-center overflow-auto">
         <div className="w-full rounded-lg mx-auto" style={{ maxWidth: '90%' }}>
-          <div className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
-            <h2 className="text-2xl font-bold mb-4">Overall Ranking</h2>
-            {overallStudents.map(student => (
-              <div
-                key={`${student.id}-${student.prefix}`}
-                className="flex items-center mb-4"
-              >
-                <button
-                  className="flex-1 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700"
-                  style={{ backgroundColor: getBackgroundColor(student.group) }}
-                  onClick={() => {}}
-                >
-                  {student.name} - {student.points} points
-                </button>
-              </div>
-            ))}
-          </div>
-
           {Object.keys(groupedStudents).map(group => (
             <div key={group} className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
               <h2 className="text-2xl font-bold mb-4">{group} Ranking</h2>
