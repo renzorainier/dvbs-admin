@@ -154,7 +154,7 @@ const StudentRanking = () => {
             groupedStudents[currentGroup] && (
               <div
                 key={currentGroup}
-                className="w-full text-center text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow"
+                className="w-full text-center text-gray-700 bg-black p-5  shadow-lg flex-grow"
               >
                 <h1 className="text-9xl font-bold mb-4">Highest points</h1>
                 <h4 className="text-5xl font-bold mb-4"> {currentGroup}</h4>
