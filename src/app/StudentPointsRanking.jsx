@@ -131,13 +131,13 @@ const StudentRanking = () => {
   }
 
   return (
-    <div className="bg-[#9ca3af] min-h-screen overflow-auto">
-    <div className="flex justify-center items-center overflow-auto">
-      <div className="w-full rounded-lg mx-auto">
+    <div className="bg-[#9ca3af] min-h-screen h-screen overflow-auto">
+    <div className="flex justify-center items-center h-full overflow-auto">
+      <div className="w-full h-full rounded-lg mx-auto flex flex-col justify-center">
         {configGroup && groupedStudents[configGroup] && ( // Check if configGroup is fetched and if the corresponding group data exists
           <div
             key={configGroup}
-            className="w-full max-w-full text-gray-700 bg-white p-5 max-h-full border rounded-lg shadow-lg">
+            className="w-full max-w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
             <h2 className="text-9xl font-bold mb-4">Highest points on {configGroup} </h2>
             {Object.keys(groupedStudents[configGroup]).map(
               (rank) =>
@@ -154,14 +154,12 @@ const StudentRanking = () => {
                       <div className="flex flex-wrap">
                         {groupedStudents[configGroup][rank].map((student) => (
                           <div
-                            key={`${student.id}-${                              student.prefix}`}
+                            key={`${student.id}-${ student.prefix}`}
                             className="flex items-center m-2 w-full">
                             <div
                               className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
                               style={{
-                                backgroundColor: getBackgroundColor(
-                                  student.group
-                                ),
+                                backgroundColor: getBackgroundColor(student.group),
                               }}>
                               {student.name}
                             </div>
@@ -180,6 +178,7 @@ const StudentRanking = () => {
       </div>
     </div>
   </div>
+
 
   );
 };
