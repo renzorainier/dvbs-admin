@@ -122,7 +122,7 @@ const StudentRanking = () => {
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto">
       <div className="flex justify-center items-center overflow-auto">
-        <div className="w-full rounded-lg mx-auto" >
+        <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
           {Object.keys(groupedStudents).map((group) => (
             <div
               key={group}
