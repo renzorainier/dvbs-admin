@@ -71,7 +71,19 @@ const StudentRanking = () => {
         });
       }
 
-      setGroupedStudents(topGroups);
+      // Group students by their ranks within each group
+      const groupedByRank = {};
+      for (const group in topGroups) {
+        groupedByRank[group] = topGroups[group].reduce((acc, student) => {
+          if (!acc[student.rank]) {
+            acc[student.rank] = [];
+          }
+          acc[student.rank].push(student);
+          return acc;
+        }, {});
+      }
+
+      setGroupedStudents(groupedByRank);
       setLoading(false);
     });
 
@@ -113,14 +125,19 @@ const StudentRanking = () => {
           {Object.keys(groupedStudents).map(group => (
             <div key={group} className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
               <h2 className="text-2xl font-bold mb-4">{group} Ranking</h2>
-              {groupedStudents[group].map(student => (
-                <div
-                  key={`${student.id}-${student.prefix}`}
-                  className="flex items-center mb-4 p-4 rounded-lg shadow-md"
-                  style={{ backgroundColor: getBackgroundColor(student.group) }}
-                >
-                  <div className="flex-1 text-white font-bold">
-                    Rank {student.rank}: {student.name} - {student.points} points
+              {Object.keys(groupedStudents[group]).map(rank => (
+                <div key={rank} className="mb-4">
+                  <div className="text-lg font-semibold mb-2">Rank {rank}</div>
+                  <div className="flex flex-wrap">
+                    {groupedStudents[group][rank].map(student => (
+                      <div
+                        key={`${student.id}-${student.prefix}`}
+                        className="flex-1 min-w-[150px] p-4 m-2 rounded-lg shadow-md text-white font-bold"
+                        style={{ backgroundColor: getBackgroundColor(student.group) }}
+                      >
+                        {student.name} - {student.points} points
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
