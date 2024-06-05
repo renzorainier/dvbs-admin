@@ -63,23 +63,17 @@ const StudentRanking = () => {
         for (const group in groups) {
           let rank = 0;
           let currentRankPoints = null;
-          let currentRankStudents = 0;
-          let rankIndex = 0;
           groupedByRank[group] = {};
           groups[group].forEach((student) => {
             if (student.points !== currentRankPoints) {
               rank++;
               currentRankPoints = student.points;
-              currentRankStudents = 0;
-              rankIndex = 0;
             }
-            if (currentRankStudents < 5 && rank <= 5) {
+            if (rank <= 5) {
               if (!groupedByRank[group][rank]) {
                 groupedByRank[group][rank] = [];
               }
               groupedByRank[group][rank].push(student);
-              currentRankStudents++;
-              rankIndex++;
             }
           });
         }
