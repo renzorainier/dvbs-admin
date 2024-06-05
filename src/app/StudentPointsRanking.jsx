@@ -126,7 +126,7 @@ const StudentRanking = () => {
         {Object.keys(groupedStudents).map((group) => (
           <div
             key={group}
-            className="w-full max-w-full text-gray-700 bg-white m-5 p-5 border rounded-lg shadow-lg mx-auto"
+            className="w-full max-w-full text-gray-700 bg-white  p-5 border rounded-lg shadow-lg "
           >
             <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
             {Object.keys(groupedStudents[group]).map((rank) => (
@@ -139,14 +139,14 @@ const StudentRanking = () => {
                       className="flex items-center m-2 w-full"
                     >
                       <div
-                        className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-lg"
+                        className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
                         style={{
                           backgroundColor: getBackgroundColor(student.group),
                         }}
                       >
                         {student.name}
                       </div>
-                      <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-lg">
+                      <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
                         {student.points}
                       </div>
                     </div>
