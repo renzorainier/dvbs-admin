@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, onSnapshot } from "firebase/firestore"; // Changed getDocs to onSnapshot
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase.js";
 
 const StudentRanking = () => {
@@ -88,9 +88,20 @@ const StudentRanking = () => {
       setLoading(false);
     });
 
+    // Log screen size on mount
+    setScreenSize({ width: window.innerWidth, height: window.innerHeight });
+
+    // Log screen size on resize
+    const handleResize = () => {
+      setScreenSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener("resize", handleResize);
+
     return () => {
       // Unsubscribe from the snapshot listener when the component unmounts
       unsubscribe();
+      // Remove event listener on unmount
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -116,7 +127,7 @@ const StudentRanking = () => {
   };
 
   if (loading) {
-    return <div></div>;
+    return <div>Loading...</div>;
   }
 
   return (
