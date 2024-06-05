@@ -119,7 +119,7 @@ const StudentRanking = () => {
   }
 
   return (
-    <div className="bg-[#9ca3af] h-screen overflow-auto">
+<div className="bg-[#9ca3af] h-screen overflow-auto">
   <div className="flex justify-center items-center overflow-auto">
     <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
       {Object.keys(groupedStudents).map((group) => (
@@ -142,7 +142,7 @@ const StudentRanking = () => {
                       }}>
                       {student.name}
                     </div>
-                    <div className="bg-black p-4 rounded-r-lg shadow-md text-white font-bold">
+                    <div className="flex-shrink-0 bg-black p-4 rounded-r-lg shadow-md text-white font-bold">
                       {student.points}
                     </div>
                   </div>
@@ -155,6 +155,8 @@ const StudentRanking = () => {
     </div>
   </div>
 </div>
+
+
 
   );
 };
