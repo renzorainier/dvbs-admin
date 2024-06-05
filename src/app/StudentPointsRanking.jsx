@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, onSnapshot } from "firebase/firestore"; // Changed getDocs to onSnapshot
+import { collection, onSnapshot, doc } from "firebase/firestore"; // Changed getDocs to onSnapshot
 import { db } from "./firebase.js";
 import { db2 } from "./firebaseConfig2.js";
 
@@ -84,16 +84,18 @@ const StudentRanking = () => {
         setLoading(false);
       }
     );
-
     const unsubscribeConfig = onSnapshot(
-      collection(db2, "points"), // Assuming "config" is the name of your document
-      (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+      doc(db2, "points/config"), // Assuming "config" is the name of your document
+      (doc) => {
+        if (doc.exists()) {
           const configData = doc.data();
           console.log("Fetched Config Data:", configData.group); // Log the value of the "group" field
-        });
+        } else {
+          console.log("Config document does not exist");
+        }
       }
     );
+
 
 
     return () => {
