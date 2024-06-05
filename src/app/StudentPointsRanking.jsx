@@ -108,7 +108,9 @@ const StudentRanking = () => {
     let interval;
     if (configGroup === "all" && Object.keys(groupedStudents).length > 0) {
       interval = setInterval(() => {
-        setGroupIndex((prevIndex) => (prevIndex + 1) % Object.keys(groupedStudents).length);
+        setGroupIndex(
+          (prevIndex) => (prevIndex + 1) % Object.keys(groupedStudents).length
+        );
       }, 5000);
     }
 
@@ -150,63 +152,62 @@ const StudentRanking = () => {
     <div className="bg-[#9ca3af] min-h-screen h-screen overflow-auto">
       <div className="flex justify-center items-center h-full overflow-auto">
         <div className="w-full h-full rounded-lg mx-auto flex flex-col justify-center">
-          {currentGroup &&
-            groupedStudents[currentGroup] && (
-              <div
-                key={currentGroup}
-                className="w-full text-center text-gray-700 bg-black p-5  shadow-lg flex-grow"
-              >
-                <h1 className="text-9xl font-bold mb-4">Highest points</h1>
-                <h4 className="text-5xl font-bold mb-4"> {currentGroup}</h4>
-                <div className="flex flex-col justify-between">
-                  {Object.keys(groupedStudents[currentGroup]).map(
-                    (rank, index) =>
-                      parseInt(rank) <= 5 && (
-                        <motion.div
-                          key={rank}
-                          className="flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0"
-                          initial={{ x: "100%" }}
-                          animate={{ x: "0%" }}
-                          transition={{ duration: 0.5, delay: index * 0.1 }}
-                        >
-                          <div
-                            className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0"
-                            style={{ width: "120px" }}
-                          >
-                            {rank}
-                          </div>
-                          <div className="flex-grow">
-                            <div className="flex flex-wrap">
-                              {groupedStudents[currentGroup][rank].map(
-                                (student) => (
+          {currentGroup && groupedStudents[currentGroup] && (
+            <div
+              key={currentGroup}
+              className="w-full text-center text-gray-700 bg-black p-5  shadow-lg flex-grow">
+              <h1 className="text-9xl text-white font-bold mb-4">
+                Highest points
+              </h1>
+              <h4 className="text-5xl text-white  font-bold mb-4">
+                {" "}
+                {currentGroup}
+              </h4>
+              <div className="flex flex-col justify-between">
+                {Object.keys(groupedStudents[currentGroup]).map(
+                  (rank, index) =>
+                    parseInt(rank) <= 5 && (
+                      <motion.div
+                        key={rank}
+                        className="flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0"
+                        initial={{ x: "100%" }}
+                        animate={{ x: "0%" }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}>
+                        <div
+                          className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0"
+                          style={{ width: "120px" }}>
+                          {rank}
+                        </div>
+                        <div className="flex-grow">
+                          <div className="flex flex-wrap">
+                            {groupedStudents[currentGroup][rank].map(
+                              (student) => (
+                                <div
+                                  key={`${student.id}-${student.prefix}`}
+                                  className="flex items-center m-2 w-full">
                                   <div
-                                    key={`${student.id}-${student.prefix}`}
-                                    className="flex items-center m-2 w-full"
-                                  >
-                                    <div
-                                      className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
-                                      style={{
-                                        backgroundColor: getBackgroundColor(
-                                          student.group
-                                        ),
-                                      }}
-                                    >
-                                      {student.name}
-                                    </div>
-                                    <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
-                                      {student.points}
-                                    </div>
+                                    className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                                    style={{
+                                      backgroundColor: getBackgroundColor(
+                                        student.group
+                                      ),
+                                    }}>
+                                    {student.name}
                                   </div>
-                                )
-                              )}
-                            </div>
+                                  <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                                    {student.points}
+                                  </div>
+                                </div>
+                              )
+                            )}
                           </div>
-                        </motion.div>
-                      )
-                  )}
-                </div>
+                        </div>
+                      </motion.div>
+                    )
+                )}
               </div>
-            )}
+            </div>
+          )}
         </div>
       </div>
     </div>
