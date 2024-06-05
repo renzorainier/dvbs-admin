@@ -139,7 +139,7 @@ const StudentRanking = () => {
                 className="w-full text-center text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
                 <h1 className="text-9xl font-bold mb-4">Highest points </h1>
                 <h4 className="text-5xl font-bold mb-4"> {configGroup}</h4>
-                <div className="flex flex-col justify-between h-full">
+                <div className="flex flex-col justify-between">
                   {Object.keys(groupedStudents[configGroup]).map(
                     (rank, index) =>
                       parseInt(rank) <= 5 && (
