@@ -73,14 +73,14 @@ const StudentRanking = () => {
     switch (group) {
       case "primary":
         return "#FFC100";
-      case "middlers": // Assuming 'mi' stands for middlers
+      case "middlers":
         return "#04d924";
-      case "juniors": // Assuming 'ju' stands for juniors
+      case "juniors":
         return "#027df7";
-      case "youth": // Assuming 'yo' stands for youth
+      case "youth":
         return "#f70233";
       default:
-        return "#FFFFFF"; // Default color if no match
+        return "#FFFFFF"; 
     }
   };
 
