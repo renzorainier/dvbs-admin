@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { collection, onSnapshot, doc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { db2 } from "./firebaseConfig2.js";
@@ -10,6 +10,8 @@ const StudentRanking = () => {
   const [configGroup, setConfigGroup] = useState(null);
   const [currentGroup, setCurrentGroup] = useState(null);
   const [groupIndex, setGroupIndex] = useState(0);
+  const containerRef = useRef(null);
+  const [scrolling, setScrolling] = useState(false);
 
   useEffect(() => {
     const unsubscribeStudents = onSnapshot(
@@ -105,21 +107,48 @@ const StudentRanking = () => {
   }, []);
 
   useEffect(() => {
-    let interval;
     if (configGroup === "all" && Object.keys(groupedStudents).length > 0) {
+      setGroupIndex(0); // Reset group index when groupedStudents changes
+    }
+  }, [groupedStudents, configGroup]);
+
+  useEffect(() => {
+    let interval;
+
+    if (configGroup === "all" && Object.keys(groupedStudents).length > 0 && !scrolling) {
       interval = setInterval(() => {
         setGroupIndex((prevIndex) => (prevIndex + 1) % Object.keys(groupedStudents).length);
       }, 5000);
     }
 
     return () => clearInterval(interval);
-  }, [configGroup, groupedStudents]);
+  }, [configGroup, groupedStudents, scrolling]);
 
   useEffect(() => {
     if (configGroup === "all" && Object.keys(groupedStudents).length > 0) {
       setCurrentGroup(Object.keys(groupedStudents)[groupIndex]);
     }
   }, [groupIndex, configGroup, groupedStudents]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+
+    if (container && container.scrollHeight > container.clientHeight) {
+      setScrolling(true);
+      let scrollTop = 0;
+      const scrollInterval = setInterval(() => {
+        scrollTop += 10;
+        container.scrollTo({ top: scrollTop, behavior: "smooth" });
+
+        if (scrollTop >= container.scrollHeight - container.clientHeight) {
+          clearInterval(scrollInterval);
+          setScrolling(false);
+        }
+      }, 100);
+
+      return () => clearInterval(scrollInterval);
+    }
+  }, [currentGroup, groupedStudents]);
 
   const getCurrentDayLetter = () => {
     const days = ["A", "B", "C", "D", "E"];
@@ -149,7 +178,7 @@ const StudentRanking = () => {
   return (
     <div className="bg-[#9ca3af] min-h-screen h-screen overflow-auto">
       <div className="flex justify-center items-center h-full overflow-auto">
-        <div className="w-full h-full rounded-lg mx-auto flex flex-col justify-center">
+        <div className="w-full h-full rounded-lg mx-auto flex flex-col justify-center" ref={containerRef}>
           {currentGroup &&
             groupedStudents[currentGroup] && (
               <div
