@@ -124,30 +124,29 @@ const StudentRanking = () => {
               <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
               {Object.keys(groupedStudents[group]).map((rank) => (
                 parseInt(rank) <= 5 && (
-                  <div key={rank} className="mb-4 p-4 bg-blue-100 rounded-lg shadow-md border border-blue-300">
-                  <div className="text-3xl font-extrabold text-blue-700 mb-2">Rank {rank}</div>
-                  <div className="flex flex-wrap">
-                    {groupedStudents[group][rank].map((student) => (
-                      <div
-                        key={`${student.id}-${student.prefix}`}
-                        className="flex items-center m-2 w-full"
-                      >
+                  <div key={rank} className="mb-4">
+                    <div className="text-xl font-bold mb-2">Rank {rank}</div>
+                    <div className="flex flex-wrap">
+                      {groupedStudents[group][rank].map((student) => (
                         <div
-                          className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
-                          style={{
-                            backgroundColor: getBackgroundColor(student.group),
-                          }}
+                          key={`${student.id}-${student.prefix}`}
+                          className="flex items-center m-2 w-full"
                         >
-                          {student.name}
+                          <div
+                            className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                            style={{
+                              backgroundColor: getBackgroundColor(student.group),
+                            }}
+                          >
+                            {student.name}
+                          </div>
+                          <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                            {student.points}
+                          </div>
                         </div>
-                        <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
-                          {student.points}
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-
                 )
               ))}
             </div>
