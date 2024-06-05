@@ -52,7 +52,24 @@ const StudentRanking = () => {
         return acc;
       }, {});
 
-      setGroupedStudents(groups);
+      // Filter to get top 5 students per group considering ties
+      const topGroups = {};
+      for (const group in groups) {
+        let rank = 0;
+        let lastPoints = null;
+        topGroups[group] = groups[group].filter((student, index) => {
+          if (index < 5 || student.points === lastPoints) {
+            if (student.points !== lastPoints) {
+              rank++;
+            }
+            lastPoints = student.points;
+            return true;
+          }
+          return false;
+        });
+      }
+
+      setGroupedStudents(topGroups);
       setOverallStudents(presentStudents);
       setLoading(false);
     });
@@ -80,7 +97,7 @@ const StudentRanking = () => {
       case "youth":
         return "#f70233";
       default:
-        return "#FFFFFF"; 
+        return "#FFFFFF";
     }
   };
 
