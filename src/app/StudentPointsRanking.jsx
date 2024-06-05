@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { collection, onSnapshot, doc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { db2 } from "./firebaseConfig2.js";
+import { Transition } from '@headlessui/react';
 
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
@@ -138,43 +139,55 @@ const StudentRanking = () => {
                 className="w-full text-center text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
                 <h1 className="text-9xl font-bold mb-4">Highest points </h1>
                 <h4 className="text-5xl font-bold mb-4"> {configGroup}</h4>
-                <div className="flex flex-col justify-between ">
+                <div className="flex flex-col justify-between h-full">
                   {Object.keys(groupedStudents[configGroup]).map(
-                    (rank) =>
+                    (rank, index) =>
                       parseInt(rank) <= 5 && (
-                        <div
+                        <Transition
                           key={rank}
-                          className="flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0">
+                          show={true}
+                          appear={true}
+                          enter="transform transition ease-in-out duration-500"
+                          enterFrom="translate-x-full"
+                          enterTo="translate-x-0"
+                          leave="transform transition ease-in-out duration-500"
+                          leaveFrom="translate-x-0"
+                          leaveTo="translate-x-full"
+                        >
                           <div
-                            className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0"
-                            style={{ width: "120px" }}>
-                            {rank}
-                          </div>
-                          <div className="flex-grow">
-                            <div className="flex flex-wrap">
-                              {groupedStudents[configGroup][rank].map(
-                                (student) => (
-                                  <div
-                                    key={`${student.id}-${student.prefix}`}
-                                    className="flex items-center m-2 w-full">
+                            key={rank}
+                            className="flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0 flex-grow">
+                            <div
+                              className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0"
+                              style={{ width: "120px" }}>
+                              {rank}
+                            </div>
+                            <div className="flex-grow">
+                              <div className="flex flex-wrap">
+                                {groupedStudents[configGroup][rank].map(
+                                  (student) => (
                                     <div
-                                      className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
-                                      style={{
-                                        backgroundColor: getBackgroundColor(
-                                          student.group
-                                        ),
-                                      }}>
-                                      {student.name}
+                                      key={`${student.id}-${student.prefix}`}
+                                      className="flex items-center m-2 w-full">
+                                      <div
+                                        className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                                        style={{
+                                          backgroundColor: getBackgroundColor(
+                                            student.group
+                                          ),
+                                        }}>
+                                        {student.name}
+                                      </div>
+                                      <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                                        {student.points}
+                                      </div>
                                     </div>
-                                    <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
-                                      {student.points}
-                                    </div>
-                                  </div>
-                                )
-                              )}
+                                  )
+                                )}
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        </Transition>
                       )
                   )}
                 </div>
