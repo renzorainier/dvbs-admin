@@ -137,7 +137,7 @@ const StudentRanking = () => {
           {configGroup && groupedStudents[configGroup] && ( // Check if configGroup is fetched and if the corresponding group data exists
             <div
               key={configGroup}
-              className="w-full max-w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg">
+              className="w-full max-w-full text-gray-700 bg-white p-5 max-h-full border rounded-lg shadow-lg">
               <h2 className="text-9xl font-bold mb-4">Highest points on {configGroup} </h2>
               {Object.keys(groupedStudents[configGroup]).map(
                 (rank) =>
