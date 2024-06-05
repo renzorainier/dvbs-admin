@@ -8,7 +8,7 @@ const StudentRanking = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db2, "points"), (querySnapshot) => {
+    const unsubscribe = onSnapshot(collection(db2, "points/config"), (querySnapshot) => {
       let groupToShow = null;
       querySnapshot.forEach((doc) => {
         groupToShow = doc.data().group;
