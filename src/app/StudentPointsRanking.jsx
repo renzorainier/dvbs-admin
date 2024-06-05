@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { collection, onSnapshot } from 'firebase/firestore'; // Changed getDocs to onSnapshot
-import { db } from './firebase.js';
+import React, { useState, useEffect } from "react";
+import { collection, onSnapshot } from "firebase/firestore"; // Changed getDocs to onSnapshot
+import { db } from "./firebase.js";
 
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'dvbs'), (querySnapshot) => {
-      const studentData = querySnapshot.docs.map(doc => ({
+    const unsubscribe = onSnapshot(collection(db, "dvbs"), (querySnapshot) => {
+      const studentData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
 
       const currentDayLetter = getCurrentDayLetter();
       const presentStudents = studentData
-        .map(group => {
+        .map((group) => {
           const groupStudents = [];
           for (const key in group) {
             if (key.endsWith(currentDayLetter)) {
@@ -37,7 +37,7 @@ const StudentRanking = () => {
         })
         .flat();
 
-      console.log('Fetched Students:', presentStudents);
+      console.log("Fetched Students:", presentStudents);
 
       // Sort students by points from highest to lowest
       presentStudents.sort((a, b) => b.points - a.points);
@@ -94,7 +94,7 @@ const StudentRanking = () => {
   }, []);
 
   const getCurrentDayLetter = () => {
-    const days = ['A', 'B', 'C', 'D', 'E'];
+    const days = ["A", "B", "C", "D", "E"];
     const dayIndex = new Date().getDay();
     return days[dayIndex >= 1 && dayIndex <= 5 ? dayIndex - 1 : 4];
   };
@@ -121,21 +121,29 @@ const StudentRanking = () => {
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto">
       <div className="flex justify-center items-center overflow-auto">
-        <div className="w-full rounded-lg mx-auto" style={{ maxWidth: '90%' }}>
-          {Object.keys(groupedStudents).map(group => (
-            <div key={group} className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
+        <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
+          {Object.keys(groupedStudents).map((group) => (
+            <div
+              key={group}
+              className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
               <h2 className="text-2xl font-bold mb-4">{group} Ranking</h2>
-              {Object.keys(groupedStudents[group]).map(rank => (
+              {Object.keys(groupedStudents[group]).map((rank) => (
                 <div key={rank} className="mb-4">
                   <div className="text-lg font-semibold mb-2">{rank}</div>
                   <div className="flex flex-wrap">
-                    {groupedStudents[group][rank].map(student => (
-                      <div
-                        key={`${student.id}-${student.prefix}`}
-                        className="flex-1 min-w-[150px] p-4 m-2 rounded-lg shadow-md text-white font-bold"
-                        style={{ backgroundColor: getBackgroundColor(student.group) }}
-                      >
-                        {student.name}
+                    {groupedStudents[group][rank].map((student) => (
+                      <div>
+                        <div
+                          key={`${student.id}-${student.prefix}`}
+                          className="flex-1 min-w-[150px] p-4 m-2 rounded-lg shadow-md text-white font-bold"
+                          style={{
+                            backgroundColor: getBackgroundColor(student.group),
+                          }}>
+                          {student.name}
+                        </div>
+                        <div className="bg-black p-4 m-2 rounded-lg shadow-md text-white font-bold ">
+                          {student.points}
+                        </div>
                       </div>
                     ))}
                   </div>
