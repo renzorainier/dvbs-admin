@@ -147,7 +147,7 @@ const StudentRanking = () => {
                           key={rank}
                           show={true}
                           appear={true}
-                          enter="transform transition ease-in-out duration-500"
+                          enter={`transform transition ease-in-out duration-500 delay-${index + 1}00`}
                           enterFrom="translate-x-full"
                           enterTo="translate-x-0"
                           leave="transform transition ease-in-out duration-500"
