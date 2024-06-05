@@ -131,20 +131,21 @@ const StudentRanking = () => {
   }
 
   return (
-    <div className="bg-[#9ca3af] min-h-screen h-screen overflow-auto">
-    <div className="flex justify-center items-center h-full overflow-auto">
-      <div className="w-full h-full rounded-lg mx-auto flex flex-col justify-center">
-        {configGroup && groupedStudents[configGroup] && ( // Check if configGroup is fetched and if the corresponding group data exists
-          <div
-            key={configGroup}
-            className="w-full h-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
-            <h2 className="text-9xl font-bold mb-4">Highest points on {configGroup} </h2>
+<div className="bg-[#9ca3af] min-h-screen h-screen overflow-auto">
+  <div className="flex justify-center items-center h-full overflow-auto">
+    <div className="w-full h-full rounded-lg mx-auto flex flex-col justify-center">
+      {configGroup && groupedStudents[configGroup] && ( // Check if configGroup is fetched and if the corresponding group data exists
+        <div
+          key={configGroup}
+          className="w-full h-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
+          <h2 className="text-9xl font-bold mb-4">Highest points on {configGroup} </h2>
+          <div className="flex flex-col justify-between h-full">
             {Object.keys(groupedStudents[configGroup]).map(
               (rank) =>
                 parseInt(rank) <= 5 && (
                   <div
                     key={rank}
-                    className="mb-4 flex items-center p-4 bg-gray-100 rounded-lg shadow-md">
+                    className="flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0">
                     <div
                       className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0"
                       style={{ width: "120px" }}>
@@ -154,16 +155,16 @@ const StudentRanking = () => {
                       <div className="flex flex-wrap">
                         {groupedStudents[configGroup][rank].map((student) => (
                           <div
-                            key={`${student.id}-${ student.prefix}`}
-                            className="flex items-center h-full m-2 w-full">
+                            key={`${student.id}-${student.prefix}`}
+                            className="flex items-center m-2 w-full">
                             <div
-                              className="flex-grow p-4 rounded-l-lg shadow-md h-full text-white font-bold text-5xl"
+                              className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
                               style={{
                                 backgroundColor: getBackgroundColor(student.group),
                               }}>
                               {student.name}
                             </div>
-                            <div className="flex-shrink-0 ml-auto h-full bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                            <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
                               {student.points}
                             </div>
                           </div>
@@ -174,10 +175,11 @@ const StudentRanking = () => {
                 )
             )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   </div>
+</div>
 
 
   );
