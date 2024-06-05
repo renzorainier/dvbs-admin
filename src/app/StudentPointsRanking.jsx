@@ -125,7 +125,7 @@ const StudentRanking = () => {
               {Object.keys(groupedStudents[group]).map((rank) => (
                 parseInt(rank) <= 5 && (
                   <div key={rank} className="mb-4 flex items-center p-4 bg-gray-100 rounded-lg shadow-md">
-                  <div className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0" style={{ width: '120px' }}>
+                  <div className="text-9xl font-extrabold bg-gray-300 text-center text-black-700 flex-shrink-0" style={{ width: '120px' }}>
                     {rank}
                   </div>
                   <div className="flex-grow">
