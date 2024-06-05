@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, onSnapshot } from "firebase/firestore"; // Changed getDocs to onSnapshot
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { db2 } from "./firebaseConfig2.js";
 
@@ -86,18 +86,14 @@ const StudentRanking = () => {
     );
 
     const unsubscribeConfig = onSnapshot(
-      collection(db2, "points"),
+      collection(db2, "config"),
       (querySnapshot) => {
-        const configData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const configData = querySnapshot.docs.map((doc) => doc.data().group);
         console.log("Fetched Config Data:", configData);
       }
     );
 
     return () => {
-      // Unsubscribe from the snapshot listeners when the component unmounts
       unsubscribeStudents();
       unsubscribeConfig();
     };
@@ -187,3 +183,4 @@ const StudentRanking = () => {
 };
 
 export default StudentRanking;
+
