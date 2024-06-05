@@ -135,13 +135,13 @@ const StudentRanking = () => {
                       <div>
                         <div
                           key={`${student.id}-${student.prefix}`}
-                          className="flex-1 min-w-[150px] p-4 m-2 rounded-lg shadow-md text-white font-bold"
+                          className="min-w-[150px] p-4 rounded-l-lg shadow-md text-white font-bold"
                           style={{
                             backgroundColor: getBackgroundColor(student.group),
                           }}>
                           {student.name}
                         </div>
-                        <div className="bg-black p-4 m-2 rounded-lg shadow-md text-white font-bold ">
+                        <div className="bg-black p-4 rounded-r-lg shadow-md text-white font-bold">
                           {student.points}
                         </div>
                       </div>
