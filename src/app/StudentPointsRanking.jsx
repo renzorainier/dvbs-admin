@@ -56,10 +56,12 @@ const StudentRanking = () => {
       for (const group in groups) {
         let rank = 0;
         let lastPoints = null;
+        let actualRank = 0;
         topGroups[group] = groups[group].filter((student, index) => {
           if (index < 5 || student.points === lastPoints) {
             if (student.points !== lastPoints) {
-              rank = index + 1;
+              actualRank++;
+              rank = actualRank;
             }
             student.rank = rank;
             lastPoints = student.points;
