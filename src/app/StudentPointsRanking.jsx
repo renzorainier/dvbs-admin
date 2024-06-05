@@ -186,7 +186,7 @@ const StudentRanking = () => {
                                   key={`${student.id}-${student.prefix}`}
                                   className="flex items-center m-2 w-full">
                                   <div
-                                    className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                                    className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-8xl"
                                     style={{
                                       backgroundColor: getBackgroundColor(
                                         student.group
