@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore"; // Changed getDocs to onSnapshot
 import { db } from "./firebase.js";
+import { db2 } from "./firebaseConfig2.js";
 
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
