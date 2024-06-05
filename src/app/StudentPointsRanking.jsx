@@ -86,7 +86,7 @@ const StudentRanking = () => {
     );
 
     const unsubscribeConfig = onSnapshot(
-      collection(db2, "config"),
+      collection(db2, "points"),
       (querySnapshot) => {
         const configData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
