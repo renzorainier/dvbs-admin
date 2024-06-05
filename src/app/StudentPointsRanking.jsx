@@ -57,7 +57,6 @@ const StudentRanking = () => {
       for (const group in groups) {
         let rank = 0;
         let lastPoints = null;
-        let count = 0;
         topGroups[group] = groups[group].filter((student, index) => {
           if (index < 5 || student.points === lastPoints) {
             if (student.points !== lastPoints) {
@@ -65,25 +64,22 @@ const StudentRanking = () => {
             }
             student.rank = rank;
             lastPoints = student.points;
-            count++;
             return true;
           }
           return false;
         });
       }
 
-      // Get top 5 students overall considering ties
+      // Filter to get top 5 students overall considering ties and assign ranks
       let overallRank = 0;
       let lastOverallPoints = null;
-      let overallCount = 0;
       const topOverallStudents = presentStudents.filter((student, index) => {
         if (index < 5 || student.points === lastOverallPoints) {
           if (student.points !== lastOverallPoints) {
             overallRank = index + 1;
           }
-          student.rank = overallRank;
+          student.overallRank = overallRank;
           lastOverallPoints = student.points;
-          overallCount++;
           return true;
         }
         return false;
@@ -141,7 +137,7 @@ const StudentRanking = () => {
                   style={{ backgroundColor: getBackgroundColor(student.group) }}
                   onClick={() => {}}
                 >
-                  Rank {student.rank}: {student.name} - {student.points} points
+                  Rank {student.overallRank}: {student.name} - {student.points} points
                 </button>
               </div>
             ))}
