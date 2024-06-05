@@ -127,7 +127,7 @@ const StudentRanking = () => {
               <h2 className="text-2xl font-bold mb-4">{group} Ranking</h2>
               {Object.keys(groupedStudents[group]).map(rank => (
                 <div key={rank} className="mb-4">
-                  <div className="text-lg font-semibold mb-2">Rank {rank}</div>
+                  <div className="text-lg font-semibold mb-2">{rank}</div>
                   <div className="flex flex-wrap">
                     {groupedStudents[group][rank].map(student => (
                       <div
