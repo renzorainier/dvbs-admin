@@ -86,15 +86,15 @@ const StudentRanking = () => {
     );
 
     const unsubscribeConfig = onSnapshot(
-      collection(db2, "points"),
+      collection(db2, "points"), // Assuming "config" is the name of your document
       (querySnapshot) => {
-        const configData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        console.log("Fetched Config Data:", configData);
+        querySnapshot.forEach((doc) => {
+          const configData = doc.data();
+          console.log("Fetched Config Data:", configData.group); // Log the value of the "group" field
+        });
       }
     );
+
 
     return () => {
       // Unsubscribe from the snapshot listeners when the component unmounts
