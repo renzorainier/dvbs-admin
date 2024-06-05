@@ -135,7 +135,7 @@ const StudentRanking = () => {
                         className="flex-1 min-w-[150px] p-4 m-2 rounded-lg shadow-md text-white font-bold"
                         style={{ backgroundColor: getBackgroundColor(student.group) }}
                       >
-                        {student.name} - {student.points} points
+                        {student.name}
                       </div>
                     ))}
                   </div>
