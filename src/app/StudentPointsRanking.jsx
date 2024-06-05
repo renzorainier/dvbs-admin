@@ -88,7 +88,7 @@ const StudentRanking = () => {
         const configData = doc.data();
         console.log("Fetched Config Data:", configData.group);
         setConfigGroup(configData.group); // Set the fetched group name
-        if (configData.group === "all") {
+        if (configData.group === "play") {
           setCurrentGroup(Object.keys(groupedStudents)[0]); // Start with the first group
         } else {
           setCurrentGroup(configData.group);
@@ -106,7 +106,7 @@ const StudentRanking = () => {
 
   useEffect(() => {
     let interval;
-    if (configGroup === "all" && Object.keys(groupedStudents).length > 0) {
+    if (configGroup === "play" && Object.keys(groupedStudents).length > 0) {
       interval = setInterval(() => {
         setGroupIndex(
           (prevIndex) => (prevIndex + 1) % Object.keys(groupedStudents).length
@@ -118,7 +118,7 @@ const StudentRanking = () => {
   }, [configGroup, groupedStudents]);
 
   useEffect(() => {
-    if (configGroup === "all" && Object.keys(groupedStudents).length > 0) {
+    if (configGroup === "play" && Object.keys(groupedStudents).length > 0) {
       setCurrentGroup(Object.keys(groupedStudents)[groupIndex]);
     }
   }, [groupIndex, configGroup, groupedStudents]);
