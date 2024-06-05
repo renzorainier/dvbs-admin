@@ -194,7 +194,7 @@ const StudentRanking = () => {
                                     }}>
                                     {student.name}
                                   </div>
-                                  <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                                  <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-7xl">
                                     {student.points}
                                   </div>
                                 </div>
