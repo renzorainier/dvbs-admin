@@ -5,6 +5,7 @@ import { db } from "./firebase.js";
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
   const [loading, setLoading] = useState(true);
+  const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "dvbs"), (querySnapshot) => {
