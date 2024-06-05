@@ -116,15 +116,12 @@ const StudentRanking = () => {
               {groupedStudents[group].map(student => (
                 <div
                   key={`${student.id}-${student.prefix}`}
-                  className="flex items-center mb-4"
+                  className="flex items-center mb-4 p-4 rounded-lg shadow-md"
+                  style={{ backgroundColor: getBackgroundColor(student.group) }}
                 >
-                  <button
-                    className="flex-1 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700"
-                    style={{ backgroundColor: getBackgroundColor(student.group) }}
-                    onClick={() => {}}
-                  >
+                  <div className="flex-1 text-white font-bold">
                     Rank {student.rank}: {student.name} - {student.points} points
-                  </button>
+                  </div>
                 </div>
               ))}
             </div>
