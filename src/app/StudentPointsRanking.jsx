@@ -137,7 +137,7 @@ const StudentRanking = () => {
         {configGroup && groupedStudents[configGroup] && ( // Check if configGroup is fetched and if the corresponding group data exists
           <div
             key={configGroup}
-            className="w-full max-w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
+            className="w-full h-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
             <h2 className="text-9xl font-bold mb-4">Highest points on {configGroup} </h2>
             {Object.keys(groupedStudents[configGroup]).map(
               (rank) =>
@@ -155,15 +155,15 @@ const StudentRanking = () => {
                         {groupedStudents[configGroup][rank].map((student) => (
                           <div
                             key={`${student.id}-${ student.prefix}`}
-                            className="flex items-center m-2 w-full">
+                            className="flex items-center h-full m-2 w-full">
                             <div
-                              className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                              className="flex-grow p-4 rounded-l-lg shadow-md h-full text-white font-bold text-5xl"
                               style={{
                                 backgroundColor: getBackgroundColor(student.group),
                               }}>
                               {student.name}
                             </div>
-                            <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                            <div className="flex-shrink-0 ml-auto h-full bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
                               {student.points}
                             </div>
                           </div>
