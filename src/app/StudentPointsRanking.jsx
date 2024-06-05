@@ -126,7 +126,7 @@ const StudentRanking = () => {
                   parseInt(rank) <= 5 && (
                     <div className="flex items-center">
                     <div
-                      className="text-9xl font-extrabold bg-gray-300 text-center text-black-700 flex-shrink-0"
+                      className="text-9xl font-extrabold bg-gray-300 text-center  text-black-700 flex-shrink-0"
                       style={{ width: "120px" }}
                     >
                       {rank}
