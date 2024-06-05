@@ -1,11 +1,12 @@
-import { db2 } from "./firebaseConfig2.js";" "import React, { useState, useEffect } from "react";
-import { collection, onSnapshot } from "firebase/firestore"; // Changed getDocs to onSnapshot
+import React, { useState, useEffect } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { db2 } from "./firebaseConfig2.js";
 
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
   const [loading, setLoading] = useState(true);
+  const [groupToShow, setGroupToShow] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "dvbs"), (querySnapshot) => {
@@ -82,9 +83,22 @@ const StudentRanking = () => {
       setLoading(false);
     });
 
+    const unsubscribeConfig = onSnapshot(
+      collection(db2, "config"),
+      (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data && data.group) {
+            setGroupToShow(data.group);
+          }
+        });
+      }
+    );
+
     return () => {
-      // Unsubscribe from the snapshot listener when the component unmounts
+      // Unsubscribe from the snapshot listeners when the component unmounts
       unsubscribe();
+      unsubscribeConfig();
     };
   }, []);
 
@@ -114,57 +128,61 @@ const StudentRanking = () => {
   }
 
   return (
-<div className="bg-[#9ca3af] h-screen overflow-auto">
-  <div className="flex justify-center items-center overflow-auto">
-    <div className="w-full rounded-lg mx-auto">
-      {Object.keys(groupedStudents)
-        .sort((a, b) => {
-          const order = ['primary', 'middlers', 'juniors', 'youth'];
-          return order.indexOf(a) - order.indexOf(b);
-        })
-        .map((group) => (
-          <div
-            key={group}
-            className="w-full max-w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg"
-          >
-            <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
-            {Object.keys(groupedStudents[group]).map((rank) => (
-              parseInt(rank) <= 5 && (
-                <div key={rank} className="mb-4 flex items-center p-4 bg-gray-100 rounded-lg shadow-md">
-                  <div className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0" style={{ width: '120px' }}>
-                    {rank}
-                  </div>
-                  <div className="flex-grow">
-                    <div className="flex flex-wrap">
-                      {groupedStudents[group][rank].map((student) => (
+    <div className="bg-[#9ca3af] h-screen overflow-auto">
+      <div className="flex justify-center items-center overflow-auto">
+        <div className="w-full rounded-lg mx-auto">
+          {Object.keys(groupedStudents)
+            .filter((group) => groupToShow.includes(group))
+            .sort((a, b) => {
+              const order = ["primary", "middlers", "juniors", "youth"];
+              return order.indexOf(a) - order.indexOf(b);
+            })
+            .map((group) => (
+              <div
+                key={group}
+                className="w-full max-w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg">
+                <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
+                {Object.keys(groupedStudents[group]).map(
+                  (rank) =>
+                    parseInt(rank) <= 5 && (
+                      <div
+                        key={rank}
+                        className="mb-4 flex items-center p-4 bg-gray-100 rounded-lg shadow-md">
                         <div
-                          key={`${student.id}-${student.prefix}`}
-                          className="flex items-center m-2 w-full"
-                        >
-                          <div
-                            className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
-                            style={{
-                              backgroundColor: getBackgroundColor(student.group),
-                            }}
-                          >
-                            {student.name}
-                          </div>
-                          <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
-                            {student.points}
+                          className="text-9xl font-extrabold text-center text-black-700 flex-shrink-0"
+                          style={{ width: "120px" }}>
+                          {rank}
+                        </div>
+                        <div className="flex-grow">
+                          <div className="flex flex-wrap">
+                            {groupedStudents[group][rank].map((student) => (
+                              <div
+                                key={`${student.id}-${student.prefix}`}
+                                className="flex items-center m-2 w-full">
+                                <div
+                                  className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                                  style={{
+                                    backgroundColor: getBackgroundColor(
+                                      student.group
+                                    ),
+                                  }}>
+                                  {student.name}
+                                </div>
+                                <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                                  {student.points}
+                                </div>
+                              </div>
+                            ))}
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )
+                      </div>
+                    )
+                )}
+              </div>
             ))}
-          </div>
-        ))}
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
   );
 };
 
