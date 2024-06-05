@@ -122,7 +122,7 @@ const StudentRanking = () => {
   return (
     <div className="bg-[#9ca3af] h-screen  overflow-auto">
     <div className="flex justify-center items-center overflow-auto">
-      <div className="rounded-lg " style={{ maxWidth: "90%" }}>
+      <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
         {Object.keys(groupedStudents).map((group) => (
           <div
             key={group}
@@ -164,3 +164,45 @@ const StudentRanking = () => {
 };
 
 export default StudentRanking;
+
+
+
+// <div className="bg-[#9ca3af] h-screen  overflow-auto">
+// <div className="flex justify-center items-center overflow-auto">
+//   <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
+//     {Object.keys(groupedStudents).map((group) => (
+//       <div
+//         key={group}
+//         className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto"
+//       >
+//         <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
+//         {Object.keys(groupedStudents[group]).map((rank) => (
+//           <div key={rank} className="mb-4">
+//             <div className="text-xl font-semibold mb-2">Rank {rank}</div>
+//             <div className="flex flex-wrap">
+//               {groupedStudents[group][rank].map((student) => (
+//                 <div
+//                   key={`${student.id}-${student.prefix}`}
+//                   className="flex items-center m-2 w-full"
+//                 >
+//                   <div
+//                     className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-lg"
+//                     style={{
+//                       backgroundColor: getBackgroundColor(student.group),
+//                     }}
+//                   >
+//                     {student.name}
+//                   </div>
+//                   <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-lg">
+//                     {student.points}
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     ))}
+//   </div>
+// </div>
+// </div>
