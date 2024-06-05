@@ -137,9 +137,9 @@ const StudentRanking = () => {
       {configGroup && groupedStudents[configGroup] && ( // Check if configGroup is fetched and if the corresponding group data exists
         <div
           key={configGroup}
-          className="w-full h-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
+          className="w-full text-gray-700 bg-white p-5 border rounded-lg shadow-lg flex-grow">
           <h2 className="text-9xl font-bold mb-4">Highest points on {configGroup} </h2>
-          <div className="flex flex-col justify-between h-full">
+          <div className="flex flex-col justify-between max-h-max">
             {Object.keys(groupedStudents[configGroup]).map(
               (rank) =>
                 parseInt(rank) <= 5 && (
