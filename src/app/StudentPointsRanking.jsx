@@ -11,9 +11,7 @@ const StudentRanking = () => {
     const unsubscribe = onSnapshot(collection(db2, "points"), (querySnapshot) => {
       let groupToShow = null;
       querySnapshot.forEach((doc) => {
-        if (doc.id === "config") {
-          groupToShow = doc.data().group;
-        }
+        groupToShow = doc.data().group;
       });
 
       if (!groupToShow) {
