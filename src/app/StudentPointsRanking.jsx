@@ -147,7 +147,7 @@ const StudentRanking = () => {
                           key={rank}
                           className={`flex items-center p-4 bg-gray-100 rounded-lg shadow-md mb-4 last:mb-0 flex-grow transition-transform ease-in-out duration-500 delay-${index + 1}00`}
                           style={{
-                            transform: "translateX(-100%)",
+                            transform: "translateX(100%)",
                             transitionDelay: `${index * 100}ms`,
                           }}
                         >
