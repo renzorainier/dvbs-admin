@@ -120,41 +120,42 @@ const StudentRanking = () => {
 
   return (
     <div className="bg-[#9ca3af] h-screen overflow-auto">
-      <div className="flex justify-center items-center overflow-auto">
-        <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
-          {Object.keys(groupedStudents).map((group) => (
-            <div
-              key={group}
-              className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
-              <h2 className="text-2xl font-bold mb-4">{group} Ranking</h2>
-              {Object.keys(groupedStudents[group]).map((rank) => (
-                <div key={rank} className="mb-4">
-                  <div className="text-lg font-semibold mb-2">Rank {rank}</div>
-                  <div className="flex flex-wrap">
-                    {groupedStudents[group][rank].map((student) => (
-                      <div
-                        key={`${student.id}-${student.prefix}`}
-                        className="flex items-center m-2">
-                        <div
-                          className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold"
-                          style={{
-                            backgroundColor: getBackgroundColor(student.group),
-                          }}>
-                          {student.name}
-                        </div>
-                        <div className="bg-black p-4 rounded-r-lg shadow-md text-white font-bold">
-                          {student.points}
-                        </div>
-                      </div>
-                    ))}
+  <div className="flex justify-center items-center overflow-auto">
+    <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
+      {Object.keys(groupedStudents).map((group) => (
+        <div
+          key={group}
+          className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto">
+          <h2 className="text-2xl font-bold mb-4">{group} Ranking</h2>
+          {Object.keys(groupedStudents[group]).map((rank) => (
+            <div key={rank} className="mb-4">
+              <div className="text-lg font-semibold mb-2">Rank {rank}</div>
+              <div className="flex flex-wrap">
+                {groupedStudents[group][rank].map((student) => (
+                  <div
+                    key={`${student.id}-${student.prefix}`}
+                    className="flex items-center m-2">
+                    <div
+                      className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold"
+                      style={{
+                        backgroundColor: getBackgroundColor(student.group),
+                      }}>
+                      {student.name}
+                    </div>
+                    <div className="bg-black p-4 rounded-r-lg shadow-md text-white font-bold">
+                      {student.points}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           ))}
         </div>
-      </div>
+      ))}
     </div>
+  </div>
+</div>
+
   );
 };
 
