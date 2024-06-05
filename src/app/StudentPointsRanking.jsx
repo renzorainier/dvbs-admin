@@ -72,8 +72,25 @@ const StudentRanking = () => {
         });
       }
 
+      // Get top 5 students overall considering ties
+      let overallRank = 0;
+      let lastOverallPoints = null;
+      let overallCount = 0;
+      const topOverallStudents = presentStudents.filter((student, index) => {
+        if (index < 5 || student.points === lastOverallPoints) {
+          if (student.points !== lastOverallPoints) {
+            overallRank = index + 1;
+          }
+          student.rank = overallRank;
+          lastOverallPoints = student.points;
+          overallCount++;
+          return true;
+        }
+        return false;
+      });
+
       setGroupedStudents(topGroups);
-      setOverallStudents(presentStudents);
+      setOverallStudents(topOverallStudents);
       setLoading(false);
     });
 
@@ -124,7 +141,7 @@ const StudentRanking = () => {
                   style={{ backgroundColor: getBackgroundColor(student.group) }}
                   onClick={() => {}}
                 >
-                  {student.name} - {student.points} points
+                  Rank {student.rank}: {student.name} - {student.points} points
                 </button>
               </div>
             ))}
