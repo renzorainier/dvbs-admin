@@ -5,7 +5,6 @@ import { db } from "./firebase.js";
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
   const [loading, setLoading] = useState(true);
-  const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "dvbs"), (querySnapshot) => {
@@ -52,36 +51,41 @@ const StudentRanking = () => {
         return acc;
       }, {});
 
-      // Filter to get top 5 students per group considering ties and assign ranks
-      const topGroups = {};
-      for (const group in groups) {
-        let rank = 0;
-        let lastPoints = null;
-        let actualRank = 0;
-        topGroups[group] = groups[group].filter((student, index) => {
-          if (index < 5 || student.points === lastPoints) {
-            if (student.points !== lastPoints) {
-              actualRank++;
-              rank = actualRank;
-            }
-            student.rank = rank;
-            lastPoints = student.points;
-            return true;
-          }
-          return false;
-        });
-      }
-
       // Group students by their ranks within each group
       const groupedByRank = {};
-      for (const group in topGroups) {
-        groupedByRank[group] = topGroups[group].reduce((acc, student) => {
-          if (!acc[student.rank]) {
-            acc[student.rank] = [];
+      for (const group in groups) {
+        let rank = 0;
+        let currentRankPoints = null;
+        let currentRankStudents = 0;
+        let rankIndex = 0;
+        groupedByRank[group] = {};
+        groups[group].forEach((student) => {
+          if (student.points !== currentRankPoints) {
+            rank++;
+            currentRankPoints = student.points;
+            currentRankStudents = 0;
+            rankIndex = 0;
           }
-          acc[student.rank].push(student);
-          return acc;
-        }, {});
+          if (currentRankStudents < 5) {
+            if (!groupedByRank[group][rank]) {
+              groupedByRank[group][rank] = [];
+            }
+            groupedByRank[group][rank].push(student);
+            currentRankStudents++;
+            rankIndex++;
+          } else if (
+            groupedByRank[group][rank + 1] &&
+            groupedByRank[group][rank + 1].length < 5
+          ) {
+            rank++;
+            if (!groupedByRank[group][rank]) {
+              groupedByRank[group][rank] = [];
+            }
+            groupedByRank[group][rank].push(student);
+            currentRankStudents = 1;
+            rankIndex = 1;
+          }
+        });
       }
 
       setGroupedStudents(groupedByRank);
@@ -116,93 +120,50 @@ const StudentRanking = () => {
   };
 
   if (loading) {
-    return <div></div>;
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="bg-[#9ca3af] h-screen  overflow-auto">
-    <div className="flex justify-center items-center overflow-auto">
-      <div className="w-full rounded-lg mx-auto" >
-        {Object.keys(groupedStudents).map((group) => (
-          <div
-            key={group}
-            className="w-full max-w-full text-gray-700 bg-white  p-5 border rounded-lg shadow-lg "
-          >
-            <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
-            {Object.keys(groupedStudents[group]).map((rank) => (
-              <div key={rank} className="mb-4">
-                <div className="text-xl font-bold mb-2">Rank {rank}</div>
-                <div className="flex flex-wrap">
-                  {groupedStudents[group][rank].map((student) => (
-                    <div
-                      key={`${student.id}-${student.prefix}`}
-                      className="flex items-center m-2 w-full"
-                    >
+      <div className="flex justify-center items-center overflow-auto">
+        <div className="w-full rounded-lg mx-auto">
+          {Object.keys(groupedStudents).map((group) => (
+            <div
+              key={group}
+              className="w-full max-w-full text-gray-700 bg-white  p-5 border rounded-lg shadow-lg"
+            >
+              <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
+              {Object.keys(groupedStudents[group]).map((rank) => (
+                <div key={rank} className="mb-4">
+                  <div className="text-xl font-bold mb-2">Rank {rank}</div>
+                  <div className="flex flex-wrap">
+                    {groupedStudents[group][rank].map((student) => (
                       <div
-                        className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
-                        style={{
-                          backgroundColor: getBackgroundColor(student.group),
-                        }}
+                        key={`${student.id}-${student.prefix}`}
+                        className="flex items-center m-2 w-full"
                       >
-                        {student.name}
+                        <div
+                          className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                          style={{
+                            backgroundColor: getBackgroundColor(student.group),
+                          }}
+                        >
+                          {student.name}
+                        </div>
+                        <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                          {student.points}
+                        </div>
                       </div>
-                      <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
-                        {student.points}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        ))}
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-
   );
 };
 
 export default StudentRanking;
-
-
-
-// <div className="bg-[#9ca3af] h-screen  overflow-auto">
-// <div className="flex justify-center items-center overflow-auto">
-//   <div className="w-full rounded-lg mx-auto" style={{ maxWidth: "90%" }}>
-//     {Object.keys(groupedStudents).map((group) => (
-//       <div
-//         key={group}
-//         className="w-full max-w-md text-gray-700 bg-white mt-5 p-5 border rounded-lg shadow-lg mx-auto"
-//       >
-//         <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
-//         {Object.keys(groupedStudents[group]).map((rank) => (
-//           <div key={rank} className="mb-4">
-//             <div className="text-xl font-semibold mb-2">Rank {rank}</div>
-//             <div className="flex flex-wrap">
-//               {groupedStudents[group][rank].map((student) => (
-//                 <div
-//                   key={`${student.id}-${student.prefix}`}
-//                   className="flex items-center m-2 w-full"
-//                 >
-//                   <div
-//                     className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-lg"
-//                     style={{
-//                       backgroundColor: getBackgroundColor(student.group),
-//                     }}
-//                   >
-//                     {student.name}
-//                   </div>
-//                   <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-lg">
-//                     {student.points}
-//                   </div>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     ))}
-//   </div>
-// </div>
-// </div>
