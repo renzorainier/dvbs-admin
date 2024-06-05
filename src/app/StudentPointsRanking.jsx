@@ -115,7 +115,7 @@ const StudentRanking = () => {
     if (configGroup === "all" && Object.keys(groupedStudents).length > 0) {
       interval = setInterval(() => {
         setGroupIndex((prevIndex) => (prevIndex + 1) % Object.keys(groupedStudents).length);
-      }, 3000);
+      }, 5000);
     }
 
     return () => clearInterval(interval);
