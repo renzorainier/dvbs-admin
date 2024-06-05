@@ -66,24 +66,13 @@ const StudentRanking = () => {
             currentRankStudents = 0;
             rankIndex = 0;
           }
-          if (currentRankStudents < 5) {
+          if (currentRankStudents < 5 && rank <= 5) {
             if (!groupedByRank[group][rank]) {
               groupedByRank[group][rank] = [];
             }
             groupedByRank[group][rank].push(student);
             currentRankStudents++;
             rankIndex++;
-          } else if (
-            groupedByRank[group][rank + 1] &&
-            groupedByRank[group][rank + 1].length < 5
-          ) {
-            rank++;
-            if (!groupedByRank[group][rank]) {
-              groupedByRank[group][rank] = [];
-            }
-            groupedByRank[group][rank].push(student);
-            currentRankStudents = 1;
-            rankIndex = 1;
           }
         });
       }
@@ -134,29 +123,31 @@ const StudentRanking = () => {
             >
               <h2 className="text-9xl font-bold mb-4">{group} Ranking</h2>
               {Object.keys(groupedStudents[group]).map((rank) => (
-                <div key={rank} className="mb-4">
-                  <div className="text-xl font-bold mb-2">Rank {rank}</div>
-                  <div className="flex flex-wrap">
-                    {groupedStudents[group][rank].map((student) => (
-                      <div
-                        key={`${student.id}-${student.prefix}`}
-                        className="flex items-center m-2 w-full"
-                      >
+                parseInt(rank) <= 5 && (
+                  <div key={rank} className="mb-4">
+                    <div className="text-xl font-bold mb-2">Rank {rank}</div>
+                    <div className="flex flex-wrap">
+                      {groupedStudents[group][rank].map((student) => (
                         <div
-                          className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
-                          style={{
-                            backgroundColor: getBackgroundColor(student.group),
-                          }}
+                          key={`${student.id}-${student.prefix}`}
+                          className="flex items-center m-2 w-full"
                         >
-                          {student.name}
+                          <div
+                            className="flex-grow p-4 rounded-l-lg shadow-md text-white font-bold text-5xl"
+                            style={{
+                              backgroundColor: getBackgroundColor(student.group),
+                            }}
+                          >
+                            {student.name}
+                          </div>
+                          <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
+                            {student.points}
+                          </div>
                         </div>
-                        <div className="flex-shrink-0 ml-auto bg-black p-4 rounded-r-lg shadow-md text-white font-bold text-5xl">
-                          {student.points}
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )
               ))}
             </div>
           ))}
