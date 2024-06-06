@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -5,15 +6,9 @@ import { db } from "./firebase.js";
 import { Menu } from "@headlessui/react";
 
 const getDefaultSelectedDay = () => {
-  const days = ["A", "B", "C", "D", "E"];
   const today = new Date().getDay();
-  return days[today >= 1 && today <= 5 ? today - 1 : 4];
+  return today === 0 || today === 6 ? "E" : String.fromCharCode(65 + today - 1);
 };
-
-// const getDefaultSelectedDay = () => {
-//   const today = new Date().getDay();
-//   return today === 0 || today === 6 ? "E" : String.fromCharCode(65 + today - 1);
-// };
 
 function AttendanceChart() {
   const [attendanceData, setAttendanceData] = useState({
@@ -26,14 +21,14 @@ function AttendanceChart() {
   const [previousAttendanceData, setPreviousAttendanceData] = useState({});
   const audioRef = useRef(null);
 
-  useEffect(() => {
-    const shouldPlaySound = (previousData, newData, day) => {
-      if (!previousData || !newData) return false;
-      const previousCount = countPresentForDay(previousData, day);
-      const newCount = countPresentForDay(newData, day);
-      return newCount > previousCount;
-    };
+  const shouldPlaySound = (previousData, newData, day) => {
+    if (!previousData || !newData) return false;
+    const previousCount = countPresentForDay(previousData, day);
+    const newCount = countPresentForDay(newData, day);
+    return newCount > previousCount;
+  };
 
+  useEffect(() => {
     const fetchAttendanceData = async () => {
       const documents = ["primary", "middlers", "juniors", "youth"];
       const listeners = {};
@@ -43,7 +38,6 @@ function AttendanceChart() {
         listeners[docName] = onSnapshot(docRef, (doc) => {
           if (doc.exists()) {
             const newData = doc.data();
-            console.log(`Data for document ${docName}:`, newData); // Log the fetched data
             setAttendanceData((prevData) => {
               if (shouldPlaySound(prevData[docName], newData, selectedDay)) {
                 playEnterSound();
@@ -68,64 +62,64 @@ function AttendanceChart() {
   }, [selectedDay]);
 
   useEffect(() => {
-    const renderChart = () => {
-      const existingChart = Chart.getChart("attendanceChart");
-      if (existingChart) {
-        existingChart.destroy();
-      }
-
-      const datasets = Object.keys(attendanceData).map((docName, index) => {
-        const data = countPresentForDay(attendanceData[docName], selectedDay);
-        const colors = ["#FFC100", "#04d924", "#027df7", "#f70233"];
-        return {
-          label: docName,
-          data: [data],
-          backgroundColor: colors[index],
-        };
-      });
-
-      const ctx = document.getElementById("attendanceChart");
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: [getDayLabel(selectedDay)],
-          datasets,
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
-            },
-            title: {
-              display: true,
-              text: `Attendance for ${getDayLabel(selectedDay)}`,
-              font: {
-                size: 18,
-              },
-            },
-          },
-          elements: {
-            bar: {
-              borderRadius: 10,
-            },
-          },
-          scales: {
-            x: {
-              ticks: {
-                display: false,
-              },
-            },
-          },
-        },
-      });
-    };
-
     if (attendanceData) {
       renderChart();
     }
-  }, [attendanceData, selectedDay]);
+  }, [attendanceData, selectedDay,]);
+
+  const renderChart = () => {
+    const existingChart = Chart.getChart("attendanceChart");
+    if (existingChart) {
+      existingChart.destroy();
+    }
+
+    const datasets = Object.keys(attendanceData).map((docName, index) => {
+      const data = countPresentForDay(attendanceData[docName], selectedDay);
+      const colors = ["#FFC100", "#04d924", "#027df7", "#f70233"];
+      return {
+        label: docName,
+        data: [data],
+        backgroundColor: colors[index],
+      };
+    });
+
+    const ctx = document.getElementById("attendanceChart");
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: [getDayLabel(selectedDay)],
+        datasets,
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+            text: `Attendance for ${getDayLabel(selectedDay)}`,
+            font: {
+              size: 18,
+            },
+          },
+        },
+        elements: {
+          bar: {
+            borderRadius: 10,
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              display: false,
+            },
+          },
+        },
+      },
+    });
+  };
 
   const countPresentForDay = (attendanceData, day) => {
     return Object.keys(attendanceData).filter(
@@ -179,6 +173,7 @@ function AttendanceChart() {
         <Menu as="div" className="relative inline-block text-left mb-2">
           <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
             {getDayLabel(selectedDay)}
+            {/* <ChevronDownIcon className="w-5 h-5 ml-2" /> */}
           </Menu.Button>
 
           <Menu.Items className="absolute left-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
@@ -205,11 +200,7 @@ function AttendanceChart() {
         {Object.keys(attendanceData).map((group, index) => (
           <div
             key={group}
-            style={{
-              backgroundColor: ["#FFC100", "#04d924", "#027df7", "#f70233"][
-                index
-              ],
-            }}
+            style={{ backgroundColor: ["#FFC100", "#04d924", "#027df7", "#f70233"][index] }}
             className="h-full md:h-full w-full flex flex-col items-center rounded-lg m-2 justify-center cursor-pointer">
             <div className="text-5xl md:text-9xl text-white font-bold">
               {countPresentForDay(attendanceData[group], selectedDay)}
@@ -230,7 +221,59 @@ function AttendanceChart() {
   );
 }
 
-export default AttendanceChart;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import React, { useState, useEffect, useRef } from "react";
 // import Chart from "chart.js/auto";
@@ -239,9 +282,15 @@ export default AttendanceChart;
 // import { Menu } from "@headlessui/react";
 
 // const getDefaultSelectedDay = () => {
+//   const days = ["A", "B", "C", "D", "E"];
 //   const today = new Date().getDay();
-//   return today === 0 || today === 6 ? "E" : String.fromCharCode(65 + today - 1);
+//   return days[today >= 1 && today <= 5 ? today - 1 : 4];
 // };
+
+// // const getDefaultSelectedDay = () => {
+// //   const today = new Date().getDay();
+// //   return today === 0 || today === 6 ? "E" : String.fromCharCode(65 + today - 1);
+// // };
 
 // function AttendanceChart() {
 //   const [attendanceData, setAttendanceData] = useState({
@@ -254,14 +303,14 @@ export default AttendanceChart;
 //   const [previousAttendanceData, setPreviousAttendanceData] = useState({});
 //   const audioRef = useRef(null);
 
-//   const shouldPlaySound = (previousData, newData, day) => {
-//     if (!previousData || !newData) return false;
-//     const previousCount = countPresentForDay(previousData, day);
-//     const newCount = countPresentForDay(newData, day);
-//     return newCount > previousCount;
-//   };
-
 //   useEffect(() => {
+//     const shouldPlaySound = (previousData, newData, day) => {
+//       if (!previousData || !newData) return false;
+//       const previousCount = countPresentForDay(previousData, day);
+//       const newCount = countPresentForDay(newData, day);
+//       return newCount > previousCount;
+//     };
+
 //     const fetchAttendanceData = async () => {
 //       const documents = ["primary", "middlers", "juniors", "youth"];
 //       const listeners = {};
@@ -271,6 +320,7 @@ export default AttendanceChart;
 //         listeners[docName] = onSnapshot(docRef, (doc) => {
 //           if (doc.exists()) {
 //             const newData = doc.data();
+//             console.log(`Data for document ${docName}:`, newData); // Log the fetched data
 //             setAttendanceData((prevData) => {
 //               if (shouldPlaySound(prevData[docName], newData, selectedDay)) {
 //                 playEnterSound();
@@ -295,64 +345,64 @@ export default AttendanceChart;
 //   }, [selectedDay]);
 
 //   useEffect(() => {
+//     const renderChart = () => {
+//       const existingChart = Chart.getChart("attendanceChart");
+//       if (existingChart) {
+//         existingChart.destroy();
+//       }
+
+//       const datasets = Object.keys(attendanceData).map((docName, index) => {
+//         const data = countPresentForDay(attendanceData[docName], selectedDay);
+//         const colors = ["#FFC100", "#04d924", "#027df7", "#f70233"];
+//         return {
+//           label: docName,
+//           data: [data],
+//           backgroundColor: colors[index],
+//         };
+//       });
+
+//       const ctx = document.getElementById("attendanceChart");
+//       new Chart(ctx, {
+//         type: "bar",
+//         data: {
+//           labels: [getDayLabel(selectedDay)],
+//           datasets,
+//         },
+//         options: {
+//           responsive: true,
+//           maintainAspectRatio: false,
+//           plugins: {
+//             legend: {
+//               display: false,
+//             },
+//             title: {
+//               display: true,
+//               text: `Attendance for ${getDayLabel(selectedDay)}`,
+//               font: {
+//                 size: 18,
+//               },
+//             },
+//           },
+//           elements: {
+//             bar: {
+//               borderRadius: 10,
+//             },
+//           },
+//           scales: {
+//             x: {
+//               ticks: {
+//                 display: false,
+//               },
+//             },
+//           },
+//         },
+//       });
+//     };
+
 //     if (attendanceData) {
 //       renderChart();
 //     }
-//   }, [attendanceData, selectedDay,]);
-
-//   const renderChart = () => {
-//     const existingChart = Chart.getChart("attendanceChart");
-//     if (existingChart) {
-//       existingChart.destroy();
-//     }
-
-//     const datasets = Object.keys(attendanceData).map((docName, index) => {
-//       const data = countPresentForDay(attendanceData[docName], selectedDay);
-//       const colors = ["#FFC100", "#04d924", "#027df7", "#f70233"];
-//       return {
-//         label: docName,
-//         data: [data],
-//         backgroundColor: colors[index],
-//       };
-//     });
-
-//     const ctx = document.getElementById("attendanceChart");
-//     new Chart(ctx, {
-//       type: "bar",
-//       data: {
-//         labels: [getDayLabel(selectedDay)],
-//         datasets,
-//       },
-//       options: {
-//         responsive: true,
-//         maintainAspectRatio: false,
-//         plugins: {
-//           legend: {
-//             display: false,
-//           },
-//           title: {
-//             display: true,
-//             text: `Attendance for ${getDayLabel(selectedDay)}`,
-//             font: {
-//               size: 18,
-//             },
-//           },
-//         },
-//         elements: {
-//           bar: {
-//             borderRadius: 10,
-//           },
-//         },
-//         scales: {
-//           x: {
-//             ticks: {
-//               display: false,
-//             },
-//           },
-//         },
-//       },
-//     });
-//   };
+//   }, [attendanceData, selectedDay]);
 
 //   const countPresentForDay = (attendanceData, day) => {
 //     return Object.keys(attendanceData).filter(
@@ -406,7 +456,6 @@ export default AttendanceChart;
 //         <Menu as="div" className="relative inline-block text-left mb-2">
 //           <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
 //             {getDayLabel(selectedDay)}
-//             {/* <ChevronDownIcon className="w-5 h-5 ml-2" /> */}
 //           </Menu.Button>
 
 //           <Menu.Items className="absolute left-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
@@ -433,7 +482,11 @@ export default AttendanceChart;
 //         {Object.keys(attendanceData).map((group, index) => (
 //           <div
 //             key={group}
-//             style={{ backgroundColor: ["#FFC100", "#04d924", "#027df7", "#f70233"][index] }}
+//             style={{
+//               backgroundColor: ["#FFC100", "#04d924", "#027df7", "#f70233"][
+//                 index
+//               ],
+//             }}
 //             className="h-full md:h-full w-full flex flex-col items-center rounded-lg m-2 justify-center cursor-pointer">
 //             <div className="text-5xl md:text-9xl text-white font-bold">
 //               {countPresentForDay(attendanceData[group], selectedDay)}
@@ -453,6 +506,8 @@ export default AttendanceChart;
 //     </div>
 //   );
 // }
+
+// export default AttendanceChart;
 
 // export default AttendanceChart;
 

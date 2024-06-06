@@ -65,8 +65,7 @@ function Main() {
           </Password>
         );
       case "Attendance":
-        return;
-        <AttendanceChart />;
+        return <AttendanceChart />;
       case "Schedule":
         return <Schedule />;
       case "Rewards":
