@@ -157,12 +157,9 @@ const StudentRanking = () => {
             <div
               key={currentGroup}
               className="w-full text-center text-black bg-black p-5  shadow-lg flex-grow">
-            <div>
-  <h1 className="text-9xl text-white font-bold mb-4" style={{ display: 'inline-block' }}>
-    Highest points
-  </h1>
-  <BsStars style={{ display: 'inline-block' }} />
-</div>
+            <h1 className="text-9xl text-white font-bold mb-4">
+  Highest points <BsStars />
+</h1>
 
 
               <h4 className="text-5xl text-white  font-bold mb-4">
