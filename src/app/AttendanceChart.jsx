@@ -4,16 +4,16 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { Menu } from "@headlessui/react";
 
-// const getDefaultSelectedDay = () => {
-//   const days = ["A", "B", "C", "D", "E"];
-//   const today = new Date().getDay();
-//   return days[today >= 1 && today <= 5 ? today - 1 : 4];
-// };
-
 const getDefaultSelectedDay = () => {
+  const days = ["A", "B", "C", "D", "E"];
   const today = new Date().getDay();
-  return today === 0 || today === 6 ? "E" : String.fromCharCode(65 + today - 1);
+  return days[today >= 1 && today <= 5 ? today - 1 : 4];
 };
+
+// const getDefaultSelectedDay = () => {
+//   const today = new Date().getDay();
+//   return today === 0 || today === 6 ? "E" : String.fromCharCode(65 + today - 1);
+// };
 
 function AttendanceChart() {
   const [attendanceData, setAttendanceData] = useState({
