@@ -220,6 +220,7 @@ function AttendanceChart() {
     </div>
   );
 }
+export default AttendanceChart;
 
 
 
@@ -509,7 +510,7 @@ function AttendanceChart() {
 
 // export default AttendanceChart;
 
-// export default AttendanceChart;
+
 
 // import React, { useState, useEffect, useRef } from "react";
 // import Chart from "chart.js/auto";
