@@ -125,13 +125,30 @@ function AttendanceChart() {
     if (attendanceData) {
       renderChart();
     }
-  }, [attendanceData, selectedDay]);
+  },
+  [attendanceData, selectedDay]);
 
   const countPresentForDay = (attendanceData, day) => {
     return Object.keys(attendanceData).filter(
-      (key) => key.startsWith("0") && key.endsWith(day) && attendanceData[key]
+      (key) => {
+        // Check if the key ends with the selected day and has a truthy value
+        if (key.endsWith(day) && attendanceData[key]) {
+          // Extract the prefix (index) part of the key
+          const index = parseInt(key.substring(0, 2));
+          // Ensure the index is a number between 1 and 99
+          return !isNaN(index) && index >= 1 && index <= 99;
+        }
+        return false;
+      }
     ).length;
   };
+
+
+  // const countPresentForDay = (attendanceData, day) => {
+  //   return Object.keys(attendanceData).filter(
+  //     (key) => key.startsWith("0") && key.endsWith(day) && attendanceData[key]
+  //   ).length;
+  // };
 
   const getTotalAttendanceForDay = (day) => {
     return Object.keys(attendanceData).reduce((total, group) => {
