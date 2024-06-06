@@ -185,14 +185,14 @@ function AttendanceChart() {
   return (
     <div className="flex flex-col md:flex-row h-screen w-screen bg-black">
       {/* Chart Section */}
-      <div className="h-full md:w-2/3">
+      <div className="h-full md:w-1/2">
         <div className="bg-white rounded-lg p-4 shadow-lg w-full h-full">
           <canvas id="attendanceChart" className="w-full h-full"></canvas>
         </div>
       </div>
 
       {/* Values Section */}
-      <div className="w-full md:w-1/3 flex flex-col items-center p-4">
+      <div className="w-full md:w-1/2 flex flex-col items-center p-4">
         <Menu as="div" className="relative inline-block text-left mb-2">
           <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
             {getDayLabel(selectedDay)}
