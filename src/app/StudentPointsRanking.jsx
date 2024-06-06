@@ -3,6 +3,8 @@ import { collection, onSnapshot, doc } from "firebase/firestore";
 import { db } from "./firebase.js";
 import { db2 } from "./firebaseConfig2.js";
 import { motion } from "framer-motion";
+import { BsStars } from "react-icons/bs";
+
 
 const StudentRanking = () => {
   const [groupedStudents, setGroupedStudents] = useState({});
@@ -158,6 +160,7 @@ const StudentRanking = () => {
               className="w-full text-center text-black bg-black p-5  shadow-lg flex-grow">
               <h1 className="text-9xl text-white font-bold mb-4">
                 Highest points
+                <BsStars />
               </h1>
               <h4 className="text-5xl text-white  font-bold mb-4">
                 {" "}
